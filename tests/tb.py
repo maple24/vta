@@ -1,7 +1,16 @@
-import queue
+from loguru import logger
+import sys
 
-q = queue.Queue()
+logger.remove()
+logger.add(sys.stderr, level="INFO")
+logger.add(
+    "log.log",
+    backtrace=True,
+    diagnose=False,
+    format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
+    level="TRACE"
+    )
 
-q.put("name")
-q.clear()
-print(q.queue)
+
+logger.info("hello")
+logger.trace("debug")
