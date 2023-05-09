@@ -1,5 +1,5 @@
 <p align='center'>
-Robotic Process Automation <b>(RPA)</b><br>
+Robotic Process Automation Framework<b>(RPAF)</b><br>
 </p>
 
 <p align='center'>
@@ -12,3 +12,5 @@ Robotic Process Automation <b>(RPA)</b><br>
 ## Features
 - ⚙️Python code formatter with [Black](https://black.readthedocs.io/en/stable/)
 - ⚡️An extremely fast Python linter [Ruff](https://beta.ruff.rs/docs/)
+- 📤RQM API
+- 📧Mail with smpt server

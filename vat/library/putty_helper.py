@@ -62,7 +62,7 @@ class putty_helper:
         logger.info("Serial console already logged in")
         return True
 
-    def connect(self, dPutty: list) -> None:
+    def connect(self, dPutty: dict) -> None:
         """
         Description: Initiate the putty interface
         """
@@ -122,7 +122,7 @@ class putty_helper:
         while True:
             if time.time() - ts > timeout:
                 logger.warning(
-                    f"Max timeout reached, unable to match pattern {pattern}!"
+                    f"Max timeout reached, unable to match pattern `{pattern}`!"
                 )
                 return False, None
             try:
