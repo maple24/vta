@@ -2,9 +2,11 @@ import time
 import psutil
 import subprocess
 from loguru import logger
+from typing import Union, Tuple
+import re
+
 
 class GenericHelper:
-
     @staticmethod
     def terminate(process):
         parent = psutil.Process(process.pid)
@@ -39,6 +41,22 @@ class GenericHelper:
             pass
         return data
 
+    @staticmethod
+    def match_string(pattern: str, data: list) -> Tuple[bool, Union[Tuple[str], None]]:
+        """
+        match_string("(.+)\s+device\s+$", data)
+        """
+        for string in data:
+            if type(string) == bytes:
+                string = string.decode()
+            match = re.search(pattern, string)
+            if match:
+                match_data = match.groups()
+                print("Regex matches: ", match_data)
+                return True, match_data
+        print("Not matched raw string:", string)
+        return False, None
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     data = GenericHelper.prompt_command("dir")
