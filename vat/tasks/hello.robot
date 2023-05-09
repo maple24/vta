@@ -1,6 +1,5 @@
 *** Settings ***
-Library    ../library/putty_helper.py    WITH NAME    mPutty
-Variables    ../conf/base.py
+Resource    ../resources/base.resource
 
 *** Test Cases ***
 TC1

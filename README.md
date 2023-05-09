@@ -14,3 +14,4 @@ Robotic Process Automation Framework<b>(RPAF)</b><br>
 - ⚡️An extremely fast Python linter [Ruff](https://beta.ruff.rs/docs/)
 - 📤RQM API
 - 📧Mail with smpt server
+- 🤖Run test cases with [Robot Framework](https://robotframework.org/)
