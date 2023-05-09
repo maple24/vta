@@ -5,5 +5,5 @@ Resource    ../resources/base.resource
 TC1
     [Documentation]    ...
 
-    Log To Console    helloworld
+    base.HelloWorld
     mPutty.Connect    ${dputty}

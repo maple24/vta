@@ -20,21 +20,21 @@ logger.add(
 )
 
 
-class putty_helper:
+class PuttyHelper:
     def __init__(self):
         self.putty_object = None
         self.matchTrace_queue: queue.Queue[tuple[float, str]] = queue.Queue()
         self.monitorTrace_queue: queue.Queue[tuple[float, str]] = queue.Queue()
-        self.event_putty_wait4trace = threading.Event()
-        self.event_putty_monitor = threading.Event()
-        self.event_putty_running = threading.Event()
+        self.event_wait4trace = threading.Event()
+        self.event_monitor = threading.Event()
+        self.event_reader = threading.Event()
 
-    def __read(self) -> None:
+    def __serial_reader(self) -> None:
         """
         Description: Continuously read data from buffer
         """
         while True:
-            if not self.event_putty_running.isSet():
+            if not self.event_reader.isSet():
                 logger.warning("Serial event is cancelled!")
                 break
 
@@ -42,9 +42,9 @@ class putty_helper:
             if line:
                 logger.trace("[{stream}] - {message}", stream="PuttyRx", message=line)
                 now_tick = time.time()
-                if self.event_putty_monitor.isSet():
+                if self.event_monitor.isSet():
                     self.monitorTrace_queue.put((now_tick, line))
-                if self.event_putty_wait4trace.isSet():
+                if self.event_wait4trace.isSet():
                     self.matchTrace_queue.put((now_tick, line))
 
     def __isLoginedin(self) -> bool:
@@ -75,7 +75,7 @@ class putty_helper:
         baudrate = int(dPutty.get("putty_baudrate", 115200))
         self.username = dPutty.get("putty_username", "root")
         self.password = dPutty.get("putty_password")
-        self.event_putty_running.set()
+        self.event_reader.set()
         try:
             self.putty_object = serial.Serial(
                 port=comport, baudrate=baudrate, timeout=3.0
@@ -83,7 +83,7 @@ class putty_helper:
         except:
             logger.exception("Failed to open serial port!")
             exit(1)
-        t = threading.Thread(target=self.__read)
+        t = threading.Thread(target=self.__serial_reader)
         t.setDaemon(True)
         t.start()
 
@@ -91,7 +91,7 @@ class putty_helper:
         """
         Description: De-Init the putty serial interface
         """
-        self.event_putty_running.clear()
+        self.event_reader.clear()
         self.putty_object.close()
         logger.info("Close serial connection!")
 
@@ -115,7 +115,7 @@ class putty_helper:
         """
         Description: Trigger the command and wait for expected trace pattern w/ defined timeout
         """
-        self.event_putty_wait4trace.set()
+        self.event_wait4trace.set()
         ts = time.time()
         self.send_command(cmd)
 
@@ -139,7 +139,7 @@ class putty_helper:
         logger.info(
             f"OK! Found matched - {matched}, elapsed time is {round(time_tick - ts, 2)}s"
         )
-        self.event_putty_wait4trace.clear()
+        self.event_wait4trace.clear()
         self.matchTrace_queue.queue.clear()
         return True, matched
 
@@ -171,14 +171,14 @@ class putty_helper:
         Description: Enable the trace monitor, each trace line will be pushed to this container
         """
         self.monitorTrace_queue.queue.clear()
-        self.event_putty_monitor.set()
+        self.event_monitor.set()
         logger.info("PuTTY monitor enabled")
 
     def disable_monitor(self) -> None:
         """
         Description: Disable the trace monitor, each trace line will be pushed to this container
         """
-        self.event_putty_monitor.clear()
+        self.event_monitor.clear()
         logger.info("PuTTY monitor disabled")
 
     def get_trace_container(self) -> list:
@@ -194,7 +194,7 @@ if __name__ == "__main__":
     """
     Result:\\s(.*) bosch_swdl -b normal
     """
-    mputty = putty_helper()
+    mputty = PuttyHelper()
     dputty = {
         "putty_enabled": True,
         "putty_comport": "COM15",

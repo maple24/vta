@@ -1,8 +1,9 @@
-from library.putty_helper import putty_helper
+from library.PuttyHelper import PuttyHelper
+from library.GenericHelper import GenericHelper
 from loguru import logger
 
 
-def startup(mputty: putty_helper, n: int = 3):
+def startup(mputty: PuttyHelper, n: int = 3):
     mputty.login()
     for i in range(n):
         res, _ = mputty.wait_for_trace("", cmd="bosch_reset", timeout=20)
@@ -11,7 +12,7 @@ def startup(mputty: putty_helper, n: int = 3):
 
 
 if __name__ == "__main__":
-    mputty = putty_helper()
+    # mputty = putty_helper()
     dputty = {
         "putty_enabled": True,
         "putty_comport": "COM9",
@@ -19,6 +20,7 @@ if __name__ == "__main__":
         "putty_username": "root",
         "putty_password": "6679836772",
     }
-    mputty.connect(dputty)
-    startup(mputty)
-    mputty.disconnect()
+    # mputty.connect(dputty)
+    # startup(mputty)
+    # mputty.disconnect()
+    GenericHelper.prompt_command("dir")
