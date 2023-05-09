@@ -8,7 +8,7 @@ import re
 
 class GenericHelper:
     @staticmethod
-    def terminate(process):
+    def terminate(process: subprocess.Popen) -> None:
         parent = psutil.Process(process.pid)
         for child in parent.children(recursive=True):
             child.kill()
