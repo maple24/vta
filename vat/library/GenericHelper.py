@@ -1,7 +1,10 @@
 import time
 import psutil
 import subprocess
-from loguru import logger
+try:
+    from LogHelper import logger
+except:
+    from loguru import logger
 from typing import Union, Tuple
 import re
 

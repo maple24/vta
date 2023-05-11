@@ -1,9 +1,12 @@
 *** Settings ***
-Resource    ../resources/base.resource
+Resource    ../resources/powercycle.resource
+
+Test Setup    setups.INIT
+Test Teardown    setups.DEINIT
 
 *** Test Cases ***
 TC1
     [Documentation]    ...
-
-    base.HelloWorld
-    mPutty.Connect    ${dputty}
+    [Tags]    example
+    generic.HelloWorld
+    powercycle.CheckPowerCycle

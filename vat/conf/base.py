@@ -1,6 +1,21 @@
 """
 bench setups
 """
+from loguru import logger
+import os
+import time
+ROOT = "\\".join(os.path.abspath(__file__).split("\\")[:-3])
+SLOT = 1
+
+logger.add(
+    f"{ROOT}\\log\\log_{time.strftime('%m%d%Y_%H%M%S')}_SLOT{SLOT}.log",
+    backtrace=True,
+    diagnose=False,
+    format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
+    rotation="1 week",
+    level="TRACE",
+)
+
 # putty channel
 dputty = {
     "putty_enabled": True,

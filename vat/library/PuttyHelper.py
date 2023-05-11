@@ -1,24 +1,13 @@
-import os
 import re
 from typing import Union, Tuple
 import serial
 import time
 import threading
 import queue
-from loguru import logger
-import sys
-
-logger.remove()
-logger.add(sys.stdout, level="INFO")
-logger.add(
-    os.path.abspath("log\\log.log"),
-    backtrace=True,
-    diagnose=False,
-    format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
-    rotation="1 week",
-    level="TRACE",
-)
-
+try:
+    from LogHelper import logger
+except:
+    from loguru import logger
 
 class PuttyHelper:
     def __init__(self):
@@ -115,6 +104,7 @@ class PuttyHelper:
         """
         Description: Trigger the command and wait for expected trace pattern w/ defined timeout
         """
+        self.login()
         self.event_wait4trace.set()
         ts = time.time()
         self.send_command(cmd)

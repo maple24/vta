@@ -10,7 +10,7 @@ class AgentHelper:
         self.port = 6666
         self.timeout = 20
         self.sock_client = None
-
+        
     def __send_and_wait_for_response(self, msg, timeout=-1, need_response=True):
         """
         Description: Send the command the AgentManger Server and wait for response w/i timeout defined
@@ -354,52 +354,3 @@ class AgentHelper:
         )
         return nReturnCode
 
-
-if __name__ == '__main__':
-    o = AgentHelper()
-#     o.req_to_run_video_analyzer(
-#         unit=1,
-#         path=r"C:\RobotTest\workspace\agentmanager\Temp\movie_1.avi",    # print(len(m_result.flatten()), m_result.flatten())
-#         profiles="User_Word_0,User_Word_1,User_Word_2",
-#         exp_rng="30,80",
-#         exp_criteria={'1': {'rep': 10, 'timeout': -1},
-#                       '2': {'rep': 10, 'timeout': -1},
-#                       '3': {'rep': 10, 'timeout': -1}},
-#         debug='True',
-#         timeout=60
-#     )
-# o.req_to_start_tmp_video(1, True)
-# o.req_to_set_chime(1, 'FCA_IMMINENT_ALRT', 5)
-# o.req_to_set_can_sig(1, 'PDU_5026', 'FrwdCllsnAlrtImAlrtDrIntAlrtChmEvtSt', 0)
-# o.req_to_get_can_sig(1, 'PDU_5026', 'FrwdCllsnAlrtImAlrtDrIntAlrtChmEvtSt')
-# o.req_to_open_canoe_application(1)
-# o.req_to_start_simu(1)
-# o.req_to_stop_simu(1)
-# o.req_to_set_can_key(1, 'GWM_WakeUp')
-# o.req_to_set_can_key(1, 'GWM_Ignition_On')
-# o.req_to_get_can_key(1, "GWM_WakeUp")
-# o.req_to_load_vision_cfg(1, "gwm.cfg")
-# o.req_to_playback_curve(1, "Datenbank_Handle_3.wav", 1, 10.0)
-# o.req_to_record_audio(1, 1, 5.0)
-# o.req_to_test_audio(1, 0)
-# o.req_to_add_video_text(1, "StepCheckSocVersion_Result_1")
-# o.req_to_start_camera(1)
-# o.req_to_stop_camera(1)
-# o.req_to_start_video(1)
-# o.req_to_stop_video(1)
-# o.req_to_test_profile(1, "Android_Home", ntimeout=30.0)
-# o.req_to_snap(1)
-# o.req_to_test_profile(1, "Cluster_Home_V71")
-# o.req_to_test_profile(1, "CP_Home")
-# o.req_to_set_relay(1, 'cleware', 1, 1)
-# o.req_to_set_relay(1, 'xinke', 9, 0)
-# o.req_to_set_relay(1,'mcube',3)
-# o.req_to_set_relay(1,'multiplexer', 'f0')
-# o.req_to_set_voltage(1, 1, 12)
-# o.req_to_set_camera_params(1,0,-5,55)
-# o.req_to_get_voltage(1, 1)
-# o.req_to_get_voltage(1, 2)
-# o.req_to_get_current(1, 1)
-# o.req_to_get_current(1, 2)
-# print("===== TEST FINISHED ======")
-# o.req_to_test_profiles([{"index":1, "profile":"System_Boot_Time_To_IVI_Animation_First_Frame", "timeout":15}, {"index":1, "profile":"System_Boot_Time_To_IVI_Complete", "timeout":15}])
