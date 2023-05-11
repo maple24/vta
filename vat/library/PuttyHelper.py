@@ -4,10 +4,12 @@ import serial
 import time
 import threading
 import queue
+
 try:
     from LogHelper import logger
 except:
     from loguru import logger
+
 
 class PuttyHelper:
     def __init__(self):

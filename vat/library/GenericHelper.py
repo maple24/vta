@@ -1,12 +1,13 @@
 import time
 import psutil
 import subprocess
+from typing import Union, Tuple
+import re
+
 try:
     from LogHelper import logger
 except:
     from loguru import logger
-from typing import Union, Tuple
-import re
 
 
 class GenericHelper:
