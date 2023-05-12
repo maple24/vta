@@ -1,7 +1,4 @@
-try:
-    from LogHelper import logger
-except:
-    from loguru import logger
+from loguru import logger
 
 
 class DBHelper:

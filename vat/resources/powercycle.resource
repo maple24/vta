@@ -1,7 +1,6 @@
 *** Settings ***
 Library    ../api/AgentHelper.py    WITH NAME    magent
 Resource    generic.resource
-Variables    ../conf/powercycle.py
 
 *** Keywords ***
 CheckPowerCycle
@@ -11,6 +10,7 @@ CheckPowerCycle
 
 CheckDisplay
     [Documentation]    Check profile display using webcam
-    
-    ${RES}    magent.Req To Test Profile    index=${1}    prof_name=Android_Home
+    [Arguments]    ${index}    ${profile}
+
+    ${RES}    magent.Req To Test Profile    index=${index}    prof_name=${profile}
     Should Be Equal    ${RES}    ${0}    Profile does not match!

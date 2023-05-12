@@ -10,7 +10,7 @@ class AgentHelper:
         self.port = 6666
         self.timeout = 20
         self.sock_client = None
-        
+
     def __send_and_wait_for_response(self, msg, timeout=-1, need_response=True):
         """
         Description: Send the command the AgentManger Server and wait for response w/i timeout defined
@@ -353,4 +353,3 @@ class AgentHelper:
             repr(d), timeout=timeout
         )
         return nReturnCode
-

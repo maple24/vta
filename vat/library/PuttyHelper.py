@@ -4,11 +4,7 @@ import serial
 import time
 import threading
 import queue
-
-try:
-    from LogHelper import logger
-except:
-    from loguru import logger
+from loguru import logger
 
 
 class PuttyHelper:
@@ -83,8 +79,9 @@ class PuttyHelper:
         Description: De-Init the putty serial interface
         """
         self.event_reader.clear()
-        self.putty_object.close()
-        logger.info("Close serial connection!")
+        if self.putty_object:
+            self.putty_object.close()
+            logger.info("Close serial connection!")
 
     def send_command(self, cmd: str) -> None:
         """

@@ -1,12 +1,20 @@
 *** Settings ***
 Resource    ../resources/powercycle.resource
+Variables    ../conf/bench_setup.py
 
-Test Setup    setups.INIT
+Test Setup    setups.INIT    ${${SLOT}}
 Test Teardown    setups.DEINIT
+
+*** Variables ***
+# default slot
+${SLOT}    SLOT_2
 
 *** Test Cases ***
 TC1
     [Documentation]    ...
     [Tags]    example
     generic.HelloWorld
-    powercycle.CheckPowerCycle
+    # Log To Console    ${${SLOT}}[dputty]
+    # Should Be Equal    1    2
+    # Log To Console    ${SLOT}[dputty]
+    # powercycle.CheckPowerCycle
