@@ -55,5 +55,8 @@ if __name__ == '__main__':
     
     try:
         rebot_cli(['--name', f'{REPORTNAME}', '--outputdir', f'{LOGPATH}\\report', f'{LOGPATH}\\*.xml'])
+    except SystemExit:
+        # normal exit by rebot cli
+        pass
     except:
         logger.exception("Unable to combine outputs!!!")

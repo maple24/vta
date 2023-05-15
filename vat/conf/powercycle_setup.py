@@ -1,94 +1,40 @@
-SLOT1 = {
-    "max_test_iterations": 2000,
-    "keywords_hook": ["GwmStepCheckRamdump",
-                        "GwmStepCheckProcesses",
-                        "GwmStepCheckDisplays"
-    ],
-    
-    "keywords_seq": [
-        "GwmStepPowerCycle",
-        "GwmStepCheckSocVersion",
-        "GwmStepCheckRamdump",
-        "GwmStepCheckStartupCrash",
-        "GwmStepCheckResetTrace",
-        "GwmStepCheckProcesses",
-        "GwmStepCheckLogdataStatus",
-        "GwmStepCheckDisplays"
-    ],
+SLOT_1_POWERCYCLE = {
+    "keywords_hook": ["StepTest", "StepCheckRamdump", "StepCheckProcesses", "StepCheckDisplays"],
     "steps": {
-        "GwmStepPowerCycle": {
-            "state": "True",
-            "arguments": {
+        "StepTest": {"enabled": True, "args": {"name": "maple"}},
+        "StepPowerCycle": {
+            "enabled": True,
+            "args": {
                 "scenario": "network",
-
-                "current_thres": 0.1,
                 "off_wait": 10,
                 "on_wait": 60,
                 "sleep_check": "trace",
-
-                "sleeptimeout": 180
-            }
+                "sleeptimeout": 180,
+            },
         },
-        "GwmStepCheckSocVersion": {
-            "state": "True",
-            "arguments": {
-                "target_ver": "BUX2201.107.userdebug"
-            }
+        "StepCheckResetTrace": {"enabled": False, "args": {}},
+        "StepCheckRamdump": {"enabled": False, "args": {}},
+        "StepCheckCrash": {
+            "enabled": False,
+            "args": {"ex_filters": [], "stop_filters": ["audio_service.core"]},
         },
-        "GwmStepCheckResetTrace": {
-            "state": "True",
-            "arguments": {
-                
-            }
-        },
-        "GwmStepCheckRamdump": {
-            "state": "True",
-            "arguments": {
-                
-            }
-        },
-        "GwmStepCheckStartupCrash": {
-            "state": "True",
-            "arguments": {
-                "ex_filters": [
-                
-                ],
-                "stop_filters": [
-                    "audio_service.core"
-                ]
-            }
-        },
-        "GwmStepCheckProcesses":{
-        "state":"True",
-        "arguments":{
-            "qvm":"tmp/linux-la.config"
-            }
-        },
-        "GwmStepCheckLogdataStatus":{
-        "state":"True",
-        "arguments": {
-        
-            }
-        },
-        "GwmStepCheckDisplays": {
-            "state": "True",
-            "arguments": {
+        "StepCheckProcesses": {"enabled": False, "args": {"qvm": "tmp/linux-la.config"}},
+        "StepCheckLogdataStatus": {"enabled": False, "args": {}},
+        "StepCheckDisplays": {
+            "enabled": True,
+            "args": {
                 "android_display": {
-                    "enabled": "True",
+                    "enabledd": True,
                     "index": 1,
-                    "profile": "Beantech_Home"
+                    "profile": "Beantech_Home",
                 },
                 "cluster_display": {
-                    "enabled": "False",
+                    "enabledd": False,
                     "index": 1,
-                    "profile": "Cluster_Home_v71"
+                    "profile": "Cluster_Home_v71",
                 },
-                "cp_display": {
-                    "enabled": "False",
-                    "index": 1,
-                    "profile": "CP_Home"
-                }
-            }
-        }
-    }
+                "cp_display": {"enabledd": False, "index": 1, "profile": "CP_Home"},
+            },
+        },
+    },
 }

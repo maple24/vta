@@ -10,8 +10,10 @@ INIT
     [Arguments]    ${SLOT}
 
     mputty.Connect    dPutty=${SLOT}[dputty]
+    mputty.Enable Monitor
 
 
 DEINIT
     [Documentation]    Deinit all instances
     mputty.Disconnect
+    mputty.Disable Monitor
