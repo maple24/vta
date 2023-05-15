@@ -97,6 +97,7 @@ for i in range(MAXLOOP):
     rc = run_cli(common + variable + ["--exclude", "skip", f"{TASKPATH}"], exit=False)
     if rc != 0:
         logger.warning(f"Test terminated due to exitcode {rc}!")
+        break
     count += 1
 
 try:

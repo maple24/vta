@@ -5,8 +5,9 @@ import time
 import threading
 import queue
 from loguru import logger
+from utils.decorators import Singleton
 
-
+@Singleton
 class PuttyHelper:
     def __init__(self):
         self.putty_object = None
@@ -38,11 +39,11 @@ class PuttyHelper:
         """
         Description: press enter to check if the serial locked
         """
-        res, _ = self.wait_for_trace("Incorrect", "\n", 3)
+        res, _ = self.wait_for_trace("Incorrect", "\n", 3, False)
         if res:
             logger.error("Login error! Please restart!")
             return False
-        res, _ = self.wait_for_trace("(login:.*)", "\n", 3)
+        res, _ = self.wait_for_trace("(login:.*)", "\n", 3, False)
         if res:
             logger.info("Serial console is locked, need login in")
             return False
@@ -98,12 +99,13 @@ class PuttyHelper:
         logger.info("[{stream}] - {message}", stream="PuttyTx", message=cmd)
 
     def wait_for_trace(
-        self, pattern: str, cmd: str = "", timeout: float = 5.0
+        self, pattern: str, cmd: str = "", timeout: float = 5.0, login: bool = True
     ) -> Tuple[bool, Union[Tuple[str], None]]:
         """
         Description: Trigger the command and wait for expected trace pattern w/ defined timeout
         """
-        self.login()
+        if login:
+            self.login()
         self.event_wait4trace.set()
         ts = time.time()
         self.send_command(cmd)
@@ -145,11 +147,11 @@ class PuttyHelper:
             retry += 1
             logger.info(f"Trying to login putty console Nr.{retry} ...")
             res, _ = self.wait_for_trace(
-                "(Password:.*)|(Logging in with home .*)", self.username, 5
+                "(Password:.*)|(Logging in with home .*)", self.username, 5, False
             )
             if not res:
                 continue
-            res, _ = self.wait_for_trace("(Logging in with home .*)", self.password, 5)
+            res, _ = self.wait_for_trace("(Logging in with home .*)", self.password, 5, False)
             if res:
                 logger.info("Success to login")
                 return

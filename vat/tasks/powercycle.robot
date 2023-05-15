@@ -18,21 +18,21 @@ ${STEPS}    ${${SLOT}_POWERCYCLE}[steps]
 
 *** Test Cases ***
 StepTest
-    [Tags]
+    [Tags]    skip
     [Template]    powercycle.Test
     ${STEPS}[${TEST_NAME}][name]
 
 StepCheckPowerCycle
-    [Tags]    skip
+    [Tags]
     [Template]    powercycle.CheckPowerCycle
     ${STEPS}[${TEST_NAME}][type]
     
 StepCheckDisplays
-    [Tags]    skip
+    [Tags]
     [Template]    powercycle.CheckDisplay
     ${STEPS}[${TEST_NAME}][displays]
 
 StepCheckCrash
-    [Tags]    skip
+    [Tags]
     [Template]    powercycle.CheckCrash
     ${STEPS}[${TEST_NAME}][type]

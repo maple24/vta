@@ -16,8 +16,8 @@ SLOT_1_POWERCYCLE = {
             "displays": [
                 {"index": 1, "profile": "Android_Home"},
                 {"index": 0, "profile": "Beantech_Home"},
-                {"index": 0, "profile": "Cluster"}
-            ]
+                {"index": 0, "profile": "Cluster"},
+            ],
         },
     }
 }
