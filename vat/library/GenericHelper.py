@@ -7,6 +7,9 @@ from loguru import logger
 
 
 class GenericHelper:
+    
+    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
+
     @staticmethod
     def terminate(process: subprocess.Popen) -> None:
         parent = psutil.Process(process.pid)

@@ -5,10 +5,12 @@ import time
 import threading
 import queue
 from loguru import logger
-from utils.decorators import Singleton
 
-@Singleton
+
 class PuttyHelper:
+    
+    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
+    
     def __init__(self):
         self.putty_object = None
         self.matchTrace_queue: queue.Queue[tuple[float, str]] = queue.Queue()
@@ -26,7 +28,7 @@ class PuttyHelper:
                 logger.warning("Serial event is cancelled!")
                 break
 
-            line = self.putty_object.readline().decode().strip()
+            line = self.putty_object.readline().decode('utf-8', 'ignore').strip()
             if line:
                 logger.trace("[{stream}] - {message}", stream="PuttyRx", message=line)
                 now_tick = time.time()
@@ -151,9 +153,11 @@ class PuttyHelper:
             )
             if not res:
                 continue
-            res, _ = self.wait_for_trace("(Logging in with home .*)", self.password, 5, False)
+            res, _ = self.wait_for_trace(
+                "(Logging in with home .*)", self.password, 5, False
+            )
             if res:
-                logger.info("Success to login")
+                logger.success("Success to login")
                 return
         logger.error("Fail to login!")
 

@@ -3,6 +3,9 @@ from loguru import logger
 
 
 class RelayHelper:
+    
+    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
+    
     def __init__(self):
         self.dev_enabled = None
         self.cleware_batch = None
@@ -15,12 +18,12 @@ class RelayHelper:
     def init_relay(self, d_relay):
         self.dev_enabled = d_relay["relay_enabled"]
         device_count = 0
-        if self.dev_enabled != "True":
+        if not self.dev_enabled:
             logger.warning("[Relay] Not relay enabled this execution !")
             return
 
         if "xinke" in d_relay.keys():
-            if d_relay["xinke"]["enabled"] == "True":
+            if not d_relay["xinke"]["enabled"]:
                 device_count += 1
                 self.xinke_comport = d_relay["xinke"]["comport"].upper()
                 logger.info("[Relay.Xinke] Xinke controller initialized")
@@ -28,7 +31,7 @@ class RelayHelper:
                 logger.info("xinke not enabled,skip")
 
         if "multiplexer" in d_relay.keys():
-            if d_relay["multiplexer"]["enabled"] == "True":
+            if not d_relay["multiplexer"]["enabled"]:
                 device_count += 1
                 self.multiplexer_comport = d_relay["multiplexer"]["comport"].upper()
                 logger.info("[Relay.Multiplexer] Multiplexer controller initialized")
@@ -195,11 +198,11 @@ class RelayHelper:
 if __name__ == "__main__":
     obj_relay = RelayHelper()
     d_relay = {
-        "relay_enabled": "True",
-        "multiplexer": {"enabled": "False", "comport": "COM13"},
-        "cleware": {"enabled": "False", "dev_id": "710452"},
-        "xinke": {"enabled": "False", "comport": "COM10"},
-        "mcube": {"enabled": "True", "comport": "COM15", "run_mode": "2*4"},
+        "relay_enabled": True,
+        "multiplexer": {"enabled": False, "comport": "COM13"},
+        "cleware": {"enabled": False, "dev_id": "710452"},
+        "xinke": {"enabled": False, "comport": "COM10"},
+        "mcube": {"enabled": True, "comport": "COM15", "run_mode": "2*4"},
     }
     obj_relay.init_relay(d_relay)
     obj_relay.set_relay_port(dev_type="mcube", port_index="1")

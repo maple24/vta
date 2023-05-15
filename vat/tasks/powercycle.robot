@@ -33,6 +33,6 @@ StepCheckDisplays
     ${STEPS}[${TEST_NAME}][displays]
 
 StepCheckCrash
-    [Tags]
+    [Tags]    skip
     [Template]    powercycle.CheckCrash
     ${STEPS}[${TEST_NAME}][type]

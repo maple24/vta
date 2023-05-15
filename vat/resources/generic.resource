@@ -7,7 +7,7 @@ Library    ../library/DBHelper.py
 HelloWorld
     [Documentation]    helloworld
     Log To Console    helloworld
-
+    
 GetSOCVersion
     [Documentation]    Get SOC version with putty command 'cat buildinfo.txt'
     
