@@ -14,6 +14,7 @@ Robotic Process Automation Framework<b>(RPAF)</b><br>
 - 📤RQM API
 - 📧Mail with smpt server
 - 🤖Run test cases with [Robot Framework](https://robotframework.org/)
+- 🤝Interacting database with [SQLModel](https://sqlmodel.tiangolo.com/)
 
 ## Movitation
 1. Run functional test with RF, which has sudo-code like sytax and can generate beautiful report automatically.
