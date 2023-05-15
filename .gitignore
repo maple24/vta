@@ -164,3 +164,6 @@ log.html
 output.xml
 report.html
 log/
+
+# project config
+!vat/conf/template_*
