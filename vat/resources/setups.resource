@@ -17,3 +17,7 @@ DEINIT
     [Documentation]    Deinit all instances
     mputty.Disconnect
     mputty.Disable Monitor
+
+UploadData
+    [Documentation]    Update test result to database
+    mdb.Test    msg

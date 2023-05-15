@@ -5,27 +5,42 @@ Resource    generic.resource
 *** Keywords ***
 Test
     [Documentation]    ...
-    [Arguments]    ${args}    ${enabled}=${True}
-    Log To Console    ${args}
-    
+    [Arguments]    ${name}
+    Log To Console    ${name}
+    Should Be Equal    123    1    force failure
 
 CheckPowerCycle
-    [Documentation]    Execute powercycle and check trace
+    [Documentation]    Execute powercycle and check trace, agrs: str
     [Arguments]    ${type}
-    Run Keyword If    ${type}==command    generic.PowerCyclebyCMD
-    Run Keyword If    ${type}==network    generic.PowerCyclebyCAN
+    Run Keyword If    ${type}==command    generic.ResetbyCMD
+    Run Keyword If    ${type}==network    generic.ResetbyCAN
 
 CheckDisplay
-    [Documentation]    Check profile display using webcam
-    [Arguments]    ${index}    ${profile}
-    ${RES}    magent.Req To Test Profile    index=${index}    prof_name=${profile}
-    Should Be Equal    ${RES}    ${0}    Profile does not match!
+    [Documentation]    Check profile display using webcam, args: list
+    [Arguments]    ${dispalys}
+    FOR    ${element}    IN    @{dispalys}
+        ${RES}    Run Keyword And Return If    ${element}[index]!=${0}    magent.Req To Test Profile    ${element}[index]   ${element}[profile]
+        Should Be Equal    ${RES}    ${0}    Profile does not match!
+    END
 
 CheckCrash
     [Documentation]    Check if crash happens
     [Arguments]    ${dInputParameters}
     
-    @{aPuttyTraces}=    mPutty.Get Trace Container
-    ${bFoundSub}    ${aDetectedTraces}=    mgeneric.Match String    ${aPuttyTraces}    dumping to
+    @{traces}=    mPutty.Get Trace Container
+    ${RES}    ${matched}=    mgeneric.Match String    ${traces}    (dumping to)
 
-    [Return]    ${RESULT}
+
+CheckStartupTrace
+    [Documentation]    Check trace from putty trace container
+    @{traces}    mputty.Get Trace Container
+
+    ${RES}    ${matched}=    mgeneric.Match String    ${traces}    (Log Type: B)
+    Should Be Equal    ${RES}    ${True}    Startup trace not found!
+
+GwmStepCheckRamdump
+    [Documentation]    Inspect if ramdump trace pattern appeared in putty trace container
+
+    @{traces}=    mPutty.Get Trace Container
+    ${RES}    ${matched}=    mgeneric.Match String    ${traces}    (XBLRamDump Image Loaded)
+    Should Not Be Equal    ${RES}    ${True}    Ramdump occurs!

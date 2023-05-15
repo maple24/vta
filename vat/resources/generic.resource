@@ -22,11 +22,11 @@ GetSCCVersion
 
     [Return]    ${MATCHED}
 
-PowerCyclebyCMD
+ResetbyCMD
     [Documentation]    Run powercycle with putty command 'bosch_reset'
 
-    ${RES}    ${MATCHED}    mputty.Wait For Trace    pattern=(Kill...)    cmd=bosch_reset    timeout=50
+    ${RES}    ${MATCHED}    mputty.Wait For Trace    pattern=(LCM Unmount is done successfully)    cmd=bosch_reset    timeout=50
     Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
 
-PowerCyclebyCAN
+ResetbyCAN
     [Documentation]    Run powercycle with can signals

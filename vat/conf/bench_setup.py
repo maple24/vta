@@ -2,8 +2,11 @@
 bench setups
 """
 import os
+from loguru import logger
 
 ROOT = "\\".join(os.path.abspath(__file__).split("\\")[:-3])
+# ERROR_CONTAINER = []
+# logger.add(ERROR_CONTAINER.append, level='ERROR', format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}")
 
 SLOT_1 = {
     # putty channel

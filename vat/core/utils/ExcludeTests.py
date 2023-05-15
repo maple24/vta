@@ -12,7 +12,6 @@ from loguru import logger
 
 
 class ExcludeTests(SuiteVisitor):
-
     def __init__(self):
         # self.matcher = Matcher(pattern)
         pass
@@ -20,9 +19,9 @@ class ExcludeTests(SuiteVisitor):
     def start_suite(self, suite):
         """Remove tests that match the given pattern."""
         # suite.tests = [t for t in suite.tests if not self._is_excluded(t)]
-        conf = BuiltIn().get_variable_value('${STEPS}')
+        conf = BuiltIn().get_variable_value("${STEPS}")
         logger.info(conf)
-        
+
     # def _is_excluded(self, test):
     #     return self.matcher.match(test.name) or self.matcher.match(test.longname)
 
