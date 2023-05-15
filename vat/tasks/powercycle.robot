@@ -1,10 +1,13 @@
 *** Settings ***
 Resource    ../resources/powercycle.resource
+Resource    ../resources/setups.resource
+Library    Collections
 Variables    ../conf/bench_setup.py
 Variables    ../conf/powercycle_setup.py
-Library    Collections
 
-Suite Teardown    Log To Console    suite message ${MESSAGE_CONTAINER}
+Suite Setup    setups.INIT    ${${SLOT}}
+Suite Teardown    setups.DEINIT    ${MESSAGE_CONTAINER}
+
 Test Teardown    Append To List    ${MESSAGE_CONTAINER}    ${TEST_MESSAGE}
 
 *** Variables ***

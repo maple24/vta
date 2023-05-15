@@ -15,8 +15,11 @@ INIT
 
 DEINIT
     [Documentation]    Deinit all instances
+    [Arguments]    ${MESSAGE_CONTAINER}
     mputty.Disconnect
     mputty.Disable Monitor
+    UploadData
+
 
 UploadData
     [Documentation]    Update test result to database

@@ -1,5 +1,7 @@
 *** Settings ***
-Resource    setups.resource
+Library    ../library/PuttyHelper.py    WITH NAME    mputty
+Library    ../library/GenericHelper.py    WITH NAME    mgeneric
+Library    ../library/DBHelper.py    WITH NAME    mdb
 
 *** Keywords ***
 HelloWorld
