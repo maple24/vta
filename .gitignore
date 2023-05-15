@@ -166,4 +166,5 @@ report.html
 log/
 
 # project config
+vat/conf/
 !vat/conf/template_*
