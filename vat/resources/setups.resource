@@ -8,7 +8,6 @@ Library    ../library/DBHelper.py
 INIT
     [Documentation]    Init all instances
     [Arguments]    ${SLOT}
-
     PuttyHelper.Connect    dPutty=${SLOT}[dputty]
     PuttyHelper.Enable Monitor
 
@@ -23,4 +22,3 @@ DEINIT
 
 UploadData
     [Documentation]    Update test result to database
-    DBHelper.Test    msg

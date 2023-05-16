@@ -13,13 +13,13 @@ class PuttyHelper:
     
     def __init__(self):
         self.putty_object = None
-        self.matchTrace_queue: queue.Queue[tuple[float, str]] = queue.Queue()
+        self.waitTrace_queue: queue.Queue[tuple[float, str]] = queue.Queue()
         self.monitorTrace_queue: queue.Queue[tuple[float, str]] = queue.Queue()
-        self.event_wait4trace = threading.Event()
-        self.event_monitor = threading.Event()
+        self.event_waitTrace = threading.Event()
+        self.event_monitorTrace = threading.Event()
         self.event_reader = threading.Event()
 
-    def __serial_reader(self) -> None:
+    def _serial_reader(self) -> None:
         """
         Description: Continuously read data from buffer
         """
@@ -32,12 +32,12 @@ class PuttyHelper:
             if line:
                 logger.trace("[{stream}] - {message}", stream="PuttyRx", message=line)
                 now_tick = time.time()
-                if self.event_monitor.isSet():
+                if self.event_monitorTrace.isSet():
                     self.monitorTrace_queue.put((now_tick, line))
-                if self.event_wait4trace.isSet():
-                    self.matchTrace_queue.put((now_tick, line))
+                if self.event_waitTrace.isSet():
+                    self.waitTrace_queue.put((now_tick, line))
 
-    def __isLoginedin(self) -> bool:
+    def _isLoginedin(self) -> bool:
         """
         Description: press enter to check if the serial locked
         """
@@ -73,7 +73,7 @@ class PuttyHelper:
         except:
             logger.exception("Failed to open serial port!")
             exit(1)
-        t = threading.Thread(target=self.__serial_reader)
+        t = threading.Thread(target=self._serial_reader)
         t.setDaemon(True)
         t.start()
 
@@ -100,6 +100,19 @@ class PuttyHelper:
         self.putty_object.flushInput()
         logger.info("[{stream}] - {message}", stream="PuttyTx", message=cmd)
 
+    def send_command_and_return_traces(self, cmd: str, wait: float = 2.0) -> list:
+        """
+        Description: Send the command and return traces
+        """
+        self.login()
+        self.event_waitTrace.set()
+        self.send_command(cmd)
+        time.sleep(wait)
+        traces = [x[1] for x in self.waitTrace_queue.queue]
+        self.waitTrace_queue.queue.clear()
+        self.event_waitTrace.clear()
+        return traces
+
     def wait_for_trace(
         self, pattern: str, cmd: str = "", timeout: float = 5.0, login: bool = True
     ) -> Tuple[bool, Union[Tuple[str], None]]:
@@ -108,7 +121,7 @@ class PuttyHelper:
         """
         if login:
             self.login()
-        self.event_wait4trace.set()
+        self.event_waitTrace.set()
         ts = time.time()
         self.send_command(cmd)
 
@@ -119,11 +132,11 @@ class PuttyHelper:
                 )
                 return False, None
             try:
-                time_tick, trace = self.matchTrace_queue.get(block=False)
+                time_tick, trace = self.waitTrace_queue.get(block=False)
             except queue.Empty:
                 continue
             else:
-                self.matchTrace_queue.task_done()
+                self.waitTrace_queue.task_done()
             match = re.search(pattern, trace)
             if match:
                 break
@@ -132,15 +145,15 @@ class PuttyHelper:
         logger.info(
             f"OK! Found matched - {matched}, elapsed time is {round(time_tick - ts, 2)}s"
         )
-        self.event_wait4trace.clear()
-        self.matchTrace_queue.queue.clear()
+        self.event_waitTrace.clear()
+        self.waitTrace_queue.queue.clear()
         return True, matched
 
     def login(self) -> None:
         """
         Description: Login the putty console with user / password
         """
-        if self.__isLoginedin():
+        if self._isLoginedin():
             logger.info("Info: No need to login putty console")
             return
 
@@ -166,14 +179,14 @@ class PuttyHelper:
         Description: Enable the trace monitor, each trace line will be pushed to this container
         """
         self.monitorTrace_queue.queue.clear()
-        self.event_monitor.set()
+        self.event_monitorTrace.set()
         logger.info("PuTTY monitor enabled")
 
     def disable_monitor(self) -> None:
         """
         Description: Disable the trace monitor, each trace line will be pushed to this container
         """
-        self.event_monitor.clear()
+        self.event_monitorTrace.clear()
         logger.info("PuTTY monitor disabled")
 
     def get_trace_container(self) -> list:
@@ -181,8 +194,7 @@ class PuttyHelper:
         Description: get the monitorTrace_queue
         """
         logger.info("Get trace container")
-        traces = list(self.monitorTrace_queue.queue)
-        return traces
+        return [x[1] for x in self.monitorTrace_queue.queue]
 
 
 if __name__ == "__main__":

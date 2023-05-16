@@ -4,11 +4,21 @@ import subprocess
 from typing import Union, Tuple
 import re
 from loguru import logger
+import os
+import socket
 
 
 class GenericHelper:
     
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
+
+    @staticmethod
+    def get_hostname():
+        return socket.gethostname()
+
+    @staticmethod
+    def get_username():
+        return os.getlogin()
 
     @staticmethod
     def terminate(process: subprocess.Popen) -> None:
@@ -62,4 +72,4 @@ class GenericHelper:
 
 
 if __name__ == "__main__":
-    data = GenericHelper.prompt_command("dir")
+    print(GenericHelper.get_hostname())

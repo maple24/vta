@@ -168,3 +168,6 @@ log/
 # project config
 vat/conf/*
 !vat/conf/template_*
+
+# database
+database.db

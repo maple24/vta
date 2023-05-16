@@ -13,6 +13,7 @@ GetSOCVersion
     
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    attern=MAIN_VERSION\=(.*)    cmd=cat Buildinfo.txt    timeout=5
     Should Be Equal    ${RES}    ${True}    Unable to get SOC version
+    
     RETURN    ${MATCHED}
 
 GetSCCVersion
