@@ -13,16 +13,14 @@ GetSOCVersion
     
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    attern=MAIN_VERSION\=(.*)    cmd=cat Buildinfo.txt    timeout=5
     Should Be Equal    ${RES}    ${True}    Unable to get SOC version
-
-    [Return]    ${MATCHED}
+    RETURN    ${MATCHED}
 
 GetSCCVersion
     [Documentation]    Get SCC version with putty command 'swup_scc -i 1'
 
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=SCC FW Version Info: (.*)    cmd=swup_scc -i 1    timeout=5
     Should Be Equal    ${RES}    ${True}    Unable to get SCC version
-
-    [Return]    ${MATCHED}
+    RETURN    ${MATCHED}
 
 ResetbyCMD
     [Documentation]    Run powercycle with putty command 'bosch_reset'
