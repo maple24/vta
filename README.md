@@ -24,6 +24,7 @@ Robotic Process Automation Framework<b>(RPAF)</b><br>
 5. Hardwares are seperated from framework which can be called with APIs.
 6. Email and RQM APIs are well structured for efficient-first purpose.
 7. Use built-in modules, to keep it as light-weighted as possible.
+8. Remove database and data statistics from robot to let user focus on test only.
 
 ## Prerequisites
 - python >= 3.8

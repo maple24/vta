@@ -2,7 +2,7 @@ from loguru import logger
 from typing import Optional
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from sqlalchemy.engine import URL
-from utils.tables import Zeekr, Hero, BaseModel
+from tables import Zeekr, Hero, BaseModel
 
 
 class DBHelper:

@@ -1,7 +1,6 @@
 *** Settings ***
 Library    ../library/PuttyHelper.py
 Library    ../library/GenericHelper.py
-Library    ../library/DBHelper.py
 
 *** Keywords ***
 HelloWorld
