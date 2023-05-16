@@ -14,7 +14,7 @@ Robotic Process Automation Framework<b>(RPAF)</b><br>
 - 📤RQM API
 - 📧Mail with smpt server
 - 🤖Run test cases with [Robot Framework](https://robotframework.org/)
-- 🤝Interacting database with [SQLModel](https://sqlmodel.tiangolo.com/)
+- 🤝Interacting database with [SQLModel](https://sqlmodel.tiangolo.com/) [Engine](https://docs.sqlalchemy.org/en/20/core/engines.html#mysql)
 
 ## Movitation
 1. Run functional test with RF, which has sudo-code like sytax and can generate beautiful report automatically.
@@ -44,3 +44,6 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 4. run HelloWorld.bat and check logs in /log
+5. (optional) set your pythonpath for robotframework
+Go to the Robot Framework Language Server extension and go to extension settings
+In there you'll find: Robot > Language-server: Python
