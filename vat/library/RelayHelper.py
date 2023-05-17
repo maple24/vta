@@ -3,9 +3,8 @@ from loguru import logger
 
 
 class RelayHelper:
-    
-    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
-    
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
+
     def __init__(self):
         self.dev_enabled = None
         self.cleware_batch = None

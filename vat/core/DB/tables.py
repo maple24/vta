@@ -5,7 +5,7 @@ from sqlmodel import Field, SQLModel
 class BaseModel(SQLModel):
     @classmethod
     def new_item(cls, kwargs: dict):
-        return cls(**kwargs)    
+        return cls(**kwargs)
 
 
 class Zeekr(BaseModel, table=True):
@@ -28,16 +28,16 @@ class Hero(BaseModel, table=True):
     age: Optional[int] = None
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     case = {
-        "soc_version" : '123',
-        "cus_version": '123',
-        "tester": '123',
-        "bench_id": '123',
-        "test_type": '123',
-        "start_time": '123',
-        "end_time": '123',
-        "error_keyword": '123'
+        "soc_version": "123",
+        "cus_version": "123",
+        "tester": "123",
+        "bench_id": "123",
+        "test_type": "123",
+        "start_time": "123",
+        "end_time": "123",
+        "error_keyword": "123",
     }
     a = Zeekr.new_item(case)
     print(a.bench_id)

@@ -10,6 +10,7 @@ class Hero(SQLModel, table=True):
     secret_name: str
     age: Optional[int] = None
 
+
 sqlite_file_name = "database.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
 # Create the engine, we should use a single one shared by all the application code, and that's what we are doing here.
@@ -40,7 +41,7 @@ def select_heroes():
     with Session(engine) as session:
         statement = select(Hero).where(Hero.name == "Deadpond").where(Hero.age == 48)
         results = session.exec(statement)
-        heroes = results.all() # get a list of heroes
+        heroes = results.all()  # get a list of heroes
         for hero in heroes:
             print(hero)
 

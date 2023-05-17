@@ -8,6 +8,8 @@ ROOT = "\\".join(os.path.abspath(__file__).split("\\")[:-3])
 # ERROR_CONTAINER = []
 # logger.add(ERROR_CONTAINER.append, level='ERROR', format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}")
 
+DATABASE = False
+
 SLOT_1 = {
     # putty channel
     "dputty": {
@@ -31,7 +33,6 @@ SLOT_1 = {
         "multiplexer": {"enabled": "False", "comport": "COM6"},
         "cleware": {"enabled": "False", "dev_id": "710452"},
         "xinke": {"enabled": "False", "comport": "COM10"},
-        "mcube": {"enabled": "False", "comport": "COM16", "run_mode": "2*4"},
     },
 }
 
@@ -58,6 +59,5 @@ SLOT_2 = {
         "multiplexer": {"enabled": "False", "comport": "COM6"},
         "cleware": {"enabled": "False", "dev_id": "710452"},
         "xinke": {"enabled": "False", "comport": "COM10"},
-        "mcube": {"enabled": "False", "comport": "COM16", "run_mode": "2*4"},
     },
 }

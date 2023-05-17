@@ -8,9 +8,8 @@ from loguru import logger
 
 
 class PuttyHelper:
-    
-    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
-    
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
+
     def __init__(self):
         self.putty_object = None
         self.waitTrace_queue: queue.Queue[tuple[float, str]] = queue.Queue()
@@ -28,7 +27,7 @@ class PuttyHelper:
                 logger.warning("Serial event is cancelled!")
                 break
 
-            line = self.putty_object.readline().decode('utf-8', 'ignore').strip()
+            line = self.putty_object.readline().decode("utf-8", "ignore").strip()
             if line:
                 logger.trace("[{stream}] - {message}", stream="PuttyRx", message=line)
                 now_tick = time.time()

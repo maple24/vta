@@ -9,8 +9,7 @@ import socket
 
 
 class GenericHelper:
-    
-    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
     @staticmethod
     def get_hostname():
