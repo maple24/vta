@@ -1,6 +1,6 @@
 *** Settings ***
 Library    ../api/AgentHelper.py
-Library    ../../.venv/lib/site-packages/robot/libraries/Collections.py
+Library    Collections
 Resource    generic.resource
 Resource    setups.resource
 
@@ -25,7 +25,7 @@ CheckDisplay
 
     FOR    ${element}    IN    @{dispalys}
         ${RES}    Run Keyword If    ${element}[index]!=${0}    AgentHelper.Req To Test Profile    ${element}[index]   ${element}[profile]
-        Should Be Equal    ${RES}    ${0}    Profile does not match!
+        Run Keyword If    ${RES}!=${None}    Should Be Equal    ${RES}    ${0}    Profile does not match!
     END
 
 CheckCrash
