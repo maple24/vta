@@ -4,12 +4,17 @@ bench setups
 import os
 from loguru import logger
 
-ROOT = "\\".join(os.path.abspath(__file__).split("\\")[:-3])
-# ERROR_CONTAINER = []
-# logger.add(ERROR_CONTAINER.append, level='ERROR', format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}")
+ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 
-DATABASE = False
-
+DATABASE = True
+CREDENTIAL = {"drivername": "sqlite", "database": "database.db"}
+# CREDENTIAL = {
+#     "drivername": "mysql",
+#     "username": "root",
+#     "password": "Boschets123",
+#     "host": "10.178.227.22",
+#     "database": "gmw_v3.5"
+# }
 SLOT_1 = {
     # putty channel
     "dputty": {
@@ -31,7 +36,6 @@ SLOT_1 = {
     "drelay": {
         "relay_enabled": False,
         "multiplexer": {"enabled": "False", "comport": "COM6"},
-        "cleware": {"enabled": "False", "dev_id": "710452"},
         "xinke": {"enabled": "False", "comport": "COM10"},
     },
 }
@@ -57,7 +61,6 @@ SLOT_2 = {
     "drelay": {
         "relay_enabled": False,
         "multiplexer": {"enabled": "False", "comport": "COM6"},
-        "cleware": {"enabled": "False", "dev_id": "710452"},
         "xinke": {"enabled": "False", "comport": "COM10"},
     },
 }

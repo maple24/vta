@@ -10,7 +10,7 @@ HelloWorld
 GetSOCVersion
     [Documentation]    Get SOC version with putty command 'cat buildinfo.txt'
     
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    attern=MAIN_VERSION\=(.*)    cmd=cat Buildinfo.txt    timeout=5
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=MAIN_VERSION\=(.*)    cmd=cat Buildinfo.txt    timeout=5
     Should Be Equal    ${RES}    ${True}    Unable to get SOC version
     
     RETURN    ${MATCHED}
@@ -20,6 +20,7 @@ GetSCCVersion
 
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=SCC FW Version Info: (.*)    cmd=swup_scc -i 1    timeout=5
     Should Be Equal    ${RES}    ${True}    Unable to get SCC version
+    
     RETURN    ${MATCHED}
 
 ResetbyCMD

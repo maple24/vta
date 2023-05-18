@@ -6,7 +6,7 @@ description: (0_0)
 '''
 import os
 import sys
-sys.path.append("\\".join(os.path.abspath(__file__).split("\\")[:-3]))
+sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3]))
 import time
 from loguru import logger
 logger.add("simpleswup.log", rotation="1 week", mode="w")

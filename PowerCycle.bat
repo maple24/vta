@@ -12,5 +12,3 @@ set MAXLOOP=1
 
 :: run 
 %PYTHONPATH% %RUNNER% --task %TASK% --slot %SLOT% --max_loop %MAXLOOP%
-
-pause

@@ -20,7 +20,7 @@ parser.add_argument(
     "--name", default="Stability Test", type=str, help="name of combined test suite"
 )
 parser.add_argument(
-    "--listener", default="PyListener.py", type=str, help="listener file"
+    "--listener", default="StabilityListener.py", type=str, help="listener file"
 )
 parser.add_argument("--modifier", type=str, help="modifier file")
 args = parser.parse_args()
@@ -29,7 +29,7 @@ TASK = args.task  # required
 SLOT = args.slot  # default to be 1
 MAXLOOP = args.max_loop  # default to be 1
 REPORTNAME = args.name  # default to be `Stability Test`
-LISTENER = args.listener  # default to be `PyListener.py`
+LISTENER = args.listener  # default to be `StabilityListener.py`
 MODIFIER = args.modifier  # default to be None
 
 """
@@ -43,9 +43,9 @@ LOGPATH = os.path.join(
 )
 TASKPATH = os.path.join(ROOT, "vat", "tasks", TASK)
 if LISTENER:
-    LISTENERPATH = os.path.join(ROOT, "vat", "core", "utils", LISTENER)
+    LISTENERPATH = os.path.join(ROOT, "vat", "core", LISTENER)
 if MODIFIER:
-    MODIFIERPATH = os.path.join(ROOT, "vat", "core", "utils", MODIFIER)
+    MODIFIERPATH = os.path.join(ROOT, "vat", "core", MODIFIER)
 logger.remove()
 logger.add(sys.stdout, level="DEBUG")
 mylogger = logger.add(

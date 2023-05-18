@@ -118,6 +118,9 @@ class PuttyHelper:
         """
         Description: Trigger the command and wait for expected trace pattern w/ defined timeout
         """
+        if not self.putty_object:
+            logger.error("No serial object found!")
+            return
         if login:
             self.login()
         self.event_waitTrace.set()

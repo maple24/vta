@@ -1,15 +1,15 @@
 from loguru import logger
-from typing import Optional
-from sqlmodel import Field, Session, SQLModel, create_engine, select
+from sqlmodel import Session, SQLModel, create_engine, select
 from sqlalchemy.engine import URL
-from tables import Zeekr, Hero, BaseModel
+from datetime import datetime
+from .DBtables import BaseModel, Stability
 
 
 class DBHelper:
     def __init__(self) -> None:
         ...
 
-    def connect(self, table: BaseModel, credential: dict) -> None:
+    def connect(self, table: BaseModel, credential: dict, echo=False) -> None:
         """
         credential = {
             "drivername": "sqlite",
@@ -19,7 +19,7 @@ class DBHelper:
             "drivername": "mysql",
             "username": "root",
             "password": "Boschets123",
-            "host": "10.178.227.22:3306",
+            "host": "10.178.227.22",
             "database": "gmw_v3.5"
         }
         """
@@ -27,15 +27,15 @@ class DBHelper:
         url_object = URL.create(**credential)
         # Create the engine, we should use a single one shared by all the application code, and that's what we are doing here.
         # Echo prints out SQL syntax && details
-        self.engine = create_engine(url_object, echo=True)
-        logger.info(f"Open database session with engine {url_object}")
+        self.engine = create_engine(url_object, echo=echo)
         self.session = Session(self.engine)
+        logger.info(f"Open database session with engine {url_object}")
 
     def create_table(self) -> None:
         # Create all the tables for the models registered in SQLModel.metadata, which is Hero here. However it can be multiple.
         # This also creates the database if it doesn't exist already.
         SQLModel.metadata.create_all(self.engine)
-        logger.success("Create database and table")
+        # logger.success("Create database and table")
 
     def insert_row(self, data: dict) -> None:
         row = self.table.new_item(data)
@@ -63,7 +63,14 @@ class DBHelper:
 
 
 if __name__ == "__main__":
-    credential = {"drivername": "sqlite", "database": "database.db"}
+    # credential = {"drivername": "sqlite", "database": "database.db"}
+    credential = {
+        "drivername": "mysql",
+        "username": "root",
+        "password": "Boschets123",
+        "host": "10.178.227.22",
+        "database": "gmw_v3.5",
+    }
     mdb = DBHelper()
     # mdb.connect(Hero, credential)
     # print(mdb.select_all())
@@ -75,6 +82,29 @@ if __name__ == "__main__":
     # mdb.insert_row(data)
     # print(mdb.select_all())
     # mdb.disconnect()
+    row = {
+        "PROJECT_NAME": "test",
+        "TEST_TYPE": "test",
+        "TESTER": "test",
+        "BENCH_ID": "test",
+        "SUT_SW_VERSION": "test",
+        "SUT_HW_VERSION": "test",
+        "RBS_VERSION": "test",
+        "RQM_TS": "test",
+        "RQM_TSER": "test",
+        "TEST_CASE_ITERATION": "test",
+        "TEST_CASE": "test",
+        "START_TIME": datetime.now().replace(microsecond=0),
+        "FINISH_TIME": datetime.now().replace(microsecond=0),
+        "SPEND_TIME": "test",
+        "TEST_RESULT": "test",
+        "ERROR_KEYWORD": "test",
+        "BEANTECH_SW_VERSION": "test",
+        "TEST_CASE_DESCRIPTION": "test",
+        "USER_PARAM1": "test",
+        "USER_PARAM2": "test",
+        "BRANCH": "test",
+    }
     case = {
         "soc_version": "123",
         "cus_version": "123",
@@ -86,8 +116,8 @@ if __name__ == "__main__":
         "error_keyword": "123",
         "result": False,
     }
-    mdb.connect(Zeekr, credential)
+    mdb.connect(Stability, credential)
     # mdb.create_table()
-    mdb.select_all()
-    mdb.insert_row(case)
+    # mdb.select_all()
+    # mdb.insert_row(row)
     mdb.select_all()
