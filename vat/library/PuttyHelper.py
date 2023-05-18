@@ -24,7 +24,7 @@ class PuttyHelper:
         """
         while True:
             if not self.event_reader.isSet():
-                logger.warning("Serial event is cancelled!")
+                logger.warning("Serial reader event is cancelled!")
                 break
 
             line = self.putty_object.readline().decode("utf-8", "ignore").strip()
