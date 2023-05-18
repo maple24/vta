@@ -1,7 +1,7 @@
 SLOT_1_POWERCYCLE = {
     "steps": {
         "StepTest": {"enabled": True, "name": "maple"},
-        "StepCheckPowerCycle": {"enabled": True, "type": "network"},
+        "StepCheckPowerCycle": {"enabled": True, "type": "command"},
         "StepCheckStartupTrace": {"enabled": False},
         "StepCheckRamdump": {"enabled": False},
         "StepCheckCrash": {

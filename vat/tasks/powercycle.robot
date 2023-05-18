@@ -24,11 +24,6 @@ StepCheckPowerCycle
     [Tags]
     [Template]    powercycle.CheckPowerCycle
     ${STEPS}[${TEST_NAME}][type]
-    
-StepCheckDisplays
-    [Tags]
-    [Template]    powercycle.CheckDisplay
-    ${STEPS}[${TEST_NAME}][displays]
 
 StepCheckCrash
     [Tags]
@@ -42,3 +37,8 @@ StepCheckStartupTrace
 StepCheckRamdump
     [Tags]
     [Template]    powercycle.CheckRamdump
+
+StepCheckDisplays
+    [Tags]
+    [Template]    powercycle.CheckDisplay
+    ${STEPS}[${TEST_NAME}][displays]
