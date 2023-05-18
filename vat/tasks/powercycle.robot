@@ -29,12 +29,7 @@ StepCheckCrash
     [Tags]
     [Template]    powercycle.CheckCrash
     ${STEPS}[${TEST_NAME}][ex_filters]
-
-StepCheckDisplays
-    [Tags]
-    [Template]    powercycle.CheckDisplay
-    ${STEPS}[${TEST_NAME}][displays]
-
+    
 StepCheckNormalTrace
     [Tags]
     [Template]    powercycle.CheckNormalTrace
@@ -44,3 +39,8 @@ StepCheckErrorTrace
     [Tags]
     [Template]    powercycle.CheckErrorTrace
     ${STEPS}[${TEST_NAME}][patterns]
+
+StepCheckDisplays
+    [Tags]
+    [Template]    powercycle.CheckDisplay
+    ${STEPS}[${TEST_NAME}][displays]
