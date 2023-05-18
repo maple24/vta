@@ -33,4 +33,12 @@ StepCheckDisplays
 StepCheckCrash
     [Tags]
     [Template]    powercycle.CheckCrash
-    ${STEPS}[${TEST_NAME}][type]
+    ${STEPS}[${TEST_NAME}][ex_filters]
+
+StepCheckStartupTrace
+    [Tags]
+    [Template]    powercycle.CheckStartupTrace
+
+StepCheckRamdump
+    [Tags]
+    [Template]    powercycle.CheckRamdump

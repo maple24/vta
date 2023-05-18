@@ -28,6 +28,7 @@ ResetbyCMD
 
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Unmount is done successfully)    cmd=bosch_reset    timeout=50
     Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
+    Sleep    20s
 
 ResetbyCAN
     [Documentation]    Run powercycle with can signals
