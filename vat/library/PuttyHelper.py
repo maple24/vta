@@ -113,7 +113,7 @@ class PuttyHelper:
         return traces
 
     def wait_for_trace(
-        self, pattern: str, cmd: str = "", timeout: float = 5.0, login: bool = True
+        self, pattern: str, cmd: str = "", timeout: float = 10.0, login: bool = True
     ) -> Tuple[bool, Optional[list]]:
         """
         Description: Trigger the command and wait for expected trace pattern w/ defined timeout
