@@ -195,8 +195,11 @@ class PuttyHelper:
         """
         Description: get the monitorTrace_queue
         """
-        logger.info("Get trace container")
-        return [x[1] for x in self.monitorTrace_queue.queue]
+        if self.event_monitorTrace.isSet():
+            logger.info("Get trace container")
+            return [x[1] for x in self.monitorTrace_queue.queue]
+        else:
+            logger.warning("Please make sure trace monitor is enabled!")
 
 
 if __name__ == "__main__":
