@@ -25,10 +25,16 @@ CheckDisplay
 
 CheckCrash
     [Documentation]    Check if crash happens
-    [Arguments]    ${dInputParameters}
+    [Arguments]    ${ex_filters}
     
     @{traces}=    PuttyHelper.Get Trace Container
-    ${RES}    ${matched}=    GenericHelper.Match String    ${traces}    (dumping to)
+    ${RES}    @{matched}=    GenericHelper.Match String    ${traces}    dumping to (.*)
+    FOR    ${element}    IN    @{matched}
+        Log    ${element}
+        
+    END
+
+    Should Not Be Equal    ${RES}    ${True}    Detect crash ${matched}!
 
 
 CheckStartupTrace

@@ -1,7 +1,7 @@
 import time
 import psutil
 import subprocess
-from typing import Union, Tuple
+from typing import Tuple, Optional
 import re
 from loguru import logger
 import os
@@ -54,10 +54,11 @@ class GenericHelper:
         return data
 
     @staticmethod
-    def match_string(pattern: str, data: list) -> Tuple[bool, Union[Tuple[str], None]]:
+    def match_string(pattern: str, data: list) -> Tuple[bool, Optional[list]]:
         """
         match_string("(.+)\s+device\s+$", data)
         """
+        matched = []
         for string in data:
             if type(string) == bytes:
                 string = string.decode()
@@ -65,8 +66,10 @@ class GenericHelper:
             if match:
                 match_data = match.groups()
                 print("Regex matches: ", match_data)
-                return True, match_data
-        print("Not matched raw string:", string)
+                matched.append(match_data)
+        if matched:
+            return True, matched
+        print("Not matched raw string:", data)
         return False, None
 
 

@@ -1,5 +1,5 @@
 import re
-from typing import Union, Tuple
+from typing import Optional, Tuple
 import serial
 import time
 import threading
@@ -114,7 +114,7 @@ class PuttyHelper:
 
     def wait_for_trace(
         self, pattern: str, cmd: str = "", timeout: float = 5.0, login: bool = True
-    ) -> Tuple[bool, Union[Tuple[str], None]]:
+    ) -> Tuple[bool, Optional[list]]:
         """
         Description: Trigger the command and wait for expected trace pattern w/ defined timeout
         """

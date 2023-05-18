@@ -6,8 +6,7 @@ SLOT_1_POWERCYCLE = {
         "StepCheckRamdump": {"enabled": False},
         "StepCheckCrash": {
             "enabled": False,
-            "ex_filters": [],
-            "stop_filters": ["audio_service.core"],
+            "ex_filters": ["audio_service.core"],
         },
         "StepCheckProcesses": {"enabled": False, "qvm": "tmp/linux-la.config"},
         "StepCheckLogdataStatus": {"enabled": False},
