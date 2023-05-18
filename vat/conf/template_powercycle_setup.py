@@ -2,8 +2,13 @@ SLOT_1_POWERCYCLE = {
     "steps": {
         "StepTest": {"enabled": True, "name": "maple"},
         "StepCheckPowerCycle": {"enabled": True, "type": "command"},
-        "StepCheckStartupTrace": {"enabled": False},
-        "StepCheckRamdump": {"enabled": False},
+        "StepCheckNormalTrace": {"enabled": False, "patterns": ["(Log Type: B)"]},
+        "StepCheckErrorTrace": {
+            "enabled": False,
+            "patterns": [
+                "(XBLRamDump Image Loaded)",
+            ],
+        },
         "StepCheckCrash": {
             "enabled": False,
             "ex_filters": ["audio_service.core"],
@@ -12,7 +17,7 @@ SLOT_1_POWERCYCLE = {
             "enabled": True,
             "displays": [
                 {"index": 1, "profile": "Android_Home"},
-                {"index": 0, "profile": "Beantech_Home"},
+                {"index": 0, "profile": "Beantech"},
                 {"index": 0, "profile": "Cluster"},
             ],
         },

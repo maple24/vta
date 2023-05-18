@@ -13,11 +13,8 @@ ${SLOT}    SLOT_2
 *** Test Cases ***
 TC1
     [Tags]    example
-    generic.HelloWorld
-    # Log To Console    ${${SLOT}}[dputty]
-    # Should Be Equal    1    2
-    # Log To Console    ${SLOT}[dputty]
-    # powercycle.CheckPowerCycle
+    [Template]    generic.HelloWorld
+
 TC2
     @{list}    Create List    dumping to hello.core    dumping to world.core
     @{ex_filters}    Create List    hello.core

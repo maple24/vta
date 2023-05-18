@@ -75,7 +75,8 @@ class StabilityListener:
 
     def end_test(self, test, result):
         if tmp := BuiltIn().get_variable_value("${TEST_MESSAGE}"):
-            if tmp not in self.error_keywords: self.error_keywords.append(tmp)
+            if tmp not in self.error_keywords:
+                self.error_keywords.append(tmp)
 
     def end_suite(self, data, result):
         self.end_time = datetime.now().replace(microsecond=0)

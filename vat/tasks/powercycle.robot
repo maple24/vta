@@ -30,15 +30,17 @@ StepCheckCrash
     [Template]    powercycle.CheckCrash
     ${STEPS}[${TEST_NAME}][ex_filters]
 
-StepCheckStartupTrace
-    [Tags]
-    [Template]    powercycle.CheckStartupTrace
-
-StepCheckRamdump
-    [Tags]
-    [Template]    powercycle.CheckRamdump
-
 StepCheckDisplays
     [Tags]
     [Template]    powercycle.CheckDisplay
     ${STEPS}[${TEST_NAME}][displays]
+
+StepCheckNormalTrace
+    [Tags]
+    [Template]    powercycle.CheckNormalTrace
+    ${STEPS}[${TEST_NAME}][patterns]
+
+StepCheckErrorTrace
+    [Tags]
+    [Template]    powercycle.CheckErrorTrace
+    ${STEPS}[${TEST_NAME}][patterns]

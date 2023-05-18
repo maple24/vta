@@ -39,16 +39,22 @@ CheckCrash
         List Should Contain Value    ${ex_filters}    ${element}[0]    Detect crash ${element}[0]!
     END
 
-CheckStartupTrace
+CheckNormalTrace
     [Documentation]    Check trace from putty trace container
+    [Arguments]    ${patterns}
+    
+    @{traces}    PuttyHelper.Get Trace Container
+    FOR    ${element}    IN    @{patterns}
+        ${RES}    ${matched}=    GenericHelper.Match String    ${element}    ${traces}
+        Should Be Equal    ${RES}    ${True}    Trace not found! ${element}
+    END
+
+CheckErrorTrace
+    [Documentation]    Inspect if ramdump trace pattern appeared in putty trace container
+    [Arguments]    ${patterns}
 
     @{traces}    PuttyHelper.Get Trace Container
-    ${RES}    ${matched}=    GenericHelper.Match String    (Log Type: B)    ${traces}
-    Should Be Equal    ${RES}    ${True}    Startup trace not found!
-
-CheckRamdump
-    [Documentation]    Inspect if ramdump trace pattern appeared in putty trace container
-
-    @{traces}=    PuttyHelper.Get Trace Container
-    ${RES}    ${matched}=    GenericHelper.Match String    (XBLRamDump Image Loaded)    ${traces}
-    Should Not Be Equal    ${RES}    ${True}    Ramdump occurs!
+    FOR    ${element}    IN    @{patterns}
+        ${RES}    ${matched}=    GenericHelper.Match String    ${element}    ${traces}
+        Should Not Be Equal    ${RES}    ${True}    Error trace detected! ${element}
+    END
