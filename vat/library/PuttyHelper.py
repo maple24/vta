@@ -144,7 +144,7 @@ class PuttyHelper:
                 break
 
         matched = match.groups()
-        logger.info(
+        logger.success(
             f"OK! Found matched - {matched}, elapsed time is {round(time_tick - ts, 2)}s"
         )
         self.event_waitTrace.clear()
