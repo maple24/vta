@@ -17,7 +17,7 @@ CheckPowerCycle
     [Arguments]    ${type}
 
     Run Keyword If    '${type}'=='command'    generic.ResetbyCMD
-    Run Keyword If    '${type}'=='network'    generic.GWM_ResetbyCAN
+    Run Keyword If    '${type}'=='network'    generic.ZEEKR_ResetbyCAN
 
 CheckDisplay
     [Documentation]    Check profile display using webcam, args: list

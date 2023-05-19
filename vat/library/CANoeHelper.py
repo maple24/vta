@@ -331,7 +331,7 @@ if __name__ == "__main__":
     }
     GWM_Sleep = {"type": "sys", "namespace": "NM_CAN1", "var": "Wakeup", "value": "0"}
     o = CANoeHelper()
-    o.init_canoe(dcanoe)
+    o.init_canoe(canoe)
     # o.start_measurement()
     # o.set_can_variable(GWM_WakeUp)
     # o.set_can_variable(GWM_Ignition_On)

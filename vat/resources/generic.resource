@@ -2,6 +2,7 @@
 Library    ../library/PuttyHelper.py
 Library    ../library/GenericHelper.py
 Library    ../library/CANoeHelper.py
+Library    ../api/TSmasterAPI/TSClient.py
 Library    GeventLibrary
 
 *** Keywords ***
@@ -67,3 +68,30 @@ GWM_StartupbyCAN
     &{WakeUP}    Create Dictionary    type=sys    namespace=NM_CAN1    var=Wakeup    value=1
     CANoeHelper.Set Can Variable    ${IGON}
     CANoeHelper.Set Can Variable    ${WakeUP}
+
+ZEEKR_ResetbyCAN
+    [Documentation]    ...
+
+    ZEEKR_ShutdownbyCAN
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM killed)    cmd=bosch_reset    timeout=30
+    Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
+
+    ZEEKR_StartupbyCAN
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Log Type: B)    timeout=60
+    Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
+
+ZEEKR_StartupbyCAN
+    [Documentation]    ...
+
+    TSClient.Set Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts    11
+    TSClient.Set Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB    1
+    TSClient.Get Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts
+    TSClient.Get Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB
+
+ZEEKR_ShutdownbyCAN
+    [Documentation]    ...
+
+    TSClient.Set Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts    0
+    TSClient.Set Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB    0
+    TSClient.Get Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts
+    TSClient.Get Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB

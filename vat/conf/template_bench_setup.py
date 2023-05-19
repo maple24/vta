@@ -6,7 +6,7 @@ from loguru import logger
 
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 
-DATABASE = True
+DATABASE = False
 CREDENTIAL = {"drivername": "sqlite", "database": "database.db"}
 # CREDENTIAL = {
 #     "drivername": "mysql",
@@ -37,7 +37,13 @@ SLOT_1 = {
         "relay_enabled": False,
         "multiplexer": {"enabled": "False", "comport": "COM6"},
         "xinke": {"enabled": "False", "comport": "COM10"},
-    }
+    },
+    "dtsmaster": {
+        "tsmaster_enabled": True,
+        "tsmaster_rbs": "C:\\Users\\EZO1SGH\\Desktop\\Vehicle_test\\RBS_projects\\Tosun_Wakeup\\Tosun",
+        "tsmaster_channel_vgm": 0,
+        "tsmaster_channel_vddm": 1,
+    },
 }
 
 SLOT_2 = {
@@ -62,5 +68,11 @@ SLOT_2 = {
         "relay_enabled": False,
         "multiplexer": {"enabled": "False", "comport": "COM6"},
         "xinke": {"enabled": "False", "comport": "COM10"},
+    },
+    "dtsmaster": {
+        "tsmaster_enabled": True,
+        "tsmaster_rbs": "C:\\Users\\EZO1SGH\\Desktop\\Vehicle_test\\RBS_projects\\Tosun_Wakeup\\Tosun",
+        "tsmaster_channel_vgm": 0,
+        "tsmaster_channel_vddm": 1,
     },
 }
