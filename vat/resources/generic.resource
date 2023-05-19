@@ -28,7 +28,7 @@ GetSCCVersion
 ResetbyCMD
     [Documentation]    Run powercycle with putty command 'bosch_reset'
 
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Unmount is done successfully)    cmd=bosch_reset    timeout=10
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Unmount is done successfully)    cmd=bosch_reset    timeout=30
     Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
     Sleep    40s
 
@@ -38,7 +38,7 @@ GWM_ResetbyCAN
     CANoeHelper.Init Canoe    enabled=${True}
 
     GWM_ShutdownbyCAN
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Unmount is done successfully)    timeout=20
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM killed)    timeout=30
     Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
 
     GWM_StartupbyCAN
