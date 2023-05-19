@@ -42,7 +42,7 @@ GWM_ResetbyCAN
     Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
 
     GWM_StartupbyCAN
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup complete)    timeout=30
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Log Type: B)    timeout=60
     Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
 
 GWM_ShutdownbyCAN
