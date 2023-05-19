@@ -3,8 +3,8 @@ Resource    ../resources/powercycle.resource
 Resource    ../resources/setups.resource
 Variables    ../conf/bench_setup.py
 
-Test Setup    setups.INIT    ${${SLOT}}
-Test Teardown    setups.DEINIT
+# Test Setup    setups.INIT    ${${SLOT}}
+# Test Teardown    setups.DEINIT
 
 *** Variables ***
 # default slot

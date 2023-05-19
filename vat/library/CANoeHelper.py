@@ -122,15 +122,14 @@ class CANoeHelper:
             else:
                 sys_value.Value = str(var)
 
-    def init_canoe(self, dCANoe):
+    def init_canoe(self, enabled):
         """
         Description: Initiatialize the CANoe interface
         :param dCANoe the dict parameters for CANoe initialization
         :return int
         """
         # re-dispatch object for CANoe Application
-        canoe_enabled = dCANoe.get("canoe_enabled", False)
-        if not canoe_enabled:
+        if not enabled:
             logger.info("[CANoe] CANoe disabled, skip initiating")
             return
 
@@ -251,7 +250,7 @@ class CANoeHelper:
         )
         return sig_val
 
-    def set_can_variable(self, dKey2Set=None):
+    def set_can_variable(self, dKey2Set: dict = None):
         """
         Description: Set the Env. Sys, or signal value to CAN network
         :param "key2set", the key name defined in "/Config/CanDefinition.xml"
@@ -275,7 +274,7 @@ class CANoeHelper:
             key_val = dKey2Set["value"]
             self.set_env_variable(key_name, key_val)
 
-    def get_can_variable(self, dKey2Set=None):
+    def get_can_variable(self, dKey2Set: dict = None):
         """
         Description: Get the Env. Sys, or signal value from CAN network
         :param "key2set", the key name defined in "/Config/CanDefinition.xml"
@@ -297,3 +296,46 @@ class CANoeHelper:
             nValue = self.set_env_variable(key_name)
 
         return int(nValue)
+
+
+if __name__ == "__main__":
+    canoe = True
+    GWM_WakeUp = {"type": "sys", "namespace": "NM_CAN1", "var": "Wakeup", "value": "1"}
+    GWM_Ignition_On = {
+        "type": "sys",
+        "namespace": "IL",
+        "var": "Ignition",
+        "value": "2",
+    }
+    GWM_Ignition_Off = {
+        "type": "sys",
+        "namespace": "IL",
+        "var": "Ignition",
+        "value": "0",
+    }
+    GWM_DrvDoorSts_Closed = {
+        "type": "signal",
+        "msg": "BCM1",
+        "sig": "DrvDoorSts",
+        "value": "0",
+        "channel": "1",
+        "bustype": "CAN",
+    }
+    GWM_DrvDoorSts_Open = {
+        "type": "signal",
+        "msg": "BCM1",
+        "sig": "DrvDoorSts",
+        "value": "1",
+        "channel": "1",
+        "bustype": "CAN",
+    }
+    GWM_Sleep = {"type": "sys", "namespace": "NM_CAN1", "var": "Wakeup", "value": "0"}
+    o = CANoeHelper()
+    o.init_canoe(dcanoe)
+    # o.start_measurement()
+    # o.set_can_variable(GWM_WakeUp)
+    # o.set_can_variable(GWM_Ignition_On)
+    o.set_can_variable(GWM_Ignition_Off)
+    o.set_can_variable(GWM_DrvDoorSts_Open)
+    o.set_can_variable(GWM_DrvDoorSts_Closed)
+    o.set_can_variable(GWM_Sleep)

@@ -37,7 +37,7 @@ SLOT_1 = {
         "relay_enabled": False,
         "multiplexer": {"enabled": "False", "comport": "COM6"},
         "xinke": {"enabled": "False", "comport": "COM10"},
-    },
+    }
 }
 
 SLOT_2 = {
