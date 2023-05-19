@@ -2,7 +2,7 @@ from loguru import logger
 import win32com.client
 
 
-class canoe_helper:
+class CANoeHelper:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
     def __init__(self):
