@@ -1,11 +1,9 @@
-from ctypes import *
 from msl.loadlib import Client64
 from loguru import logger
 
 
 class TSClient(Client64):
     def __init__(self):
-        super(TSClient, self).__init__(module32="TSAgent")
         self.tsmaster_enable = None
         self.tsmaster_rbs = None
         self.tsmaster_channel = None
@@ -33,6 +31,7 @@ class TSClient(Client64):
         :param dTSMaster: setup of RBS
         :return: void
         """
+        super(TSClient, self).__init__(module32="TSAgent")
         self.tsmaster_enabled = dTSMaster.get("tsmaster_enabled", False)
         if not self.tsmaster_enabled:
             logger.warning("[TSMaster] TSMaster disabled, skip initiating ...")
@@ -104,13 +103,13 @@ if __name__ == "__main__":
     }
 
     ts_app = TSClient()
-    ts_app.init_tsmaster(tsmasterapi_dict)
+    # ts_app.init_tsmaster(tsmasterapi_dict)
 
-    ts_app.start_simulation()
-    ts_app.set_signal(
-        "0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts", 11
-    )
-    ts_app.set_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB", 1)
-    ts_app.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts")
-    ts_app.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB")
-    ts_app.stop_simulation()
+    # ts_app.start_simulation()
+    # ts_app.set_signal(
+    #     "0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts", 11
+    # )
+    # ts_app.set_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB", 1)
+    # ts_app.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts")
+    # ts_app.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB")
+    # ts_app.stop_simulation()
