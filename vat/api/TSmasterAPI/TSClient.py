@@ -1,5 +1,9 @@
 from msl.loadlib import Client64
 from loguru import logger
+import sys
+import os
+
+sys.path.append(os.path.dirname(__file__))
 
 
 class TSClient(Client64):
