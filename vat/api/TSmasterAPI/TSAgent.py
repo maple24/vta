@@ -21,10 +21,9 @@ class TSAgent(Server32):
         :return: void
         """
         self.deinitialize()
-        ret = self.dll.initialize_lib_tsmaster_with_project(
+        self.dll.initialize_lib_tsmaster_with_project(
             self.app_name, project.encode("utf-8")
         )
-        return ret
 
     def start_simulation(self):
         """

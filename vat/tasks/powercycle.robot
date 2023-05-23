@@ -1,12 +1,11 @@
 *** Settings ***
 Resource    ../resources/powercycle.resource
-Resource    ../resources/setups.resource
 
 Variables    ../conf/bench_setup.py
 Variables    ../conf/powercycle_setup.py
 
-Suite Setup    setups.INIT    ${CONF_BASE}
-Suite Teardown    setups.DEINIT
+Suite Setup    powercycle.INIT    ${CONF_BASE}
+Suite Teardown    powercycle.DEINIT
 
 *** Variables ***
 ${SLOT}    SLOT_1

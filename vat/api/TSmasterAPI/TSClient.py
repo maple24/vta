@@ -49,8 +49,7 @@ class TSClient(Client64):
             return
 
         logger.info("[TSMaster] Start initiating TSMaster interface ...")
-        ret = self.request32("init_tsmaster", self.tsmaster_rbs)
-        logger.info(ret)
+        self.request32("init_tsmaster", self.tsmaster_rbs)
 
     def start_simulation(self):
         """
