@@ -128,6 +128,7 @@ class PuttyHelper:
         self.send_command(cmd)
 
         while True:
+            time.sleep(0.005)
             if time.time() - ts > timeout:
                 logger.warning(
                     f"Max timeout reached, unable to match pattern `{pattern}`!"
