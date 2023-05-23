@@ -34,11 +34,11 @@ class StabilityListener:
             for key, value in steps.items():
                 if not value.get("enabled"):
                     self.disabled.append(key)
-        tests = test.tests
-        for t in tests:
-            if t.name in self.disabled:
-                logger.warning(f"Remove step `{t}` due to disabled!")
-                tests.remove(t)
+        for _ in range(len(test.tests)):
+            for t in test.tests:
+                if t.name in self.disabled:
+                    logger.warning(f"Remove step `{t}` due to disabled!")
+                    test.tests.remove(t)
 
     def _upload_database(self):
         if not self.db_enabled:

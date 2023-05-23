@@ -21,9 +21,10 @@ StepTest
 
 StepCheckPowerCycle
     [Tags]
+    
     Run Keyword If    '${STEPS}[${TEST_NAME}][type]'=='command'    generic.ResetbyCMD
     IF    '${STEPS}[${TEST_NAME}][type]'=='network'
-        ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30
+        ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30    login=${False}
         Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
         
         TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
