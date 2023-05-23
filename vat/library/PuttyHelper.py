@@ -29,7 +29,7 @@ class PuttyHelper:
 
             line = self.putty_object.readline().decode("utf-8", "ignore").strip()
             if line:
-                logger.trace("[{stream}] - {message}", stream="PuttyRx", message=line)
+                logger.debug("[{stream}] - {message}", stream="PuttyRx", message=line)
                 now_tick = time.time()
                 if self.event_monitorTrace.isSet():
                     self.monitorTrace_queue.put((now_tick, line))

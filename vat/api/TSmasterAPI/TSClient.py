@@ -2,6 +2,7 @@ from msl.loadlib import Client64
 from loguru import logger
 import sys
 import os
+import time
 
 sys.path.append(os.path.dirname(__file__))
 
@@ -96,17 +97,33 @@ class TSClient(Client64):
         logger.info(f"OK! Get signal {signalAddress} with value: {sig_val} !")
         return sig_val
 
+    def startup(self):
+        self.start_simulation()
+        self.set_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts", 11)
+        self.set_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB", 1)
+        self.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts")
+        self.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB")
+        self.stop_simulation()
+        time.sleep(0.5)
+        self.start_simulation()
+        self.set_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts", 11)
+        self.set_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB", 1)
+        self.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts")
+        self.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB")
+        self.stop_simulation()
+
 
 if __name__ == "__main__":
     tsmasterapi_dict = {
         "tsmaster_enabled": True,
-        "tsmaster_rbs": "C:\\Users\\EZO1SGH\\Desktop\\Vehicle_test\\RBS_projects\\Tosun_Wakeup\\Tosun",
+        "tsmaster_rbs": "C:\\Users\\ets1szh\\Desktop\\RBS_Project\\Tosun_Wakeup_CH1\\Tosun",
         "tsmaster_channel_vgm": 0,
         "tsmaster_channel_vddm": 1,
     }
 
     ts_app = TSClient()
-    # ts_app.init_tsmaster(tsmasterapi_dict)
+    ts_app.init_tsmaster(tsmasterapi_dict)
+    ts_app.startup()
 
     # ts_app.start_simulation()
     # ts_app.set_signal(

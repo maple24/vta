@@ -1,6 +1,6 @@
 *** Settings ***
 Resource    ../resources/powercycle.resource
-
+Library    ../api/TSmasterAPI/TSClient.py
 Variables    ../conf/bench_setup.py
 Variables    ../conf/powercycle_setup.py
 
@@ -21,8 +21,17 @@ StepTest
 
 StepCheckPowerCycle
     [Tags]
-    [Template]    powercycle.CheckPowerCycle
-    ${STEPS}[${TEST_NAME}][type]
+    Run Keyword If    '${STEPS}[${TEST_NAME}][type]'=='command'    generic.ResetbyCMD
+    IF    '${STEPS}[${TEST_NAME}][type]'=='network'
+        ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30
+        Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
+        
+        TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
+        TSClient.Startup
+        ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Startup Condition)    timeout=60    login=${False}
+        Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
+    END
+    Sleep    10s
 
 StepCheckCrash
     [Tags]

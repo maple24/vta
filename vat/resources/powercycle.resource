@@ -39,47 +39,6 @@ DefineGlobal
     # Set Global Variable    ${SOCVersion}
     # Set Global Variable    ${SCCVersion}
 
-ZEEKR_ResetbyCAN
-    [Documentation]    ...
-
-    ZEEKR_ShutdownbyCAN
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM killed)    cmd=bosch_reset    timeout=30
-    Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
-
-    ZEEKR_StartupbyCAN
-    Sleep    0.5s
-    ZEEKR_StartupbyCAN
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Log Type: B)    timeout=60
-    Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
-
-ZEEKR_StartupbyCAN
-    [Documentation]    ...
-
-    TSClient.Start Simulation
-    TSClient.Set Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts    11
-    TSClient.Set Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB    1
-    TSClient.Get Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts
-    TSClient.Get Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB
-    TSClient.Stop Simulation
-
-ZEEKR_ShutdownbyCAN
-    [Documentation]    ...
-
-    TSClient.Start Simulation
-    TSClient.Set Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts    0
-    TSClient.Set Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB    0
-    TSClient.Get Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts
-    TSClient.Get Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB
-    TSClient.Stop Simulation
-
-
-CheckPowerCycle
-    [Documentation]    Execute powercycle and check trace, agrs: str
-    [Arguments]    ${type}
-
-    Run Keyword If    '${type}'=='command'    generic.ResetbyCMD
-    Run Keyword If    '${type}'=='network'    ZEEKR_ResetbyCAN
-
 CheckDisplay
     [Documentation]    Check profile display using webcam, args: list
     [Arguments]    ${dispalys}
