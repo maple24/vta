@@ -12,7 +12,7 @@ HelloWorld
 GetSOCVersion
     [Documentation]    Get SOC version with putty command 'cat buildinfo.txt'
     
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=MAIN_VERSION\=(.*)    cmd=cat Buildinfo.txt    timeout=10
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=MAIN_VERSION\=(.*)    cmd=cat /mnt/Buildinfo.txt    timeout=10
     Should Be Equal    ${RES}    ${True}    Unable to get SOC version
     
     RETURN    ${MATCHED}
