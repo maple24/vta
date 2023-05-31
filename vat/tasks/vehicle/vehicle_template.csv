@@ -1,0 +1,6 @@
+SigID,Msg,SigGroup,DataType,User,ACCESS,Rx,Tx,mulsend,mockack,TxPeriod,Component
+DRIVEINFO_DSTESTIMDTOEMPTYFORDRVGELEC,VDDMBackBoneSignalIPdu16,,INT32,BackboneFR,READ,DstEstimdToEmptyForDrvgElec,,,,,Cluster
+DRIVEINFO_DRVRGEARLVRLOCKINDCN,VDDMBackBoneSignalIPdu18,,INT32,BackboneFR,READ,DrvrGearLvrLockIndcn,,,,,Cluster
+DRIVEINFO_AUDWARNACTV,DIMBackBoneSignalIPdu08,,INT32,BackboneFR,WRITE,,AudWarnActv,,,100,Cluster
+HVAC_HMIDEFRSTELECREQ_FRNTELECREQ,IHUBackBoneSignalIPdu08,igHmiDefrstElecReq,INT32,BackboneFR,WRITE,,HmiDefrstElecReqFrntElecReq,,,100,Infra-HVAC
+HVAC_HMISYNCREQ,IHUBackBoneSignalIPdu37,,INT32,BackboneFR,WRITE,,HmiSyncReq,,,100,Infra-HVAC
