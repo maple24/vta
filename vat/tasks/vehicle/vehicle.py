@@ -60,6 +60,7 @@ class Vehicle:
             sys.exit(1)
         logger.success("Succeed to send signal!")
         self.mputty.send_command("\x03")
+        time.sleep(0.5)
 
         # read from canoe
         val = self.mcanoe.get_signal(msg, sig, bus_type="FlexRay")
@@ -83,7 +84,7 @@ class Vehicle:
         self.mcanoe.set_signal(msg, sig, value, bus_type="FlexRay")
 
         # read from qnx
-        time.sleep(1)
+        time.sleep(0.5)
         traces = self.mputty.get_trace_container()
         res, _ = GenericHelper.match_string(
             pattern="(signal message send)", data=traces
@@ -99,7 +100,6 @@ class Vehicle:
         self.mputty.disable_monitor()
 
     def run(self, row: dict) -> None:
-        ID = Vehicle.get_proto_id(self.proto, row.get("SigID"))
         ACCESS = row.get("ACCESS")
         GROUP = row.get("SigGroup")
         MSG = row.get("Msg")
@@ -121,10 +121,8 @@ class Vehicle:
 
 
 if __name__ == "__main__":
-    # file = 'com.platform.vehicle.proto'
-    # signal_name = 'HVAC_HMIFRAGRAMODREQ'
+    proto = 'com.platform.vehicle.proto'
 
-    # print(Vehicle.get_proto_id(os.path.join(os.path.dirname(__file__), file), 'HVAC_HMIFRAGRAMODREQ'))
     dputty = {
         "putty_enabled": True,
         "putty_comport": "COM11",
@@ -132,7 +130,7 @@ if __name__ == "__main__":
         "putty_username": "root",
         "putty_password": "6679836772",
     }
-    mv = Vehicle(dputty, True)
+    mv = Vehicle(dputty, canoe=True, proto=os.path.join(os.path.dirname(__file__), proto))
     # mv.read(
     #     ub="DstEstimdToEmptyForDrvgElec_UB",
     #     msg="VDDMBackBoneSignalIPdu16",
@@ -146,16 +144,18 @@ if __name__ == "__main__":
     # )
     row = {
         "SigID": "DRIVEINFO_DSTESTIMDTOEMPTYFORDRVGELEC",
+        "Msg": "VDDMBackBoneSignalIPdu16",
         "SigGroup": "",
         "ACCESS": "READ",
         "Rx": "DstEstimdToEmptyForDrvgElec",
         "Tx": "",
     }
-    # row = {
-    #     "SigID": "DRIVEINFO_AUDWARNACTV",
-    #     "SigGroup": "",
-    #     "ACCESS": "WRITE",
-    #     "Rx": "",
-    #     "Tx": "AudWarnActv",
-    # }
+    row = {
+        "SigID": "DRIVEINFO_AUDWARNACTV",
+        "Msg": "DIMBackBoneSignalIPdu08",
+        "SigGroup": "",
+        "ACCESS": "WRITE",
+        "Rx": "",
+        "Tx": "AudWarnActv",
+    }
     mv.run(row)

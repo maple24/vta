@@ -15,6 +15,9 @@ class Student(Person):
         super().__init__(name, age)
         
 
-p = Student()
-p.init("maple", 24)
-p.greeting()
+# p = Student()
+# p.init("maple", 24)
+# p.greeting()
+import os
+if not os.path.exists(''):
+    print("Proto file not found!")
