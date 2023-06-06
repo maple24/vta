@@ -2,9 +2,9 @@ from vehicle import Vehicle
 import os
 
 
-if __name__ == '__main__':
-    protoname = 'com.platform.vehicle.proto'
-    templatename = 'vehicle_template.csv'
+if __name__ == "__main__":
+    protoname = "com.platform.vehicle.proto"
+    templatename = "vehicle_template.csv"
     proto = os.path.join(os.path.dirname(__file__), protoname)
     template = os.path.join(os.path.dirname(__file__), templatename)
     dputty = {

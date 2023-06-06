@@ -45,7 +45,7 @@ class Vehicle:
                 rows.append(row)
         return rows
 
-    def write(self, id: str, msg: str, sig: str) -> None:
+    def write(self, id: str, msg: str, sig: str, bus: str = "FlexRay") -> None:
         value = random.choice(["0", "1"])
         logger.info(
             f"Write signal. ID: {id} | Msg: {msg} | Sig: {sig} | Value: {value}"
@@ -63,7 +63,7 @@ class Vehicle:
         time.sleep(0.5)
 
         # read from canoe
-        val = self.mcanoe.get_signal(msg, sig, bus_type="FlexRay")
+        val = self.mcanoe.get_signal(msg, sig, bus_type=bus)
         if float(val) != float(value):
             logger.error(
                 f"Signal value does not match! Get: {val} | Send: {value} | Msg: {msg} | Sig: {sig}"
@@ -71,20 +71,20 @@ class Vehicle:
             sys.exit(1)
         logger.success("Signal value is matched!")
 
-    def read(self, ub: str, msg: str, sig: str) -> None:
+    def read(self, ub: str, msg: str, sig: str, bus: str = "FlexRay") -> None:
         self.mputty.enable_monitor()
         # send signal from canoe
-        value = self.mcanoe.get_signal(msg, sig, bus_type="FlexRay")
+        value = self.mcanoe.get_signal(msg, sig, bus_type=bus)
         if float(value) == 0:
             value = "1"
         else:
             value = "0"
         logger.info(f"Send signal. UB: {ub} | Msg: {msg} | Sig: {sig} | Value: {value}")
-        self.mcanoe.set_signal(msg, ub, "1", bus_type="FlexRay")
-        self.mcanoe.set_signal(msg, sig, value, bus_type="FlexRay")
+        self.mcanoe.set_signal(msg, ub, "1", bus_type=bus)
+        self.mcanoe.set_signal(msg, sig, value, bus_type=bus)
+        time.sleep(1)
 
         # read from qnx
-        time.sleep(0.5)
         traces = self.mputty.get_trace_container()
         res, _ = GenericHelper.match_string(
             pattern="(signal message send)", data=traces
@@ -121,7 +121,7 @@ class Vehicle:
 
 
 if __name__ == "__main__":
-    proto = 'com.platform.vehicle.proto'
+    proto = "com.platform.vehicle.proto"
 
     dputty = {
         "putty_enabled": True,
@@ -130,7 +130,9 @@ if __name__ == "__main__":
         "putty_username": "root",
         "putty_password": "6679836772",
     }
-    mv = Vehicle(dputty, canoe=True, proto=os.path.join(os.path.dirname(__file__), proto))
+    mv = Vehicle(
+        dputty, canoe=True, proto=os.path.join(os.path.dirname(__file__), proto)
+    )
     # mv.read(
     #     ub="DstEstimdToEmptyForDrvgElec_UB",
     #     msg="VDDMBackBoneSignalIPdu16",
