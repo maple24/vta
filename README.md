@@ -12,7 +12,7 @@ Vite Automation Test Framework<b>(VAT)</b><br>
 - ⚙️Python code formatter with [Black](https://black.readthedocs.io/en/stable/)
 - 🤖Run test cases with [Robot Framework](https://robotframework.org/)
 - 🤝Interacting database with [SQLModel](https://sqlmodel.tiangolo.com/) [Engine](https://docs.sqlalchemy.org/en/20/core/engines.html#mysql)
-- 🌽 Run keywords asynchronously [GeventLibrary]https://github.com/eldaduzman/robotframework-gevent
+- 🌽Run keywords asynchronously [GeventLibrary]https://github.com/eldaduzman/robotframework-gevent
 - ⚡️An extremely fast Python linter [Ruff](https://beta.ruff.rs/docs/)
 - 📤RQM API
 - 📧Mail with smpt server
@@ -47,5 +47,6 @@ pip install -r requirements.txt
 ```
 4. run HelloWorld.bat and check logs in /log
 5. (optional) set your pythonpath for robotframework
+
 Go to the Robot Framework Language Server extension and go to extension settings
 In there you'll find: Robot > Language-server: Python
