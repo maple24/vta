@@ -1,7 +1,7 @@
 import re
 import sys
 import os
-from typing import Optional, List
+from typing import Optional, List, Union
 from loguru import logger
 import time
 import csv
@@ -33,6 +33,7 @@ class Vehicle:
         for line in lines:
             match = re.search(pattern, line)
             if match:
+                logger.success("Succeed to get proto id!")
                 return match.groups()[0]
         return None
 
@@ -43,9 +44,23 @@ class Vehicle:
             reader = csv.DictReader(f, delimiter=",")
             for row in reader:
                 rows.append(row)
+        logger.success("Succeed to parse csv file!")
         return rows
 
-    def write(self, id: str, msg: str, sig: str, bus: str = "FlexRay") -> None:
+    @staticmethod
+    def dict2csv(file: str, data: Union[List[dict], dict]) -> None:
+        if isinstance(data, list):
+            fieldnames = data[0].keys()
+        else:
+            fieldnames = data.keys()
+            data = [data]
+        with open(file, 'w', newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(data)
+        logger.success("Succeed to write to csv file!")
+
+    def write(self, id: str, msg: str, sig: str, bus: str = "FlexRay") -> str:
         value = random.choice(["0", "1"])
         logger.info(
             f"Write signal. ID: {id} | Msg: {msg} | Sig: {sig} | Value: {value}"
@@ -68,10 +83,11 @@ class Vehicle:
             logger.error(
                 f"Signal value does not match! Get: {val} | Send: {value} | Msg: {msg} | Sig: {sig}"
             )
-            sys.exit(1)
+            return 'FAIL'
         logger.success("Signal value is matched!")
+        return 'PASS'
 
-    def read(self, ub: str, msg: str, sig: str, bus: str = "FlexRay") -> None:
+    def read(self, ub: str, msg: str, sig: str, bus: str = "FlexRay") -> str:
         self.mputty.enable_monitor()
         # send signal from canoe
         value = self.mcanoe.get_signal(msg, sig, bus_type=bus)
@@ -89,17 +105,18 @@ class Vehicle:
         res, _ = GenericHelper.match_string(
             pattern="(signal message send)", data=traces
         )
+        self.mputty.disable_monitor()
         if not res:
             logger.error(
                 f"Fail to receive signal! Msg: {msg} | Sig: {sig} | Value: {value}"
             )
-            sys.exit(1)
+            return 'FAIL'
         logger.success(
             f"Succeed to receive signal! Msg: {msg} | Sig: {sig} | Value: {value}"
         )
-        self.mputty.disable_monitor()
+        return 'PASS'
 
-    def run(self, row: dict) -> None:
+    def run(self, row: dict, bus: str = 'FlexRay') -> dict:
         ACCESS = row.get("ACCESS")
         GROUP = row.get("SigGroup")
         MSG = row.get("Msg")
@@ -110,14 +127,18 @@ class Vehicle:
                 ub = GROUP[2:] + "_UB"
             else:
                 ub = SIG + "_UB"
-            self.read(ub, MSG, SIG)
+            result = self.read(ub, MSG, SIG, bus=bus)
         elif ACCESS == "WRITE":
             ID = Vehicle.get_proto_id(self.proto, row.get("SigID"))
             SIG = row.get("Tx")
-            self.write(ID, MSG, SIG)
+            result = self.write(ID, MSG, SIG, bus=bus)
         else:
-            logger.error("Error access type!")
-            sys.exit(1)
+            logger.error(f"Error access type! {ACCESS}")
+            result = 'ERROR'
+        
+        resultrow = {'Result': result}
+        resultrow.update(row)
+        return resultrow
 
 
 if __name__ == "__main__":
