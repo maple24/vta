@@ -24,15 +24,18 @@ StepCheckPowerCycle
     
     Run Keyword If    '${STEPS}[${TEST_NAME}][type]'=='command'    generic.ResetbyCMD
     IF    '${STEPS}[${TEST_NAME}][type]'=='network'
-        ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30    login=${False}
-        Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
-        
+        # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30    login=${False}
+        # Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
+        RelayHelper.Set Relay Port    dev_type=xinke    port_index=2    state_code=1
+        RelayHelper.Set Relay Port    dev_type=xinke    port_index=2    state_code=0
+        Sleep    1s
+
         TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
         TSClient.Startup
         # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
         # Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
     END
-    Sleep    40s
+    Sleep    55s
 
 StepCheckCrash
     [Tags]

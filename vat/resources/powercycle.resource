@@ -4,6 +4,7 @@ Library    Collections
 Resource    generic.resource
 Library    ../library/PuttyHelper.py
 Library    ../library/GenericHelper.py
+Library    ../library/RelayHelper.py
 
 *** Keywords ***
 Test
@@ -18,6 +19,7 @@ INIT
     [Arguments]    ${CONF}
     PuttyHelper.Connect    dPutty=${CONF}[dputty]
     PuttyHelper.Enable Monitor
+    RelayHelper.Init Relay    drelay=${CONF}[drelay]
 
     DefineGlobal
 

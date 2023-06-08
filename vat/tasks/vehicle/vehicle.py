@@ -82,7 +82,7 @@ class Vehicle:
         logger.info(f"Send signal. UB: {ub} | Msg: {msg} | Sig: {sig} | Value: {value}")
         self.mcanoe.set_signal(msg, ub, "1", bus_type=bus)
         self.mcanoe.set_signal(msg, sig, value, bus_type=bus)
-        time.sleep(1)
+        time.sleep(0.5)
 
         # read from qnx
         traces = self.mputty.get_trace_container()
@@ -107,7 +107,7 @@ class Vehicle:
         if ACCESS == "READ":
             SIG = row.get("Rx")
             if GROUP:
-                ub = GROUP + "_UB"
+                ub = GROUP[2:] + "_UB"
             else:
                 ub = SIG + "_UB"
             self.read(ub, MSG, SIG)
