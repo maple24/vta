@@ -54,7 +54,7 @@ class Vehicle:
         else:
             fieldnames = data.keys()
             data = [data]
-        with open(file, 'w', newline='') as csvfile:
+        with open(file, "w", newline="") as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             writer.writerows(data)
@@ -83,9 +83,9 @@ class Vehicle:
             logger.error(
                 f"Signal value does not match! Get: {val} | Send: {value} | Msg: {msg} | Sig: {sig}"
             )
-            return 'FAIL'
+            return "FAIL"
         logger.success("Signal value is matched!")
-        return 'PASS'
+        return "PASS"
 
     def read(self, ub: str, msg: str, sig: str, bus: str = "FlexRay") -> str:
         self.mputty.enable_monitor()
@@ -110,13 +110,13 @@ class Vehicle:
             logger.error(
                 f"Fail to receive signal! Msg: {msg} | Sig: {sig} | Value: {value}"
             )
-            return 'FAIL'
+            return "FAIL"
         logger.success(
             f"Succeed to receive signal! Msg: {msg} | Sig: {sig} | Value: {value}"
         )
-        return 'PASS'
+        return "PASS"
 
-    def run(self, row: dict, bus: str = 'FlexRay') -> dict:
+    def run(self, row: dict, bus: str = "FlexRay") -> dict:
         ACCESS = row.get("ACCESS")
         GROUP = row.get("SigGroup")
         MSG = row.get("Msg")
@@ -134,9 +134,9 @@ class Vehicle:
             result = self.write(ID, MSG, SIG, bus=bus)
         else:
             logger.error(f"Error access type! {ACCESS}")
-            result = 'ERROR'
-        
-        resultrow = {'Result': result}
+            result = "ERROR"
+
+        resultrow = {"Result": result}
         resultrow.update(row)
         return resultrow
 
