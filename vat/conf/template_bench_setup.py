@@ -21,8 +21,8 @@ SLOT_1 = {
         "putty_enabled": True,
         "putty_comport": "COM9",
         "putty_baudrate": 115200,
-        "putty_username": "root",
-        "putty_password": "6679836772",
+        "putty_username": "zeekr",
+        "putty_password": "Aa123123",
     },
     # programming power supply
     "dpps": {
@@ -52,8 +52,8 @@ SLOT_2 = {
         "putty_enabled": False,
         "putty_comport": "COM9",
         "putty_baudrate": 115200,
-        "putty_username": "root",
-        "putty_password": "6679836772",
+        "putty_username": "zeekr",
+        "putty_password": "Aa123123",
     },
     # programming power supply
     "dpps": {
