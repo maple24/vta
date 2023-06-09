@@ -36,7 +36,7 @@ SLOT_1 = {
     "drelay": {
         "relay_enabled": False,
         "multiplexer": {"enabled": False, "comport": "COM6"},
-        "xinke": {"enabled": True, "comport": "COM16"},
+        "xinke": {"enabled": True, "comport": "COM16", "channel": "2"},
     },
     "dtsmaster": {
         "tsmaster_enabled": True,
@@ -67,7 +67,7 @@ SLOT_2 = {
     "drelay": {
         "relay_enabled": False,
         "multiplexer": {"enabled": False, "comport": "COM6"},
-        "xinke": {"enabled": True, "comport": "COM16"},
+        "xinke": {"enabled": True, "comport": "COM16", "channel": "2"},
     },
     "dtsmaster": {
         "tsmaster_enabled": True,
