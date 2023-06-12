@@ -50,3 +50,7 @@ pip install -r requirements.txt
 
 Go to the Robot Framework Language Server extension and go to extension settings
 In there you'll find: Robot > Language-server: Python
+
+## Structure
+- Helpers: pure functions/classes/apis in independent files, no relative import needed
+- Managers: higher level functions which use Helpers to buildup

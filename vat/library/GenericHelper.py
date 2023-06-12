@@ -6,18 +6,57 @@ import re
 from loguru import logger
 import os
 import socket
+import serial
 
 
 class GenericHelper:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
     @staticmethod
-    def get_hostname():
+    def get_hostname() -> str:
         return socket.gethostname()
 
     @staticmethod
-    def get_username():
+    def get_username() -> str:
         return os.getlogin()
+
+    @staticmethod
+    def serial_command(
+        cmd, comport: str, username="root", password="root", timeout=5.0
+    ) -> list:
+        with serial.Serial(comport, baudrate=115200, timeout=2) as ser:
+            logger.info(f"Opening port {comport}...")
+            ser.write("\n".encode())
+            res = ser.readlines()
+            if len(res) == 0:
+                logger.error(f"Fail to open port {comport}!")
+                exit(1)
+            if GenericHelper.match_string("(login:.*)", res)[0]:
+                logger.info(f"Enter username is {username}")
+                ser.write((username + "\n").encode())
+                if GenericHelper.match_string("(Password:.*)", ser.readlines())[0]:
+                    logger.info(f"Enter password is {password}")
+                    ser.write((password + "\n").encode())
+                if not GenericHelper.match_string(
+                    "(Logging in with home .*)", ser.readlines()
+                )[0]:
+                    logger.info("Fail to login!")
+                    exit(1)
+            logger.info("[{stream}] - {message}", stream="PuttyTx", message=cmd)
+            if isinstance(cmd, list):
+                for i in cmd:
+                    ser.write((i + "\n").encode())
+            else:
+                ser.write((cmd + "\n").encode())
+            data = []
+            start = time.time()
+            while time.time() - start < timeout:
+                line = ser.readline().decode()
+                if not line:
+                    break
+                data.append(line)
+                logger.debug("[{stream}] - {message}", stream="PuttyRx", message=line)
+            return data
 
     @staticmethod
     def terminate(process: subprocess.Popen) -> None:
@@ -45,7 +84,7 @@ class GenericHelper:
             line = out.readline().decode("utf-8").strip()
             if line:
                 data.append(line)
-                logger.trace("[{stream}] - {message}", stream="PromptRx", message=line)
+                logger.debug("[{stream}] - {message}", stream="PromptRx", message=line)
         try:
             GenericHelper.terminate(process)
         except psutil.NoSuchProcess:
@@ -65,13 +104,13 @@ class GenericHelper:
             match = re.search(pattern, string)
             if match:
                 match_data = match.groups()
-                print("Regex matches: ", match_data)
+                logger.info("Regex matches: ", match_data)
                 matched.append(match_data)
         if matched:
             return True, matched
-        print("Not matched raw string:", data)
+        logger.info("Not matched raw string:", data)
         return False, None
 
 
 if __name__ == "__main__":
-    print(GenericHelper.get_hostname())
+    logger.info(GenericHelper.get_hostname())
