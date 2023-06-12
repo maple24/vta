@@ -24,6 +24,11 @@ class FileManager:
             return True
         logger.error(f"ADB {deviceID} is not available!")
         return False
+    
+    @staticmethod
+    def Android_screencapture(deviceID: str = '1234567', localPath: str = '.'):
+        cmd = f'adb -s {deviceID} shell screencap -p /sdcard/screencap.png && adb pull /sdcard/screencap.png {localPath}'
+        GenericHelper.prompt_command(cmd)
 
     @staticmethod
     def PC2Android(localPath: str, remotePath: str, deviceID: str = "1234567") -> None:
@@ -34,14 +39,11 @@ class FileManager:
 
     @staticmethod
     def Android2PC(
-        remotePath: str, localPath: Optional[str] = None, deviceID: str = "1234567"
+        remotePath: str, localPath: str = '.', deviceID: str = "1234567"
     ) -> None:
         if not FileManager.is_adb_available(deviceID):
             return
-        if not localPath:
-            cmd = f"adb -s {deviceID} pull {remotePath}"
-        else:
-            cmd = f"adb -s {deviceID} pull {remotePath} {localPath}"
+        cmd = f"adb -s {deviceID} pull {remotePath} {localPath}"
         GenericHelper.prompt_command(cmd)
 
     @staticmethod
@@ -66,7 +68,7 @@ class FileManager:
     def QNX2PC(
         comport: str,
         remotePath: str,
-        localPath: Optional[str] = None,
+        localPath: str = '.',
         deviceID: str = "1234567",
         username: str = "root",
         password: str = "root",
