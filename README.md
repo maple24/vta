@@ -14,9 +14,10 @@ Vite Automation Test Framework<b>(VAT)</b><br>
 - 🤝Interacting database with [SQLModel](https://sqlmodel.tiangolo.com/) [Engine](https://docs.sqlalchemy.org/en/20/core/engines.html#mysql)
 - 🌽Run keywords asynchronously [GeventLibrary]https://github.com/eldaduzman/robotframework-gevent
 - ⚡️An extremely fast Python linter [Ruff](https://beta.ruff.rs/docs/)
-- 📤RQM API
+- 📤Out-of-box RQM API
 - 📧Mail with smpt server
 - 🏃‍♂️Delete logs automatically
+- 🍉Light-weighted, less than 2MB
 
 ## Movitation
 1. Run functional test with RF, which has sudo-code like sytax and can generate beautiful report automatically.
