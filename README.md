@@ -16,6 +16,7 @@ Vite Automation Test Framework<b>(VAT)</b><br>
 - ⚡️An extremely fast Python linter [Ruff](https://beta.ruff.rs/docs/)
 - 📤RQM API
 - 📧Mail with smpt server
+- 🏃‍♂️Delete logs automatically
 
 ## Movitation
 1. Run functional test with RF, which has sudo-code like sytax and can generate beautiful report automatically.
@@ -54,3 +55,10 @@ In there you'll find: Robot > Language-server: Python
 ## Structure
 - Helpers: pure functions/classes/apis in independent files, no relative import needed
 - Managers: higher level functions which use Helpers to buildup
+
+## Contributing
+1. Fork it (https://github.com/maple24/vat.git)
+2. Create your feature branch (git checkout -b my-new-feature)
+3. Commit your changes (git commit -am 'Add some feature')
+4. Push to the branch (git push origin my-new-feature)
+5. Create a new Pull Request

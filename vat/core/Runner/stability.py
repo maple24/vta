@@ -5,6 +5,7 @@ from robot import run_cli, rebot_cli
 from loguru import logger
 import sys
 import argparse
+from utils import rotate_folder
 
 # User argument interface
 parser = argparse.ArgumentParser()
@@ -56,6 +57,7 @@ mylogger = logger.add(
     rotation="1 week",
     level="TRACE",
 )
+rotate_folder(os.path.join(ROOT, 'log'))
 """
 =============================== DO NOT CHANGE ===============================
 """
