@@ -68,7 +68,7 @@ class Vehicle:
         # send signal from qnx
         res, _ = self.mputty.wait_for_trace(
             pattern="(vehicle_proxy_send_message success)",
-            cmd=f"/shared/vehicle_test {id} {value}",
+            cmd=f"/mnt/nfs_share/vehicle_test 0 {id} {value}",
         )
         if not res:
             logger.error(f"Fail to send signal! ID: {id} | Value: {value}")

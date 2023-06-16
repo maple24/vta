@@ -27,8 +27,9 @@ StepCheckPowerCycle
         # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30    login=${False}
         # Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
         RelayHelper.Set Relay Port    dev_type=xinke    port_index=${CONF_BASE}[drelay][xinke][channel]    state_code=1
+        Sleep    0.5s
         RelayHelper.Set Relay Port    dev_type=xinke    port_index=${CONF_BASE}[drelay][xinke][channel]    state_code=0
-        Sleep    1s
+        Sleep    0.5s
 
         TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
         TSClient.Startup

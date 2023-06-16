@@ -22,8 +22,8 @@ if __name__ == "__main__":
         "putty_enabled": True,
         "putty_comport": "COM11",
         "putty_baudrate": 115200,
-        "putty_username": "root",
-        "putty_password": "6679836772",
+        "putty_username": "zeekr",
+        "putty_password": "Aa123123",
     }
     mv = Vehicle(dputty=dputty, canoe=True, proto=proto)
     data = Vehicle.csv2dict(template)
