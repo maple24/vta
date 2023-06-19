@@ -5,7 +5,7 @@ import os
 from loguru import logger
 
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
-
+# enable database
 DATABASE = False
 CREDENTIAL = {"drivername": "sqlite", "database": "database.db"}
 # CREDENTIAL = {
@@ -15,6 +15,8 @@ CREDENTIAL = {"drivername": "sqlite", "database": "database.db"}
 #     "host": "10.178.227.22",
 #     "database": "gmw_v3.5"
 # }
+# enable mail
+MAIL = False
 SLOT_1 = {
     # putty channel
     "dputty": {
