@@ -8,6 +8,8 @@ Variables    ../conf/bench_setup.py
 *** Variables ***
 # default slot
 ${SLOT}    SLOT_2
+${subject}    Hello world!
+${body}    This is mail body!
 
 *** Test Cases ***
 TC1

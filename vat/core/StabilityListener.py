@@ -3,6 +3,7 @@ from robot.libraries.BuiltIn import BuiltIn
 from datetime import datetime
 from DB.DBHelper import DBHelper
 from DB.DBtables import Stability
+from Mail.EMAILClient import EmailClient
 
 
 class StabilityListener:
@@ -12,6 +13,10 @@ class StabilityListener:
         self.mdb = DBHelper()
         self.db_enabled = None
         self.db_credential = None
+        self.mail_enabled = None
+        self.mail_credential = None
+        self.subject = None
+        self.body = None
         self.table = None
 
         self.disabled = []
@@ -40,7 +45,7 @@ class StabilityListener:
                     logger.warning(f"Remove step `{t}` due to disabled!")
                     test.tests.remove(t)
 
-    def _upload_database(self):
+    def _upload_database(self) -> None:
         if not self.db_enabled:
             logger.warning("Database is disabled!")
             return
@@ -61,13 +66,24 @@ class StabilityListener:
         self.mdb.insert_row(data)
         logger.success("Upload to database successfully!")
 
+    def _send_mail(self) -> None:
+        if not self.mail_enabled:
+            logger.warning("Mail is disabled!")
+            return
+        mail = EmailClient(
+            sender=self.mail_credential.get("sender"), username=self.mail_credential.get("username"), password=self.mail_credential.get("password")
+        )
+        mail.send_mail(self.mail_credential.get("recepients"), self.subject, self.body)
+
     def start_suite(self, test, result):
         self.start_time = datetime.now().replace(microsecond=0)
         self.project = BuiltIn().get_variable_value("${PROJECT}")
         self.conf_base = BuiltIn().get_variable_value("${CONF_BASE}")
         self.conf_test = BuiltIn().get_variable_value("${CONF_TEST}")
         self.db_enabled = BuiltIn().get_variable_value("${DATABASE}")
-        self.db_credential = BuiltIn().get_variable_value("${CREDENTIAL}")
+        self.db_credential = BuiltIn().get_variable_value("${DB_CREDENTIAL}")
+        self.mail_enabled = BuiltIn().get_variable_value("${MAIL}")
+        self.mail_credential = BuiltIn().get_variable_value("${MAIL_CREDENTIAL}")
         self._remove_tests(test)
 
     def start_test(self, test, result):
@@ -85,7 +101,10 @@ class StabilityListener:
         self.test_type = BuiltIn().get_variable_value("${SUITE_NAME}")
         self.soc_version = BuiltIn().get_variable_value("${SOCVersion}")
         # self.scc_version = BuiltIn().get_variable_value("${SCCVersion}")
+        self.subject = BuiltIn().get_variable_value("${subject}")
+        self.body = BuiltIn().get_variable_value("${body}")
         self.result = result.status
 
     def close(self):
         self._upload_database()
+        self._send_mail()
