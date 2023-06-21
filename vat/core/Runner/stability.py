@@ -57,7 +57,7 @@ mylogger = logger.add(
     rotation="1 week",
     level="TRACE",
 )
-rotate_folder(os.path.join(ROOT, 'log'))
+rotate_folder(os.path.join(ROOT, "log"))
 """
 =============================== DO NOT CHANGE ===============================
 """

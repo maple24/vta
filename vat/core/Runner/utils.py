@@ -3,6 +3,7 @@ import time
 import shutil
 from loguru import logger
 
+
 def rotate_folder(folder_path: str, days: int = 7) -> None:
     current_time = time.time()
     days_in_seconds = days * 24 * 60 * 60
@@ -15,10 +16,12 @@ def rotate_folder(folder_path: str, days: int = 7) -> None:
             if (current_time - folder_time) > days_in_seconds:
                 # Delete the folder and its contents
                 shutil.rmtree(folder)
-                logger.warning(f"Delete folder {folder} which is created `{days}days` ago!")
+                logger.warning(
+                    f"Delete folder {folder} which is created `{days}days` ago!"
+                )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     folder_path = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\log"
 
     rotate_folder(folder_path)

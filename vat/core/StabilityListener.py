@@ -70,9 +70,11 @@ class StabilityListener:
         if not self.mail_enabled:
             logger.warning("Mail is disabled!")
             return
-        
+
         mail = EmailClient(
-            sender=self.mail_credential.get("sender"), username=self.mail_credential.get("username"), password=self.mail_credential.get("password")
+            sender=self.mail_credential.get("sender"),
+            username=self.mail_credential.get("username"),
+            password=self.mail_credential.get("password"),
         )
         mail.send_mail(self.mail_credential.get("recepients"), self.subject, self.body)
 

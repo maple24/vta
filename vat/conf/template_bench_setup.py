@@ -21,10 +21,7 @@ MAIL_CREDENTIAL = {
     "sender": "Test.EST@cn.bosch.com",
     "username": "ets1szh",
     "password": "estbangbangde6",
-    "recepients": [
-        "Test.EST@bcn.bosch.com",
-        "jin.zhu5@cn.bosch.com"
-    ]
+    "recepients": ["Test.EST@bcn.bosch.com", "jin.zhu5@cn.bosch.com"],
 }
 SLOT_1 = {
     # putty channel
