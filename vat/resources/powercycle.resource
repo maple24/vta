@@ -1,10 +1,10 @@
 *** Settings ***
 Library    ../api/AgentHelper.py
+Library    ../api/PuttyHelper.py
+Library    ../api/RelayHelper.py
+Library    ../library/GenericHelper.py
 Library    Collections
 Resource    generic.resource
-Library    ../library/PuttyHelper.py
-Library    ../library/GenericHelper.py
-Library    ../library/RelayHelper.py
 
 *** Keywords ***
 Test

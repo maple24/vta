@@ -1,7 +1,7 @@
 *** Settings ***
-Library    ../library/PuttyHelper.py
+Library    ../api/PuttyHelper.py
+Library    ../api/CANoeHelper.py
 Library    ../library/GenericHelper.py
-Library    ../library/CANoeHelper.py
 Library    GeventLibrary
 
 *** Keywords ***

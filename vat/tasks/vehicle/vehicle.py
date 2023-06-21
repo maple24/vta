@@ -9,8 +9,8 @@ import random
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
-from vat.library.PuttyHelper import PuttyHelper
-from vat.library.CANoeHelper import CANoeHelper
+from vat.api.PuttyHelper import PuttyHelper
+from vat.api.CANoeHelper import CANoeHelper
 from vat.library.GenericHelper import GenericHelper
 
 

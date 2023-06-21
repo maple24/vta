@@ -8,12 +8,12 @@ ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 # enable database
 DATABASE = False
 DB_CREDENTIAL = {"drivername": "sqlite", "database": "database.db"}
-# CREDENTIAL = {
+# DB_CREDENTIAL = {
 #     "drivername": "mysql",
-#     "username": "root",
-#     "password": "Boschets123",
-#     "host": "10.178.227.22",
-#     "database": "gmw_v3.5"
+#     "username": "ets1szh",
+#     "password": "estbangbangde",
+#     "host": "10.161.224.58",
+#     "database": "zeekr"
 # }
 # enable mail
 MAIL = False
