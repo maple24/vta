@@ -22,54 +22,40 @@ class DLTHelper:
         """
         Description: Continuously read data from buffer
         """
-        start_flag = b""
         while True:
-            time.sleep(0.5)
             if not self.event_reader.isSet():
                 logger.warning("Serial reader event is cancelled!")
                 break
 
-            nCount = self.dlt_object.inWaiting()
-            if nCount == 0:
-                continue
-
-            data = self.dlt_object.read(nCount)
-            if start_flag != b"":
-                data += start_flag
-            if data.count(b"DLS") == 0:
-                start_flag = data
-                continue
-
-            traces = []
-            tmp = data.split(b"DLS")
-            if data.startswith(b"DLS"):
-                traces = [b"DLS" + ln for ln in tmp if ln.strip() != ""]
-            else:
-                traces.append(tmp[0])
-                traces.extend([b"DLS" + ln for ln in tmp[1:-1] if ln.strip() != ""])
-                start_flag = b"DLS" + tmp[-1]
-            for line in traces:
-                if tmp := self._filter(line):
-                    line = tmp
-                    logger.debug("[{stream}] - {message}", stream="DLTRx", message=line)
-                    now_tick = time.time()
-                    if self.event_monitorTrace.isSet():
-                        self.monitorTrace_queue.put((now_tick, line))
-                    if self.event_waitTrace.isSet():
-                        self.waitTrace_queue.put((now_tick, line))
+            data = self.dlt_object.read_until(expected=b"DLS")
+            if tmp := self._filter(data):
+                line = tmp.strip()
+                logger.debug("[{stream}] - {message}", stream="DLTRx", message=line)
+                now_tick = time.time()
+                if self.event_monitorTrace.isSet():
+                    self.monitorTrace_queue.put((now_tick, line))
+                if self.event_waitTrace.isSet():
+                    self.waitTrace_queue.put((now_tick, line))
 
     def _filter(self, rawBytes):
         data = (
-            rawBytes[8:11]
+            rawBytes[5:8]
             + b" "
-            + rawBytes[22:26]
+            + rawBytes[19:23]
             + b" "
-            + rawBytes[26:30]
+            + rawBytes[23:27]
             + b" "
-            + rawBytes[36:]
+            + rawBytes[33:-3]
         ).decode("utf-8", errors="ignore")
-        if data.count("MAIN") > 0:
-            return
+        # data = (
+        #     rawBytes[5:8]
+        #     + b" "
+        #     + rawBytes[15:19]
+        #     + b" "
+        #     + rawBytes[19:23]
+        #     + b" "
+        #     + rawBytes[28:-3]
+        # ).decode("utf-8", errors="ignore")
         if len(data) < 15:
             return
         return data
@@ -143,7 +129,7 @@ class DLTHelper:
         self.send_command(cmd)
 
         while True:
-            time.sleep(0.5)
+            time.sleep(0.005)
             if time.time() - ts > timeout:
                 logger.warning(
                     f"Max timeout reached, unable to match pattern `{pattern}`!"
@@ -199,6 +185,7 @@ if __name__ == "__main__":
     mdlt = DLTHelper()
     dDlt = {
         "dlt_enabled": True,
-        "dlt_comport": "COM10",
+        "dlt_comport": "COM7",
     }
     mdlt.connect(dDlt)
+    time.sleep(5)
