@@ -38,6 +38,7 @@ class DLTHelper:
                     self.waitTrace_queue.put((now_tick, line))
 
     def _filter(self, rawBytes):
+        # zeerk
         data = (
             rawBytes[5:8]
             + b" "
@@ -47,6 +48,7 @@ class DLTHelper:
             + b" "
             + rawBytes[33:-3]
         ).decode("utf-8", errors="ignore")
+        # gwm
         # data = (
         #     rawBytes[5:8]
         #     + b" "

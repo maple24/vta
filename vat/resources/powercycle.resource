@@ -1,10 +1,9 @@
 *** Settings ***
 Library    ../api/AgentHelper.py
 Library    ../api/PuttyHelper.py
-Library    ../api/RelayHelper.py
+Library    ../api/CANoeHelper.py
 Library    ../library/GenericHelper.py
 Library    Collections
-Resource    generic.resource
 
 *** Keywords ***
 Test
@@ -13,31 +12,6 @@ Test
 
     Log To Console    ${name}
     Should Be Equal    123    1    force failure
-
-INIT
-    [Documentation]    Init all instances
-    [Arguments]    ${CONF}
-    PuttyHelper.Connect    dPutty=${CONF}[dputty]
-    PuttyHelper.Enable Monitor
-    RelayHelper.Init Relay    drelay=${CONF}[drelay]
-
-    DefineGlobal
-
-DEINIT
-    [Documentation]    Deinit all instances
-    PuttyHelper.Disconnect
-    PuttyHelper.Disable Monitor
-
-DefineGlobal
-    [Documentation]    Define global variables
-    ${TESTER}    GenericHelper.Get Username
-    ${BENCHID}    GenericHelper.Get Hostname
-    # ${SOCVersion}    generic.GetSOCVersion
-    # ${SCCVersion}    generic.GetSCCVersion
-    Set Global Variable    ${TESTER}
-    Set Global Variable    ${BENCHID}
-    # Set Global Variable    ${SOCVersion}
-    # Set Global Variable    ${SCCVersion}
 
 CheckDisplay
     [Documentation]    Check profile display using webcam, args: list
@@ -78,3 +52,46 @@ CheckErrorTrace
         ${RES}    ${matched}=    GenericHelper.Match String    ${element}    ${traces}
         Should Not Be Equal    ${RES}    ${True}    Error trace detected! ${element}
     END
+
+ResetbyCMD
+    [Documentation]    Run powercycle with putty command 'bosch_reset'
+
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Unmount is done successfully)    cmd=bosch_reset    timeout=30
+    Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
+    Sleep    40s
+
+GWM_ResetbyCAN
+    [Documentation]    Run powercycle with can signals
+
+    CANoeHelper.Init Canoe    enabled=${True}
+
+    GWM_ShutdownbyCAN
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM killed)    timeout=30
+    Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
+
+    GWM_StartupbyCAN
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Log Type: B)    timeout=60
+    Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
+
+GWM_ShutdownbyCAN
+    [Documentation]    Run powercycle with can signals
+    
+    &{IGOFF}    Create Dictionary    type=sys    namespace=IL    var=Ignition    value=0
+    &{Sleep}    Create Dictionary    type=sys    namespace=NM_CAN1    var=Wakeup    value=0
+    &{DoorClose}    Create Dictionary    type=signal    msg=BCM1    sig=DrvDoorSts    value=0    channel=1    bustype=CAN    
+    &{DoorOpen}    Create Dictionary    type=signal    msg=BCM1    sig=DrvDoorSts    value=1    channel=1    bustype=CAN
+    CANoeHelper.Set Can Variable    ${IGOFF}
+    Sleep    0.1s
+    CANoeHelper.Set Can Variable    ${DoorOpen}
+    Sleep    0.1s
+    CANoeHelper.Set Can Variable    ${DoorClose}
+    Sleep    0.1s
+    CANoeHelper.Set Can Variable    ${Sleep}
+
+GWM_StartupbyCAN
+    [Documentation]    ...
+
+    &{IGON}    Create Dictionary    type=sys    namespace=IL    var=Ignition    value=2
+    &{WakeUP}    Create Dictionary    type=sys    namespace=NM_CAN1    var=Wakeup    value=1
+    CANoeHelper.Set Can Variable    ${IGON}
+    CANoeHelper.Set Can Variable    ${WakeUP}

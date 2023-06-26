@@ -1,11 +1,13 @@
 *** Settings ***
 Resource    ../resources/powercycle.resource
+Resource    ../resources/generic.resource
 Library    ../api/TSmasterAPI/TSClient.py
+
 Variables    ../conf/bench_setup.py
 Variables    ../conf/powercycle_setup.py
 
-Suite Setup    powercycle.INIT    ${CONF_BASE}
-Suite Teardown    powercycle.DEINIT
+Suite Setup    generic.INIT    ${CONF_BASE}
+Suite Teardown    generic.DEINIT
 
 *** Variables ***
 ${SLOT}    SLOT_1
@@ -18,17 +20,18 @@ StepTest
     [Tags]
     [Template]    powercycle.Test
     ${STEPS}[${TEST_NAME}][name]
+    ${STEPS}[${TEST_NAME}][name]
 
 StepCheckPowerCycle
     [Tags]
     
-    Run Keyword If    '${STEPS}[${TEST_NAME}][type]'=='command'    generic.ResetbyCMD
+    Run Keyword If    '${STEPS}[${TEST_NAME}][type]'=='command'    powercycle.ResetbyCMD
     IF    '${STEPS}[${TEST_NAME}][type]'=='network'
         # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30    login=${False}
         # Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
-        RelayHelper.Set Relay Port    dev_type=xinke    port_index=${CONF_BASE}[drelay][xinke][channel]    state_code=1
+        RelayHelper.Set Relay Port    dev_type=xinke    port_index=1    state_code=1
         Sleep    0.5s
-        RelayHelper.Set Relay Port    dev_type=xinke    port_index=${CONF_BASE}[drelay][xinke][channel]    state_code=0
+        RelayHelper.Set Relay Port    dev_type=xinke    port_index=1    state_code=0
         Sleep    0.5s
 
         TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]

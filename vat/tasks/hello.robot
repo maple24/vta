@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../resources/powercycle.resource
+Resource    ../resources/generic.resource
 Variables    ../conf/bench_setup.py
 
 # Test Setup    setups.INIT    ${${SLOT}}
