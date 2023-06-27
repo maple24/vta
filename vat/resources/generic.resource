@@ -7,23 +7,34 @@ Library    ../library/GenericHelper.py
 HelloWorld
     [Documentation]    helloworld
     Log To Console    helloworld
-    
+Putty_CtrlC
+    PuttyHelper.Send Command    \x03
+ACC_ON
+    RelayHelper.Set Relay Port    dev_type=xinke    port_index=2    state_code=0
+ACC_OFF
+    RelayHelper.Set Relay Port    dev_type=xinke    port_index=2    state_code=1
+Route_Carlauncher
+    GenericHelper.Prompt Command    adb shell am start com.android.car.carlauncher/.CarLauncher
+UDisk2PC
+    RelayHelper.Set Relay Port    dev_type=multiplexer    port_index=14
+UDisk2DHU
+    RelayHelper.Set Relay Port    dev_type=multiplexer    port_index=24
 INIT
     [Documentation]    Init all instances
+
     [Arguments]    ${CONF}
     PuttyHelper.Connect    dPutty=${CONF}[dputty]
     PuttyHelper.Enable Monitor
     RelayHelper.Init Relay    drelay=${CONF}[drelay]
-
     DefineGlobal
-
 DEINIT
     [Documentation]    Deinit all instances
+
     PuttyHelper.Disconnect
     PuttyHelper.Disable Monitor
-
 DefineGlobal
     [Documentation]    Define global variables
+
     ${TESTER}    GenericHelper.Get Username
     ${BENCHID}    GenericHelper.Get Hostname
     # ${SOCVersion}    generic.GetSOCVersion
@@ -32,15 +43,13 @@ DefineGlobal
     Set Global Variable    ${BENCHID}
     # Set Global Variable    ${SOCVersion}
     # Set Global Variable    ${SCCVersion}
-
 GetSOCVersion
     [Documentation]    Get SOC version with putty command 'cat buildinfo.txt'
-    
+
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=MAIN_VERSION\=(.*)    cmd=cat /mnt/Buildinfo.txt    timeout=10
     Should Be Equal    ${RES}    ${True}    Unable to get SOC version
     
     RETURN    ${MATCHED}
-
 GetSCCVersion
     [Documentation]    Get SCC version with putty command 'swup_scc -i 1'
 

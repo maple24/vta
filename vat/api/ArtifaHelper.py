@@ -21,6 +21,8 @@ ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 
 
 class ArtifaHelper:
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
+
     def __init__(
         self,
         repo: str = "zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-fc_main_dev/daily/",
@@ -41,6 +43,12 @@ class ArtifaHelper:
     def _get_url(self, package) -> str:
         return self.server + self.repo + package
 
+    def get_root(self) -> str:
+        return self.dstfolder
+
+    def get_swpath(self, name: str = "all_images_8295") -> str:
+        return os.path.join(self.dstfolder, name)
+
     def connection_test(self) -> None:
         path = ArtifactoryPath(self.server + self.repo, auth=self.auth, verify=False)
         try:
@@ -50,7 +58,7 @@ class ArtifaHelper:
         except:
             raise
 
-    def downloader(self, url: str) -> str:
+    def download(self, url: str) -> str:
         chunk_size = 1024 * 1024
         t_s = time.time()
         arti_path = ArtifactoryPath(url, auth=self.auth, verify=False)
@@ -192,5 +200,5 @@ class ArtifaHelper:
 if __name__ == "__main__":
     ar = ArtifaHelper()
     # f_lastModified = ar.get_latest()
-    # package = ar.downloader(f_lastModified["url"])
+    # package = ar.download(f_lastModified["url"])
     # ArtifaHelper.unzip(package)

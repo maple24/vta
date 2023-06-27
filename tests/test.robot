@@ -35,3 +35,7 @@ Test2
     TSClient.Get Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts
     TSClient.Get Signal    0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB
     TSClient.Stop Simulation
+
+Test3
+    ${test}    Set Variable    ${None}
+    Should Not Be Equal As Strings    ${test}    ${None}

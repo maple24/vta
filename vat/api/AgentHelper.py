@@ -5,6 +5,8 @@ from loguru import logger
 
 
 class AgentHelper:
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
+
     def __init__(self):
         self.host = "localhost"
         self.port = 6666
