@@ -5,8 +5,9 @@ Resource    ../resources/swup.resource
 
 Library    ../api/AgentHelper.py
 Library    ../api/RelayHelper.py
-Library    ../api/TSmasterAPI/TSClient.py
 Library    ../library/FileManager.py
+Library    ../library/GenericHelper.py
+Library    ../api/TSmasterAPI/TSClient.py
 Library    OperatingSystem
 
 Variables    ../conf/bench_setup.py
@@ -24,7 +25,7 @@ SWUP
     [Documentation]    software upgrade
     ${image}    qvta.Download_Latest
     generic.UDisk2PC
-    ${udisk}    FileManager.Get Removable Drives
+    ${udisk}    GenericHelper.Get Removable Drives
     FileManager.Copy Directory    ${image}    ${udisk}//all_images
     generic.UDisk2DHU
 

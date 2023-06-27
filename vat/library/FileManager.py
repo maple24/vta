@@ -1,9 +1,6 @@
-from typing import Optional
+from typing import Optional, Tuple
 import os
 import shutil
-import win32api
-import win32con
-import win32file
 from loguru import logger
 from GenericHelper import GenericHelper
 
@@ -20,7 +17,7 @@ class FileManager:
         else:
             logger.success(f"Copied file from {source} to {destination}.")
 
-    def copy_directory(self, source, destination):
+    def copy_directory(self, source: str, destination: str) -> None:
         source, destination = self._prepare_copy_and_move_directory(source, destination)
         try:
             shutil.copytree(source, destination)
@@ -31,7 +28,7 @@ class FileManager:
         else:
             logger.success(f"Copied directory from {source} to {destination}.")
 
-    def move_directory(self, source, destination):
+    def move_directory(self, source: str, destination: str) -> None:
         source, destination = self._prepare_copy_and_move_directory(source, destination)
         try:
             shutil.move(source, destination)
@@ -42,7 +39,7 @@ class FileManager:
         else:
             logger.success(f"Moved directory from {source} to {destination}.")
 
-    def _prepare_copy_and_move_directory(self, source, destination):
+    def _prepare_copy_and_move_directory(self, source: str, destination: str) -> Tuple[str, str]:
         source = self._absnorm(source)
         destination = self._absnorm(destination)
         if not os.path.exists(source):
@@ -60,24 +57,24 @@ class FileManager:
                 os.makedirs(parent)
         return source, destination
 
-    def _absnorm(self, path):
+    def _absnorm(self, path: str) -> str:
         path = self._normalize_path(path)
         try:
             return self._abspath(path)
         except ValueError:
             return path
 
-    def _normalize_path(self, path, case_normalize=False):
+    def _normalize_path(self, path: str, case_normalize: bool=False) -> str:
         path = os.path.normpath(os.path.expanduser(path.replace("/", os.sep)))
         if case_normalize:
             path = os.path.normcase(path)
         return path or "."
 
-    def _abspath(self, path, case_normalize=False):
+    def _abspath(self, path: str, case_normalize: bool=False) -> str:
         path = self._normpath(path, case_normalize)
         return path
 
-    def _normpath(self, path, case_normalize=False):
+    def _normpath(self, path: str, case_normalize: bool=False) -> str:
         path = os.path.normpath(path)
         if case_normalize:
             path = path.lower()
@@ -91,16 +88,6 @@ class FileManager:
             logger.error("Path does not exist!")
             return
         return os.listdir(path)
-
-    @staticmethod
-    def get_removable_drives() -> str:
-        drives = [i for i in win32api.GetLogicalDriveStrings().split("\x00") if i]
-        rdrives = [
-            d for d in drives if win32file.GetDriveType(d) == win32con.DRIVE_REMOVABLE
-        ]
-        if len(rdrives) == 0:
-            logger.error("No removable drives found!")
-        return rdrives[0]
 
     @staticmethod
     def is_adb_available(deviceID: str = "1234567") -> bool:

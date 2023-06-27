@@ -7,6 +7,9 @@ from loguru import logger
 import os
 import socket
 import serial
+import win32api
+import win32con
+import win32file
 
 
 class GenericHelper:
@@ -19,6 +22,16 @@ class GenericHelper:
     @staticmethod
     def get_username() -> str:
         return os.getlogin()
+
+    @staticmethod
+    def get_removable_drives() -> str:
+        drives = [i for i in win32api.GetLogicalDriveStrings().split("\x00") if i]
+        rdrives = [
+            d for d in drives if win32file.GetDriveType(d) == win32con.DRIVE_REMOVABLE
+        ]
+        if len(rdrives) == 0:
+            logger.error("No removable drives found!")
+        return rdrives[0]
 
     @staticmethod
     def serial_command(
