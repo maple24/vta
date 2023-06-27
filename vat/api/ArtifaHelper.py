@@ -198,7 +198,9 @@ class ArtifaHelper:
 
 
 if __name__ == "__main__":
-    ar = ArtifaHelper()
-    # f_lastModified = ar.get_latest()
+    ar = ArtifaHelper(repo='zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-fc_main_dev/daily/', pattern='_userdebug.tgz$')
+    f_lastModified = ar.get_latest()
+    # monitor
+    
     # package = ar.download(f_lastModified["url"])
     # ArtifaHelper.unzip(package)

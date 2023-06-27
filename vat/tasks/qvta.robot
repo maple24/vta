@@ -22,7 +22,6 @@ ${CONF_BASE}    ${${SLOT}}
 *** Test Cases ***
 SWUP
     [Documentation]    software upgrade
-    
     ${image}    qvta.Download_Latest
     generic.UDisk2PC
     ${udisk}    FileManager.Get Removable Drives
@@ -37,32 +36,36 @@ Media_Picture
 
 BSP_Camera_DMS
     [Documentation]    check DMS camera
-    # turn on camera
     qvta.Open_DMS
-    # check camera display
-    AgentHelper.Req To Test Profile    1    DMS
+    ${RES}    AgentHelper.Req To Test Profile    1    DMS
     generic.Putty_CtrlC
+    Should Be Equal    ${RES}    ${0}    Profile does not match!
 
 BSP_Camera_OMS
     [Documentation]    check OMS camera
     qvta.Open_OMS
-    AgentHelper.Req To Test Profile    1    OMS
+    ${RES}    AgentHelper.Req To Test Profile    1    OMS
     generic.Putty_CtrlC
+    Should Be Equal    ${RES}    ${0}    Profile does not match!
 
 BSP_Display_CSD
     [Documentation]    check CSD display
     generic.Route_Carlauncher
-    AgentHelper.Req To Test Profile    1    Android_Home
+    ${RES}    AgentHelper.Req To Test Profile    1    Android_Home
+    Should Be Equal    ${RES}    ${0}    Profile does not match!
 
 BSP_Display_Backlight
     [Documentation]    check backlight in CSD
     qvta.Open_Backlight
-    AgentHelper.Req To Test Profile    1    Backlight
+    ${RES}    AgentHelper.Req To Test Profile    1    Backlight
     generic.Putty_CtrlC
+    Should Be Equal    ${RES}    ${0}    Profile does not match!
 
 LCM_PowerONOFF
     [Documentation]    power on/off switch via ACC
     generic.ACC_OFF
-    AgentHelper.Req To Test Profile    1    Black_Screen
+    ${RES1}    AgentHelper.Req To Test Profile    1    Black_Screen
+    Should Be Equal    ${RES1}    ${0}    Profile does not match!
     generic.ACC_ON
-    AgentHelper.Req To Test Profile    1    Android_Home
+    ${RES2}    AgentHelper.Req To Test Profile    1    Android_Home
+    Should Be Equal    ${RES2}    ${0}    Profile does not match!

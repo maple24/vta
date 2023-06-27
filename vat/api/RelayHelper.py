@@ -18,7 +18,7 @@ class RelayHelper:
         self.dev_enabled = drelay["relay_enabled"]
         device_count = 0
         if not self.dev_enabled:
-            logger.warning("[Relay] Not relay enabled this execution !")
+            logger.warning("[Relay] No relay enabled this execution !")
             return
 
         if "xinke" in drelay.keys():
