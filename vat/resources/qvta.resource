@@ -17,16 +17,19 @@ Download Latest
     Directory Should Exist    ${image}    Image directory does not exist!
     RETURN    ${image}
 Open DMS
-    PuttyHelper.Send Command    /mnt/bin/camera/qcarcam_test/qcarcam_test -config=dms_test.xml
+    PuttyHelper.Send Command    cd /mnt/bin/camera/qcarcam_test
+    PuttyHelper.Send Command    ./qcarcam_test -config=dms_test.xml
 Open OMS
-    PuttyHelper.Send Command    /mnt/bin/camera/qcarcam_test/qcarcam_test -config=oms1_test.xml
+    PuttyHelper.Send Command    cd /mnt/bin/camera/qcarcam_test
+    PuttyHelper.Send Command    ./qcarcam_test -config=oms1_test.xml
 Open Backlight
     PuttyHelper.Send Command    sw-vsync -display=5
-ADB Enable
+Mount USB to Android
     # mount usb2.0 to android
     PuttyHelper.Send Command    bosch_swdl_assistant -o "{\"type\":\"usb_owner\", \"port\":0, \"owner\":3, \"io\":2}"
     # reset
     PuttyHelper.Send Command    bosch reset
+    Sleep    40s
 Check DLT
     # MCU reset reason
 

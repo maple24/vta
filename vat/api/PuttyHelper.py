@@ -170,7 +170,7 @@ class PuttyHelper:
             if not res:
                 continue
             res, _ = self.wait_for_trace(
-                "(Logging in with home .*)", self.password, 5, False
+                "(#)|(Logging in with home .*)", self.password, 5, False
             )
             if res:
                 logger.success("Success to login")

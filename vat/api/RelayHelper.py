@@ -181,13 +181,14 @@ class RelayHelper:
         finally:
             obj_multiplexer.close()
 
-    def _set_cleware_port(self, port_index, state_code, dev_id=None):
+    def _set_cleware_port(self, port_index, state_code):
         """
         Description: Set the relay port close or open
         :param "port_index" the relay port to be manipulated (1 ~ 8)
         :param "state_code" port state, "open | close" , "0 | 1". "on | off"
         :param "dev_id" the cleware id to work on
         """
+        dev_id = self.cleware_id
         if dev_id is None:
             logger.error("[SetCleware] INVALID Cleware id assigned !")
             return
