@@ -4,56 +4,44 @@ Library    ../api/RelayHelper.py
 Library    ../library/GenericHelper.py
 
 *** Keywords ***
-HelloWorld
+Hello World
     [Documentation]    helloworld
     Log To Console    helloworld
-Putty_CtrlC
+Randomly Run Keywords
+    [Documentation]    run keywords randomly
+    [Arguments]    ${keyword_list}
+    ${random_keyword}    Evaluate    random.choice($keyword_list)
+    Run Keyword    ${random_keyword}
+Putty CtrlC
     PuttyHelper.Send Command    \x03
-ACC_ON
+ACC ON
     RelayHelper.Set Relay Port    dev_type=xinke    port_index=2    state_code=0
-ACC_OFF
+ACC OFF
     RelayHelper.Set Relay Port    dev_type=xinke    port_index=2    state_code=1
-Route_Carlauncher
+Route Carlauncher
     GenericHelper.Prompt Command    adb shell am start com.android.car.carlauncher/.CarLauncher
-UDisk2PC
+UDisk to PC
     RelayHelper.Set Relay Port    dev_type=multiplexer    port_index=14
-UDisk2DHU
+UDisk to DHU
     RelayHelper.Set Relay Port    dev_type=multiplexer    port_index=24
 INIT
     [Documentation]    Init all instances
-
     [Arguments]    ${CONF}
     PuttyHelper.Connect    dPutty=${CONF}[dputty]
     PuttyHelper.Enable Monitor
     RelayHelper.Init Relay    drelay=${CONF}[drelay]
-    DefineGlobal
+    Define Global
 DEINIT
     [Documentation]    Deinit all instances
-
     PuttyHelper.Disconnect
     PuttyHelper.Disable Monitor
-DefineGlobal
+Define Global
     [Documentation]    Define global variables
-
     ${TESTER}    GenericHelper.Get Username
     ${BENCHID}    GenericHelper.Get Hostname
-    # ${SOCVersion}    generic.GetSOCVersion
-    # ${SCCVersion}    generic.GetSCCVersion
+    # ${SOCVersion}    qvta.Get SOC Version
+    # ${SCCVersion}    qvta.Get SCC Version
     Set Global Variable    ${TESTER}
     Set Global Variable    ${BENCHID}
     # Set Global Variable    ${SOCVersion}
     # Set Global Variable    ${SCCVersion}
-GetSOCVersion
-    [Documentation]    Get SOC version with putty command 'cat buildinfo.txt'
-
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=MAIN_VERSION\=(.*)    cmd=cat /mnt/Buildinfo.txt    timeout=10
-    Should Be Equal    ${RES}    ${True}    Unable to get SOC version
-    
-    RETURN    ${MATCHED}
-GetSCCVersion
-    [Documentation]    Get SCC version with putty command 'swup_scc -i 1'
-
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=SCC FW Version Info: (.*)    cmd=swup_scc -i 1    timeout=10
-    Should Be Equal    ${RES}    ${True}    Unable to get SCC version
-    
-    RETURN    ${MATCHED}

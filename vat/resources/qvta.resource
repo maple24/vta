@@ -6,9 +6,8 @@ Library    ../api/ArtifaHelper.py    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-
 Library    OperatingSystem
 
 *** Keywords ***
-Download_Latest
+Download Latest
     [Documentation]    download latest version from artifactory and unzip
-
     ${source}    ArtifaHelper.Get Latest
     Should Not Be Equal As Strings    ${source}    ${None}    Fail to get latest version!
     ${package}    ArtifaHelper.Download    ${source}[url]
@@ -16,18 +15,28 @@ Download_Latest
     ArtifaHelper.Unzip    ${package}
     ${image}    ArtifaHelper.Get Swpath    name=all_images_8295
     Directory Should Exist    ${image}    Image directory does not exist!
-
     RETURN    ${image}
-Open_DMS
+Open DMS
     PuttyHelper.Send Command    /mnt/bin/camera/qcarcam_test/qcarcam_test -config=dms_test.xml
-Open_OMS
+Open OMS
     PuttyHelper.Send Command    /mnt/bin/camera/qcarcam_test/qcarcam_test -config=oms1_test.xml
-Open_Backlight
+Open Backlight
     PuttyHelper.Send Command    sw-vsync -display=5
-ADB_Enable
+ADB Enable
     # mount usb2.0 to android
     PuttyHelper.Send Command    bosch_swdl_assistant -o "{\"type\":\"usb_owner\", \"port\":0, \"owner\":3, \"io\":2}"
     # reset
     PuttyHelper.Send Command    bosch reset
-CheckDLT
+Check DLT
     # MCU reset reason
+
+Get SOC Version
+    [Documentation]    Get SOC version with putty command 'cat buildinfo.txt'
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=MAIN_VERSION\=(.*)    cmd=cat /mnt/Buildinfo.txt    timeout=10
+    Should Be Equal    ${RES}    ${True}    Unable to get SOC version
+    RETURN    ${MATCHED}
+Get SCC Version
+    [Documentation]    Get SCC version with putty command 'swup_scc -i 1'
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=SCC FW Version Info: (.*)    cmd=swup_scc -i 1    timeout=10
+    Should Be Equal    ${RES}    ${True}    Unable to get SCC version
+    RETURN    ${MATCHED}

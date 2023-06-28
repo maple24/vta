@@ -25,7 +25,7 @@ StepTest
 StepCheckPowerCycle
     [Tags]
     
-    Run Keyword If    '${STEPS}[${TEST_NAME}][type]'=='command'    powercycle.ResetbyCMD
+    Run Keyword If    '${STEPS}[${TEST_NAME}][type]'=='command'    powercycle.Reset by CMD
     IF    '${STEPS}[${TEST_NAME}][type]'=='network'
         # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30    login=${False}
         # Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
@@ -43,20 +43,20 @@ StepCheckPowerCycle
 
 StepCheckCrash
     [Tags]
-    [Template]    powercycle.CheckCrash
+    [Template]    powercycle.Check Crash
     ${STEPS}[${TEST_NAME}][ex_filters]
     
 StepCheckNormalTrace
     [Tags]
-    [Template]    powercycle.CheckNormalTrace
+    [Template]    powercycle.Check Normal Trace
     ${STEPS}[${TEST_NAME}][patterns]
 
 StepCheckErrorTrace
     [Tags]
-    [Template]    powercycle.CheckErrorTrace
+    [Template]    powercycle.Check Error Trace
     ${STEPS}[${TEST_NAME}][patterns]
 
 StepCheckDisplays
     [Tags]
-    [Template]    powercycle.CheckDisplay
+    [Template]    powercycle.Check Display
     ${STEPS}[${TEST_NAME}][displays]

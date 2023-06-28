@@ -1,5 +1,8 @@
 import serial
+import os
 from loguru import logger
+
+ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 
 
 class RelayHelper:
@@ -7,12 +10,9 @@ class RelayHelper:
 
     def __init__(self):
         self.dev_enabled = None
-        self.cleware_batch = None
-        self.cleware_id = None
-        self.mcube_comport = None
+        self.cleware_executor = None
         self.xinke_comport = None
         self.multiplexer_comport = None
-        self.mcube_mode = None
 
     def init_relay(self, drelay):
         self.dev_enabled = drelay["relay_enabled"]
@@ -26,19 +26,25 @@ class RelayHelper:
                 device_count += 1
                 self.xinke_comport = drelay["xinke"]["comport"].upper()
                 logger.info("[Relay.Xinke] Xinke controller initialized")
-            else:
-                logger.info("xinke not enabled,skip")
 
         if "multiplexer" in drelay.keys():
             if drelay["multiplexer"]["enabled"]:
                 device_count += 1
                 self.multiplexer_comport = drelay["multiplexer"]["comport"].upper()
                 logger.info("[Relay.Multiplexer] Multiplexer controller initialized")
-            else:
-                logger.info("multiplexer not enabled,skip")
+
+        if "cleware" in drelay.keys():
+            if drelay['cleware']['enabled']:
+                device_count += 1
+                self.cleware_executor = os.path.join(ROOT, "bin", "cleware", "USBswitchCmd.exe")
+                if not os.path.exists(self.cleware_executor):
+                    logger.error("[Relay.Cleware] Not found Cleware executor!")
+                    exit(1)
+                self.cleware_id = drelay["cleware"]["dev_id"]
+                logger.info("[Relay.Cleware] Cleware controller initialized")
 
         if device_count == 0:
-            logger.error("Error! No valid relay set!")
+            logger.warning("No valid relay set!")
 
     def __set_xinke_port(self, port_index, state_code, xinke_type="KBC2105"):
         """
@@ -175,6 +181,31 @@ class RelayHelper:
         finally:
             obj_multiplexer.close()
 
+    def _set_cleware_port(self, port_index, state_code, dev_id=None):
+        """
+        Description: Set the relay port close or open
+        :param "port_index" the relay port to be manipulated (1 ~ 8)
+        :param "state_code" port state, "open | close" , "0 | 1". "on | off"
+        :param "dev_id" the cleware id to work on
+        """
+        if dev_id is None:
+            logger.error("[SetCleware] INVALID Cleware id assigned !")
+            return
+
+        port_index = int(port_index)
+        state_code = str(state_code).strip()
+        if state_code != "0" and state_code != "1":
+            logger.error(
+                f"[SetCleware] INVALID Cleware state code assigned, '{state_code}' !"
+            )
+            return
+
+        sCmd = f"cmd.exe /c {self.cleware_executor} -n {dev_id} {state_code} -# {port_index - 1} -d"
+        os.system(sCmd)
+        logger.info(
+            f"[SetCleware] Set Cleware dev_id={dev_id}, port={port_index}, state={state_code}"
+        )
+
     def set_relay_port(self, dev_type=None, **kwargs):
         """
         Description: This is generic function entry for relay controlling
@@ -189,9 +220,10 @@ class RelayHelper:
 
         if dev_type == "xinke":
             return self.__set_xinke_port(**kwargs)
-
         if dev_type == "multiplexer":
             return self.__set_multiplexer_port(**kwargs)
+        if dev_type == "cleware":
+            return self._set_cleware_port(**kwargs)
 
 
 if __name__ == "__main__":
@@ -201,7 +233,6 @@ if __name__ == "__main__":
         "multiplexer": {"enabled": False, "comport": "COM13"},
         "cleware": {"enabled": False, "dev_id": "710452"},
         "xinke": {"enabled": False, "comport": "COM10"},
-        "mcube": {"enabled": True, "comport": "COM15", "run_mode": "2*4"},
     }
     obj_relay.init_relay(drelay)
     obj_relay.set_relay_port(dev_type="mcube", port_index="1")

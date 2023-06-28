@@ -14,7 +14,7 @@ ${body}    This is mail body!
 *** Test Cases ***
 TC1
     [Tags]    example
-    generic.HelloWorld
+    generic.Hello World
 
 # TC2
 #     @{list}    Create List    dumping to hello.core    dumping to world.core

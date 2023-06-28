@@ -39,7 +39,9 @@ class FileManager:
         else:
             logger.success(f"Moved directory from {source} to {destination}.")
 
-    def _prepare_copy_and_move_directory(self, source: str, destination: str) -> Tuple[str, str]:
+    def _prepare_copy_and_move_directory(
+        self, source: str, destination: str
+    ) -> Tuple[str, str]:
         source = self._absnorm(source)
         destination = self._absnorm(destination)
         if not os.path.exists(source):
@@ -64,17 +66,17 @@ class FileManager:
         except ValueError:
             return path
 
-    def _normalize_path(self, path: str, case_normalize: bool=False) -> str:
+    def _normalize_path(self, path: str, case_normalize: bool = False) -> str:
         path = os.path.normpath(os.path.expanduser(path.replace("/", os.sep)))
         if case_normalize:
             path = os.path.normcase(path)
         return path or "."
 
-    def _abspath(self, path: str, case_normalize: bool=False) -> str:
+    def _abspath(self, path: str, case_normalize: bool = False) -> str:
         path = self._normpath(path, case_normalize)
         return path
 
-    def _normpath(self, path: str, case_normalize: bool=False) -> str:
+    def _normpath(self, path: str, case_normalize: bool = False) -> str:
         path = os.path.normpath(path)
         if case_normalize:
             path = path.lower()
