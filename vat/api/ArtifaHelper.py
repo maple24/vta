@@ -76,7 +76,7 @@ class ArtifaHelper:
                     fo.write(piece)
                     fo.flush()
                     count += 1
-                    print(f"Downloading progress - [{count}MB/{file_size}MB]")
+                    logger.debug(f"Downloading progress - [{count}MB/{file_size}MB]")
                 else:
                     logger.success(f"OK!Download file success - {local_file}")
                     break

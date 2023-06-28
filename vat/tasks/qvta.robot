@@ -7,7 +7,6 @@ Library    ../api/AgentHelper.py
 Library    ../api/RelayHelper.py
 Library    ../library/FileManager.py
 Library    ../library/GenericHelper.py
-Library    ../api/TSmasterAPI/TSClient.py
 Library    OperatingSystem
 
 Variables    ../conf/bench_setup.py
