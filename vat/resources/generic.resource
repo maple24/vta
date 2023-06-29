@@ -16,7 +16,7 @@ Randomly Run Keywords
     ${random_keyword}    Evaluate    random.choice($keyword_list)
     Run Keyword    ${random_keyword}
 Putty CtrlC
-    PuttyHelper.Send Command    \x03
+    PuttyHelper.Send Command And Return Traces    \x03
 ACC ON
     RelayHelper.Set Relay Port    dev_type=xinke    port_index=2    state_code=0
 ACC OFF
