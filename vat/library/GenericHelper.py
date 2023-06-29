@@ -117,11 +117,11 @@ class GenericHelper:
             match = re.search(pattern, string)
             if match:
                 match_data = match.groups()
-                logger.info("Regex matches: ", match_data)
+                logger.info(f"Regex matches: {match_data}")
                 matched.append(match_data)
         if matched:
             return True, matched
-        logger.info("Not matched raw string:", data)
+        logger.info(f"Not matched raw string: {data}")
         return False, None
 
 

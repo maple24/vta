@@ -30,4 +30,3 @@ SWUP Execution
     generic.Randomly Run Keywords    ${keyword_list}
     swup.Check Image    ${image_name}
     swup.Enter Recovery Mode
-    swup.Triger Upgrade

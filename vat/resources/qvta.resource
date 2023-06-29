@@ -6,6 +6,17 @@ Library    ../api/ArtifaHelper.py    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-
 Library    OperatingSystem
 
 *** Keywords ***
+Mount USB to Android
+    # mount usb2.0 to android
+    PuttyHelper.Send Command    bosch_swdl_assistant -o "{\"type\":\"usb_owner\", \"port\":0, \"owner\":3, \"io\":2}"
+    PuttyHelper.Send Command    sync
+    PuttyHelper.Send Command    bosch reset
+    Sleep    40s
+    ${data}    GenericHelper.Prompt Command    adb root
+    ${data}    GenericHelper.Prompt Command    adb shell 'echo 0 > /sys/devices/platform/soc/soc:usbpower/usb1_pwr_en'
+    ${data}    GenericHelper.Prompt Command    adb shell 'mount | grep public'
+    ${RES}    ${_}    GenericHelper.Match String    (type vfat)    ${data}
+    Should Be Equal    ${RES}    ${True}
 Download Latest
     [Documentation]    download latest version from artifactory and unzip
     ${source}    ArtifaHelper.Get Latest
@@ -16,6 +27,8 @@ Download Latest
     ${image}    ArtifaHelper.Get Swpath    name=all_images_8295
     Directory Should Exist    ${image}    Image directory does not exist!
     RETURN    ${image}
+Exit Camera
+    PuttyHelper.Send Command    e
 Open DMS
     PuttyHelper.Send Command    cd /mnt/bin/camera/qcarcam_test
     PuttyHelper.Send Command    ./qcarcam_test -config=dms_test.xml
@@ -24,15 +37,11 @@ Open OMS
     PuttyHelper.Send Command    ./qcarcam_test -config=oms1_test.xml
 Open Backlight
     PuttyHelper.Send Command    sw-vsync -display=5
-Mount USB to Android
-    # mount usb2.0 to android
-    PuttyHelper.Send Command    bosch_swdl_assistant -o "{\"type\":\"usb_owner\", \"port\":0, \"owner\":3, \"io\":2}"
-    # reset
-    PuttyHelper.Send Command    bosch reset
-    Sleep    40s
 Check DLT
     # MCU reset reason
-
+Open Picture in USB
+    GenericHelper.Prompt Command    adb shell input tap 50 577
+    GenericHelper.Prompt Command    adb shell input tap 360 375
 Get SOC Version
     [Documentation]    Get SOC version with putty command 'cat buildinfo.txt'
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=MAIN_VERSION\=(.*)    cmd=cat /mnt/Buildinfo.txt    timeout=10

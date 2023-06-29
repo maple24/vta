@@ -25,3 +25,6 @@ TC1
 #         Log To Console    ${element}[0]
 #         List Should Contain Value    ${ex_filters}    ${element}[0]    Detect crash ${element}[0]!
 #     END
+
+TC3
+    Wait Until Keyword Succeeds    1 minutes    10 sec    generic.Hello World

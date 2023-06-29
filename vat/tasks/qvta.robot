@@ -17,6 +17,7 @@ Suite Teardown    generic.DEINIT
 *** Variables ***
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
+${SWUP_timeout}    20 minutes
 
 
 *** Test Cases ***
@@ -28,8 +29,8 @@ SWUP
     FileManager.Copy Directory    ${image}    ${udisk}//all_images
     generic.UDisk to DHU
     swup.Enter Recovery Mode
-    swup.Triger Upgrade
-
+    Wait Until Keyword Succeeds    ${SWUP_timeout}    10 sec    swup.Check SWUP Success
+    
 Media Picture
     [Documentation]    open picture in USB3.0
     # open picture
@@ -40,14 +41,14 @@ BSP Camera DMS
     [Documentation]    check DMS camera
     qvta.Open DMS
     ${RES}    AgentHelper.Req To Test Profile    1    DMS
-    generic.Putty CtrlC
+    qvta.Exit Camera
     Should Be Equal    ${RES}    ${0}    Profile does not match!
 
 BSP Camera OMS
     [Documentation]    check OMS camera
     qvta.Open OMS
     ${RES}    AgentHelper.Req To Test Profile    1    OMS
-    generic.Putty CtrlC
+    qvta.Exit Camera
     Should Be Equal    ${RES}    ${0}    Profile does not match!
 
 BSP Display CSD
@@ -60,7 +61,7 @@ BSP Display Backlight
     [Documentation]    check backlight in CSD
     qvta.Open Backlight
     ${RES}    AgentHelper.Req To Test Profile    1    Backlight
-    generic.Putty CtrlC
+    qvta.Exit Camera
     Should Be Equal    ${RES}    ${0}    Profile does not match!
 
 LCM PowerONOFF

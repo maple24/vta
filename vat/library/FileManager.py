@@ -92,13 +92,17 @@ class FileManager:
         return os.listdir(path)
 
     @staticmethod
+    def get_adb_device() -> Optional[list]:
+        ...
+
+    @staticmethod
     def is_adb_available(deviceID: str = "1234567") -> bool:
         data = GenericHelper.prompt_command(cmd="adb devices")
-        res, matched = GenericHelper.match_string("(.+)\s+device\s+$", data)
+        res, matched = GenericHelper.match_string("(.+)\s+device$", data)
         if not res:
             logger.warning("No adb devices found!")
             return False
-        if deviceID in matched:
+        if deviceID in [x[0] for x in matched]:
             logger.success(f"ADB {deviceID} is available!")
             return True
         logger.error(f"ADB {deviceID} is not available!")

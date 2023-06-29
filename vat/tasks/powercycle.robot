@@ -1,7 +1,9 @@
 *** Settings ***
 Resource    ../resources/powercycle.resource
 Resource    ../resources/generic.resource
-Library    ../api/TSmasterAPI/TSClient.py
+Resource    ../resources/qvta.resource
+Library    ../api/AgentHelper.py
+# Library    ../api/TSmasterAPI/TSClient.py
 
 Variables    ../conf/bench_setup.py
 Variables    ../conf/powercycle_setup.py
@@ -29,17 +31,34 @@ StepCheckPowerCycle
     IF    '${STEPS}[${TEST_NAME}][type]'=='network'
         # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30    login=${False}
         # Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
-        RelayHelper.Set Relay Port    dev_type=xinke    port_index=1    state_code=1
+        AgentHelper.Req To Set Voltage    1    1    0
         Sleep    0.5s
-        RelayHelper.Set Relay Port    dev_type=xinke    port_index=1    state_code=0
-        Sleep    0.5s
+        AgentHelper.Req To Set Voltage    1    1    12
+        # RelayHelper.Set Relay Port    dev_type=xinke    port_index=1    state_code=1
+        # Sleep    0.5s
+        # RelayHelper.Set Relay Port    dev_type=xinke    port_index=1    state_code=0
+        # Sleep    0.5s
 
-        TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
-        TSClient.Startup
+        # TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
+        # TSClient.Startup
         # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
         # Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
     END
-    Sleep    55s
+    Sleep    10s
+
+StepCheckOMS
+    [Tags]
+    qvta.Open OMS
+    ${RES}    AgentHelper.Req To Test Profile    1    OMS
+    Should Be Equal    ${RES}    ${0}
+    qvta.Exit Camera
+
+StepCheckDMS
+    [Tags]
+    qvta.Open DMS
+    ${RES}    AgentHelper.Req To Test Profile    1    DMS
+    Should Be Equal    ${RES}    ${0}
+    qvta.Exit Camera
 
 StepCheckCrash
     [Tags]
