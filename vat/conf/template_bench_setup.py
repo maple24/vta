@@ -5,7 +5,6 @@ import os
 import sys
 from loguru import logger
 
-logger.remove()
 logger.add(sys.stdout, level="DEBUG")
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 # enable database

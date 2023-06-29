@@ -121,7 +121,7 @@ class GenericHelper:
                 matched.append(match_data)
         if matched:
             return True, matched
-        logger.info(f"Not matched raw string: {data}")
+        logger.info(f"Not matched pattern {pattern}")
         return False, None
 
 

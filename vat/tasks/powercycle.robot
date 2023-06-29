@@ -41,22 +41,22 @@ StepCheckPowerCycle
 
         # TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
         # TSClient.Startup
-        # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
-        # Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
+        ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
+        Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
     END
     Sleep    10s
 
 StepCheckOMS
     [Tags]
     qvta.Open OMS
-    ${RES}    AgentHelper.Req To Test Profile    1    OMS
+    ${RES}    AgentHelper.Req To Test Profile    ${1}    OMS
     Should Be Equal    ${RES}    ${0}
     qvta.Exit Camera
 
 StepCheckDMS
     [Tags]
     qvta.Open DMS
-    ${RES}    AgentHelper.Req To Test Profile    1    DMS
+    ${RES}    AgentHelper.Req To Test Profile    ${1}    DMS
     Should Be Equal    ${RES}    ${0}
     qvta.Exit Camera
 
