@@ -3,7 +3,8 @@ Library    ../api/PuttyHelper.py
 Library    ../api/RelayHelper.py
 Library    ../library/GenericHelper.py
 Library    ../library/FileManager.py
-Library    ../../.venv/lib/site-packages/robot/libraries/OperatingSystem.py
+Library    ../api/AgentHelper.py
+Library    OperatingSystem
 
 *** Keywords ***
 Hello World
@@ -21,10 +22,14 @@ ACC ON
     RelayHelper.Set Relay Port    dev_type=xinke    port_index=2    state_code=0
 ACC OFF
     RelayHelper.Set Relay Port    dev_type=xinke    port_index=2    state_code=1
-POWER ON
+Power ON with Relay
     RelayHelper.Set Relay Port    dev_type=xinke    port_index=1    state_code=0
-POWER OFF
+Power OFF with Relay
     RelayHelper.Set Relay Port    dev_type=xinke    port_index=1    state_code=1
+Power ON with PPS
+    AgentHelper.Req To Set Voltage    1    1    12
+Power OFF with PPS
+    AgentHelper.Req To Set Voltage    1    1    0
 Route Carlauncher
     GenericHelper.Prompt Command    adb shell am start -n com.android.car.carlauncher/.CarLauncher
 Route Files

@@ -50,9 +50,11 @@ Check Error Trace
 
 Reset by CMD
     [Documentation]    Run powercycle with putty command 'bosch_reset'
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Unmount is done successfully)    cmd=bosch_reset    timeout=30
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=60
     Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
-    Sleep    40s
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
+    Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
+    Sleep    10s
 
 GWM Reset by CAN
     [Documentation]    Run powercycle with can signals

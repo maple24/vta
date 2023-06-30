@@ -3,7 +3,7 @@ Resource    ../resources/powercycle.resource
 Resource    ../resources/generic.resource
 Resource    ../resources/qvta.resource
 Library    ../api/AgentHelper.py
-# Library    ../api/TSmasterAPI/TSClient.py
+Library    ../api/TSmasterAPI/TSClient.py
 
 Variables    ../conf/bench_setup.py
 Variables    ../conf/powercycle_setup.py
@@ -26,24 +26,40 @@ StepTest
 
 StepCheckPowerCycle
     [Tags]
-    
-    Run Keyword If    '${STEPS}[${TEST_NAME}][type]'=='command'    powercycle.Reset by CMD
-    IF    '${STEPS}[${TEST_NAME}][type]'=='network'
-        # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30    login=${False}
-        # Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
-        AgentHelper.Req To Set Voltage    1    1    0
+    IF    '${STEPS}[${TEST_NAME}][type]'=='command'
+        Log    run powercycle with putty command
+        ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30
+        Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
+    ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='pps'
+        Log    run powercycle with pps
+        generic.Power OFF with PPS
         Sleep    0.5s
-        AgentHelper.Req To Set Voltage    1    1    12
-        # RelayHelper.Set Relay Port    dev_type=xinke    port_index=1    state_code=1
-        # Sleep    0.5s
-        # RelayHelper.Set Relay Port    dev_type=xinke    port_index=1    state_code=0
-        # Sleep    0.5s
-
-        # TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
-        # TSClient.Startup
-        ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
-        Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
+        generic.Power ON with PPS
+    ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='relay'
+        Log    run powercycle with pps
+        generic.Power OFF with Relay
+        Sleep    0.5s
+        generic.Power ON with Relay
+        Sleep    5s
+        generic.Power OFF with Relay
+        Sleep    0.5s
+        generic.Power ON with Relay
+    ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='network'
+        Log    run powercycle with network
+        generic.ACC OFF
+        Sleep    0.5s
+        generic.ACC ON
+        Sleep    0.5s
+        TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
+        TSClient.Startup
+    ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='acc'
+        Log    run powercycle with acc
+        generic.ACC OFF
+        Sleep    0.5s
+        generic.ACC ON
     END
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
+    Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
     Sleep    10s
 
 StepCheckOMS
