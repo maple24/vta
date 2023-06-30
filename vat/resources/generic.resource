@@ -16,6 +16,12 @@ Randomly Run Keywords
     [Arguments]    ${keyword_list}
     ${random_keyword}    Evaluate    random.choice($keyword_list)
     Run Keyword    ${random_keyword}
+Auto Log Pull
+    [Documentation]    pull log to usb disk automatically
+    UDisk to PC
+    ${udisk}    GenericHelper.Get Removable Drives
+    Create File    ${udisk}//zeekr-auto-export.txt
+    UDisk to DHU
 Putty CtrlC
     PuttyHelper.Send Command And Return Traces    \x03
 ACC ON
@@ -38,8 +44,10 @@ Route EngineeringMode
     GenericHelper.Prompt Command    adb shell am start -n com.bosch.apps.engineeringmode/.MainActivity
 UDisk to PC
     RelayHelper.Set Relay Port    dev_type=cleware    port_index=1    state_code=1
+    Sleep    1s
 UDisk to DHU
     RelayHelper.Set Relay Port    dev_type=cleware    port_index=5    state_code=1
+    Sleep    1s
 INIT
     [Documentation]    Init all instances
     [Arguments]    ${CONF}
