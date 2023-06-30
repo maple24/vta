@@ -1,9 +1,9 @@
 from loguru import logger
 from robot.libraries.BuiltIn import BuiltIn
 from datetime import datetime
-from DB.DBHelper import DBHelper
-from DB.DBtables import Stability
-from Mail.EMAILClient import EmailClient
+from db.DBHelper import DBHelper
+from db.DBtables import Stability
+from mail.EMAILClient import EmailClient
 
 
 class StabilityListener:
