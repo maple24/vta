@@ -35,12 +35,12 @@ StepCheckPowerCycle
         generic.Power OFF with PPS
         Sleep    0.5s
         generic.Power ON with PPS
+        Sleep    5s
+        generic.Power OFF with PPS
+        Sleep    0.5s
+        generic.Power ON with PPS
     ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='relay'
         Log    run powercycle with pps
-        generic.Power OFF with Relay
-        Sleep    0.5s
-        generic.Power ON with Relay
-        Sleep    5s
         generic.Power OFF with Relay
         Sleep    0.5s
         generic.Power ON with Relay

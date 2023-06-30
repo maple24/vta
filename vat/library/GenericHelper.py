@@ -129,4 +129,6 @@ if __name__ == "__main__":
     # logger.info(GenericHelper.get_hostname())
     cmd = r'C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\vat\bin\ODiffBin.exe C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\3.png C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\4.png'
     data = GenericHelper.prompt_command(cmd)
-    GenericHelper.match_string(pattern='Different pixels:\s\d+\s\((.*)\)', data=data)
+    GenericHelper.match_string(pattern='Different pixels:\s.+\s\((.+)%\)', data=data)
+    # GenericHelper.match_string(pattern='Different pixels:\s\d+\s\((.+)%\)', data=['Different pixels: 64526 (18.393065%)'])
+    # print(re.search(pattern='Different pixels:\s.+\s\((.+)%\)', string='Different pixels: \x1b[1m\x1b[31m64526 (18.393065%)\x1b[22m\x1b[39m'))

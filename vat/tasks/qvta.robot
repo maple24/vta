@@ -34,7 +34,8 @@ SWUP
 Media Picture
     [Documentation]    open picture in USB3.0
     # open picture
-
+    qvta.Mount USB to Android
+    qvta.Open Picture in USB
     # check display
 
 BSP Camera DMS

@@ -1,4 +1,5 @@
 *** Settings ***
+Resource    ../resources/powercycle.resource
 Library    ../api/PuttyHelper.py
 Library    ../api/RelayHelper.py
 Library    ../library/GenericHelper.py
@@ -10,8 +11,7 @@ Mount USB to Android
     # mount usb2.0 to android
     PuttyHelper.Send Command And Return Traces    bosch_swdl_assistant -o "{\"type\":\"usb_owner\", \"port\":0, \"owner\":3, \"io\":2}"
     PuttyHelper.Send Command And Return Traces    sync
-    PuttyHelper.Send Command And Return Traces    bosch reset
-    Sleep    40s
+    powercycle.Reset by CMD
     ${data}    GenericHelper.Prompt Command    adb root
     ${data}    GenericHelper.Prompt Command    adb shell 'echo 0 > /sys/devices/platform/soc/soc:usbpower/usb1_pwr_en'
     ${data}    GenericHelper.Prompt Command    adb shell 'mount | grep public'
