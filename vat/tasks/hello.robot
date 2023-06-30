@@ -15,6 +15,7 @@ ${body}    This is mail body!
 TC1
     [Tags]    example
     generic.Hello World
+    
 
 # TC2
 #     @{list}    Create List    dumping to hello.core    dumping to world.core

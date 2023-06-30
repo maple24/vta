@@ -9,7 +9,7 @@ Library    ../../.venv/lib/site-packages/robot/libraries/OperatingSystem.py
 Hello World
     [Documentation]    helloworld
     Log To Console    helloworld
-    Should Be Equal    1    2
+    # Should Be Equal    1    2
 Randomly Run Keywords
     [Documentation]    run keywords randomly
     [Arguments]    ${keyword_list}

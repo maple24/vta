@@ -34,9 +34,12 @@ class RelayHelper:
                 logger.info("[Relay.Multiplexer] Multiplexer controller initialized")
 
         if "cleware" in drelay.keys():
-            if drelay['cleware']['enabled']:
+            if drelay["cleware"]["enabled"]:
                 device_count += 1
-                self.cleware_executor = os.path.join(ROOT, "bin", "cleware", "USBswitchCmd.exe")
+                self.cleware_executor = os.path.join(
+                    ROOT, "vat", "bin", "cleware", "USBswitchCmd.exe"
+                )
+                print(self.cleware_executor)
                 if not os.path.exists(self.cleware_executor):
                     logger.error("[Relay.Cleware] Not found Cleware executor!")
                     exit(1)
@@ -232,8 +235,8 @@ if __name__ == "__main__":
     drelay = {
         "relay_enabled": True,
         "multiplexer": {"enabled": False, "comport": "COM13"},
-        "cleware": {"enabled": False, "dev_id": "710452"},
+        "cleware": {"enabled": True, "dev_id": "710452"},
         "xinke": {"enabled": False, "comport": "COM10"},
     }
     obj_relay.init_relay(drelay)
-    obj_relay.set_relay_port(dev_type="mcube", port_index="1")
+    # obj_relay.set_relay_port(dev_type="mcube", port_index="1")

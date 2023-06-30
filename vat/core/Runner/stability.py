@@ -71,7 +71,10 @@ count = 1
 
 for i in range(MAXLOOP):
     logger.info("Start running test!")
-    logger.remove(mylogger)
+    try:
+        logger.remove(mylogger)
+    except ValueError:
+        logger.warning("Logger handler has been removed!")
     mylogger = logger.add(
         f"{LOGPATH}\\log_{count}.log",
         backtrace=True,
