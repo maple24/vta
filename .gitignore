@@ -171,3 +171,6 @@ vat/conf/*
 
 # database
 database.db
+
+# temperary files
+tmp/

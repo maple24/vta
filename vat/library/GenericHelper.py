@@ -117,13 +117,16 @@ class GenericHelper:
             match = re.search(pattern, string)
             if match:
                 match_data = match.groups()
-                logger.info(f"Regex matches: {match_data}")
+                logger.success(f"Regex matches: {match_data}")
                 matched.append(match_data)
         if matched:
             return True, matched
-        logger.info(f"Not matched pattern {pattern}")
+        logger.warning(f"Not matched pattern {pattern}")
         return False, None
 
 
 if __name__ == "__main__":
-    logger.info(GenericHelper.get_hostname())
+    # logger.info(GenericHelper.get_hostname())
+    cmd = r'C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\vat\bin\ODiffBin.exe C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\3.png C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\4.png'
+    data = GenericHelper.prompt_command(cmd)
+    GenericHelper.match_string(pattern='Different pixels:\s\d+\s\((.*)\)', data=data)
