@@ -11,9 +11,14 @@ import win32api
 import win32con
 import win32file
 
+ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
+
 
 class GenericHelper:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
+
+    def __init__(self) -> None:
+        self.ODiffBin = os.path.join(ROOT, "vat", "bin", "ODiffBin.exe")
 
     @staticmethod
     def get_hostname() -> str:
@@ -123,12 +128,34 @@ class GenericHelper:
             return True, matched
         logger.warning(f"Not matched pattern {pattern}")
         return False, None
+    
+    def image_diff(self, image1: str, image2: str, output: Optional[str] = None) -> Optional[float]:
+        if not os.path.exists(self.ODiffBin):
+            logger.error(f"ODiffBin not found in {self.ODiffBin}!")
+            return
+        if output:
+            cmd = f"{self.ODiffBin} {image1} {image2} {output}"
+        else:
+            cmd = f"{self.ODiffBin} {image1} {image2}"
+        out = GenericHelper.prompt_command(cmd)
+        result, _ = GenericHelper.match_string(pattern="(Success)", data=out)
+        if result:
+            logger.success(f"{image1} and {image2} are exactly the same!")
+            return 0.0
+        result, diff = GenericHelper.match_string(pattern="Different pixels:\s.+\s\((.+)%\)", data=out)
+        if result:
+            logger.info(f"Image difference between {image1} and {image2} is {diff[0][0]}")
+            return round(float(diff[0][0]), 1)
 
 
 if __name__ == "__main__":
     # logger.info(GenericHelper.get_hostname())
-    cmd = r'C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\vat\bin\ODiffBin.exe C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\3.png C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\4.png'
-    data = GenericHelper.prompt_command(cmd)
-    GenericHelper.match_string(pattern='Different pixels:\s.+\s\((.+)%\)', data=data)
+    cmd = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\vat\bin\ODiffBin.exe C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\3.png C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\4.png"
+    # data = GenericHelper.prompt_command(cmd)
+    # GenericHelper.match_string(pattern="Different pixels:\s.+\s\((.+)%\)", data=data)
     # GenericHelper.match_string(pattern='Different pixels:\s\d+\s\((.+)%\)', data=['Different pixels: 64526 (18.393065%)'])
     # print(re.search(pattern='Different pixels:\s.+\s\((.+)%\)', string='Different pixels: \x1b[1m\x1b[31m64526 (18.393065%)\x1b[22m\x1b[39m'))
+    image1 = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\3.png"
+    image2 = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\3.png"
+    g = GenericHelper()
+    a = g.image_diff(image1, image2)
