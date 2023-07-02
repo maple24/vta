@@ -100,6 +100,7 @@ for i in range(MAXLOOP):
         common += ["--prerunmodifier", f"{MODIFIERPATH}"]
     variable = ["--variable", f"SLOT:SLOT_{SLOT}"]
     rc = run_cli(common + variable + ["--exclude", "skip", f"{TASKPATH}"], exit=False)
+    logger.info(f"Finish runnning loop {i+1}")
     if rc != 0:
         logger.warning(f"Test terminated due to exitcode {rc}!")
         break
