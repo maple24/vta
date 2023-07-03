@@ -49,6 +49,7 @@ UDisk to DHU
     RelayHelper.Set Relay Port    dev_type=cleware    port_index=5    state_code=1
     Sleep    1s
 WebCam Video ON
+    AgentHelper.Req To Stop Video    1
     AgentHelper.Req To Start Video    1
 WebCam Video OFF
     AgentHelper.Req To Stop Video    1
@@ -58,11 +59,13 @@ INIT
     PuttyHelper.Connect    dPutty=${CONF}[dputty]
     PuttyHelper.Enable Monitor
     RelayHelper.Init Relay    drelay=${CONF}[drelay]
+    Run Keyword If    ${CONF}[VIDEO]==${True}    WebCam Video ON
     Define Global
 DEINIT
     [Documentation]    Deinit all instances
     PuttyHelper.Disconnect
     PuttyHelper.Disable Monitor
+    WebCam Video OFF
 Define Global
     [Documentation]    Define global variables
     ${TESTER}    GenericHelper.Get Username
