@@ -9,8 +9,8 @@ Library    OperatingSystem
 *** Keywords ***
 Mount USB to Android
     # mount usb2.0 to android
-    PuttyHelper.Send Command And Return Traces    bosch_swdl_assistant -o "{\"type\":\"usb_owner\", \"port\":0, \"owner\":3, \"io\":2}"
-    PuttyHelper.Send Command And Return Traces    sync
+    PuttyHelper.Send Command And Return Traces    bosch_swdl_assistant -o "{\\"type\\":\\"usb_owner\\", \\"port\\":0, \\"owner\\":3, \\"io\\":2}"
+    PuttyHelper.Send Command And Return Traces    sync    login=${False}
     powercycle.Reset by CMD
     ${data}    GenericHelper.Prompt Command    adb root
     ${data}    GenericHelper.Prompt Command    adb shell 'echo 0 > /sys/devices/platform/soc/soc:usbpower/usb1_pwr_en'
@@ -28,13 +28,13 @@ Download Latest
     Directory Should Exist    ${image}    Image directory does not exist!
     RETURN    ${image}
 Exit Camera
-    PuttyHelper.Send Command And Return Traces    e
+    PuttyHelper.Send Command And Return Traces    e    login=${False}
 Open DMS
     PuttyHelper.Send Command And Return Traces    cd /mnt/bin/camera/qcarcam_test
-    PuttyHelper.Send Command And Return Traces    ./qcarcam_test -config=dms_test.xml
+    PuttyHelper.Send Command And Return Traces    ./qcarcam_test -config=dms_test.xml    login=${False}
 Open OMS
     PuttyHelper.Send Command And Return Traces    cd /mnt/bin/camera/qcarcam_test
-    PuttyHelper.Send Command And Return Traces    ./qcarcam_test -config=oms1_test.xml
+    PuttyHelper.Send Command And Return Traces    ./qcarcam_test -config=oms1_test.xml    login=${False}
 Open Backlight
     PuttyHelper.Send Command And Return Traces    sw-vsync -display=5
 Check DLT

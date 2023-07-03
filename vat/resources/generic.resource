@@ -23,7 +23,7 @@ Auto Log Pull
     Create File    ${udisk}//zeekr-auto-export.txt
     UDisk to DHU
 Putty CtrlC
-    PuttyHelper.Send Command And Return Traces    \x03
+    PuttyHelper.Send Command And Return Traces    \x03    login=${False}
 ACC ON
     RelayHelper.Set Relay Port    dev_type=xinke    port_index=2    state_code=0
 ACC OFF

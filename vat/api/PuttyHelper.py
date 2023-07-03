@@ -99,14 +99,16 @@ class PuttyHelper:
         self.putty_object.flushInput()
         logger.info("[{stream}] - {message}", stream="PuttyTx", message=cmd)
 
-    def send_command_and_return_traces(self, cmd: str, wait: float = 2.0) -> list:
+    def send_command_and_return_traces(self, cmd: str, wait: Optional[float] = None, login: bool = False) -> list:
         """
         Description: Send the command and return traces
         """
-        self.login()
+        if login:
+            self.login()
         self.event_waitTrace.set()
         self.send_command(cmd)
-        time.sleep(wait)
+        if wait:
+            time.sleep(wait)
         traces = [x[1] for x in self.waitTrace_queue.queue]
         self.waitTrace_queue.queue.clear()
         self.event_waitTrace.clear()

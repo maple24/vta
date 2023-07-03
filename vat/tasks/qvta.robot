@@ -35,6 +35,7 @@ Media Picture
     [Documentation]    open picture in USB3.0
     # open picture
     qvta.Mount USB to Android
+    generic.Route Files
     qvta.Open Picture in USB
     # check display
 

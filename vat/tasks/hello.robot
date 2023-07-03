@@ -8,12 +8,14 @@ Variables    ../conf/settings.py
 *** Variables ***
 # default slot
 ${SLOT}    SLOT_2
-${subject}    Hello world!
-${body}    This is mail body!
+${mail_subject}    Hello world!
+${mail_body}    This is mail body!
 
 *** Test Cases ***
 TC1
     [Tags]    example
+    [Setup]    generic.WebCam Video ON
+    [Teardown]    generic.WebCam Video OFF
     generic.Hello World
     
 # TC2
