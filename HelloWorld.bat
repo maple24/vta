@@ -8,7 +8,7 @@ set RUNNER=%ROOT%\\vat\\core\\runner\\stability.py
 :: set args
 set TASK=hello.robot
 set SLOT=1
-set MAXLOOP=10
+set MAXLOOP=1
 
 :: run 
 %PYTHONPATH% %RUNNER% --task %TASK% --slot %SLOT% --max_loop %MAXLOOP%

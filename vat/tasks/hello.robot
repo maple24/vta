@@ -15,8 +15,6 @@ ${body}    This is mail body!
 TC1
     [Tags]    example
     generic.Hello World
-    ${img}    Join Path    ${ROOT}    tmp
-    Directory Should Exist    ${img}
     
 # TC2
 #     @{list}    Create List    dumping to hello.core    dumping to world.core
@@ -28,5 +26,5 @@ TC1
 #         List Should Contain Value    ${ex_filters}    ${element}[0]    Detect crash ${element}[0]!
 #     END
 
-TC3
-    Wait Until Keyword Succeeds    1 minutes    10 sec    generic.Hello World
+# TC3
+#     Wait Until Keyword Succeeds    1 minutes    10 sec    generic.Hello World

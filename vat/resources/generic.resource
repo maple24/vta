@@ -59,13 +59,11 @@ INIT
     PuttyHelper.Connect    dPutty=${CONF}[dputty]
     PuttyHelper.Enable Monitor
     RelayHelper.Init Relay    drelay=${CONF}[drelay]
-    Run Keyword If    ${CONF}[VIDEO]==${True}    WebCam Video ON
     Define Global
 DEINIT
     [Documentation]    Deinit all instances
     PuttyHelper.Disconnect
     PuttyHelper.Disable Monitor
-    WebCam Video OFF
 Define Global
     [Documentation]    Define global variables
     ${TESTER}    GenericHelper.Get Username

@@ -16,6 +16,8 @@ ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
 ${CONF_TEST}    ${${SLOT}_POWERCYCLE}
 ${STEPS}    ${CONF_TEST}[steps]
+${mail_subject}    Powercycle error notification!
+${mail_body}    Unexpected error occurs!!
 
 *** Test Cases ***
 StepTest
@@ -26,6 +28,8 @@ StepTest
 
 StepCheckPowerCycle
     [Tags]
+    [Setup]    generic.WebCam Video ON
+    [Teardown]    generic.WebCam Video OFF
     IF    '${STEPS}[${TEST_NAME}][type]'=='command'
         Log    run powercycle with putty command
         ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30

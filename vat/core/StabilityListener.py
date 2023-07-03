@@ -104,9 +104,11 @@ class StabilityListener:
         self.test_type = BuiltIn().get_variable_value("${SUITE_NAME}")
         self.soc_version = BuiltIn().get_variable_value("${SOCVersion}")
         # self.scc_version = BuiltIn().get_variable_value("${SCCVersion}")
-        self.subject = BuiltIn().get_variable_value("${subject}")
-        self.body = BuiltIn().get_variable_value("${body}")
+        self.subject = BuiltIn().get_variable_value("${mail_subject}")
+        self.body = BuiltIn().get_variable_value("${mail_body}")
         self.result = result.status
+        # if result.status == 'PASS':
+        #     self.mail_enabled = False
 
     def close(self):
         self._upload_database()
