@@ -15,8 +15,9 @@ ${body}    This is mail body!
 TC1
     [Tags]    example
     generic.Hello World
+    ${img}    Join Path    ${ROOT}    tmp
+    Directory Should Exist    ${img}
     
-
 # TC2
 #     @{list}    Create List    dumping to hello.core    dumping to world.core
 #     @{ex_filters}    Create List    hello.core

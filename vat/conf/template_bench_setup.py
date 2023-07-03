@@ -8,6 +8,11 @@ from loguru import logger
 logger.remove()
 logger.add(sys.stdout, level="DEBUG")
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
+DEBUG = False
+
+# enable video
+VIDEO = False
+
 # enable database
 DATABASE = False
 DB_CREDENTIAL = {"drivername": "sqlite", "database": "database.db"}
@@ -18,6 +23,7 @@ DB_CREDENTIAL = {"drivername": "sqlite", "database": "database.db"}
 #     "host": "10.161.224.58",
 #     "database": "zeekr"
 # }
+
 # enable mail
 MAIL = False
 MAIL_CREDENTIAL = {
@@ -26,6 +32,7 @@ MAIL_CREDENTIAL = {
     "password": "estbangbangde6",
     "recepients": ["Test.EST@bcn.bosch.com", "jin.zhu5@cn.bosch.com"],
 }
+
 SLOT_1 = {
     # putty channel
     "dputty": {
@@ -47,8 +54,10 @@ SLOT_1 = {
     "drelay": {
         "relay_enabled": False,
         "multiplexer": {"enabled": False, "comport": "COM6"},
-        "xinke": {"enabled": True, "comport": "COM16", "channel": "2"},
+        "cleware": {"enabled": False, "dev_id": "710452"},
+        "xinke": {"enabled": "False", "comport": "COM10", "port_power": 1, "port_acc": 2},
     },
+    # tsmaster
     "dtsmaster": {
         "tsmaster_enabled": True,
         "tsmaster_rbs": "C:\\Users\\EZO1SGH\\Desktop\\Vehicle_test\\RBS_projects\\Tosun_Wakeup\\Tosun",
@@ -78,8 +87,10 @@ SLOT_2 = {
     "drelay": {
         "relay_enabled": False,
         "multiplexer": {"enabled": False, "comport": "COM6"},
-        "xinke": {"enabled": True, "comport": "COM16", "channel": "2"},
+        "cleware": {"enabled": False, "dev_id": "710452"},
+        "xinke": {"enabled": "False", "comport": "COM10", "port_power": 1, "port_acc": 2},
     },
+    # tsmaster
     "dtsmaster": {
         "tsmaster_enabled": True,
         "tsmaster_rbs": "C:\\Users\\EZO1SGH\\Desktop\\Vehicle_test\\RBS_projects\\Tosun_Wakeup\\Tosun",
