@@ -2,7 +2,7 @@
 Library    ../vat/library/SystemHelper.py
 Library    ../vat/library/GenericHelper.py
 Library    OperatingSystem
-Variables    ../vat/conf/template_bench_setup.py
+Variables    ../vat/conf/template_settings.py
 
 *** Test Cases ***
 Example

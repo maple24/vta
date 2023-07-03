@@ -9,7 +9,7 @@ Library    ../library/FileManager.py
 Library    ../library/GenericHelper.py
 Library    OperatingSystem
 
-Variables    ../conf/bench_setup.py
+Variables    ../conf/settings.py
 
 Suite Setup    generic.INIT    ${CONF_BASE}
 Suite Teardown    generic.DEINIT

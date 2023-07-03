@@ -1,6 +1,6 @@
 *** Settings ***
 Resource    ../resources/generic.resource
-Variables    ../conf/bench_setup.py
+Variables    ../conf/settings.py
 
 # Test Setup    setups.INIT    ${${SLOT}}
 # Test Teardown    setups.DEINIT

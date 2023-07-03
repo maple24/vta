@@ -5,8 +5,8 @@ Resource    ../resources/qvta.resource
 Library    ../api/AgentHelper.py
 Library    ../api/TSmasterAPI/TSClient.py
 
-Variables    ../conf/bench_setup.py
-Variables    ../conf/powercycle_setup.py
+Variables    ../conf/settings.py
+Variables    ../conf/setups.py
 
 Suite Setup    generic.INIT    ${CONF_BASE}
 Suite Teardown    generic.DEINIT

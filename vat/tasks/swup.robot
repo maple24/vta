@@ -5,7 +5,7 @@ Library    String
 Library    OperatingSystem
 Library    ../api/RelayHelper.py
 Library    ../library/GenericHelper.py
-Variables    ../conf/bench_setup.py
+Variables    ../conf/settings.py
 
 Suite Setup    generic.INIT    ${CONF_BASE}
 Suite Teardown    generic.DEINIT
