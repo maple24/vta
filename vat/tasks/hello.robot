@@ -14,8 +14,8 @@ ${mail_body}    This is mail body!
 *** Test Cases ***
 TC1
     [Tags]    example
-    [Setup]    generic.WebCam Video ON
-    [Teardown]    generic.WebCam Video OFF
+    [Setup]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video ON
+    [Teardown]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video OFF
     generic.Hello World
     
 # TC2

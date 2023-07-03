@@ -28,8 +28,8 @@ StepTest
 
 StepCheckPowerCycle
     [Tags]
-    [Setup]    generic.WebCam Video ON
-    [Teardown]    generic.WebCam Video OFF
+    [Setup]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video ON
+    [Teardown]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video OFF
     IF    '${STEPS}[${TEST_NAME}][type]'=='command'
         Log    run powercycle with putty command
         ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=30
