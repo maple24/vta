@@ -128,8 +128,10 @@ class GenericHelper:
             return True, matched
         logger.warning(f"Not matched pattern {pattern}")
         return False, None
-    
-    def image_diff(self, image1: str, image2: str, output: Optional[str] = None) -> Optional[float]:
+
+    def image_diff(
+        self, image1: str, image2: str, output: Optional[str] = None
+    ) -> Optional[float]:
         if not os.path.exists(self.ODiffBin):
             logger.error(f"ODiffBin not found in {self.ODiffBin}!")
             return
@@ -142,9 +144,13 @@ class GenericHelper:
         if result:
             logger.success(f"{image1} and {image2} are exactly the same!")
             return 0.0
-        result, diff = GenericHelper.match_string(pattern="Different pixels:\s.+\s\((.+)%\)", data=out)
+        result, diff = GenericHelper.match_string(
+            pattern="Different pixels:\s.+\s\((.+)%\)", data=out
+        )
         if result:
-            logger.info(f"Image difference between {image1} and {image2} is {diff[0][0]}")
+            logger.info(
+                f"Image difference between {image1} and {image2} is {diff[0][0]}"
+            )
             return round(float(diff[0][0]), 1)
 
 

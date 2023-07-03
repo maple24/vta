@@ -5,6 +5,8 @@ from loguru import logger
 
 
 class FileManager:
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
+
     def copy_file(self, source: str, destination: str) -> None:
         try:
             logger.info("Start copying, Please wait...")

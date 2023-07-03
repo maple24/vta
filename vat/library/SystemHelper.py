@@ -5,7 +5,8 @@ from GenericHelper import GenericHelper
 
 
 class SystemHelper:
-        
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
+
     @staticmethod
     def get_adb_devices() -> Optional[list]:
         data = GenericHelper.prompt_command(cmd="adb devices")
@@ -31,7 +32,9 @@ class SystemHelper:
         return False
 
     @staticmethod
-    def android_screencapture(deviceID: str = "1234567", name: str = 'screencap', localPath: str = ".") -> None:
+    def android_screencapture(
+        deviceID: str = "1234567", name: str = "screencap", localPath: str = "."
+    ) -> None:
         cmd = f"adb -s {deviceID} shell screencap -p /sdcard/{name}.png && adb pull /sdcard/{name}.png {localPath}"
         GenericHelper.prompt_command(cmd)
 
@@ -84,7 +87,7 @@ class SystemHelper:
         GenericHelper.serial_command(cmd, comport, username, password)
         remotePath = f"/data/nfs/nfs_share/{filename}"
         SystemHelper.Android2PC(localPath, remotePath, deviceID)
-        
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     SystemHelper.get_adb_devices()

@@ -55,7 +55,12 @@ SLOT_1 = {
         "relay_enabled": False,
         "multiplexer": {"enabled": False, "comport": "COM6"},
         "cleware": {"enabled": False, "dev_id": "710452"},
-        "xinke": {"enabled": "False", "comport": "COM10", "port_power": 1, "port_acc": 2},
+        "xinke": {
+            "enabled": "False",
+            "comport": "COM10",
+            "port_power": 1,
+            "port_acc": 2,
+        },
     },
     # tsmaster
     "dtsmaster": {
@@ -88,7 +93,12 @@ SLOT_2 = {
         "relay_enabled": False,
         "multiplexer": {"enabled": False, "comport": "COM6"},
         "cleware": {"enabled": False, "dev_id": "710452"},
-        "xinke": {"enabled": "False", "comport": "COM10", "port_power": 1, "port_acc": 2},
+        "xinke": {
+            "enabled": "False",
+            "comport": "COM10",
+            "port_power": 1,
+            "port_acc": 2,
+        },
     },
     # tsmaster
     "dtsmaster": {
