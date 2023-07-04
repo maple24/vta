@@ -42,35 +42,35 @@ Media Picture
 BSP Camera DMS
     [Documentation]    check DMS camera
     qvta.Open DMS
-    ${RES}    AgentHelper.Req To Test Profile    1    DMS
+    ${RES}    AgentHelper.Req To Test Profile    ${1}    DMS
     qvta.Exit Camera
     Should Be Equal    ${RES}    ${0}    Profile does not match!
 
 BSP Camera OMS
     [Documentation]    check OMS camera
     qvta.Open OMS
-    ${RES}    AgentHelper.Req To Test Profile    1    OMS
+    ${RES}    AgentHelper.Req To Test Profile    ${1}    OMS
     qvta.Exit Camera
     Should Be Equal    ${RES}    ${0}    Profile does not match!
 
 BSP Display CSD
     [Documentation]    check CSD display
     generic.Route Carlauncher
-    ${RES}    AgentHelper.Req To Test Profile    1    Android_Home
+    ${RES}    AgentHelper.Req To Test Profile    ${1}    Android_Home
     Should Be Equal    ${RES}    ${0}    Profile does not match!
 
 BSP Display Backlight
     [Documentation]    check backlight in CSD
     qvta.Open Backlight
-    ${RES}    AgentHelper.Req To Test Profile    1    Backlight
+    ${RES}    AgentHelper.Req To Test Profile    ${1}    Backlight
     qvta.Exit Camera
     Should Be Equal    ${RES}    ${0}    Profile does not match!
 
 LCM PowerONOFF
     [Documentation]    power on/off switch via ACC
     generic.ACC OFF
-    ${RES1}    AgentHelper.Req To Test Profile    1    Black_Screen
+    ${RES1}    AgentHelper.Req To Test Profile    ${1}    Black_Screen
     Should Be Equal    ${RES1}    ${0}    Profile does not match!
     generic.ACC ON
-    ${RES2}    AgentHelper.Req To Test Profile    1    Android_Home
+    ${RES2}    AgentHelper.Req To Test Profile    ${1}    Android_Home
     Should Be Equal    ${RES2}    ${0}    Profile does not match!
