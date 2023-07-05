@@ -22,17 +22,17 @@ Click WIFI Button
 BT
     [Documentation]    click bt on/off button and check status change
     generic.Route BT Settings
-    ${BT_0}    SystemHelper.Android Screencapture    ${device_id}    BT_0    ${TEMP}
+    ${BT_0}    SystemHelper.Android Screencapture    ${device_id}    BT_0.png    ${TEMP}
     Click BT Button
-    ${BT_1}    SystemHelper.Android Screencapture    ${device_id}    BT_1    ${TEMP}
+    ${BT_1}    SystemHelper.Android Screencapture    ${device_id}    BT_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${BT_0}    ${BT_1}
     Should Not Be Equal    ${RES}    ${True}
     
 WIFI
     [Documentation]    click wifi on/off button and check status change
     generic.Route WIFI Settings
-    ${WIFI_0}    SystemHelper.Android Screencapture    ${device_id}    WIFI_0    ${TEMP}
+    ${WIFI_0}    SystemHelper.Android Screencapture    ${device_id}    WIFI_0.png    ${TEMP}
     Click WIFI Button
-    ${WIFI_1}    SystemHelper.Android Screencapture    ${device_id}    WIFI_1    ${TEMP}
+    ${WIFI_1}    SystemHelper.Android Screencapture    ${device_id}    WIFI_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}
     Should Not Be Equal    ${RES}    ${True}
