@@ -53,7 +53,7 @@ class SystemHelper:
         res, matched = GenericHelper.match_string("(.+)\s+device$", data)
         if not res:
             logger.warning("No adb devices found!")
-            return False
+            return
         devices = [x[0] for x in matched]
         logger.info(f"Get adb devices list: {devices}")
         return devices

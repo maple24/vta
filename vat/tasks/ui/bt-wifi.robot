@@ -14,9 +14,9 @@ Get Device ID
     Should Be Equal As Integers    ${device_number}    ${1}
     Set Suite Variable    ${device_id}    ${device_id_list}[0]
 Click BT Button
-    GenericHelper.Prompt Command    adb shell input tap ${BT_BUTTON}
+    GenericHelper.Prompt Command    adb shell input tap ${BT_BUTTON}[0] ${BT_BUTTON}[1]    
 Click WIFI Button
-    GenericHelper.Prompt Command    adb shell input tap ${WIFI_BUTTON}
+    GenericHelper.Prompt Command    adb shell input tap ${WIFI_BUTTON}[0] ${WIFI_BUTTON}[1]
 
 *** Test Cases ***
 BT
