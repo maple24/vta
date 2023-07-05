@@ -22,6 +22,16 @@ Auto Log Pull
     ${udisk}    GenericHelper.Get Removable Drives
     Create File    ${udisk}//zeekr-auto-export.txt
     UDisk to DHU
+Route Carlauncher
+    GenericHelper.Prompt Command    adb shell am start -n com.android.car.carlauncher/.CarLauncher
+Route Files
+    GenericHelper.Prompt Command    adb shell am start -n com.android.documentsui/.LauncherActivity
+Route EngineeringMode
+    GenericHelper.Prompt Command    adb shell am start -n com.bosch.apps.engineeringmode/.MainActivity
+Route BT Settings
+    GenericHelper.Prompt Command    adb shell am start -a android.settings.BLUETOOTH_SETTINGS
+Route WIFI Settings
+    GenericHelper.Prompt Command    adb shell am start -a android.settings.WIFI_SETTINGS
 Putty CtrlC
     PuttyHelper.Send Command And Return Traces    \x03    login=${False}
 ACC ON
@@ -36,12 +46,6 @@ Power ON with PPS
     AgentHelper.Req To Set Voltage    1    1    12
 Power OFF with PPS
     AgentHelper.Req To Set Voltage    1    1    0
-Route Carlauncher
-    GenericHelper.Prompt Command    adb shell am start -n com.android.car.carlauncher/.CarLauncher
-Route Files
-    GenericHelper.Prompt Command    adb shell am start -n com.android.documentsui/.LauncherActivity
-Route EngineeringMode
-    GenericHelper.Prompt Command    adb shell am start -n com.bosch.apps.engineeringmode/.MainActivity
 UDisk to PC
     RelayHelper.Set Relay Port    dev_type=cleware    port_index=1    state_code=1
     Sleep    1s

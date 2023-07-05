@@ -73,10 +73,11 @@ class SystemHelper:
 
     @staticmethod
     def android_screencapture(
-        deviceID: str = "1234567", name: str = "screencap", localPath: str = "."
-    ) -> None:
-        cmd = f"adb -s {deviceID} shell screencap -p /sdcard/{name}.png && adb pull /sdcard/{name}.png {localPath}"
+        deviceID: str = "1234567", name: str = "screencap.png", localPath: str = "."
+    ) -> str:
+        cmd = f"adb -s {deviceID} shell screencap -p /sdcard/{name} && adb pull /sdcard/{name} {localPath}"
         GenericHelper.prompt_command(cmd)
+        return os.path.join(localPath, name)
 
     @staticmethod
     def PC2Android(localPath: str, remotePath: str, deviceID: str = "1234567") -> None:

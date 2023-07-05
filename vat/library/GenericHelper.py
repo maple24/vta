@@ -6,7 +6,6 @@ import re
 from loguru import logger
 import os
 import socket
-import serial
 import win32api
 import win32con
 import win32file
@@ -92,10 +91,13 @@ class GenericHelper:
         return False, None
 
     def image_diff(
-        self, image1: str, image2: str, output: Optional[str] = None
-    ) -> Optional[float]:
+        self, image1: str, image2: str, output: Optional[str] = None, thre: float = 0.0
+    ) -> Optional[bool]:
         if not os.path.exists(self.ODiffBin):
             logger.error(f"ODiffBin not found in {self.ODiffBin}!")
+            return
+        if not os.path.exists(image1) or not os.path.exists(image2):
+            logger.error(f"Image not found!")
             return
         if output:
             cmd = f"{self.ODiffBin} {image1} {image2} {output}"
@@ -105,15 +107,22 @@ class GenericHelper:
         result, _ = GenericHelper.match_string(pattern="(Success)", data=out)
         if result:
             logger.success(f"{image1} and {image2} are exactly the same!")
-            return 0.0
+            return True
         result, diff = GenericHelper.match_string(
             pattern="Different pixels:\s.+\s\((.+)%\)", data=out
         )
         if result:
-            logger.info(
-                f"Image difference between {image1} and {image2} is {diff[0][0]}"
-            )
-            return round(float(diff[0][0]), 1)
+            diff_rate = round(float(diff[0][0]), 2)
+            if diff_rate > thre:
+                logger.info(
+                    f"Image difference rate {diff_rate} is larger than threshold {thre}"
+                )
+                return False
+            else:
+                logger.info(
+                    f"Image difference rate {diff_rate} is less than threshold {thre}"
+                )
+                return True
 
 
 if __name__ == "__main__":
@@ -123,7 +132,7 @@ if __name__ == "__main__":
     # GenericHelper.match_string(pattern="Different pixels:\s.+\s\((.+)%\)", data=data)
     # GenericHelper.match_string(pattern='Different pixels:\s\d+\s\((.+)%\)', data=['Different pixels: 64526 (18.393065%)'])
     # print(re.search(pattern='Different pixels:\s.+\s\((.+)%\)', string='Different pixels: \x1b[1m\x1b[31m64526 (18.393065%)\x1b[22m\x1b[39m'))
-    image1 = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\3.png"
+    image1 = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\4.png"
     image2 = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\3.png"
     g = GenericHelper()
     a = g.image_diff(image1, image2)
