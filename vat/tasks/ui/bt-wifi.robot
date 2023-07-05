@@ -34,5 +34,5 @@ WIFI
     ${WIFI_0}    SystemHelper.Android Screencapture    ${device_id}    WIFI_0.png    ${TEMP}
     Click WIFI Button
     ${WIFI_1}    SystemHelper.Android Screencapture    ${device_id}    WIFI_1.png    ${TEMP}
-    ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}
+    ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}    ${0.1}
     Should Not Be Equal    ${RES}    ${True}
