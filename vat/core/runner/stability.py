@@ -5,7 +5,7 @@ from robot import run_cli, rebot_cli
 from loguru import logger
 import sys
 import argparse
-from utils import rotate_folder
+from utils import rotate_folder, find_file
 
 # User argument interface
 parser = argparse.ArgumentParser()
@@ -42,7 +42,7 @@ LOGPATH = os.path.join(
     "log",
     f"{datetime.now().strftime('%A')}_{time.strftime('%m%d%Y_%H%M')}_SLOT{SLOT}",
 )
-TASKPATH = os.path.join(ROOT, "vat", "tasks", TASK)
+TASKPATH = find_file(os.path.join(ROOT, "vat", "tasks"), TASK)
 if LISTENER:
     LISTENERPATH = os.path.join(ROOT, "vat", "core", LISTENER)
 if MODIFIER:
