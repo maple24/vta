@@ -3,6 +3,7 @@ Resource    ../../resources/generic.resource
 Library    ../../library/GenericHelper.py
 Library    ../../library/SystemHelper.py
 
+Variables    ../../conf/settings.py
 Variables    coordinates.py
 
 Suite Setup    Get Device ID
@@ -34,5 +35,5 @@ WIFI
     ${WIFI_0}    SystemHelper.Android Screencapture    ${device_id}    WIFI_0.png    ${TEMP}
     Click WIFI Button
     ${WIFI_1}    SystemHelper.Android Screencapture    ${device_id}    WIFI_1.png    ${TEMP}
-    ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}    ${0.1}
+    ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}    thre=${0.1}
     Should Not Be Equal    ${RES}    ${True}

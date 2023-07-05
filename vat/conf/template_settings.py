@@ -5,9 +5,8 @@ import os
 import sys
 from loguru import logger
 
-logger.remove()
-logger.add(sys.stdout, level="DEBUG")
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
+TEMP = os.path.join(ROOT, "tmp")
 DEBUG = False
 
 # enable video
@@ -32,6 +31,10 @@ MAIL_CREDENTIAL = {
     "password": "estbangbangde6",
     "recepients": ["Test.EST@bcn.bosch.com", "jin.zhu5@cn.bosch.com"],
 }
+
+if DEBUG:
+    logger.remove()
+    logger.add(sys.stdout, level="DEBUG")
 
 SLOT_1 = {
     # putty channel
