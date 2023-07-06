@@ -111,7 +111,7 @@ class SystemHelper:
         SystemHelper.PC2Android(localPath, remotePath, deviceID)
         if remotePath is not None:
             cmd = f"cp /data/share/{filename} {remotePath}"
-            GenericHelper.serial_command(cmd, comport, username, password)
+            SystemHelper.serial_command(cmd, comport, username, password)
 
     @staticmethod
     def QNX2PC(
@@ -125,7 +125,7 @@ class SystemHelper:
         filename = remotePath.split("/")[-1]
         logger.info(f"Target file is {filename}")
         cmd = f"cp {remotePath} /data/share/"
-        GenericHelper.serial_command(cmd, comport, username, password)
+        SystemHelper.serial_command(cmd, comport, username, password)
         remotePath = f"/data/nfs/nfs_share/{filename}"
         SystemHelper.Android2PC(localPath, remotePath, deviceID)
 
