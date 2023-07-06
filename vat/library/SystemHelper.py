@@ -9,6 +9,8 @@ from GenericHelper import GenericHelper
 class SystemHelper:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
+    disk_mapping = {"qnx": "/shared", "android": "/data/vendor/nfs/shared"}
+
     @staticmethod
     def serial_command(
         cmd, comport: str, username="root", password="root", timeout=5.0
@@ -80,26 +82,26 @@ class SystemHelper:
         return os.path.join(localPath, name)
 
     @staticmethod
-    def PC2Android(localPath: str, remotePath: str, deviceID: str = "1234567") -> None:
+    def PC2Android(localPath: str, androidPath: str, deviceID: str = "1234567") -> None:
         if not SystemHelper.is_adb_available(deviceID):
             return
-        cmd = f"adb -s {deviceID} push {localPath} {remotePath}"
+        cmd = f"adb -s {deviceID} push {localPath} {androidPath}"
         GenericHelper.prompt_command(cmd)
 
     @staticmethod
     def Android2PC(
-        remotePath: str, localPath: str = ".", deviceID: str = "1234567"
+        androidPath: str, localPath: str = ".", deviceID: str = "1234567"
     ) -> None:
         if not SystemHelper.is_adb_available(deviceID):
             return
-        cmd = f"adb -s {deviceID} pull {remotePath} {localPath}"
+        cmd = f"adb -s {deviceID} pull {androidPath} {localPath}"
         GenericHelper.prompt_command(cmd)
 
     @staticmethod
     def PC2QNX(
         comport: str,
         localPath: str,
-        remotePath: Optional[str] = None,
+        qnxPath: Optional[str] = None,
         deviceID: str = "1234567",
         username: str = "root",
         password: str = "root",
@@ -107,27 +109,29 @@ class SystemHelper:
         if not os.path.exists(localPath):
             logger.error("File does not exist in local PC!")
         filename = os.path.basename(localPath)
-        remotePath = "/data/nfs/nfs_share"
-        SystemHelper.PC2Android(localPath, remotePath, deviceID)
-        if remotePath is not None:
-            cmd = f"cp /data/share/{filename} {remotePath}"
+        androidPath = SystemHelper.disk_mapping.get("android", "/data/nfs/nfs_share")
+        SystemHelper.PC2Android(localPath, androidPath, deviceID)
+        if qnxPath is not None:
+            cmd = f"cp {os.path.join(SystemHelper.disk_mapping.get('qnx', '/data/share/'), filename)} {qnxPath}"
             SystemHelper.serial_command(cmd, comport, username, password)
 
     @staticmethod
     def QNX2PC(
         comport: str,
-        remotePath: str,
+        qnxPath: str,
         localPath: str = ".",
         deviceID: str = "1234567",
         username: str = "root",
         password: str = "root",
     ) -> None:
-        filename = remotePath.split("/")[-1]
+        filename = os.path.basename(qnxPath)
         logger.info(f"Target file is {filename}")
-        cmd = f"cp {remotePath} /data/share/"
+        cmd = f"cp {qnxPath} {SystemHelper.disk_mapping.get('qnx', '/data/share/')}"
         SystemHelper.serial_command(cmd, comport, username, password)
-        remotePath = f"/data/nfs/nfs_share/{filename}"
-        SystemHelper.Android2PC(localPath, remotePath, deviceID)
+        androidPath = os.path.join(
+            SystemHelper.disk_mapping.get("android", "/data/nfs/nfs_share/"), filename
+        )
+        SystemHelper.Android2PC(androidPath, localPath, deviceID)
 
 
 if __name__ == "__main__":

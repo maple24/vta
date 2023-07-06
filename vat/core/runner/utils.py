@@ -20,7 +20,8 @@ def rotate_folder(folder_path: str, days: int = 7) -> None:
                 logger.warning(
                     f"Delete folder {folder} which is created `{days}days` ago!"
                 )
-                
+
+
 def find_file(directory: str, file_name: str) -> Optional[str]:
     for root, dirs, files in os.walk(directory):
         for file in files:
