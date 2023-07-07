@@ -53,10 +53,10 @@ UDisk to DHU
     RelayHelper.Set Relay Port    dev_type=cleware    port_index=5    state_code=1
     Sleep    1s
 WebCam Video ON
-    AgentHelper.Req To Stop Video    1
-    AgentHelper.Req To Start Video    1
+    AgentHelper.Req To Stop Video    ${1}
+    AgentHelper.Req To Start Video    ${1}
 WebCam Video OFF
-    AgentHelper.Req To Stop Video    1
+    AgentHelper.Req To Stop Video    ${1}
 INIT
     [Documentation]    Init all instances
     [Arguments]    ${CONF}
