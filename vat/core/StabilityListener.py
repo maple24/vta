@@ -1,4 +1,5 @@
 from loguru import logger
+from typing import Optional
 from robot.libraries.BuiltIn import BuiltIn
 from datetime import datetime
 from db.DBHelper import DBHelper
@@ -11,27 +12,24 @@ class StabilityListener:
 
     def __init__(self):
         self.mdb = DBHelper()
-        self.db_enabled = None
-        self.db_credential = None
-        self.mail_enabled = None
-        self.mail_credential = None
-        self.subject = None
-        self.body = None
-        self.table = None
+        self.db_enabled: Optional[bool] = None
+        self.db_credential: Optional[dict] = None
+        self.mail_enabled: Optional[bool] = None
+        self.mail_credential: Optional[dict] = None
+        self.subject: Optional[str] = None
+        self.body: Optional[str] = None
+        self.table = Stability
 
         self.disabled = []
         self.error_keywords = []
-        self.start_time = None
-        self.project = None
-        self.conf_base = None
-        self.conf_test = None
-        self.end_time = None
-        self.testser = None
-        self.bench_id = None
-        self.test_type = None
-        self.soc_version = None
-        self.scc_version = None
-        self.result = None
+        self.start_time: Optional[datetime] = None
+        self.end_time: Optional[datetime] = None
+        self.testser: Optional[str] = None
+        self.bench_id: Optional[str] = None
+        self.test_type: Optional[str] = None
+        self.soc_version: Optional[str] = None
+        self.scc_version: Optional[str] = None
+        self.result: Optional[str] = None
 
     def _remove_tests(self, test):
         steps = BuiltIn().get_variable_value("${STEPS}")
@@ -61,7 +59,7 @@ class StabilityListener:
             "error_keyword": str(self.error_keywords),
             "result": self.result,
         }
-        self.mdb.connect(Stability, self.db_credential)
+        self.mdb.connect(self.table, self.db_credential)
         self.mdb.create_table()
         self.mdb.insert_row(data)
         logger.success("Upload to database successfully!")
@@ -80,9 +78,6 @@ class StabilityListener:
 
     def start_suite(self, test, result):
         self.start_time = datetime.now().replace(microsecond=0)
-        self.project = BuiltIn().get_variable_value("${PROJECT}")
-        self.conf_base = BuiltIn().get_variable_value("${CONF_BASE}")
-        self.conf_test = BuiltIn().get_variable_value("${CONF_TEST}")
         self.db_enabled = BuiltIn().get_variable_value("${DATABASE}")
         self.db_credential = BuiltIn().get_variable_value("${DB_CREDENTIAL}")
         self.mail_enabled = BuiltIn().get_variable_value("${MAIL}")

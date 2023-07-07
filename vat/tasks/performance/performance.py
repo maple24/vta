@@ -10,22 +10,38 @@ BIN = os.path.join(os.path.dirname(__file__), "bin")
 
 
 class Performance:
-    
+    def __init__(
+        self, deviceID: str, comport: str, username: str, password: str
+    ) -> None:
+        self.deviceID = deviceID
+        self.comport = comport
+        self.username = username
+        self.password = password
+
     def nfs_iospeed():
         """test android nfs i/o speend by `dd` command
         dd if=/dev/zero of=/data/test.image count=100 bs=1440k
         """
         ...
 
-    def android_ufs_iospeed(deviceID: str) -> None:
+    def android_ufs_iospeed(self) -> None:
         """test android ufs i/o speend by `tiotest_la` tool
         ./data/tiotest_la.out -t 1 -d /data/ -b 2097152 -f 200 -L
         """
         tiotest = os.path.join(BIN, "tiotest_la")
-        SystemHelper.PC2Android(localPath=tiotest, androidPath='/data', deviceID=deviceID)
-        GenericHelper.prompt_command("chmod +x /data/tiotest_la")
-        data = GenericHelper.prompt_command(f"adb shell -s {deviceID} ./data/tiotest_la -t 1 -d /data/ -b 2097152 -f 200 -L")
-        GenericHelper.match_string(pattern="\| (Write|Read)\s+.*\s+([0-9\.]+)\sMB/s", data=data)
+        SystemHelper.PC2Android(
+            localPath=tiotest, androidPath="/data", deviceID=self.deviceID
+        )
+        GenericHelper.prompt_command(
+            f"adb -s {self.deviceID} shell chmod +x /data/tiotest_la"
+        )
+        data = GenericHelper.prompt_command(
+            f"adb -s {self.deviceID} shell /data/tiotest_la -t 1 -d /data/ -b 2097152 -f 200 -L",
+            timeout=10.0,
+        )
+        GenericHelper.match_string(
+            pattern="\| (Write|Read)\s+.*\s+([0-9\.]+)\sMB/s", data=data
+        )
 
     def qnx_ufs_iospeed():
         """test android ufs i/o speend by `tiotest_qnx` tool
