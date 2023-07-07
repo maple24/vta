@@ -72,9 +72,5 @@ Define Global
     [Documentation]    Define global variables
     ${TESTER}    GenericHelper.Get Username
     ${BENCHID}    GenericHelper.Get Hostname
-    # ${SOCVersion}    qvta.Get SOC Version
-    # ${SCCVersion}    qvta.Get SCC Version
     Set Global Variable    ${TESTER}
     Set Global Variable    ${BENCHID}
-    # Set Global Variable    ${SOCVersion}
-    # Set Global Variable    ${SCCVersion}
