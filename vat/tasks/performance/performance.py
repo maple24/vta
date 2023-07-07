@@ -24,9 +24,10 @@ class Performance:
         """
         ...
 
-    def android_ufs_iospeed(self) -> None:
+    def android_ufs_iospeed(self) -> dict:
         """test android ufs i/o speend by `tiotest_la` tool
         ./data/tiotest_la.out -t 1 -d /data/ -b 2097152 -f 200 -L
+        return: {'Write': '354.371', 'Read': '662.324'}
         """
         tiotest = os.path.join(BIN, "tiotest_la")
         SystemHelper.PC2Android(
@@ -37,11 +38,16 @@ class Performance:
         )
         data = GenericHelper.prompt_command(
             f"adb -s {self.deviceID} shell /data/tiotest_la -t 1 -d /data/ -b 2097152 -f 200 -L",
-            timeout=10.0,
+            timeout=20.0,
         )
-        GenericHelper.match_string(
+        res, matched = GenericHelper.match_string(
             pattern="\| (Write|Read)\s+.*\s+([0-9\.]+)\sMB/s", data=data
         )
+        if res:
+            return {
+                matched[0][0]: matched[0][1],
+                matched[1][0]: matched[1][1]
+            }
 
     def qnx_ufs_iospeed():
         """test android ufs i/o speend by `tiotest_qnx` tool

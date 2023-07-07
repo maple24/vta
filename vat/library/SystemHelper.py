@@ -3,7 +3,7 @@ from typing import Optional
 from loguru import logger
 import time
 import serial
-from GenericHelper import GenericHelper
+from .GenericHelper import GenericHelper
 
 
 class SystemHelper:
