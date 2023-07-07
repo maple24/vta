@@ -9,7 +9,7 @@ from GenericHelper import GenericHelper
 class SystemHelper:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
-    disk_mapping = {"qnx": "/shared", "android": "/data/vendor/nfs/shared"}
+    disk_mapping = {"qnx": "/mnt/nfs_share", "android": "/data/vendor/nfs/mount"}
 
     @staticmethod
     def serial_command(
@@ -85,6 +85,7 @@ class SystemHelper:
     def PC2Android(localPath: str, androidPath: str, deviceID: str = "1234567") -> None:
         if not SystemHelper.is_adb_available(deviceID):
             return
+        GenericHelper.prompt_command(f"adb -s {deviceID} root")
         cmd = f"adb -s {deviceID} push {localPath} {androidPath}"
         GenericHelper.prompt_command(cmd)
 
@@ -94,6 +95,7 @@ class SystemHelper:
     ) -> None:
         if not SystemHelper.is_adb_available(deviceID):
             return
+        GenericHelper.prompt_command(f"adb -s {deviceID} root")
         cmd = f"adb -s {deviceID} pull {androidPath} {localPath}"
         GenericHelper.prompt_command(cmd)
 
