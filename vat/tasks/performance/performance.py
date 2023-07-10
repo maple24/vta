@@ -1,5 +1,6 @@
 import os
 import sys
+from loguru import logger
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
@@ -18,42 +19,73 @@ class Performance:
         self.username = username
         self.password = password
 
-    def nfs_iospeed():
-        """test android nfs i/o speend by `dd` command
-        dd if=/dev/zero of=/data/test.image count=100 bs=1440k
+    def android_nfs_iospeed(self, disk: str, type: str = "w"):
+        """test android nfs i/o speed by `dd` command for `nfs_log` and `mount` disk
+        write: dd if=/dev/zero of=/data/vendor/nfs/nfs_log/test.image count=100 bs=1440k
+        read: dd if={}/test.image of=/dev/null count=100 bs=1440k
         """
-        ...
+        pattern = "[0-9]+\sbytes\stransferred\sin\s([0-9]+(\.[0-9]{1,3})?)\ssecs\s\(([0-9]+)\sbytes\/sec\)"
+        if type == "w":
+            logger.info(f"Testing write speed of {disk}")
+            data = GenericHelper.prompt_command(
+                f"adb -s {self.deviceID} shell dd if=/dev/zero of={disk}/test.image count=100 bs=1440k"
+            )
+            res, matched = GenericHelper.match_string(pattern=pattern, data=data)
+        elif type == "r":
+            logger.info(f"Testing read speed of {disk}")
+            data = GenericHelper.prompt_command(
+                f"adb -s {self.deviceID} shell dd if={disk}/test.image of=/dev/null count=100 bs=1440k"
+            )
+            res, matched = GenericHelper.match_string(pattern=pattern, data=data)
+        else:
+            logger.warning(f"Unknown test type: {type}")
 
-    def android_ufs_iospeed(self) -> dict:
-        """test android ufs i/o speend by `tiotest_la` tool
+    def android_ufs_iospeed(self, disk: str = "/data") -> dict:
+        """test android ufs i/o speed by `tiotest_la` tool
         ./data/tiotest_la.out -t 1 -d /data/ -b 2097152 -f 200 -L
         return: {'Write': '354.371', 'Read': '662.324'}
+        TBD: return files
         """
+        pattern = "\| (Write|Read)\s+.*\s+([0-9\.]+)\sMB/s"
         tiotest = os.path.join(BIN, "tiotest_la")
+        androidPath = "/data"
+        tiotest_android = os.path.join(androidPath, "tiotest_la")
         SystemHelper.PC2Android(
-            localPath=tiotest, androidPath="/data", deviceID=self.deviceID
+            localPath=tiotest, androidPath=androidPath, deviceID=self.deviceID
         )
         GenericHelper.prompt_command(
-            f"adb -s {self.deviceID} shell chmod +x /data/tiotest_la"
+            f"adb -s {self.deviceID} shell chmod +x {tiotest_android}"
         )
         data = GenericHelper.prompt_command(
-            f"adb -s {self.deviceID} shell /data/tiotest_la -t 1 -d /data/ -b 2097152 -f 200 -L",
+            f"adb -s {self.deviceID} shell {tiotest_android} -t 1 -d {disk} -b 2097152 -f 200 -L",
             timeout=20.0,
+        )
+        res, matched = GenericHelper.match_string(pattern=pattern, data=data)
+        if res:
+            return {matched[0][0]: matched[0][1], matched[1][0]: matched[1][1]}
+
+    def qnx_ufs_iospeed(self):
+        """test android ufs i/o speend by `tiotest_qnx` tool
+        on -p 63 /var/log/tiotest_qnx -t 1 -d /otaupdate -b 2097152 -f 200 -L
+        """
+        tiotest = os.path.join(BIN, "tiotest_qnx")
+        tiotest_qnx = os.path.join(SystemHelper.disk_mapping.get("qnx"), "tiotest_qnx")
+        SystemHelper.PC2QNX(
+            comport=self.comport,
+            localPath=tiotest,
+            deviceID=self.deviceID,
+            username=self.username,
+            password=self.password,
+        )
+        SystemHelper.serial_command(f"chmod +x {tiotest_qnx}")
+        data = SystemHelper.serial_command(
+            f"on -p 63 {tiotest_qnx} -t 1 -d /var -b 2097152 -f 200 -L"
         )
         res, matched = GenericHelper.match_string(
             pattern="\| (Write|Read)\s+.*\s+([0-9\.]+)\sMB/s", data=data
         )
         if res:
-            return {
-                matched[0][0]: matched[0][1],
-                matched[1][0]: matched[1][1]
-            }
-
-    def qnx_ufs_iospeed():
-        """test android ufs i/o speend by `tiotest_qnx` tool
-        on -p 63 /var/log/tiotest_qnx -t 1 -d /otaupdate -b 2097152 -f 200 -L
-        """
-        tiotest = os.path.join(BIN, "tiotest_qnx")
+            return {matched[0][0]: matched[0][1], matched[1][0]: matched[1][1]}
 
     def android_cpu_mem():
         """
@@ -88,3 +120,11 @@ class Performance:
             "hogs -i 1 > hogs.log",
             "showmem -s > showmem.log",
         ]
+
+
+if __name__ == "__main__":
+    p = Performance(
+        deviceID="605712f4", comport="com8", username="zeekr", password="Aa123123"
+    )
+    res = p.android_ufs_iospeed()
+    print(res)
