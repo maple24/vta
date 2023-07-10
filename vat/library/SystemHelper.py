@@ -114,7 +114,7 @@ class SystemHelper:
         androidPath = SystemHelper.disk_mapping.get("android", "/data/nfs/nfs_share")
         SystemHelper.PC2Android(localPath, androidPath, deviceID)
         if qnxPath is not None:
-            cmd = f"cp {os.path.join(SystemHelper.disk_mapping.get('qnx', '/data/share/'), filename)} {qnxPath}"
+            cmd = f"cp {SystemHelper.disk_mapping.get('qnx', '/data/share/')}/{filename} {qnxPath}"
             SystemHelper.serial_command(cmd, comport, username, password)
 
     @staticmethod
@@ -130,9 +130,7 @@ class SystemHelper:
         logger.info(f"Target file is {filename}")
         cmd = f"cp {qnxPath} {SystemHelper.disk_mapping.get('qnx', '/data/share/')}"
         SystemHelper.serial_command(cmd, comport, username, password)
-        androidPath = os.path.join(
-            SystemHelper.disk_mapping.get("android", "/data/nfs/nfs_share/"), filename
-        )
+        androidPath = f"{SystemHelper.disk_mapping.get('android', '/data/nfs/nfs_share/')}/{filename}"
         SystemHelper.Android2PC(androidPath, localPath, deviceID)
 
 
