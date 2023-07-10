@@ -174,3 +174,4 @@ database.db
 
 # temperary files
 tmp/
+result/

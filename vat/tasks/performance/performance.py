@@ -8,6 +8,7 @@ from vat.library.GenericHelper import GenericHelper
 from vat.library.SystemHelper import SystemHelper
 
 BIN = os.path.join(os.path.dirname(__file__), "bin")
+RESULT = os.path.join(os.path.dirname(__file__), "result")
 
 
 class Performance:
@@ -18,8 +19,13 @@ class Performance:
         self.comport = comport
         self.username = username
         self.password = password
+        if not os.path.exists(RESULT):
+            os.mkdir(RESULT)
+        if not os.path.exists(BIN):
+            logger.error("Binary folder does not exist!")
+            sys.exit(1)
 
-    def android_nfs_iospeed(self, disk: str, type: str = "w"):
+    def android_nfs_iospeed(self, disk: str, type: str = "w") -> dict:
         """test android nfs i/o speed by `dd` command for `nfs_log` and `mount` disk
         write: dd if=/dev/zero of=/data/vendor/nfs/nfs_log/test.image count=100 bs=1440k
         read: dd if={}/test.image of=/dev/null count=100 bs=1440k
@@ -68,7 +74,7 @@ class Performance:
         if res:
             return {matched[0][0]: matched[0][1], matched[1][0]: matched[1][1]}
 
-    def qnx_ufs_iospeed(self):
+    def qnx_ufs_iospeed(self, disk: str = "/data") -> dict:
         """test android ufs i/o speend by `tiotest_qnx` tool
         on -p 63 /var/log/tiotest_qnx -t 1 -d /otaupdate -b 2097152 -f 200 -L
         """
@@ -84,47 +90,45 @@ class Performance:
         )
         SystemHelper.serial_command(f"chmod +x {tiotest_qnx}")
         data = SystemHelper.serial_command(
-            f"on -p 63 {tiotest_qnx} -t 1 -d /var -b 2097152 -f 200 -L"
+            f"on -p 63 {tiotest_qnx} -t 1 -d {disk} -b 2097152 -f 200 -L"
         )
-        res, matched = GenericHelper.match_string(
-            pattern=pattern, data=data
-        )
+        res, matched = GenericHelper.match_string(pattern=pattern, data=data)
         if res:
             return {matched[0][0]: matched[0][1], matched[1][0]: matched[1][1]}
 
-    def android_cpu_mem():
+    def android_cpu_mem(self, cmd: str, file: str) -> None:
         """
-        cmd:
-        1. android: top -b -n 1
-        2. android: dumpsys cpuinfo
-        3. android: ps -A
-        4. android: cat /proc/cpuinfo
-        5. android: dumpsys meminfo
-        output: files
+        cmd: top -b -n 1
+        output: aos_top.log
         """
-        cmds = [
-            "top -b -n 1 > top.log",
-            "dumpsys cpuinfo > sys_cpuinfo.log",
-            "ps -A > ps.log",
-            "cat /proc/cpuinfo > proc_cpuinfo.log",
-            "dumpsys meminfo > meminfo.log",
-        ]
-        log_folder = SystemHelper.disk_mapping.get("android")
-        GenericHelper.prompt_command()
+        tmp = "/sdcard"
+        output = f"{tmp}/{file}"
+        GenericHelper.prompt_command(f'adb -s {self.deviceID} shell "{cmd} > {output}"')
+        SystemHelper.Android2PC(
+            androidPath=output, localPath=RESULT, deviceID=self.deviceID
+        )
 
-    def qnx_cpu_mem():
+    def qnx_cpu_mem(self, cmd: str, file: str) -> None:
         """
-        cmd:
-        1. qnx: top -b -i 1
-        2. qnx: hogs -i 1
-        3. qnx: showmem -s
-        output: files
+        cmd: top -b -i 1
+        output: qnx_top.log
         """
-        cmds = [
-            "top -b -i 1 > top.log",
-            "hogs -i 1 > hogs.log",
-            "showmem -s > showmem.log",
-        ]
+        tmp = "/var"
+        output = f"{tmp}/{file}"
+        SystemHelper.serial_command(
+            cmd=f"{cmd} > {output}",
+            comport=self.comport,
+            username=self.username,
+            password=self.password,
+        )
+        SystemHelper.QNX2PC(
+            comport=self.comport,
+            qnxPath=output,
+            localPath=RESULT,
+            deviceID=self.deviceID,
+            username=self.username,
+            password=self.password,
+        )
 
 
 if __name__ == "__main__":
