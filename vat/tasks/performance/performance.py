@@ -24,19 +24,23 @@ class Performance:
         write: dd if=/dev/zero of=/data/vendor/nfs/nfs_log/test.image count=100 bs=1440k
         read: dd if={}/test.image of=/dev/null count=100 bs=1440k
         """
-        pattern = "[0-9]+\sbytes\stransferred\sin\s([0-9]+(\.[0-9]{1,3})?)\ssecs\s\(([0-9]+)\sbytes\/sec\)"
+        pattern = "\d+\sbytes\s\(.+\)\scopied,\s.+,\s(.+)"
         if type == "w":
             logger.info(f"Testing write speed of {disk}")
             data = GenericHelper.prompt_command(
                 f"adb -s {self.deviceID} shell dd if=/dev/zero of={disk}/test.image count=100 bs=1440k"
             )
             res, matched = GenericHelper.match_string(pattern=pattern, data=data)
+            if res:
+                return {"Write": matched[0][0]}
         elif type == "r":
             logger.info(f"Testing read speed of {disk}")
             data = GenericHelper.prompt_command(
                 f"adb -s {self.deviceID} shell dd if={disk}/test.image of=/dev/null count=100 bs=1440k"
             )
             res, matched = GenericHelper.match_string(pattern=pattern, data=data)
+            if res:
+                return {"Read": matched[0][0]}
         else:
             logger.warning(f"Unknown test type: {type}")
 
@@ -46,7 +50,7 @@ class Performance:
         return: {'Write': '354.371', 'Read': '662.324'}
         TBD: return files
         """
-        pattern = "\| (Write|Read)\s+.*\s+([0-9\.]+)\sMB/s"
+        pattern = "\| (Write|Read)\s+.*\s+([0-9\.]+\sMB/s)"
         tiotest = os.path.join(BIN, "tiotest_la")
         androidPath = "/data"
         tiotest_android = f"{androidPath}/tiotest_la"
@@ -68,6 +72,7 @@ class Performance:
         """test android ufs i/o speend by `tiotest_qnx` tool
         on -p 63 /var/log/tiotest_qnx -t 1 -d /otaupdate -b 2097152 -f 200 -L
         """
+        pattern = "\| (Write|Read)\s+.*\s+([0-9\.]+\sMB/s)"
         tiotest = os.path.join(BIN, "tiotest_qnx")
         tiotest_qnx = f"{SystemHelper.disk_mapping.get('qnx')}/tiotest_qnx"
         SystemHelper.PC2QNX(
@@ -82,7 +87,7 @@ class Performance:
             f"on -p 63 {tiotest_qnx} -t 1 -d /var -b 2097152 -f 200 -L"
         )
         res, matched = GenericHelper.match_string(
-            pattern="\| (Write|Read)\s+.*\s+([0-9\.]+)\sMB/s", data=data
+            pattern=pattern, data=data
         )
         if res:
             return {matched[0][0]: matched[0][1], matched[1][0]: matched[1][1]}
