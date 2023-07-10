@@ -49,7 +49,7 @@ class Performance:
         pattern = "\| (Write|Read)\s+.*\s+([0-9\.]+)\sMB/s"
         tiotest = os.path.join(BIN, "tiotest_la")
         androidPath = "/data"
-        tiotest_android = os.path.join(androidPath, "tiotest_la")
+        tiotest_android = f"{androidPath}/tiotest_la"
         SystemHelper.PC2Android(
             localPath=tiotest, androidPath=androidPath, deviceID=self.deviceID
         )
@@ -69,7 +69,7 @@ class Performance:
         on -p 63 /var/log/tiotest_qnx -t 1 -d /otaupdate -b 2097152 -f 200 -L
         """
         tiotest = os.path.join(BIN, "tiotest_qnx")
-        tiotest_qnx = os.path.join(SystemHelper.disk_mapping.get("qnx"), "tiotest_qnx")
+        tiotest_qnx = f"{SystemHelper.disk_mapping.get('qnx')}/tiotest_qnx"
         SystemHelper.PC2QNX(
             comport=self.comport,
             localPath=tiotest,
