@@ -1,6 +1,8 @@
 import os
 import sys
 from loguru import logger
+from typing import Union, List
+import csv
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
@@ -38,7 +40,7 @@ class Performance:
             )
             res, matched = GenericHelper.match_string(pattern=pattern, data=data)
             if res:
-                return {"Write": matched[0][0]}
+                return {f"nfs_{disk}_Write": matched[0][0]}
         elif type == "r":
             logger.info(f"Testing read speed of {disk}")
             data = GenericHelper.prompt_command(
@@ -46,7 +48,7 @@ class Performance:
             )
             res, matched = GenericHelper.match_string(pattern=pattern, data=data)
             if res:
-                return {"Read": matched[0][0]}
+                return {f"nfs_{disk}_Read": matched[0][0]}
         else:
             logger.warning(f"Unknown test type: {type}")
 
@@ -54,7 +56,6 @@ class Performance:
         """test android ufs i/o speed by `tiotest_la` tool
         ./data/tiotest_la.out -t 1 -d /data/ -b 2097152 -f 200 -L
         return: {'Write': '354.371', 'Read': '662.324'}
-        TBD: return files
         """
         pattern = "\| (Write|Read)\s+.*\s+([0-9\.]+\sMB/s)"
         tiotest = os.path.join(BIN, "tiotest_la")
@@ -72,7 +73,10 @@ class Performance:
         )
         res, matched = GenericHelper.match_string(pattern=pattern, data=data)
         if res:
-            return {matched[0][0]: matched[0][1], matched[1][0]: matched[1][1]}
+            return {
+                f"ufs_{disk}_{matched[0][0]}": matched[0][1],
+                f"ufs_{disk}_{matched[1][0]}": matched[1][1],
+            }
 
     def qnx_ufs_iospeed(self, disk: str = "/data") -> dict:
         """test android ufs i/o speend by `tiotest_qnx` tool
@@ -94,7 +98,10 @@ class Performance:
         )
         res, matched = GenericHelper.match_string(pattern=pattern, data=data)
         if res:
-            return {matched[0][0]: matched[0][1], matched[1][0]: matched[1][1]}
+            return {
+                f"ufs_{disk}_{matched[0][0]}": matched[0][1],
+                f"ufs_{disk}_{matched[1][0]}": matched[1][1],
+            }
 
     def android_cpu_mem(self, cmd: str, file: str) -> None:
         """
@@ -129,6 +136,19 @@ class Performance:
             username=self.username,
             password=self.password,
         )
+
+    @staticmethod
+    def dict2csv(file: str, data: Union[List[dict], dict]) -> None:
+        if isinstance(data, list):
+            fieldnames = data[0].keys()
+        else:
+            fieldnames = data.keys()
+            data = [data]
+        with open(file, "w", newline="") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(data)
+        logger.success("Succeed to write to csv file!")
 
 
 if __name__ == "__main__":

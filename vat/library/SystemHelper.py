@@ -3,7 +3,11 @@ from typing import Optional
 from loguru import logger
 import time
 import serial
-from .GenericHelper import GenericHelper
+
+try:
+    from GenericHelper import GenericHelper
+except:
+    from .GenericHelper import GenericHelper
 
 
 class SystemHelper:
