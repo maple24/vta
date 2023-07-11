@@ -157,5 +157,11 @@ if __name__ == "__main__":
     # )
     # res = p.android_ufs_iospeed()
     # print(res)
-    a = [{'nfs_/data/vendor/nfs/mount_Write': '59 M/s'}, {'nfs_/data/vendor/nfs/mount_Read': '52 M/s'}, {'nfs_/data/vendor/nfs/nfs_log_Write': '444 M/s'}, {'nfs_/data/vendor/nfs/nfs_log_Read': '7.5 G/s'}, {'ufs_/data_Write': '358.693 MB/s', 'ufs_/data_Read': '678.157 MB/s'}]
-    Performance.dict2csv(file='yesy.csv', data=a)
+    a = [
+        {"nfs_/data/vendor/nfs/mount_Write": "59 M/s"},
+        {"nfs_/data/vendor/nfs/mount_Read": "52 M/s"},
+        {"nfs_/data/vendor/nfs/nfs_log_Write": "444 M/s"},
+        {"nfs_/data/vendor/nfs/nfs_log_Read": "7.5 G/s"},
+        {"ufs_/data_Write": "358.693 MB/s", "ufs_/data_Read": "678.157 MB/s"},
+    ]
+    Performance.dict2csv(file="yesy.csv", data=a)
