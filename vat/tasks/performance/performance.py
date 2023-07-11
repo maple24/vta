@@ -74,8 +74,8 @@ class Performance:
         res, matched = GenericHelper.match_string(pattern=pattern, data=data)
         if res:
             return {
-                f"ufs_{disk}_{matched[0][0]}": matched[0][1],
-                f"ufs_{disk}_{matched[1][0]}": matched[1][1],
+                f"aos_ufs_{matched[0][0]}": matched[0][1],
+                f"aos_ufs_{matched[1][0]}": matched[1][1],
             }
 
     def qnx_ufs_iospeed(self, disk: str = "/data") -> dict:
@@ -99,8 +99,8 @@ class Performance:
         res, matched = GenericHelper.match_string(pattern=pattern, data=data)
         if res:
             return {
-                f"ufs_{disk}_{matched[0][0]}": matched[0][1],
-                f"ufs_{disk}_{matched[1][0]}": matched[1][1],
+                f"qnx_ufs_{matched[0][0]}": matched[0][1],
+                f"qnx_ufs_{matched[1][0]}": matched[1][1],
             }
 
     def android_cpu_mem(self, cmd: str, file: str) -> None:
@@ -152,8 +152,10 @@ class Performance:
 
 
 if __name__ == "__main__":
-    p = Performance(
-        deviceID="605712f4", comport="com8", username="zeekr", password="Aa123123"
-    )
-    res = p.android_ufs_iospeed()
-    print(res)
+    # p = Performance(
+    #     deviceID="605712f4", comport="com8", username="zeekr", password="Aa123123"
+    # )
+    # res = p.android_ufs_iospeed()
+    # print(res)
+    a = [{'nfs_/data/vendor/nfs/mount_Write': '59 M/s'}, {'nfs_/data/vendor/nfs/mount_Read': '52 M/s'}, {'nfs_/data/vendor/nfs/nfs_log_Write': '444 M/s'}, {'nfs_/data/vendor/nfs/nfs_log_Read': '7.5 G/s'}, {'ufs_/data_Write': '358.693 MB/s', 'ufs_/data_Read': '678.157 MB/s'}]
+    Performance.dict2csv(file='yesy.csv', data=a)

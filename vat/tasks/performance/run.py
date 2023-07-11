@@ -11,6 +11,8 @@ logger.add(
 )
 
 if __name__ == "__main__":
+    outputname = 'perf_io.csv'
+    output = os.path.join(os.path.dirname(__file__), outputname)
     nfs_disk = ["/data/vendor/nfs/mount", "/data/vendor/nfs/nfs_log"]
     aos_cmds = [
         {"cmd": "top -b -n 1", "file": "aos_top.log"},
@@ -31,16 +33,15 @@ if __name__ == "__main__":
     mp = Performance(
         deviceID="c35364f", comport="com5", username="zeekr", password="Aa123123"
     )
-    results = []
+    results = {}
     # android nfs
     for i in nfs_disk:
-        results.append(mp.android_nfs_iospeed(disk=i, type="w"))
-        results.append(mp.android_nfs_iospeed(disk=i, type="r"))
+        results.update(mp.android_nfs_iospeed(disk=i, type="w"))
+        results.update(mp.android_nfs_iospeed(disk=i, type="r"))
 
     # android ufs
-    results.append(mp.android_ufs_iospeed())
-    print(results)
-    Performance.dict2csv(file='perf.csv', data=results)
+    results.update(mp.android_ufs_iospeed())
+    Performance.dict2csv(file=output, data=results)
 
     # qnx ufs: blocked
 
