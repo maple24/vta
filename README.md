@@ -49,9 +49,14 @@ pip install -r requirements.txt
 ```
 4. run HelloWorld.bat and check logs in /log
 5. (optional) set your pythonpath for robotframework
-
+```sh
 Go to the Robot Framework Language Server extension and go to extension settings
 In there you'll find: Robot > Language-server: Python
+```
+6. format your code
+```sh
+python -m black .\vat\
+```
 
 ## Structure
 - Helpers: pure functions/classes/apis in independent files, no relative import needed

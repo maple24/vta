@@ -11,7 +11,7 @@ class PuttyHelper:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
     def __init__(self):
-        self.putty_object = None
+        self.putty_object: Optional[serial.Serial] = None
         self.waitTrace_queue: queue.Queue[tuple[float, str]] = queue.Queue()
         self.monitorTrace_queue: queue.Queue[tuple[float, str]] = queue.Queue()
         self.event_waitTrace = threading.Event()
