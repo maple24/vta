@@ -27,3 +27,5 @@ Check Image
 Check SWUP Success
     [Arguments]    ${SWUP_timeout}
     Wait Until Keyword Succeeds    ${SWUP_timeout}    10 sec    generic.Check Android Home
+    # close notification
+    GenericHelper.Prompt Command    adb shell input tap 865 865
