@@ -11,10 +11,10 @@ Enter Recovery Mode
     generic.Route EngineeringMode
     # click upgrade button
     GenericHelper.Prompt Command    adb shell input tap 600 160
-    Sleep    2s
+    Sleep    1s
     # click enter recovery mode
     GenericHelper.Prompt Command    adb shell input tap 2400 240
-    Sleep    2s
+    Sleep    1s
     @{traces}=    PuttyHelper.Get Trace Container
     ${RES}    ${matched}=    GenericHelper.Match String    (Requester: usbdownload)    ${traces}
     Should Be Equal    ${RES}    ${True}    Fail to enter recovery mode!
