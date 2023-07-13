@@ -8,19 +8,21 @@ Library    OperatingSystem
 *** Keywords ***
 Enter Recovery Mode
     [Documentation]    enter recovery mode
-    GenericHelper.Prompt Command    adb root
     generic.Route EngineeringMode
-    GenericHelper.Prompt Command    adb shell am broadcast -a android.intent.action.MEDIA_MOUNTED -d file:/test/usb1 -f 0x01000000
     # click upgrade button
     GenericHelper.Prompt Command    adb shell input tap 600 160
     Sleep    2s
     # click enter recovery mode
     GenericHelper.Prompt Command    adb shell input tap 2400 240
+    Sleep    2s
+    @{traces}=    PuttyHelper.Get Trace Container
+    ${RES}    ${matched}=    GenericHelper.Match String    (Requester: usbdownload)    ${traces}
+    Should Be Equal    ${RES}    ${True}    Fail to enter recovery mode!
 Check Image
     [Documentation]    check image exist
     [Arguments]    ${image}
     ${udisk}    GenericHelper.Get Removable Drives
     Directory Should Exist    ${udisk}//${image}    Software package not found!
 Check SWUP Success
-    ${RES}    AgentHelper.Req To Test Profile    ${1}    Android_Home
-    Should Be Equal    ${RES}    ${0}
+    [Arguments]    ${SWUP_timeout}
+    Wait Until Keyword Succeeds    ${SWUP_timeout}    10 sec    generic.Check Android Home

@@ -17,7 +17,7 @@ Suite Teardown    generic.DEINIT
 *** Variables ***
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
-${SWUP_timeout}    20 minutes
+${SWUP_timeout}    30 minutes
 
 
 *** Test Cases ***
@@ -29,7 +29,7 @@ SWUP
     FileManager.Copy Directory    ${image}    ${udisk}//all_images
     generic.UDisk to DHU
     swup.Enter Recovery Mode
-    Wait Until Keyword Succeeds    ${SWUP_timeout}    10 sec    swup.Check SWUP Success
+    swup.Check SWUP Success    ${SWUP_timeout}
     
 Media Picture
     [Documentation]    open picture in USB3.0
@@ -56,8 +56,7 @@ BSP Camera OMS
 BSP Display CSD
     [Documentation]    check CSD display
     generic.Route Carlauncher
-    ${RES}    AgentHelper.Req To Test Profile    ${1}    Android_Home
-    Should Be Equal    ${RES}    ${0}    Profile does not match!
+    generic.Check Android Home
 
 BSP Display Backlight
     [Documentation]    check backlight in CSD
@@ -69,8 +68,6 @@ BSP Display Backlight
 LCM PowerONOFF
     [Documentation]    power on/off switch via ACC
     generic.ACC OFF
-    ${RES1}    AgentHelper.Req To Test Profile    ${1}    Black_Screen
-    Should Be Equal    ${RES1}    ${0}    Profile does not match!
+    generic.Check Black Screen
     generic.ACC ON
-    ${RES2}    AgentHelper.Req To Test Profile    ${1}    Android_Home
-    Should Be Equal    ${RES2}    ${0}    Profile does not match!
+    generic.Check Android Home

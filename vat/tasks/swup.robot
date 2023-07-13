@@ -14,13 +14,14 @@ Suite Teardown    generic.DEINIT
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
 ${image_name}    all_images
+${SWUP_timeout}    30 minutes
 
 *** Keywords ***
 USB0
-    RelayHelper.Set Relay Port    dev_type=multiplexer    port_index=13
+    RelayHelper.Set Relay Port    dev_type=cleware    port_index=5    state_code=1
     Sleep    1s
 USB1
-    RelayHelper.Set Relay Port    dev_type=multiplexer    port_index=14
+    RelayHelper.Set Relay Port    dev_type=cleware    port_index=6    state_code=1
     Sleep    1s
 
 *** Test Cases ***
@@ -30,3 +31,4 @@ SWUP Execution
     generic.Randomly Run Keywords    ${keyword_list}
     swup.Check Image    ${image_name}
     swup.Enter Recovery Mode
+    swup.Check SWUP Success    ${SWUP_timeout}

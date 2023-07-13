@@ -57,6 +57,12 @@ WebCam Video ON
     AgentHelper.Req To Start Video    ${1}
 WebCam Video OFF
     AgentHelper.Req To Stop Video    ${1}
+Check Android Home
+    ${RES}    AgentHelper.Req To Test Profile    ${1}    Android_Home
+    Should Be Equal    ${RES}    ${0}    Android Home does not match!
+Check Black Screen
+    ${RES}    AgentHelper.Req To Test Profile    ${1}    Black_Screen
+    Should Be Equal    ${RES}    ${0}    Black Screen does not match!
 INIT
     [Documentation]    Init all instances
     [Arguments]    ${CONF}

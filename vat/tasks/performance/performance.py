@@ -29,6 +29,9 @@ class Performance:
 
     def bootchart(self):
         ...
+    
+    def android_boot(self):
+        ...
 
     def android_nfs_iospeed(self, disk: str, type: str = "w") -> dict:
         """test android nfs i/o speed by `dd` command for `nfs_log` and `mount` disk
@@ -155,16 +158,8 @@ class Performance:
 
 
 if __name__ == "__main__":
-    # p = Performance(
-    #     deviceID="605712f4", comport="com8", username="zeekr", password="Aa123123"
-    # )
-    # res = p.android_ufs_iospeed()
-    # print(res)
-    a = [
-        {"nfs_/data/vendor/nfs/mount_Write": "59 M/s"},
-        {"nfs_/data/vendor/nfs/mount_Read": "52 M/s"},
-        {"nfs_/data/vendor/nfs/nfs_log_Write": "444 M/s"},
-        {"nfs_/data/vendor/nfs/nfs_log_Read": "7.5 G/s"},
-        {"ufs_/data_Write": "358.693 MB/s", "ufs_/data_Read": "678.157 MB/s"},
-    ]
-    Performance.dict2csv(file="yesy.csv", data=a)
+    p = Performance(
+        deviceID="605712f4", comport="com8", username="zeekr", password="Aa123123"
+    )
+    res = p.android_ufs_iospeed()
+    print(res)
