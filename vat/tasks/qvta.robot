@@ -17,6 +17,7 @@ Suite Teardown    generic.DEINIT
 *** Variables ***
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
+${image_name}    all_images
 ${SWUP_timeout}    30 minutes
 
 
@@ -26,7 +27,7 @@ SWUP
     ${image}    qvta.Download Latest
     generic.UDisk to PC
     ${udisk}    GenericHelper.Get Removable Drives
-    FileManager.Copy Directory    ${image}    ${udisk}//all_images
+    FileManager.Copy Directory    ${image}    ${udisk}//${image_name}
     generic.UDisk to DHU
     swup.Enter Recovery Mode
     swup.Check SWUP Success    ${SWUP_timeout}
