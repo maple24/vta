@@ -18,6 +18,7 @@ Enter Recovery Mode
     @{traces}=    PuttyHelper.Get Trace Container
     ${RES}    ${matched}=    GenericHelper.Match String    (Requester: usbdownload)    ${traces}
     Should Be Equal    ${RES}    ${True}    Fail to enter recovery mode!
+    Wait Until Keyword Succeeds    3 minutes    10 sec    generic.Check Upgrade Screen
 Check Image
     [Documentation]    check image exist
     [Arguments]    ${image}

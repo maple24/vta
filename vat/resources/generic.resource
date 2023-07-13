@@ -63,6 +63,9 @@ Check Android Home
 Check Black Screen
     ${RES}    AgentHelper.Req To Test Profile    ${1}    Black_Screen
     Should Be Equal    ${RES}    ${0}    Black Screen does not match!
+Check Upgrade Screen
+    ${RES}    AgentHelper.Req To Test Profile    ${1}    Upgrade
+    Should Be Equal    ${RES}    ${0}    Upgrade Screen does not match!
 INIT
     [Documentation]    Init all instances
     [Arguments]    ${CONF}
