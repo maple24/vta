@@ -1,6 +1,7 @@
 *** Settings ***
 Resource    ../resources/generic.resource
 Resource    ../resources/swup.resource
+Resource    ../resources/qvta.resource
 Library    String
 Library    OperatingSystem
 Library    ../api/RelayHelper.py
@@ -31,6 +32,9 @@ USB1
     Sleep    1s
 
 *** Test Cases ***
+GetVersion
+    ${SOCVersion}    qvta.Get SOC Version
+    Set Suite Variable    ${SOCVersion}
 SWUP Execution
     [Documentation]    randomly select software package and run test
     ${keyword_list}    Create List    USB0    USB1

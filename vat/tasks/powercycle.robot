@@ -28,10 +28,7 @@ StepTest
 
 GetVersion
     ${SOCVersion}    qvta.Get SOC Version
-    # ${SCCVersion}    qvta.Get SCC Version
     Set Suite Variable    ${SOCVersion}
-    # Set Suite Variable    ${SCCVersion}
-
 StepCheckPowerCycle
     [Tags]
     [Setup]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video ON
