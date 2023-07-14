@@ -66,6 +66,11 @@ Check Black Screen
 Check Upgrade Screen
     ${RES}    AgentHelper.Req To Test Profile    ${1}    Upgrade
     Should Be Equal    ${RES}    ${0}    Upgrade Screen does not match!
+Check Trace From Container
+    [Arguments]    ${pattern}
+    @{traces}=    PuttyHelper.Get Trace Container
+    ${RES}    ${matched}=    GenericHelper.Match String    ${pattern}    ${traces}
+    Should Be Equal    ${RES}    ${True}    Fail to match pattern ${pattern}!
 INIT
     [Documentation]    Init all instances
     [Arguments]    ${CONF}

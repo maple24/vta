@@ -44,7 +44,7 @@ class PuttyHelper:
         if res:
             logger.error("Login error! Please restart!")
             return False
-        res, _ = self.wait_for_trace("(login:.*)", "\n", 3, False)
+        res, _ = self.wait_for_trace("(login:.*)|(Login incorrect)", "\n", 3, False)
         if res:
             logger.info("Serial console is locked, need login in")
             return False

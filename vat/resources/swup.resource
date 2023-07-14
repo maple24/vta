@@ -15,9 +15,7 @@ Enter Recovery Mode
     # click enter recovery mode
     GenericHelper.Prompt Command    adb shell input tap 2400 240
     Sleep    1s
-    @{traces}=    PuttyHelper.Get Trace Container
-    ${RES}    ${matched}=    GenericHelper.Match String    (Requester: usbdownload)    ${traces}
-    Should Be Equal    ${RES}    ${True}    Fail to enter recovery mode!
+    generic.Check Trace From Container    (Requester: usbdownload)
     Wait Until Keyword Succeeds    3 minutes    10 sec    generic.Check Upgrade Screen
 Check Image
     [Documentation]    check image exist
@@ -26,11 +24,7 @@ Check Image
     Directory Should Exist    ${udisk}//${image}    Software package not found!
 Check SWUP Success
     [Arguments]    ${SWUP_timeout}
-    Wait Until Keyword Succeeds    ${SWUP_timeout}    10 sec    Check Mode Normal
-    Wait Until Keyword Succeeds    1 minutes    10 sec    generic.Check Android Home
+    Wait Until Keyword Succeeds    ${SWUP_timeout}    10 sec    generic.Check Android Home
+    generic.Check Trace From Container    (SocMode: Normal)
     # close notification
     GenericHelper.Prompt Command    adb shell input tap 865 865
-Check Mode Normal
-    @{traces}=    PuttyHelper.Get Trace Container
-    ${RES}    ${matched}=    GenericHelper.Match String    (SocMode: Normal)    ${traces}
-    Should Be Equal    ${RES}    ${True}    Fail to get soc mode normal!
