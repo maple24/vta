@@ -37,6 +37,8 @@ GetVersion
     Set Suite Variable    ${SOCVersion}
 SWUP Execution
     [Documentation]    randomly select software package and run test
+    [Setup]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video ON
+    [Teardown]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video OFF
     ${keyword_list}    Create List    USB0    USB1
     generic.Randomly Run Keywords    ${keyword_list}
     swup.Enter Recovery Mode
