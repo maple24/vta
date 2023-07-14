@@ -26,6 +26,11 @@ Check Image
     Directory Should Exist    ${udisk}//${image}    Software package not found!
 Check SWUP Success
     [Arguments]    ${SWUP_timeout}
-    Wait Until Keyword Succeeds    ${SWUP_timeout}    10 sec    generic.Check Android Home
+    Wait Until Keyword Succeeds    ${SWUP_timeout}    10 sec    Check Mode Normal
+    Wait Until Keyword Succeeds    1 minutes    10 sec    generic.Check Android Home
     # close notification
     GenericHelper.Prompt Command    adb shell input tap 865 865
+Check Mode Normal
+    @{traces}=    PuttyHelper.Get Trace Container
+    ${RES}    ${matched}=    GenericHelper.Match String    (SocMode: Normal)    ${traces}
+    Should Be Equal    ${RES}    ${True}    Fail to get soc mode normal!
