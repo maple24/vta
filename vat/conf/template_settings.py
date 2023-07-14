@@ -7,6 +7,7 @@ from loguru import logger
 
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 TEMP = os.path.join(ROOT, "tmp")
+
 DEBUG = False
 
 # enable video
@@ -35,6 +36,8 @@ MAIL_CREDENTIAL = {
 if DEBUG:
     logger.remove()
     logger.add(sys.stdout, level="DEBUG")
+if not os.path.exists(TEMP):
+    os.mkdir(TEMP)
 
 SLOT_1 = {
     # putty channel
