@@ -20,6 +20,7 @@ Click BT Button
 Click WIFI Button
     GenericHelper.Prompt Command    adb shell input tap ${WIFI_BUTTON}[0] ${WIFI_BUTTON}[1]
 Route Zeekr BT Settings
+    Route Zeekr Car Launcher
     Route Zeekr Car Settings
     GenericHelper.Prompt Command    adb shell input tap ${BT_SETTINGS}[0] ${BT_SETTINGS}[1]  
 Route Zeekr Car Settings
@@ -30,9 +31,8 @@ Route Zeekr Car Launcher
 *** Test Cases ***
 BT
     [Documentation]    click bt on/off button and check status change
-    [Setup]    Route Zeekr Car Launcher 
+    [Setup]    Route Zeekr BT Settings
     # generic.Route BT Settings
-    Route Zeekr BT Settings
     ${BT_0}    SystemHelper.Android Screencapture    ${device_id}    BT_0.png    ${TEMP}
     Click BT Button
     ${BT_1}    SystemHelper.Android Screencapture    ${device_id}    BT_1.png    ${TEMP}
