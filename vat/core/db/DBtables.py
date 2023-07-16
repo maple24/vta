@@ -10,7 +10,7 @@ class BaseModel(SQLModel):
 
 
 class Stability(BaseModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: Optional[str] = Field(default=None, primary_key=True)
     soc_version: Optional[str] = None
     cus_version: Optional[str] = None
     tester: str

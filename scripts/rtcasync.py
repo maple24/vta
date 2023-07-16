@@ -52,7 +52,7 @@ returned_prop = "dc:title,dc:identifier,rtc_cm:state,dc:created"
 queried_wis = myquery.runSavedQueryByUrl(saved_query_url, returned_properties=returned_prop)
 for item in queried_wis:
     fetched.append({
-        "id": int(item["identifier"]),
+        "id": item["identifier"],
         "summary": item["title"],
         "created": item["created"],
         "status": STATE_MAPPING.get(item["state"]["@rdf:resource"])

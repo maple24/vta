@@ -29,7 +29,7 @@ class Performance:
 
     def bootchart(self):
         ...
-    
+
     def android_boot(self):
         ...
 
