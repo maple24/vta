@@ -54,6 +54,13 @@ class Hero(BaseModel, table=True):
     age: Optional[int] = None
 
 
+class BugTicket(BaseModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    summary: str
+    status: str
+    created: datetime
+
+
 if __name__ == "__main__":
     case = {
         "soc_version": "123",
@@ -66,4 +73,14 @@ if __name__ == "__main__":
         "error_keyword": "123",
     }
     a = Stability.new_item(case)
+    a = Stability(
+        soc_version= "123",
+        cus_version= "123",
+        tester= "123",
+        bench_id= "123",
+        test_type= "123",
+        start_time= "123",
+        end_time= "123",
+        error_keyword= "123",
+    )
     print(a.bench_id)

@@ -2,7 +2,11 @@ from loguru import logger
 from sqlmodel import Session, SQLModel, create_engine, select
 from sqlalchemy.engine import URL
 from datetime import datetime
-from .DBtables import BaseModel, Stability
+
+try:
+    from .DBtables import BaseModel, Stability, Hero, BugTicket
+except:
+    from DBtables import BaseModel, Stability, Hero, BugTicket
 
 
 class DBHelper:
@@ -51,6 +55,13 @@ class DBHelper:
         logger.success(f"Select all from database {results}")
         return results
 
+    def select_ids(self) -> list:
+        statement = select(self.table.id)
+        results = self.session.exec(statement).all()
+        logger.success(f"Select ids from database {results}")
+        return results
+        
+
     def disconnect(self):
         logger.info("Close database session!")
         self.session.close()
@@ -67,21 +78,17 @@ if __name__ == "__main__":
     credential = {
         "drivername": "mysql",
         "username": "root",
-        "password": "Boschets123",
-        "host": "10.178.227.22",
-        "database": "gmw_v3.5",
+        "password": "root",
+        "host": "10.161.224.58",
+        "database": "zeekr",
     }
     mdb = DBHelper()
-    # mdb.connect(Hero, credential)
-    # print(mdb.select_all())
-    # data = {
-    #     'name': 'maple',
-    #     'secret_name': 'jin',
-    #     'age': 22
-    # }
+    mdb.connect(BugTicket, credential)
+    print(mdb.select_ids())
+    # data = {"id": 10, "name": "maple", "secret_name": "jin", "age": 22}
     # mdb.insert_row(data)
     # print(mdb.select_all())
-    # mdb.disconnect()
+    mdb.disconnect()
     row = {
         "PROJECT_NAME": "test",
         "TEST_TYPE": "test",
@@ -116,8 +123,8 @@ if __name__ == "__main__":
         "error_keyword": "123",
         "result": False,
     }
-    mdb.connect(Stability, credential)
+    # mdb.connect(Stability, credential)
     # mdb.create_table()
     # mdb.select_all()
     # mdb.insert_row(row)
-    mdb.select_all()
+    # mdb.select_all()
