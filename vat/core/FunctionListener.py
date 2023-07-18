@@ -310,5 +310,8 @@ class FunctionListener:
         # subject = f"[Automated] Zeekr QVTa Test Report_{timestr}"
         logger.info(self.result_container)
         logger.info(self.info_container)
-        self.body = mail_generator(self.info_container, self.result_container)
+        try:
+            self.body = mail_generator(self.info_container, self.result_container)
+        except:
+            self.subject = BuiltIn().get_variable_value("${mail_body}")
         self._send_mail()
