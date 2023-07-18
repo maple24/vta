@@ -51,7 +51,7 @@ Check Error Trace
 
 Reset by CMD
     [Documentation]    Run powercycle with putty command 'bosch_reset'
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset    timeout=60
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset -b normal    timeout=60
     Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
     Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
