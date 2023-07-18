@@ -40,11 +40,11 @@ class PuttyHelper:
         """
         Description: press enter to check if the serial locked
         """
-        res, _ = self.wait_for_trace("(Login incorrect)", "\n", 3, False)
+        res, _ = self.wait_for_trace("(Login incorrect)", "\n", 5, False)
         if res:
             logger.error("Login error! Please restart!")
             return False
-        res, _ = self.wait_for_trace("(login:.*)|(Login incorrect)", "\n", 3, False)
+        res, _ = self.wait_for_trace("(login:.*)|(Login incorrect)", "\n", 5, False)
         if res:
             logger.info("Serial console is locked, need login in")
             return False
