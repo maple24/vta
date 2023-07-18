@@ -92,7 +92,7 @@ class StabilityListener:
             if tmp not in self.error_keywords:
                 self.error_keywords.append(tmp)
 
-    def end_suite(self, data, result):
+    def end_suite(self, test, result):
         self.end_time = datetime.now().replace(microsecond=0)
         self.testser = BuiltIn().get_variable_value("${TESTER}")
         self.bench_id = BuiltIn().get_variable_value("${BENCHID}")

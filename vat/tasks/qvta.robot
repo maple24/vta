@@ -17,6 +17,7 @@ Suite Teardown    generic.DEINIT
 *** Variables ***
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
+${subject}    QVTa debug
 ${image_name}    all_images
 ${SWUP_timeout}    30 minutes
 

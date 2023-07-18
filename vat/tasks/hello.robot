@@ -13,7 +13,7 @@ ${mail_body}    This is mail body!
 
 *** Test Cases ***
 TC1
-    [Tags]    example
+    [Tags]    skip
     [Setup]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video ON
     [Teardown]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video OFF
     generic.Hello World
@@ -28,5 +28,8 @@ TC1
 #         List Should Contain Value    ${ex_filters}    ${element}[0]    Detect crash ${element}[0]!
 #     END
 
-# TC3
-#     Wait Until Keyword Succeeds    1 minutes    10 sec    generic.Hello World
+TC3
+    Wait Until Keyword Succeeds    1 minutes    10 sec    generic.Hello World
+
+TC4
+    Wait Until Keyword Succeeds    1 minutes    10 sec    generic.Hello World

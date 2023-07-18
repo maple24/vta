@@ -74,13 +74,13 @@ if __name__ == "__main__":
     }
     a = Stability.new_item(case)
     a = Stability(
-        soc_version= "123",
-        cus_version= "123",
-        tester= "123",
-        bench_id= "123",
-        test_type= "123",
-        start_time= "123",
-        end_time= "123",
-        error_keyword= "123",
+        soc_version="123",
+        cus_version="123",
+        tester="123",
+        bench_id="123",
+        test_type="123",
+        start_time="123",
+        end_time="123",
+        error_keyword="123",
     )
     print(a.bench_id)

@@ -10,6 +10,9 @@ TEMP = os.path.join(ROOT, "tmp")
 
 DEBUG = False
 
+# RQM
+RQM = False
+
 # enable video
 VIDEO = False
 

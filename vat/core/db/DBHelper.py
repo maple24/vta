@@ -60,7 +60,6 @@ class DBHelper:
         results = self.session.exec(statement).all()
         logger.success(f"Select ids from database {results}")
         return results
-        
 
     def disconnect(self):
         logger.info("Close database session!")
