@@ -17,18 +17,18 @@ Suite Teardown    generic.DEINIT
 *** Variables ***
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
+${SWUP_timeout}    30 minutes
 ${mail_subject}    Zeekr QVTa
 ${image_name}    all_images
-${SWUP_timeout}    30 minutes
 
 
 *** Test Cases ***
 SWUP
     [Documentation]    software upgrade
-    ${image}    qvta.Download Latest
+    ${image_path}    qvta.Download Latest
     generic.UDisk to PC
     ${udisk}    GenericHelper.Get Removable Drives
-    FileManager.Copy Directory    ${image}    ${udisk}//${image_name}
+    FileManager.Copy Directory    ${image_path}    ${udisk}//${image_name}
     generic.UDisk to DHU
     swup.Enter Recovery Mode
     swup.Check SWUP Success    ${SWUP_timeout}
