@@ -239,4 +239,5 @@ if __name__ == "__main__":
         "xinke": {"enabled": False, "comport": "COM10"},
     }
     obj_relay.init_relay(drelay)
-    # obj_relay.set_relay_port(dev_type="mcube", port_index="1")
+    obj_relay.set_relay_port(dev_type="cleware", port_index="5", state_code="1")
+

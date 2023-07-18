@@ -1,4 +1,5 @@
 *** Settings ***
+Resource    generic.resource
 Library    ../api/AgentHelper.py
 Library    ../api/PuttyHelper.py
 Library    ../api/CANoeHelper.py
@@ -55,6 +56,12 @@ Reset by CMD
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
     Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
     Sleep    10s
+
+Reset by PPS
+    generic.Power OFF with PPS
+    Sleep    0.5s
+    generic.Power ON with PPS
+    Wait Until Keyword Succeeds    2 minutes    10 sec    generic.Check Android Home
 
 GWM Reset by CAN
     [Documentation]    Run powercycle with can signals

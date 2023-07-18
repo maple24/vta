@@ -100,7 +100,7 @@ class PuttyHelper:
         logger.info("[{stream}] - {message}", stream="PuttyTx", message=cmd)
 
     def send_command_and_return_traces(
-        self, cmd: str, wait: Optional[float] = None, login: bool = False
+        self, cmd: str, wait: Optional[float] = None, login: bool = True
     ) -> list:
         """
         Description: Send the command and return traces

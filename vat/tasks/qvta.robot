@@ -39,7 +39,7 @@ Media Picture
     qvta.Mount USB to Android
     generic.Route Files
     qvta.Open Picture in USB
-    # check display
+    generic.Check USB Picture
 
 BSP Camera DMS
     [Documentation]    check DMS camera

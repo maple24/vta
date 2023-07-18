@@ -66,6 +66,9 @@ Check Black Screen
 Check Upgrade Screen
     ${RES}    AgentHelper.Req To Test Profile    ${1}    Upgrade
     Should Be Equal    ${RES}    ${0}    Upgrade Screen does not match!
+Check USB Picture
+    ${RES}    AgentHelper.Req To Test Profile    ${1}    USB
+    Should Be Equal    ${RES}    ${0}    USB picture does not match!
 Check Trace From Container
     [Arguments]    ${pattern}
     @{traces}=    PuttyHelper.Get Trace Container
