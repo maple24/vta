@@ -16,6 +16,7 @@ Test
 Check Display
     [Documentation]    Check profile display using webcam, args: list
     [Arguments]    ${dispalys}
+    PuttyHelper.Send Command And Return Traces    susd_invoke 1547 0
     FOR    ${element}    IN    @{dispalys}
         ${RES}    Run Keyword If    ${element}[index]!=${0}    AgentHelper.Req To Test Profile    ${element}[index]   ${element}[profile]
         Run Keyword If    ${RES}!=${None}    Should Be Equal    ${RES}    ${0}    Profile does not match!

@@ -46,14 +46,14 @@ BSP Camera DMS
     qvta.Open DMS
     ${RES}    AgentHelper.Req To Test Profile    ${1}    DMS
     qvta.Exit Camera
-    Should Be Equal    ${RES}    ${0}    Profile does not match!
+    Should Be Equal    ${RES}    ${0}    DMS profile does not match!
 
 BSP Camera OMS
     [Documentation]    check OMS camera
     qvta.Open OMS
     ${RES}    AgentHelper.Req To Test Profile    ${1}    OMS
     qvta.Exit Camera
-    Should Be Equal    ${RES}    ${0}    Profile does not match!
+    Should Be Equal    ${RES}    ${0}    OMS profile does not match!
 
 BSP Display CSD
     [Documentation]    check CSD display
@@ -65,7 +65,7 @@ BSP Display Backlight
     qvta.Open Backlight
     ${RES}    AgentHelper.Req To Test Profile    ${1}    Backlight
     qvta.Exit Camera
-    Should Be Equal    ${RES}    ${0}    Profile does not match!
+    Should Be Equal    ${RES}    ${0}    Backloght does not match!
 
 LCM PowerONOFF
     [Documentation]    power on/off switch via ACC
