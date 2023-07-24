@@ -36,11 +36,11 @@ LOGPATH = os.path.join(
     "log",
     f"{datetime.now().strftime('%A')}_{time.strftime('%m%d%Y_%H%M')}_SLOT{SLOT}",
 )
-TASKPATH = find_file(os.path.join(ROOT, "vat", "tasks"), TASK)
+TASKPATH = find_file(os.path.join(ROOT, "vta", "tasks"), TASK)
 if LISTENER:
-    LISTENERPATH = os.path.join(ROOT, "vat", "core", LISTENER)
+    LISTENERPATH = os.path.join(ROOT, "vta", "core", LISTENER)
 if MODIFIER:
-    MODIFIERPATH = os.path.join(ROOT, "vat", "core", MODIFIER)
+    MODIFIERPATH = os.path.join(ROOT, "vta", "core", MODIFIER)
 logger.remove()
 logger.add(sys.stdout, level="DEBUG")
 mylogger = logger.add(

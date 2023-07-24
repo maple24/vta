@@ -9,9 +9,9 @@ import random
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
-from vat.api.PuttyHelper import PuttyHelper
-from vat.api.CANoeHelper import CANoeHelper
-from vat.library.GenericHelper import GenericHelper
+from vta.api.PuttyHelper import PuttyHelper
+from vta.api.CANoeHelper import CANoeHelper
+from vta.library.GenericHelper import GenericHelper
 
 
 class Vehicle:

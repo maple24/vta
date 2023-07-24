@@ -1,5 +1,5 @@
 *** Settings ***
-Library             ../vat/api/TSmasterAPI/TSClient.py
+Library             ../vta/api/TSmasterAPI/TSClient.py
 
 *** Test Cases ***
 API

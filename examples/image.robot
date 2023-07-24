@@ -1,8 +1,8 @@
 *** Settings ***
-Library    ../vat/library/SystemHelper.py
-Library    ../vat/library/GenericHelper.py
+Library    ../vta/library/SystemHelper.py
+Library    ../vta/library/GenericHelper.py
 Library    OperatingSystem
-Variables    ../vat/conf/template_settings.py
+Variables    ../vta/conf/template_settings.py
 
 *** Test Cases ***
 Example

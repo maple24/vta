@@ -37,7 +37,7 @@ class RelayHelper:
             if drelay["cleware"]["enabled"]:
                 device_count += 1
                 self.cleware_executor = os.path.join(
-                    ROOT, "vat", "bin", "cleware", "USBswitchCmd.exe"
+                    ROOT, "vta", "bin", "cleware", "USBswitchCmd.exe"
                 )
                 print(self.cleware_executor)
                 if not os.path.exists(self.cleware_executor):

@@ -1,5 +1,5 @@
 <p align='center'>
-Vite Automation Test Framework<b>(VAT)</b><br>
+Vite Test Automation Framework<b>(VTA)</b><br>
 </p>
 
 <p align='center'>
@@ -35,11 +35,11 @@ Vite Automation Test Framework<b>(VAT)</b><br>
 ## Quick start
 1. clone project
 ```sh
-git clone https://github.com/maple24/vat.git
+git clone https://github.com/maple24/vta.git
 ```
 2. create python virtual environment
 ```sh
-cd vat
+cd vta
 python -m venv .venv
 ```
 3. activate venv and install dependencies
@@ -55,7 +55,7 @@ In there you'll find: Robot > Language-server: Python
 ```
 6. format your code
 ```sh
-python -m black .\vat\
+python -m black .\vta\
 ```
 
 ## Structure
@@ -63,7 +63,7 @@ python -m black .\vat\
 - Managers: higher level functions which use Helpers to buildup
 
 ## Contributing
-1. Fork it (https://github.com/maple24/vat.git)
+1. Fork it (https://github.com/maple24/vta.git)
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)

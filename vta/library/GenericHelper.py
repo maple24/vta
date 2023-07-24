@@ -17,7 +17,7 @@ class GenericHelper:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
     def __init__(self) -> None:
-        self.ODiffBin = os.path.join(ROOT, "vat", "bin", "ODiffBin.exe")
+        self.ODiffBin = os.path.join(ROOT, "vta", "bin", "ODiffBin.exe")
 
     @staticmethod
     def get_hostname() -> str:
@@ -127,12 +127,12 @@ class GenericHelper:
 
 if __name__ == "__main__":
     # logger.info(GenericHelper.get_hostname())
-    cmd = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\vat\bin\ODiffBin.exe C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\3.png C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\4.png"
+    cmd = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vta\vta\bin\ODiffBin.exe C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vta\tmp\3.png C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vta\tmp\4.png"
     # data = GenericHelper.prompt_command(cmd)
     # GenericHelper.match_string(pattern="Different pixels:\s.+\s\((.+)%\)", data=data)
     # GenericHelper.match_string(pattern='Different pixels:\s\d+\s\((.+)%\)', data=['Different pixels: 64526 (18.393065%)'])
     # print(re.search(pattern='Different pixels:\s.+\s\((.+)%\)', string='Different pixels: \x1b[1m\x1b[31m64526 (18.393065%)\x1b[22m\x1b[39m'))
-    image1 = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\4.png"
-    image2 = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\tmp\3.png"
+    image1 = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vta\tmp\4.png"
+    image2 = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vta\tmp\3.png"
     g = GenericHelper()
     a = g.image_diff(image1, image2)

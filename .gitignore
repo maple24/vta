@@ -167,8 +167,8 @@ interactive_console_output.xml
 log/
 
 # project config
-vat/conf/*
-!vat/conf/template_*
+vta/conf/*
+!vta/conf/template_*
 
 # database
 database.db

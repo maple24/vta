@@ -31,6 +31,6 @@ def find_file(directory: str, file_name: str) -> Optional[str]:
 
 
 if __name__ == "__main__":
-    folder_path = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vat\log"
+    folder_path = r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vta\log"
 
     rotate_folder(folder_path)

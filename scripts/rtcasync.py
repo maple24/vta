@@ -9,8 +9,8 @@ import MySQLdb
 setup_basic_logging()
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2]))
 
-from vat.core.db.DBtables import BugTicket
-from vat.core.db.DBHelper import DBHelper
+from vta.core.db.DBtables import BugTicket
+from vta.core.db.DBHelper import DBHelper
 
 credential = {
     "drivername": "mysql",

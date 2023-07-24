@@ -6,8 +6,8 @@ import csv
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
-from vat.library.GenericHelper import GenericHelper
-from vat.library.SystemHelper import SystemHelper
+from vta.library.GenericHelper import GenericHelper
+from vta.library.SystemHelper import SystemHelper
 
 BIN = os.path.join(os.path.dirname(__file__), "bin")
 RESULT = os.path.join(os.path.dirname(__file__), "result")

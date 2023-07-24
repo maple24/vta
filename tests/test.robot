@@ -3,7 +3,7 @@
 Library             Collections
 Library             String
 Library             GeventLibrary
-Library             ../vat/api/TSmasterAPI/TSClient.py
+Library             ../vta/api/TSmasterAPI/TSClient.py
 
 *** Keywords ***
 Sleep Wrapper
