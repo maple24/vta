@@ -67,7 +67,7 @@ StepCheckPowerCycle
     END
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
     Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
-    Wait Until Keyword Succeeds    2 minutes    10 sec    generic.Check Android Home
+    Wait Until Keyword Succeeds    2 minutes    5 sec    generic.Check Android Home
 
 StepCheckOMS
     [Tags]
