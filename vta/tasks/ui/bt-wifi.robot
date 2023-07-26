@@ -43,14 +43,13 @@ BT
     ${BT_0}    SystemHelper.Android Screencapture    ${device_id}    BT_0.png    ${TEMP}
     Click BT Button
     ${BT_1}    SystemHelper.Android Screencapture    ${device_id}    BT_1.png    ${TEMP}
-    ${RES}    GenericHelper.Image Diff    ${BT_0}    ${BT_1}    thre=${0.5}
+    ${RES}    GenericHelper.Image Diff    ${BT_0}    ${BT_1}
     Should Not Be Equal    ${RES}    ${True}
     
 WIFI
     [Documentation]    click wifi on/off button and check status change
     [Tags]    
     [Setup]    generic.Route WIFI Settings
-    GenericHelper.Prompt Command    adb shell input tap ${WIFI_SETTINGS}[0] ${WIFI_SETTINGS}[1]
     ${WIFI_0}    SystemHelper.Android Screencapture    ${device_id}    WIFI_0.png    ${TEMP}
     Click WIFI Button
     ${WIFI_1}    SystemHelper.Android Screencapture    ${device_id}    WIFI_1.png    ${TEMP}

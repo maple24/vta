@@ -88,6 +88,6 @@ DEINIT
 Define Global
     [Documentation]    Define global variables
     ${TESTER}    GenericHelper.Get Username
-    ${BENCHID}    GenericHelper.Get Hostname
+    ${BENCHID}    GenericHelper.Get Ip
     Set Global Variable    ${TESTER}
     Set Global Variable    ${BENCHID}
