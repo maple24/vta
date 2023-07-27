@@ -57,7 +57,7 @@ def fetch_data_from_source():
             "created": item["created"],
             "status": STATE_MAPPING.get(item["state"]["@rdf:resource"])
         })
-    logger.info(fetched)
+    logger.success(fetched)
     return fetched
 
 def get_stored() -> list:
@@ -69,15 +69,18 @@ def update_record(updated_record: dict) -> None:
     cursor.execute("UPDATE bugticket SET summary=%s, created=STR_TO_DATE(%s, '%%Y-%%m-%%dT%%H:%%i:%%s.%%fZ'), status=%s WHERE id=%s",
                 (updated_record["summary"], updated_record["created"], updated_record["status"], updated_record["id"]))
     mydb.commit()
+    logger.success(f"Update record: {updated_record['id']}")
 
 def insert_record(new_record: dict) -> None:
     cursor.execute("INSERT INTO bugticket (id, summary, created, status) VALUES (%s, %s, STR_TO_DATE(%s, '%%Y-%%m-%%dT%%H:%%i:%%s.%%fZ'), %s)", 
                    (new_record["id"], new_record["summary"], new_record["created"], new_record["status"]))
     mydb.commit()
+    logger.success(f"Insert new record: {new_record['id']}")
 
 def delete_record_by_id(id: Union[int, str]) -> None:
     cursor.execute(f"DELETE FROM bugticket WHERE id={id}")
     mydb.commit()
+    logger.warning(f"Delete record: {id}")
     
 def synchronize_data(data_from_source: list):
     existing_data = get_stored()
