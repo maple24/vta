@@ -2,7 +2,7 @@ from loguru import logger
 from sqlmodel import Session, SQLModel, create_engine, select
 from sqlalchemy.engine import URL
 from datetime import datetime
-
+from typing import Union
 try:
     from .DBtables import BaseModel, Stability, Hero, BugTicket
 except:
@@ -60,6 +60,11 @@ class DBHelper:
         results = self.session.exec(statement).all()
         logger.success(f"Select ids from database {results}")
         return results
+    
+    def select_by_id(self, id: Union[int, str]) -> dict:
+        statement = select(self.table).where(self.table.id == id)
+        result = self.session.exec(statement).one()
+        return dict(result)
 
     def disconnect(self):
         logger.info("Close database session!")
@@ -84,6 +89,7 @@ if __name__ == "__main__":
     mdb = DBHelper()
     mdb.connect(BugTicket, credential)
     print(mdb.select_ids())
+    # print(mdb.select_by_id("1840672"))
     # data = {"id": 10, "name": "maple", "secret_name": "jin", "age": 22}
     # mdb.insert_row(data)
     # print(mdb.select_all())

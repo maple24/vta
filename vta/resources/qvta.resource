@@ -30,10 +30,10 @@ Exit Camera
     PuttyHelper.Send Command And Return Traces    e    login=${False}
 Open DMS
     PuttyHelper.Send Command And Return Traces    cd /mnt/bin/camera/qcarcam_test
-    PuttyHelper.Send Command And Return Traces    ./qcarcam_test -config=dms_test.xml    login=${False}    wait=${0.5}
+    PuttyHelper.Send Command And Return Traces    ./qcarcam_test -config=dms_test.xml    login=${False}    wait=${1}
 Open OMS
     PuttyHelper.Send Command And Return Traces    cd /mnt/bin/camera/qcarcam_test
-    PuttyHelper.Send Command And Return Traces    ./qcarcam_test -config=oms1_test.xml    login=${False}    wait=${0.5}
+    PuttyHelper.Send Command And Return Traces    ./qcarcam_test -config=oms1_test.xml    login=${False}    wait=${1}
 Open Backlight
     PuttyHelper.Send Command And Return Traces    sw-vsync -display=5
 Check DLT
