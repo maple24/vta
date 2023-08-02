@@ -59,7 +59,9 @@ python -m black .\vta\
 ```
 
 ## Architecture
+1. Functional test building block
 ![images](docs/assets/functional.png)
+2. Stability test building block
 ![images](docs/assets/stability.png)
 - Helpers: pure functions/classes/apis in independent files, no relative import needed
 - Managers: higher level functions which use Helpers to buildup
