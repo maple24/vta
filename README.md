@@ -6,6 +6,9 @@ Vite Test Automation Framework<b>(VTA)</b><br>
 <b>English</b> | <a href="README.zh-cn.md">简体中文</a>
 </p>
 
+![version](https://img.shields.io/badge/version-1.0.0-blue)
+![Windows](https://img.shields.io/badge/Windows-0078D6)
+![Python](https://img.shields.io/badge/python-3670A0)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## Features
@@ -72,3 +75,6 @@ python -m black .\vta\
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
 5. Create a new Pull Request
+
+## License
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
