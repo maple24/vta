@@ -35,7 +35,7 @@ class EmailClient:
 
 if __name__ == "__main__":
     e = EmailClient(
-        sender="Test.EST@bcn.bosch.com", username="ets1szh", password="estbangbangde6"
+        sender="Test.EST@cn.bosch.com", username="ets1szh", password="estbangbangde6"
     )
     recipients = ["jin.zhu5@cn.bosch.com", "Test.EST@bcn.bosch.com"]
     e.send_mail(recipients, subject="123", email_body="123")

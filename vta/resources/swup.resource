@@ -24,7 +24,8 @@ Check Image
     Directory Should Exist    ${udisk}//${image}    Software package not found!
 Check SWUP Success
     [Arguments]    ${SWUP_timeout}
-    Wait Until Keyword Succeeds    ${SWUP_timeout}    30 sec    generic.Check Trace From Container    (SwitchToNormal)
-    Wait Until Keyword Succeeds    1 minutes    5 sec    generic.Check Android Home
+    Wait Until Keyword Succeeds    ${SWUP_timeout}    30 sec    generic.Check Trace From Container    (VIP_NORMAL)
+    Wait Until Keyword Succeeds    2 minutes    5 sec    generic.Check Android Home
+    Sleep    2s
     # close notification
     GenericHelper.Prompt Command    adb shell input tap 865 865

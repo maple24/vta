@@ -58,7 +58,9 @@ In there you'll find: Robot > Language-server: Python
 python -m black .\vta\
 ```
 
-## Structure
+## Architecture
+![images](docs/assets/functional.png)
+![images](docs/assets/stability.png)
 - Helpers: pure functions/classes/apis in independent files, no relative import needed
 - Managers: higher level functions which use Helpers to buildup
 

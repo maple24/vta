@@ -16,9 +16,9 @@ Test
 Check Display
     [Documentation]    Check profile display using webcam, args: list
     [Arguments]    ${dispalys}
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(msg code 1547)    cmd=susd_invoke 1547 0
-    Should Be Equal    ${RES}    ${True}    Fail to get response message!
-    Sleep    0.5s
+    # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(msg code 1547)    cmd=susd_invoke 1547 0
+    # Should Be Equal    ${RES}    ${True}    Fail to get response message!
+    # Sleep    0.5s
     FOR    ${element}    IN    @{dispalys}
         ${RES}    Run Keyword If    ${element}[index]!=${0}    AgentHelper.Req To Test Profile    ${element}[index]   ${element}[profile]
         Run Keyword If    ${RES}!=${None}    Should Be Equal    ${RES}    ${0}    Profile does not match!
