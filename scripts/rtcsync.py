@@ -89,8 +89,12 @@ def synchronize_data(data_from_source: list):
         id_to_check = source_entry["id"]
         existing_entry = next((item for item in existing_data if item["id"] == id_to_check), None)
         if existing_entry:
-            # Update existing record if necessary
-            if source_entry != existing_entry:
+            # Update existing record excluding 'created' key if necessary
+            tmp_source_entry = source_entry.copy()
+            tmp_source_entry.pop('created')
+            tmp_existing_entry = existing_entry.copy()
+            tmp_existing_entry.pop('created')
+            if tmp_source_entry != tmp_existing_entry:
                 update_record(source_entry)
         else:
             # Insert new record into your database
