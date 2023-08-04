@@ -21,8 +21,8 @@ ${mail_body}    Unexpected error occurs!!
 
 *** Keywords ***
 Check Android Home and Thermal
-    generic.Check Android Home
     PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
+    generic.Check Android Home
 
 *** Test Cases ***
 StepTest

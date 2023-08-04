@@ -23,11 +23,11 @@ Check Image
     ${udisk}    GenericHelper.Get Removable Drives
     Directory Should Exist    ${udisk}//${image}    Software package not found!
 Check Normal Mode and Thermal
+    PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
     generic.Check Trace From Container    (VIP_NORMAL)
-    PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
 Check Android Home and Thermal
-    generic.Check Android Home
     PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
+    generic.Check Android Home
 Check SWUP Success
     [Arguments]    ${SWUP_timeout}
     Wait Until Keyword Succeeds    ${SWUP_timeout}    5 sec    Check Normal Mode and Thermal
