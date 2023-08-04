@@ -19,6 +19,11 @@ ${STEPS}    ${CONF_TEST}[steps]
 ${mail_subject}    Powercycle error notification!
 ${mail_body}    Unexpected error occurs!!
 
+*** Keywords ***
+Check Android Home and Thermal
+    generic.Check Android Home
+    PuttyHelper.Send Command And Return Traces    cat thermalmgr
+
 *** Test Cases ***
 StepTest
     [Tags]
@@ -67,7 +72,7 @@ StepCheckPowerCycle
     END
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
     Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
-    Wait Until Keyword Succeeds    2 minutes    5 sec    generic.Check Android Home
+    Wait Until Keyword Succeeds    2 minutes    5 sec    Check Android Home and Thermal
 
 StepCheckOMS
     [Tags]

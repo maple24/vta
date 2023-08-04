@@ -22,10 +22,16 @@ Check Image
     [Arguments]    ${image}
     ${udisk}    GenericHelper.Get Removable Drives
     Directory Should Exist    ${udisk}//${image}    Software package not found!
+Check Normal Mode and Thermal
+    generic.Check Trace From Container    (VIP_NORMAL)
+    PuttyHelper.Send Command And Return Traces    cat thermalmgr
+Check Android Home and Thermal
+    generic.Check Android Home
+    PuttyHelper.Send Command And Return Traces    cat thermalmgr
 Check SWUP Success
     [Arguments]    ${SWUP_timeout}
-    Wait Until Keyword Succeeds    ${SWUP_timeout}    30 sec    generic.Check Trace From Container    (VIP_NORMAL)
-    Wait Until Keyword Succeeds    2 minutes    5 sec    generic.Check Android Home
+    Wait Until Keyword Succeeds    ${SWUP_timeout}    5 sec    Check Normal Mode and Thermal
+    Wait Until Keyword Succeeds    2 minutes    5 sec    Check Android Home and Thermal
     Sleep    2s
     # close notification
     GenericHelper.Prompt Command    adb shell input tap 865 865
