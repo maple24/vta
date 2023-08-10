@@ -11,10 +11,10 @@ setup_basic_logging()
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2]))
 
 credential = {
-    'host': '10.161.224.58',
+    'host': '10.161.235.42',
     'port': 3306,
     'user': 'root',
-    'password': 'root',
+    'password': 'admin',
     'database': 'zeekr',
     'connect_timeout': 10
     }
