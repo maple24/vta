@@ -3,7 +3,7 @@ Resource    ../resources/powercycle.resource
 Library    ../api/PuttyHelper.py
 Library    ../api/RelayHelper.py
 Library    ../library/GenericHelper.py
-Library    ../api/ArtifaHelper.py    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-fc_main_dev/daily/    _userdebug.tgz$
+Library    ../api/ArtifaHelper.py    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/    _userdebug.tgz$
 Library    OperatingSystem
 
 *** Keywords ***
