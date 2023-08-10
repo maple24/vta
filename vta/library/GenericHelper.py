@@ -22,15 +22,15 @@ class GenericHelper:
     @staticmethod
     def get_hostname() -> str:
         return socket.gethostname()
-    
+
     @staticmethod
     def get_ip():
         st = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         try:
-            st.connect(('10.255.255.255', 1))
+            st.connect(("10.255.255.255", 1))
             ipaddr = st.getsockname()[0]
         except Exception:
-            ipaddr = '127.0.0.1'
+            ipaddr = "127.0.0.1"
         finally:
             st.close()
         return ipaddr

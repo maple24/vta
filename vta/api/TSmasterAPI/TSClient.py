@@ -100,20 +100,23 @@ class TSClient(Client64):
     def startup(self):
         self.start_simulation()
         self.set_signal(
-            "0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts", 11
+            "0/BackboneFR/CDM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts", 11
         )
-        self.set_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB", 1)
-        self.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts")
-        self.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB")
-        self.stop_simulation()
+        self.set_signal(
+            "0/BackboneFR/CDM/CemBackBoneFr02/VehModMngtGlbSafe1CarModSts1", 0
+        )
         time.sleep(0.5)
+        self.stop_simulation()
+
+    def shutdown(self):
         self.start_simulation()
         self.set_signal(
-            "0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts", 11
+            "0/BackboneFR/CDM/CemBackBoneFr02/VehModMngtGlbSafe1CarModSts1", 1
         )
-        self.set_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB", 1)
-        self.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts")
-        self.get_signal("0/BackboneFR/CEM/CemBackBoneFr02/VehModMngtGlbSafe1_UB")
+        self.set_signal(
+            "0/BackboneFR/CDM/CemBackBoneFr02/VehModMngtGlbSafe1UsgModSts", 0
+        )
+        time.sleep(0.5)
         self.stop_simulation()
 
 

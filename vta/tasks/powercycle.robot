@@ -58,11 +58,9 @@ StepCheckPowerCycle
         generic.Power ON with Relay
     ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='network'
         Log    run powercycle with network
-        generic.ACC OFF
-        Sleep    0.5s
-        generic.ACC ON
-        Sleep    0.5s
         TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
+        TSClient.Shutdown
+        Sleep    0.5s
         TSClient.Startup
     ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='acc'
         Log    run powercycle with acc

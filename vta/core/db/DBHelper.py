@@ -3,6 +3,7 @@ from sqlmodel import Session, SQLModel, create_engine, select
 from sqlalchemy.engine import URL
 from datetime import datetime
 from typing import Union
+
 try:
     from .DBtables import BaseModel, Stability, Hero, BugTicket
 except:
@@ -60,7 +61,7 @@ class DBHelper:
         results = self.session.exec(statement).all()
         logger.success(f"Select ids from database {results}")
         return results
-    
+
     def select_by_id(self, id: Union[int, str]) -> dict:
         statement = select(self.table).where(self.table.id == id)
         result = self.session.exec(statement).one()
