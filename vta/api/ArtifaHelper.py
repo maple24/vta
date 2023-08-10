@@ -199,7 +199,7 @@ class ArtifaHelper:
 
 if __name__ == "__main__":
     ar = ArtifaHelper(
-        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-fc_main_dev/daily/",
+        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/",
         pattern="_userdebug.tgz$",
     )
     f_lastModified = ar.get_latest()
