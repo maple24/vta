@@ -2,7 +2,6 @@
 Resource    generic.resource
 Library    ../library/GenericHelper.py
 Library    ../api/PuttyHelper.py
-Library    ../api/AgentHelper.py
 Library    OperatingSystem
 
 *** Keywords ***
