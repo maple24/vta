@@ -64,7 +64,7 @@ BSP Display Backlight
     [Documentation]    check backlight in CSD
     qvta.Open Backlight
     ${RES}    AgentHelper.Req To Test Profile    ${1}    Backlight
-    qvta.Exit Camera
+    generic.Putty CtrlC
     Should Be Equal    ${RES}    ${0}    Backloght does not match!
 
 LCM PowerONOFF

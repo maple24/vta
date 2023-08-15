@@ -42,6 +42,15 @@ class APIFlexClient:
         post_response = cls.httprequester.send_request("POST", "publish/", data=data)
         logger.info(f"POST Response: {post_response}")
 
+    @classmethod
+    def req_to_test_profile(cls, region_name: str, thre: float = 0.9):
+        data = {
+            "topic": "webcam",
+            "action": {"method": "image_compare", "params": {"region_name": region_name, "thre": thre}},
+        }
+        post_response = cls.httprequester.send_request("POST", "publish/", data=data)
+        logger.info(f"POST Response: {post_response}")
 
-if __name__ == '__main__':
-    APIFlexClient.req_to_stop_camera()
+
+if __name__ == "__main__":
+    APIFlexClient.req_to_test_profile(region_name="1")
