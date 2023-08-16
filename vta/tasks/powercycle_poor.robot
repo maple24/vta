@@ -69,7 +69,7 @@ CheckPowerCycle
         Sleep    0.5s
         generic.ACC ON
     END
-    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
+    ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Pull up)    timeout=60    login=${False}
     Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
     Wait Until Keyword Succeeds    2 minutes    5 sec    Check Android Home and Thermal
 CheckCrash

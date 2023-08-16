@@ -1,8 +1,10 @@
-from utils.HTTPRequester import HTTPRequester
-from loguru import logger
+from utility.HTTPRequester import HTTPRequester
+from loguru import logger   
 
 
 class APIFlexClient:
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
+    
     base_url = "http://localhost:1234/"
     httprequester = HTTPRequester(base_url)
 
@@ -50,7 +52,9 @@ class APIFlexClient:
         }
         post_response = cls.httprequester.send_request("POST", "publish/", data=data)
         logger.info(f"POST Response: {post_response}")
+        return post_response.get('result')
 
 
 if __name__ == "__main__":
-    APIFlexClient.req_to_test_profile(region_name="1")
+    res = APIFlexClient.req_to_test_profile(region_name="1")
+    logger.info(res)
