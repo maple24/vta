@@ -15,7 +15,7 @@ Suite Teardown    generic.DEINIT
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
 ${senario}    command
-@{crash_filters}        audio_service.core       
+@{crash_filters}        audio_service.core
 @{normal_traces}    (Log Type: B)
 @{error_traces}    (XBLRamDump Image Loaded)
 
@@ -72,16 +72,16 @@ CheckPowerCycle
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
     Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
     Wait Until Keyword Succeeds    2 minutes    5 sec    Check Android Home and Thermal
-StepCheckCrash
+CheckCrash
     [Tags]
     [Template]    powercycle.Check Crash
     @{crash_filters}
-Check NormalTrace
+CheckNormalTrace
     [Documentation]    traces should appear in traces
     [Tags]    skip
     [Template]    powercycle.Check Normal Trace
     @{normal_traces}
-StepCheckErrorTrace
+CheckErrorTrace
     [Documentation]    traces should not appear in traces
     [Tags]    skip
     [Template]    powercycle.Check Error Trace
