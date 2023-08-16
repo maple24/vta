@@ -32,7 +32,13 @@ SWUP
     generic.UDisk to DHU
     swup.Enter Recovery Mode
     swup.Check SWUP Success    ${SWUP_timeout}
-    
+
+BT
+    [Documentation]    click bluetooth button
+
+WIFI
+    [Documentation]    click wifi button
+
 Media Picture
     [Documentation]    open picture in USB3.0
     # open picture

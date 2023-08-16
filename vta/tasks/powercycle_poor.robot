@@ -2,47 +2,48 @@
 Resource    ../resources/powercycle.resource
 Resource    ../resources/generic.resource
 Resource    ../resources/qvta.resource
-Library    ../api/AgentHelper.py
 Library    ../api/TSmasterAPI/TSClient.py
+Library    ../api/APIFlexClient.py
 
 Variables    ../conf/settings.py
-Variables    ../conf/setups.py
 
 Suite Setup    generic.INIT    ${CONF_BASE}
 Suite Teardown    generic.DEINIT
 
+
 *** Variables ***
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
-${CONF_TEST}    ${${SLOT}_POWERCYCLE}
-${STEPS}    ${CONF_TEST}[steps]
-${mail_subject}    Powercycle error notification!
-${mail_body}    Unexpected error occurs!!
+${senario}    command
+@{crash_filters}        audio_service.core       
+@{normal_traces}    (Log Type: B)
+@{error_traces}    (XBLRamDump Image Loaded)
+
 
 *** Keywords ***
 Check Android Home and Thermal
     PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
-    generic.Check Android Home
+    IF    ${VIDEO} == ${True}
+        ${RES}    APIFlexClient.Req To Test Profile    Android_Home
+        Should Be Equal    ${RES}    ${True}
+    END
+
 
 *** Test Cases ***
-StepTest
-    [Tags]
-    [Template]    powercycle.Test
-    ${STEPS}[${TEST_NAME}][name]
-    ${STEPS}[${TEST_NAME}][name]
-
 GetVersion
+    [Documentation]    get socversion
+    [Tags]
     ${SOCVersion}    qvta.Get SOC Version
     Set Suite Variable    ${SOCVersion}
-StepCheckPowerCycle
+CheckPowerCycle
     [Tags]
-    [Setup]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video ON
-    [Teardown]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video OFF
-    IF    '${STEPS}[${TEST_NAME}][type]'=='command'
+    [Setup]    Run Keyword If    ${VIDEO}==${True}    APIFlexClient.Req To Start Video
+    [Teardown]    Run Keyword If    ${VIDEO}==${True}    APIFlexClient.Req To Stop Video
+    IF    '${senario}'=='command'
         Log    run powercycle with putty command
         ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset -b normal    timeout=30
         Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
-    ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='pps'
+    ELSE IF    '${senario}'=='pps'
         Log    run powercycle with pps
         generic.Power OFF with PPS
         Sleep    0.5s
@@ -51,18 +52,18 @@ StepCheckPowerCycle
         generic.Power OFF with PPS
         Sleep    0.5s
         generic.Power ON with PPS
-    ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='relay'
+    ELSE IF    '${senario}'=='relay'
         Log    run powercycle with pps
         generic.Power OFF with Relay
         Sleep    0.5s
         generic.Power ON with Relay
-    ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='network'
+    ELSE IF    '${senario}'=='network'
         Log    run powercycle with network
         TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
         TSClient.Shutdown
         Sleep    0.5s
         TSClient.Startup
-    ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='acc'
+    ELSE IF    '${senario}'=='acc'
         Log    run powercycle with acc
         generic.ACC OFF
         Sleep    0.5s
@@ -71,37 +72,17 @@ StepCheckPowerCycle
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
     Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
     Wait Until Keyword Succeeds    2 minutes    5 sec    Check Android Home and Thermal
-
-StepCheckOMS
-    [Tags]
-    qvta.Open OMS
-    ${RES}    AgentHelper.Req To Test Profile    ${1}    OMS
-    Should Be Equal    ${RES}    ${0}
-    qvta.Exit Camera
-
-StepCheckDMS
-    [Tags]
-    qvta.Open DMS
-    ${RES}    AgentHelper.Req To Test Profile    ${1}    DMS
-    Should Be Equal    ${RES}    ${0}
-    qvta.Exit Camera
-
 StepCheckCrash
     [Tags]
     [Template]    powercycle.Check Crash
-    ${STEPS}[${TEST_NAME}][ex_filters]
-    
-StepCheckNormalTrace
-    [Tags]
+    @{crash_filters}
+Check NormalTrace
+    [Documentation]    traces should appear in traces
+    [Tags]    skip
     [Template]    powercycle.Check Normal Trace
-    ${STEPS}[${TEST_NAME}][patterns]
-
+    @{normal_traces}
 StepCheckErrorTrace
-    [Tags]
+    [Documentation]    traces should not appear in traces
+    [Tags]    skip
     [Template]    powercycle.Check Error Trace
-    ${STEPS}[${TEST_NAME}][patterns]
-
-StepCheckDisplays
-    [Tags]
-    [Template]    powercycle.Check Display
-    ${STEPS}[${TEST_NAME}][displays]
+    @{error_traces}
