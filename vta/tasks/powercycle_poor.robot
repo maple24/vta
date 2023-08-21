@@ -75,14 +75,14 @@ CheckPowerCycle
 CheckCrash
     [Tags]
     [Template]    powercycle.Check Crash
-    @{crash_filters}
+    ${crash_filters}
 CheckNormalTrace
     [Documentation]    traces should appear in traces
     [Tags]    skip
     [Template]    powercycle.Check Normal Trace
-    @{normal_traces}
+    ${normal_traces}
 CheckErrorTrace
     [Documentation]    traces should not appear in traces
     [Tags]    skip
     [Template]    powercycle.Check Error Trace
-    @{error_traces}
+    ${error_traces}
