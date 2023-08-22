@@ -2,7 +2,6 @@
 Library    ../api/PuttyHelper.py
 Library    ../api/RelayHelper.py
 Library    ../library/GenericHelper.py
-Library    ../library/FileManager.py
 Library    ../api/AgentHelper.py
 Library    OperatingSystem
 

@@ -5,7 +5,6 @@ Resource    ../resources/swup.resource
 
 Library    ../api/AgentHelper.py
 Library    ../api/RelayHelper.py
-Library    ../library/FileManager.py
 Library    ../library/GenericHelper.py
 Library    OperatingSystem
 
@@ -28,7 +27,8 @@ SWUP
     ${image_path}    qvta.Download Latest
     generic.UDisk to PC
     ${udisk}    GenericHelper.Get Removable Drives
-    FileManager.Copy Directory    ${image_path}    ${udisk}//${image_name}
+    Remove Directory    ${udisk}//${image_name}    recursive=${True}
+    Move Directory    ${image_path}    ${udisk}//${image_name}
     generic.UDisk to DHU
     swup.Enter Recovery Mode
     swup.Check SWUP Success    ${SWUP_timeout}
