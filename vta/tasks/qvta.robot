@@ -75,7 +75,8 @@ BSP Display Backlight
 
 LCM PowerONOFF
     [Documentation]    power on/off switch via ACC
-    generic.ACC OFF
+    generic.Power OFF with Relay
+    Sleep    0.5s
     generic.Check Black Screen
-    generic.ACC ON
-    generic.Check Android Home
+    generic.Power ON with Relay
+    Wait Until Keyword Succeeds    2 minutes    5s    generic.Check Android Home
