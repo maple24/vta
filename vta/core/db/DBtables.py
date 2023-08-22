@@ -9,6 +9,40 @@ class BaseModel(SQLModel):
         return cls(**kwargs)
 
 
+class Tester(SQLModel):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    account: str
+    department: Optional[str]
+    office: Optional[str]
+
+
+class DHU(SQLModel):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    soc_version: Optional[str] = None
+    scc_version: Optional[str] = None
+    cus_version: Optional[str] = None
+    hardware: Optional[str] = None
+
+
+class Bench(SQLModel):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    ip: str
+    hostname: Optional[str]
+    location: Optional[str]
+
+
+class TestRecords(BaseModel):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    DHU_id: Optional[int] = Field(default=None, foreign_key="dhu.id")
+    tester_id: Optional[int] = Field(default=None, foreign_key="tester.id")  
+    bench_id: Optional[int] = Field(default=None, foreign_key="bench.id")  
+    test_type: str
+    start_time: Optional[datetime]
+    end_time: Optional[datetime]
+    result: str
+    comments: Optional[str] = None
+    
+
 class Stability(BaseModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     soc_version: Optional[str] = None
@@ -20,31 +54,6 @@ class Stability(BaseModel, table=True):
     end_time: Optional[datetime]
     error_keyword: Optional[str] = None
     result: str
-
-
-# class stability(BaseModel, table=True):
-#     PROJECT_NAME: Optional[str] = Field(primary_key=True)
-#     # PROJECT_NAME: str
-#     TEST_TYPE: str
-#     TESTER: str
-#     BENCH_ID: str
-#     SUT_SW_VERSION: str
-#     SUT_HW_VERSION: str
-#     RBS_VERSION: str
-#     RQM_TS: str
-#     RQM_TSER: str
-#     TEST_CASE_ITERATION: str
-#     TEST_CASE: str
-#     START_TIME: Optional[datetime]
-#     FINISH_TIME: Optional[datetime]
-#     SPEND_TIME: str
-#     TEST_RESULT: str
-#     ERROR_KEYWORD: str
-#     BEANTECH_SW_VERSION: str
-#     TEST_CASE_DESCRIPTION: str
-#     USER_PARAM1: str
-#     USER_PARAM2: str
-#     BRANCH: str
 
 
 class Hero(BaseModel, table=True):

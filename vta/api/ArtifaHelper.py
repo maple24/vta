@@ -200,9 +200,14 @@ class ArtifaHelper:
 if __name__ == "__main__":
     ar = ArtifaHelper(
         repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/",
-        pattern="_userdebug.tgz$",
+        pattern="_userdebug_binary_\d+_\d+.tgz$",
     )
-    f_lastModified = ar.get_latest()
+    
+    # f_lastModified = ar.get_latest()
+    def func():
+        print("helloworld")
+        
+    ar.monitor(thres=33, callback=func)
     # monitor
 
     # package = ar.download(f_lastModified["url"])

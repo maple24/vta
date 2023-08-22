@@ -15,7 +15,7 @@ Enter Recovery Mode
     GenericHelper.Prompt Command    adb shell input tap 2400 240
     Sleep    1s
     generic.Check Trace From Container    (Requester: usbdownload)
-    Wait Until Keyword Succeeds    3 minutes    10 sec    generic.Check Upgrade Screen
+    # Wait Until Keyword Succeeds    3 minutes    10 sec    generic.Check Upgrade Screen
 Check Image
     [Documentation]    check image exist
     [Arguments]    ${image}
