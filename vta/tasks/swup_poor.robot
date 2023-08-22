@@ -40,14 +40,14 @@ USB2
 Check Normal Mode
     PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
     generic.Check Trace From Container    (VIP_NORMAL)
-Check Android Home
+Check Profile
     PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
     ${RES}    APIFlexClient.Req To Test Profile    Android_Home    0.9
     Should Be Equal    ${RES}    ${True}
 Check Success
     [Arguments]    ${SWUP_timeout}
-    Wait Until Keyword Succeeds    ${SWUP_timeout}    5 sec    swup_poor.Check Normal Mode
-    Wait Until Keyword Succeeds    2 minutes    5 sec    swup_poor.Check Android Home
+    Wait Until Keyword Succeeds    ${SWUP_timeout}    5 sec    Check Normal Mode
+    Wait Until Keyword Succeeds    2 minutes    5 sec    Check Profile
     Sleep    2s
     # close notification
     GenericHelper.Prompt Command    adb shell input tap 865 865
@@ -63,4 +63,4 @@ SWUP Execution
     ${keyword_list}    Create List    USB0    USB1    USB2
     generic.Randomly Run Keywords    ${keyword_list}
     swup.Enter Recovery Mode
-    swup_poor.Check Success    ${SWUP_timeout}
+    Check Success    ${SWUP_timeout}
