@@ -107,4 +107,4 @@ class StabilityListener:
 
     def close(self):
         self._upload_database()
-        self._send_mail()
+        # self._send_mail()
