@@ -53,13 +53,13 @@ class PeriodicReleaseChecker:
         is_new_released, version = ar.monitor(thres=condition)
         self.get()
         if is_new_released and version not in self.records:
-            logger.success("Release is new, start task!")
             self.run_task(script)
             self.update(record=version)
         else:
             logger.info("Release is not new")
 
     def run_task(self, script: str):
+        logger.success("Start task!")
         try:
             subprocess.Popen([script], shell=True)
         except subprocess.CalledProcessError as e:
