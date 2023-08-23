@@ -176,3 +176,4 @@ database.db
 # temperary files
 tmp/
 result/
+records.txt
