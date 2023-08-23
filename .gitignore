@@ -177,3 +177,8 @@ database.db
 tmp/
 result/
 records.txt
+
+# execution
+*.bat
+!Function.bat
+!Stability.bat
