@@ -73,7 +73,7 @@ class PeriodicReleaseChecker:
 
 if __name__ == "__main__":
     ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2])
-    script = os.path.join(ROOT, "Function.bat")
+    script = os.path.join(ROOT, "QVTa.bat")
     release_checker = PeriodicReleaseChecker()
     schedule.every(1).hour.do(release_checker.periodic_job, script=script)
     # threading.Thread(target=release_checker.run_scheduler).start()
