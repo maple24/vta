@@ -10,7 +10,7 @@ import time
 from datetime import datetime
 import pytz
 from loguru import logger
-from typing import Optional
+from typing import Optional, Tuple
 from collections.abc import Callable
 import tarfile
 import zipfile
@@ -27,7 +27,7 @@ class ArtifaHelper:
         self,
         repo: str = "zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-fc_main_dev/daily/",
         pattern: str = "_userdebug.tgz$",
-        server: str = "https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/",
+        server: str = "https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/",
         auth: tuple = ("ets1szh", "estbangbangde6"),
         dstfolder: str = "downloads",
     ) -> None:
@@ -86,24 +86,24 @@ class ArtifaHelper:
         logger.success("Finish->time cost: ", t_e - t_s)
         return os.path.join(self.dstfolder, url.split("/")[-1])
 
-    def monitor(self, thres: int, callback: Optional[Callable] = None) -> bool:
+    def monitor(self, thres: int, callback: Optional[Callable] = None) -> Tuple[bool, str]:
         f_lastModified = self.get_latest()
         tz = pytz.timezone("Asia/Shanghai")
         now = datetime.now(tz)
         t = datetime.strptime(f_lastModified["lastModified"], "%Y-%m-%dT%H:%M:%S.%f%z")
         diff_hrs = (now - t).total_seconds() / 60 / 60
         if diff_hrs < thres:
-            logger.info(
-                f"The latest version {f_lastModified} was built within {thres} hrs."
+            logger.success(
+                f"The latest version {f_lastModified['uri']} was built within {thres} hrs."
             )
             if callback:
                 callback()
-            return True
+            return True, f_lastModified["uri"]
         else:
             logger.info(
                 f"No actifacts found in {thres} hrs. The latest version was built {diff_hrs} hrs ago."
             )
-            return False
+            return False, f_lastModified["uri"]
 
     def get_latest(self) -> Optional[dict]:
         session = requests.Session()
@@ -203,11 +203,12 @@ if __name__ == "__main__":
         pattern="_userdebug_binary_\d+_\d+.tgz$",
     )
     
-    # f_lastModified = ar.get_latest()
+    f_lastModified = ar.get_latest()
+    print(f_lastModified)
     def func():
         print("helloworld")
         
-    ar.monitor(thres=33, callback=func)
+    # ar.monitor(thres=33, callback=func)
     # monitor
 
     # package = ar.download(f_lastModified["url"])
