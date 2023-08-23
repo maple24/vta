@@ -96,7 +96,7 @@ StepCheckNormalTrace
     [Template]    powercycle.Check Normal Trace
     ${STEPS}[${TEST_NAME}][patterns]
 
-Step;CheckErrorTrace
+StepCheckErrorTrace
     [Tags]
     [Template]    powercycle.Check Error Trace
     ${STEPS}[${TEST_NAME}][patterns]
