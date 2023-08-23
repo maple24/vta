@@ -75,6 +75,6 @@ if __name__ == "__main__":
     ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2])
     script = os.path.join(ROOT, "Function.bat")
     release_checker = PeriodicReleaseChecker()
-    schedule.every(4).seconds.do(release_checker.periodic_job, script=script)
+    schedule.every(1).hour.do(release_checker.periodic_job, script=script)
     # threading.Thread(target=release_checker.run_scheduler).start()
     release_checker.run_scheduler()
