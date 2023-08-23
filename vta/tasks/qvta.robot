@@ -46,6 +46,7 @@ Media Picture
     generic.Route Files
     qvta.Open Picture in USB
     generic.Check USB Picture
+    qvta.Mount USB to QNX
 
 BSP Camera DMS
     [Documentation]    check DMS camera
