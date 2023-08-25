@@ -18,14 +18,14 @@ VIDEO = False
 
 # enable database
 DATABASE = False
-DB_CREDENTIAL = {"drivername": "sqlite", "database": "database.db"}
-# DB_CREDENTIAL = {
-#     "drivername": "mysql",
-#     "username": "ets1szh",
-#     "password": "estbangbangde",
-#     "host": "10.161.224.58",
-#     "database": "zeekr"
-# }
+# DB_CREDENTIAL = {"drivername": "sqlite", "database": "database.db"}
+DB_CREDENTIAL = {
+    "drivername": "mysql",
+    "username": "ets1szh",
+    "password": "estbangbangde",
+    "host": "10.161.235.42",
+    "database": "zeekr"
+}
 
 # enable mail
 MAIL = False

@@ -9,11 +9,11 @@ Library    OperatingSystem
 *** Keywords ***
 Mount USB to Android
     # mount usb2.0 to android
-    PuttyHelper.Send Command And Return Traces    bosch_swdl_assistant -o "{\\"type\\":\\"usb_owner\\", \\"port\\":0, \\"owner\\":3, \\"io\\":2}"
+    PuttyHelper.Send Command And Return Traces    bosch_swdl_assistant -o "{\\"type\\":\\"usb_owner\\", \\"port\\":0, \\"owner\\":0, \\"io\\":2}"
     PuttyHelper.Send Command And Return Traces    sync    login=${False}
     powercycle.Reset by PPS
 Mount USB to QNX
-    PuttyHelper.Send Command And Return Traces    bosch_swdl_assistant -o "{\\"type\\":\\"usb_owner\\", \\"port\\":0, \\"owner\\":0, \\"io\\":2}"
+    PuttyHelper.Send Command And Return Traces    bosch_swdl_assistant -o "{\\"type\\":\\"usb_owner\\", \\"port\\":0, \\"owner\\":1, \\"io\\":2}"
     PuttyHelper.Send Command And Return Traces    sync    login=${False}
     powercycle.Reset by PPS
 Download Latest

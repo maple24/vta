@@ -30,14 +30,17 @@ SWUP
     Remove Directory    ${udisk}//${image_name}    recursive=${True}
     Move Directory    ${image_path}    ${udisk}//${image_name}
     generic.UDisk to DHU
+    qvta.Mount USB to QNX
     swup.Enter Recovery Mode
     swup.Check SWUP Success    ${SWUP_timeout}
 
 BT
     [Documentation]    click bluetooth button
+    [Tags]    skip
 
 WIFI
     [Documentation]    click wifi button
+    [Tags]    skip
 
 Media Picture
     [Documentation]    open picture in USB3.0
@@ -46,7 +49,7 @@ Media Picture
     generic.Route Files
     qvta.Open Picture in USB
     generic.Check USB Picture
-    qvta.Mount USB to QNX
+    # qvta.Mount USB to QNX
 
 BSP Camera DMS
     [Documentation]    check DMS camera
