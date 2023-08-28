@@ -118,7 +118,7 @@ class AgentHelper:
         nReturnCode, dReturn = self.__send_and_wait_for_response(repr(d), timeout=5.0)
         return nReturnCode
 
-    def req_to_test_profile(self, index, prof_name, ntimeout=5.0):
+    def req_to_test_profile(self, index, prof_name, ntimeout=10.0):
         """
         Description: Request AgentManager Server to test some existing profile with corresponding camera
         :param "index" the camera index
