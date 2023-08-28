@@ -23,7 +23,7 @@ Check Image
     Directory Should Exist    ${udisk}//${image}    Software package not found!
 Check Normal Mode and Thermal
     PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
-    generic.Check Trace From Container    (VIP_NORMAL)
+    generic.Check Trace From Container    (SwitchToNormal)
 Check Android Home and Thermal
     PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
     generic.Check Android Home
