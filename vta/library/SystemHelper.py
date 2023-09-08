@@ -13,7 +13,7 @@ except:
 class SystemHelper:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
-    disk_mapping = {"qnx": "/mnt/nfs_share", "android": "/data/vendor/nfs/mount"}
+    disk_mapping = {"qnx": "/mnt/nfs_share", "android": "/nfs_share"}
 
     @staticmethod
     def serial_command(
@@ -81,7 +81,7 @@ class SystemHelper:
     def android_screencapture(
         deviceID: str = "1234567", name: str = "screencap.png", localPath: str = "."
     ) -> str:
-        cmd = f"adb -s {deviceID} shell screencap -p /sdcard/{name} && adb pull /sdcard/{name} {localPath}"
+        cmd = f"adb -s {deviceID} shell screencap -p /sdcard/{name} && adb -s {deviceID} pull /sdcard/{name} {localPath}"
         GenericHelper.prompt_command(cmd)
         return os.path.join(localPath, name)
 
@@ -132,7 +132,7 @@ class SystemHelper:
     ) -> None:
         filename = os.path.basename(qnxPath)
         logger.info(f"Target file is {filename}")
-        cmd = f"cp {qnxPath} {SystemHelper.disk_mapping.get('qnx', '/data/share/')}"
+        cmd = f"cp -r {qnxPath} {SystemHelper.disk_mapping.get('qnx', '/data/share/')}"
         SystemHelper.serial_command(cmd, comport, username, password)
         androidPath = f"{SystemHelper.disk_mapping.get('android', '/data/nfs/nfs_share/')}/{filename}"
         SystemHelper.Android2PC(androidPath, localPath, deviceID)

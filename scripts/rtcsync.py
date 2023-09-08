@@ -1,14 +1,11 @@
 from rtcclient.utils import setup_basic_logging
 from rtcclient import RTCClient
 from typing import Union
-import os
-import sys
 from loguru import logger
 import MySQLdb
 
 # you can remove this if you don't need logging
 setup_basic_logging()
-sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2]))
 
 credential = {
     "host": "10.161.235.42",
