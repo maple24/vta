@@ -52,22 +52,32 @@ UDisk to DHU
     RelayHelper.Set Relay Port    dev_type=cleware    port_index=5    state_code=1
     Sleep    1s
 WebCam Video ON
-    AgentHelper.Req To Stop Video    ${1}
-    AgentHelper.Req To Start Video    ${1}
+    [Arguments]    ${cameraindex}=${1}
+    AgentHelper.Req To Stop Video    ${cameraindex}
+    AgentHelper.Req To Start Video    ${cameraindex}
 WebCam Video OFF
-    AgentHelper.Req To Stop Video    ${1}
+    [Arguments]    ${cameraindex}=${1}
+    AgentHelper.Req To Stop Video    ${cameraindex}
 Check Android Home
-    ${RES}    AgentHelper.Req To Test Profile    ${1}    Android_Home
+    [Arguments]    ${cameraindex}=${1}
+    ${RES}    AgentHelper.Req To Test Profile    ${cameraindex}    Android_Home
     Should Be Equal    ${RES}    ${0}    Android Home does not match!
 Check Black Screen
-    ${RES}    AgentHelper.Req To Test Profile    ${1}    Black_Screen
+    [Arguments]    ${cameraindex}=${1}
+    ${RES}    AgentHelper.Req To Test Profile    ${cameraindex}    Black_Screen
     Should Be Equal    ${RES}    ${0}    Black Screen does not match!
 Check Upgrade Screen
-    ${RES}    AgentHelper.Req To Test Profile    ${1}    Upgrade
+    [Arguments]    ${cameraindex}=${1}
+    ${RES}    AgentHelper.Req To Test Profile    ${cameraindex}    Upgrade
     Should Be Equal    ${RES}    ${0}    Upgrade Screen does not match!
 Check USB Picture
-    ${RES}    AgentHelper.Req To Test Profile    ${1}    USB
+    [Arguments]    ${cameraindex}=${1}
+    ${RES}    AgentHelper.Req To Test Profile    ${cameraindex}    USB
     Should Be Equal    ${RES}    ${0}    USB picture does not match!
+Check Android Home and Thermal
+    [Arguments]    ${cameraindex}
+    PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
+    Check Android Home    ${cameraindex}
 Check Trace From Container
     [Arguments]    ${pattern}
     @{traces}=    PuttyHelper.Get Trace Container

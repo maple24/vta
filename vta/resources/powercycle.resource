@@ -15,12 +15,12 @@ Test
 
 Check Display
     [Documentation]    Check profile display using webcam, args: list
-    [Arguments]    ${dispalys}
+    [Arguments]    ${dispalys}    ${cameraindex}
     # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(msg code 1547)    cmd=susd_invoke 1547 0
     # Should Be Equal    ${RES}    ${True}    Fail to get response message!
     # Sleep    0.5s
     FOR    ${element}    IN    @{dispalys}
-        ${RES}    Run Keyword If    ${element}[index]!=${0}    AgentHelper.Req To Test Profile    ${element}[index]   ${element}[profile]
+        ${RES}    Run Keyword If    ${element}[index]!=${0}    AgentHelper.Req To Test Profile    ${cameraindex}   ${element}[profile]
         Run Keyword If    ${RES}!=${None}    Should Be Equal    ${RES}    ${0}    Profile does not match!
     END
 
@@ -61,10 +61,11 @@ Reset by CMD
     Sleep    10s
 
 Reset by PPS
+    [Arguments]    ${cameraindex}
     generic.Power OFF with PPS
     Sleep    0.5s
     generic.Power ON with PPS
-    Wait Until Keyword Succeeds    2 minutes    10 sec    generic.Check Android Home
+    Wait Until Keyword Succeeds    2 minutes    10 sec    generic.Check Android Home    ${cameraindex}
 
 GWM Reset by CAN
     [Documentation]    Run powercycle with can signals

@@ -8,14 +8,16 @@ Library    OperatingSystem
 
 *** Keywords ***
 Mount USB to Android
+    [Arguments]    ${cameraindex}
     # mount usb2.0 to android
     PuttyHelper.Send Command And Return Traces    bosch_swdl_assistant -o "{\\"type\\":\\"usb_owner\\", \\"port\\":0, \\"owner\\":0, \\"io\\":2}"
     PuttyHelper.Send Command And Return Traces    sync    login=${False}
-    powercycle.Reset by PPS
+    powercycle.Reset by PPS    ${cameraindex}
 Mount USB to QNX
+    [Arguments]    ${cameraindex}
     PuttyHelper.Send Command And Return Traces    bosch_swdl_assistant -o "{\\"type\\":\\"usb_owner\\", \\"port\\":0, \\"owner\\":1, \\"io\\":2}"
     PuttyHelper.Send Command And Return Traces    sync    login=${False}
-    powercycle.Reset by PPS
+    powercycle.Reset by PPS    ${cameraindex}
 Download Latest
     [Documentation]    download latest version from artifactory and unzip
     ${source}    ArtifaHelper.Get Latest

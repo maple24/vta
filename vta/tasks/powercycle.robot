@@ -16,13 +16,10 @@ ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
 ${CONF_TEST}    ${${SLOT}_POWERCYCLE}
 ${STEPS}    ${CONF_TEST}[steps]
+${CAMERA_INDEX}    ${CONF_BASE}[cameraindex]
 ${mail_subject}    Powercycle error notification!
 ${mail_body}    Unexpected error occurs!!
 
-*** Keywords ***
-Check Android Home and Thermal
-    PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
-    generic.Check Android Home
 
 *** Test Cases ***
 StepTest
@@ -36,8 +33,8 @@ GetVersion
     Set Suite Variable    ${SOCVersion}
 StepCheckPowerCycle
     [Tags]
-    [Setup]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video ON
-    [Teardown]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video OFF
+    [Setup]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video ON    ${CAMERA_INDEX}
+    [Teardown]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video OFF    ${CAMERA_INDEX}
     IF    '${STEPS}[${TEST_NAME}][type]'=='command'
         Log    run powercycle with putty command
         ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset -b normal    timeout=30
@@ -70,19 +67,19 @@ StepCheckPowerCycle
     END
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
     Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
-    Wait Until Keyword Succeeds    2 minutes    5 sec    Check Android Home and Thermal
+    Wait Until Keyword Succeeds    2 minutes    5 sec    generic.Check Android Home and Thermal    ${CAMERA_INDEX}
 
 StepCheckOMS
     [Tags]
     qvta.Open OMS
-    ${RES}    AgentHelper.Req To Test Profile    ${1}    OMS
+    ${RES}    AgentHelper.Req To Test Profile    ${CAMERA_INDEX}    OMS
     Should Be Equal    ${RES}    ${0}
     qvta.Exit Camera
 
 StepCheckDMS
     [Tags]
     qvta.Open DMS
-    ${RES}    AgentHelper.Req To Test Profile    ${1}    DMS
+    ${RES}    AgentHelper.Req To Test Profile    ${CAMERA_INDEX}    DMS
     Should Be Equal    ${RES}    ${0}
     qvta.Exit Camera
 
@@ -104,4 +101,4 @@ StepCheckErrorTrace
 StepCheckDisplays
     [Tags]
     [Template]    powercycle.Check Display
-    ${STEPS}[${TEST_NAME}][displays]
+    ${STEPS}[${TEST_NAME}][displays]    ${CAMERA_INDEX}

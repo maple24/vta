@@ -14,6 +14,7 @@ Suite Teardown    generic.DEINIT
 *** Variables ***
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
+${CAMERA_INDEX}    ${CONF_BASE}[cameraindex]
 ${image_name}    all_images
 ${SWUP_timeout}    30 minutes
 
@@ -41,10 +42,10 @@ GetVersion
     Set Suite Variable    ${SOCVersion}
 SWUP Execution
     [Documentation]    randomly select software package and run test
-    [Setup]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video ON
-    [Teardown]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video OFF
+    [Setup]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video ON    ${CAMERA_INDEX}
+    [Teardown]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video OFF    ${CAMERA_INDEX}
     ${keyword_list}    Create List    USB0    USB1
     generic.Randomly Run Keywords    ${keyword_list}
     Mount
     swup.Enter Recovery Mode
-    swup.Check SWUP Success    ${SWUP_timeout}
+    swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}
