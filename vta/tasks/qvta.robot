@@ -2,6 +2,7 @@
 Resource    ../resources/generic.resource
 Resource    ../resources/qvta.resource
 Resource    ../resources/swup.resource
+Resource    ../resources/powercycle.resource
 
 Library    ../api/AgentHelper.py
 Library    ../api/RelayHelper.py
@@ -18,7 +19,7 @@ Suite Teardown    generic.DEINIT
 *** Variables ***
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
-${ADB_ID}    ${CONF_BASE}[cameraindex]
+${ADB_ID}    ${CONF_BASE}[adbid]
 ${CAMERA_INDEX}    ${CONF_BASE}[cameraindex]
 ${SWUP_timeout}    30 minutes
 ${mail_subject}    Zeekr QVTa
@@ -37,9 +38,14 @@ SWUP
     swup.Enter Recovery Mode    ${ADB_ID}
     swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
 
+System Partition
+    [Documentation]    system_b larger than 3G
+    [Tags]    skip
+    
+
 BT
     [Documentation]    click bluetooth button
-    [Tags]    skip
+    [Tags]    
     [Setup]    generic.Route BT Settings    ${ADB_ID}
     GenericHelper.Prompt Command    adb shell input tap 250 215
     ${BT_0}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_0.png    ${TEMP}
@@ -50,7 +56,7 @@ BT
 
 WIFI
     [Documentation]    click wifi button
-    [Tags]    skip
+    [Tags]    
     [Setup]    generic.Route WIFI Settings    ${ADB_ID}
     ${WIFI_0}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_0.png    ${TEMP}
     GenericHelper.Prompt Command    adb shell input tap 2400 220
@@ -64,6 +70,14 @@ Media Picture
     generic.Route Files    ${ADB_ID}
     qvta.Open Picture in USB    ${ADB_ID}
     generic.Check USB Picture    ${CAMERA_INDEX}
+    generic.Route Carlauncher    ${ADB_ID}
+
+Audio 1kHz
+    [Documentation]    test audio with 1000khz
+    generic.Route Files    ${ADB_ID}
+    qvta.Open Audio in USB    ${ADB_ID}
+    Wait Until Keyword Succeeds    30s    1s    generic.Check 1Hz Audio
+    generic.Route Carlauncher    ${ADB_ID}
 
 BSP Camera DMS
     [Documentation]    check DMS camera
@@ -84,6 +98,10 @@ BSP Display CSD
     generic.Route Carlauncher    ${ADB_ID}
     generic.Check Android Home    ${CAMERA_INDEX}
 
+BSP Display Cluster
+    [Documentation]    check CSD display
+    [Tags]    skip
+
 BSP Display Backlight
     [Documentation]    check backlight in CSD
     qvta.Open Backlight
@@ -102,11 +120,9 @@ LCM PowerONOFF
 DLT Log
     [Documentation]    startup log in dlt
     # PowerM: POWERM_SM_RUN_STATE
-    generic.Power OFF with PPS
-    Sleep    0.5s
-    generic.Check Black Screen    ${CAMERA_INDEX}
-    generic.Power ON with PPS
-    Wait Until Keyword Succeeds    2 minutes    5s    generic.Check Android Home    ${CAMERA_INDEX}
-    @{traces}=    DLTHelper.Get Trace Container
-    ${RES}    ${matched}=    GenericHelper.Match String    (POWERM_SM_RUN_STATE)    ${traces}
-    Should Be Equal    ${RES}    ${True}    Fail to match pattern `POWERM_SM_RUN_STATE`!
+    powercycle.Reset by PPS    ${CAMERA_INDEX}
+    qvta.Check DLT
+
+Android Reboot
+    [Documentation]    reboot by android command: adb -s 1234567 reboot
+    powercycle.Reset by Android Command    ${CAMERA_INDEX}    ${ADB_ID}

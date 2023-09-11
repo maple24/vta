@@ -67,6 +67,12 @@ Reset by PPS
     generic.Power ON with PPS
     Wait Until Keyword Succeeds    2 minutes    10 sec    generic.Check Android Home    ${cameraindex}
 
+Reset by Android Command
+    [Arguments]    ${cameraindex}    ${adbid}
+    GenericHelper.Prompt Command    cmd=adb -s ${adbid} reboot
+    Wait Until Keyword Succeeds    2 minutes    3 sec    generic.Check Black Screen    ${cameraindex}
+    Wait Until Keyword Succeeds    2 minutes    10 sec    generic.Check Android Home    ${cameraindex}
+
 GWM Reset by CAN
     [Documentation]    Run powercycle with can signals
     CANoeHelper.Init Canoe    enabled=${True}

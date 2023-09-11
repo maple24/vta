@@ -39,8 +39,14 @@ Open OMS
 Open Backlight
     PuttyHelper.Send Command And Return Traces    sw-vsync -display=5
 Check DLT
-    # MCU reset reason
+    @{traces}=    DLTHelper.Get Trace Container
+    ${RES}    ${matched}=    GenericHelper.Match String    (POWERM_SM_RUN_STATE)    ${traces}
+    Should Be Equal    ${RES}    ${True}    Fail to match pattern `POWERM_SM_RUN_STATE`!
 Open Picture in USB
+    [Arguments]    ${adbid}
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 50 577
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 540 500
+Open Audio in USB
     [Arguments]    ${adbid}
     GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 50 577
     GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 370 500

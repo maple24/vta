@@ -66,7 +66,7 @@ class DLTHelper:
         #     + b" "
         #     + rawBytes[28:-3]
         # ).decode("utf-8", errors="ignore")
-        if len(data) < 15:
+        if len(data) < 20 or "MAIN" in data:
             return
         return data
 
