@@ -43,9 +43,9 @@ if not os.path.exists(TEMP):
     os.mkdir(TEMP)
 
 SLOT_1 = {
-    # putty channel
     "adbid": "123456",
     "cameraindex": 1,
+    # putty channel
     "dputty": {
         "putty_enabled": True,
         "putty_comport": "COM9",
@@ -83,9 +83,9 @@ SLOT_1 = {
 }
 
 SLOT_2 = {
-    # putty channel
     "adbid": "123456",
     "cameraindex": 2,
+    # putty channel
     "dputty": {
         "putty_enabled": False,
         "putty_comport": "COM9",

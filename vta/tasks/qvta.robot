@@ -32,7 +32,6 @@ SWUP
     Remove Directory    ${udisk}//${image_name}    recursive=${True}
     Move Directory    ${image_path}    ${udisk}//${image_name}
     generic.UDisk to DHU
-    qvta.Mount USB to QNX    ${CAMERA_INDEX}
     swup.Enter Recovery Mode    ${ADB_ID}
     swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
 
@@ -47,11 +46,9 @@ WIFI
 Media Picture
     [Documentation]    open picture in USB3.0
     # open picture
-    qvta.Mount USB to Android    ${CAMERA_INDEX}
     generic.Route Files    ${ADB_ID}
     qvta.Open Picture in USB    ${ADB_ID}
     generic.Check USB Picture    ${CAMERA_INDEX}
-    # qvta.Mount USB to QNX
 
 BSP Camera DMS
     [Documentation]    check DMS camera
@@ -77,7 +74,7 @@ BSP Display Backlight
     qvta.Open Backlight
     ${RES}    AgentHelper.Req To Test Profile    ${CAMERA_INDEX}    Backlight
     generic.Putty CtrlC
-    Should Be Equal    ${RES}    ${0}    Backloght does not match!
+    Should Be Equal    ${RES}    ${0}    Backlight does not match!
 
 LCM PowerONOFF
     [Documentation]    power on/off switch via ACC

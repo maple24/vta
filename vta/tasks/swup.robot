@@ -20,10 +20,6 @@ ${image_name}    all_images
 ${SWUP_timeout}    30 minutes
 
 *** Keywords ***
-Mount
-    PuttyHelper.Send Command And Return Traces    bosch_swdl_assistant -o "{\\"type\\":\\"usb_owner\\", \\"port\\":0, \\"owner\\":1, \\"io\\":2}"
-    PuttyHelper.Send Command And Return Traces    sync    login=${False}
-    powercycle.Reset by CMD
 USB0
     RelayHelper.Set Relay Port    dev_type=cleware    port_index=1    state_code=1
     Sleep    1s
@@ -47,6 +43,5 @@ SWUP Execution
     [Teardown]    Run Keyword If    ${VIDEO}==${True}    generic.WebCam Video OFF    ${CAMERA_INDEX}
     ${keyword_list}    Create List    USB0    USB1
     generic.Randomly Run Keywords    ${keyword_list}
-    Mount
     swup.Enter Recovery Mode    ${ADB_ID}
     swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
