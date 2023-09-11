@@ -14,6 +14,7 @@ Suite Teardown    generic.DEINIT
 *** Variables ***
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
+${ADB_ID}    ${CONF_BASE}[adbid]
 ${CAMERA_INDEX}    ${CONF_BASE}[cameraindex]
 ${image_name}    all_images
 ${SWUP_timeout}    30 minutes
@@ -47,5 +48,5 @@ SWUP Execution
     ${keyword_list}    Create List    USB0    USB1
     generic.Randomly Run Keywords    ${keyword_list}
     Mount
-    swup.Enter Recovery Mode
-    swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}
+    swup.Enter Recovery Mode    ${ADB_ID}
+    swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}

@@ -16,6 +16,7 @@ ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
 ${CONF_TEST}    ${${SLOT}_POWERCYCLE}
 ${STEPS}    ${CONF_TEST}[steps]
+${ADB_ID}    ${CONF_BASE}[adbid]
 ${CAMERA_INDEX}    ${CONF_BASE}[cameraindex]
 ${mail_subject}    Powercycle error notification!
 ${mail_body}    Unexpected error occurs!!

@@ -41,8 +41,9 @@ Open Backlight
 Check DLT
     # MCU reset reason
 Open Picture in USB
-    GenericHelper.Prompt Command    adb shell input tap 50 577
-    GenericHelper.Prompt Command    adb shell input tap 370 500
+    [Arguments]    ${adbid}
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 50 577
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 370 500
 Get SOC Version
     [Documentation]    Get SOC version with putty command 'cat buildinfo.txt'
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=MAIN_VERSION\=(.*)    cmd=cat /mnt/Buildinfo.txt    timeout=10

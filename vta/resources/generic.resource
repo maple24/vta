@@ -22,15 +22,20 @@ Auto Log Pull
     Create File    ${udisk}//zeekr-auto-export.txt
     UDisk to DHU
 Route Carlauncher
-    GenericHelper.Prompt Command    adb shell am start -n com.android.car.carlauncher/.CarLauncher
+    [Arguments]    ${adbid}
+    GenericHelper.Prompt Command    adb -s ${adbid} shell am start -n com.android.car.carlauncher/.CarLauncher
 Route Files
-    GenericHelper.Prompt Command    adb shell am start -n com.android.documentsui/.LauncherActivity
+    [Arguments]    ${adbid}
+    GenericHelper.Prompt Command    adb -s ${adbid} shell am start -n com.android.documentsui/.LauncherActivity
 Route EngineeringMode
-    GenericHelper.Prompt Command    adb shell am start -n com.bosch.apps.engineeringmode/.MainActivity
+    [Arguments]    ${adbid}
+    GenericHelper.Prompt Command    adb -s ${adbid} shell am start -n com.bosch.apps.engineeringmode/.MainActivity
 Route BT Settings
-    GenericHelper.Prompt Command    adb shell am start -a android.settings.BLUETOOTH_SETTINGS
+    [Arguments]    ${adbid}
+    GenericHelper.Prompt Command    adb -s ${adbid} shell am start -a android.settings.BLUETOOTH_SETTINGS
 Route WIFI Settings
-    GenericHelper.Prompt Command    adb shell am start -a android.settings.WIFI_SETTINGS
+    [Arguments]    ${adbid}
+    GenericHelper.Prompt Command    adb -s ${adbid} shell am start -a android.settings.WIFI_SETTINGS
 Putty CtrlC
     PuttyHelper.Send Command And Return Traces    \x03    login=${False}
 ACC ON

@@ -38,7 +38,7 @@ Route Zeekr Car Launcher
 BT
     [Documentation]    click bt on/off button and check status change
     [Tags]
-    [Setup]    generic.Route BT Settings
+    [Setup]    generic.Route BT Settings    ${device_id}
     GenericHelper.Prompt Command    adb shell input tap ${BT_SETTINGS}[0] ${BT_SETTINGS}[1]
     ${BT_0}    SystemHelper.Android Screencapture    ${device_id}    BT_0.png    ${TEMP}
     Click BT Button
@@ -49,7 +49,7 @@ BT
 WIFI
     [Documentation]    click wifi on/off button and check status change
     [Tags]    
-    [Setup]    generic.Route WIFI Settings
+    [Setup]    generic.Route WIFI Settings    ${device_id}
     ${WIFI_0}    SystemHelper.Android Screencapture    ${device_id}    WIFI_0.png    ${TEMP}
     Click WIFI Button
     ${WIFI_1}    SystemHelper.Android Screencapture    ${device_id}    WIFI_1.png    ${TEMP}
@@ -58,7 +58,7 @@ WIFI
 ZEEKR BT
     [Documentation]    click bt on/off button and check status change
     [Tags]    skip
-    [Setup]    Route ZEEKR BT Settings
+    [Setup]    Route ZEEKR BT Settings    ${device_id}
     ${BT_0}    SystemHelper.Android Screencapture    ${device_id}    BT_0.png    ${TEMP}
     Click ZEEKR BT Button
     ${BT_1}    SystemHelper.Android Screencapture    ${device_id}    BT_1.png    ${TEMP}

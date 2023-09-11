@@ -44,6 +44,7 @@ if not os.path.exists(TEMP):
 
 SLOT_1 = {
     # putty channel
+    "adbid": "123456",
     "cameraindex": 1,
     "dputty": {
         "putty_enabled": True,
@@ -83,6 +84,7 @@ SLOT_1 = {
 
 SLOT_2 = {
     # putty channel
+    "adbid": "123456",
     "cameraindex": 2,
     "dputty": {
         "putty_enabled": False,

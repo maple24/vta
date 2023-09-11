@@ -16,6 +16,7 @@ Suite Teardown    generic.DEINIT
 *** Variables ***
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
+${ADB_ID}    ${CONF_BASE}[cameraindex]
 ${CAMERA_INDEX}    ${CONF_BASE}[cameraindex]
 ${SWUP_timeout}    30 minutes
 ${mail_subject}    Zeekr QVTa
@@ -32,8 +33,8 @@ SWUP
     Move Directory    ${image_path}    ${udisk}//${image_name}
     generic.UDisk to DHU
     qvta.Mount USB to QNX    ${CAMERA_INDEX}
-    swup.Enter Recovery Mode
-    swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}
+    swup.Enter Recovery Mode    ${ADB_ID}
+    swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
 
 BT
     [Documentation]    click bluetooth button
@@ -47,8 +48,8 @@ Media Picture
     [Documentation]    open picture in USB3.0
     # open picture
     qvta.Mount USB to Android    ${CAMERA_INDEX}
-    generic.Route Files
-    qvta.Open Picture in USB
+    generic.Route Files    ${ADB_ID}
+    qvta.Open Picture in USB    ${ADB_ID}
     generic.Check USB Picture    ${CAMERA_INDEX}
     # qvta.Mount USB to QNX
 
@@ -68,7 +69,7 @@ BSP Camera OMS
 
 BSP Display CSD
     [Documentation]    check CSD display
-    generic.Route Carlauncher
+    generic.Route Carlauncher    ${ADB_ID}
     generic.Check Android Home    ${CAMERA_INDEX}
 
 BSP Display Backlight
