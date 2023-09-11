@@ -5,7 +5,9 @@ Resource    ../resources/swup.resource
 
 Library    ../api/AgentHelper.py
 Library    ../api/RelayHelper.py
+Library    ../api/DLTHelper.py
 Library    ../library/GenericHelper.py
+Library    ../library/SystemHelper.py
 Library    OperatingSystem
 
 Variables    ../conf/settings.py
@@ -38,10 +40,23 @@ SWUP
 BT
     [Documentation]    click bluetooth button
     [Tags]    skip
+    [Setup]    generic.Route BT Settings    ${ADB_ID}
+    GenericHelper.Prompt Command    adb shell input tap 250 215
+    ${BT_0}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_0.png    ${TEMP}
+    GenericHelper.Prompt Command    adb shell input tap 2400 220
+    ${BT_1}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_1.png    ${TEMP}
+    ${RES}    GenericHelper.Image Diff    ${BT_0}    ${BT_1}
+    Should Not Be Equal    ${RES}    ${True}
 
 WIFI
     [Documentation]    click wifi button
     [Tags]    skip
+    [Setup]    generic.Route WIFI Settings    ${ADB_ID}
+    ${WIFI_0}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_0.png    ${TEMP}
+    GenericHelper.Prompt Command    adb shell input tap 2400 220
+    ${WIFI_1}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_1.png    ${TEMP}
+    ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}    thre=${0.1}
+    Should Not Be Equal    ${RES}    ${True}
 
 Media Picture
     [Documentation]    open picture in USB3.0
@@ -83,3 +98,15 @@ LCM PowerONOFF
     generic.Check Black Screen    ${CAMERA_INDEX}
     generic.Power ON with Relay
     Wait Until Keyword Succeeds    2 minutes    5s    generic.Check Android Home    ${CAMERA_INDEX}
+
+DLT Log
+    [Documentation]    startup log in dlt
+    # PowerM: POWERM_SM_RUN_STATE
+    generic.Power OFF with PPS
+    Sleep    0.5s
+    generic.Check Black Screen    ${CAMERA_INDEX}
+    generic.Power ON with PPS
+    Wait Until Keyword Succeeds    2 minutes    5s    generic.Check Android Home    ${CAMERA_INDEX}
+    @{traces}=    DLTHelper.Get Trace Container
+    ${RES}    ${matched}=    GenericHelper.Match String    (POWERM_SM_RUN_STATE)    ${traces}
+    Should Be Equal    ${RES}    ${True}    Fail to match pattern `POWERM_SM_RUN_STATE`!

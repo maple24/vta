@@ -53,6 +53,10 @@ SLOT_1 = {
         "putty_username": "zeekr",
         "putty_password": "Aa123123",
     },
+    "ddlt": {
+        "dlt_enabled": False,
+        "dlt_comport": "COM7",
+    },
     # programming power supply
     "dpps": {
         "pps_enabled": False,
@@ -92,6 +96,10 @@ SLOT_2 = {
         "putty_baudrate": 115200,
         "putty_username": "zeekr",
         "putty_password": "Aa123123",
+    },
+    "ddlt": {
+        "dlt_enabled": False,
+        "dlt_comport": "COM7",
     },
     # programming power supply
     "dpps": {

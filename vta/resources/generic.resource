@@ -3,6 +3,7 @@ Library    ../api/PuttyHelper.py
 Library    ../api/RelayHelper.py
 Library    ../library/GenericHelper.py
 Library    ../api/AgentHelper.py
+Library    ../api/DLTHelper.py
 Library    OperatingSystem
 
 *** Keywords ***
@@ -94,11 +95,15 @@ INIT
     PuttyHelper.Connect    dPutty=${CONF}[dputty]
     PuttyHelper.Enable Monitor
     RelayHelper.Init Relay    drelay=${CONF}[drelay]
+    DLTHelper.Connect    dDlt=${CONF}[ddlt]
+    DLTHelper.Enable Monitor
     Define Global
 DEINIT
     [Documentation]    Deinit all instances
     PuttyHelper.Disconnect
     PuttyHelper.Disable Monitor
+    DLTHelper.Disconnect
+    DLTHelper.Disable Monitor
 Define Global
     [Documentation]    Define global variables
     ${TESTER}    GenericHelper.Get Username
