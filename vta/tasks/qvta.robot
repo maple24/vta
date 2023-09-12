@@ -39,12 +39,12 @@ SWUP
     swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
 
 System Partition
-    [Documentation]    system_b is 3G
+    [Documentation]    system_b  3G
     [Tags]    
     @{traces}    PuttyHelper.Send Command And Return Traces    cmd=df -g /dev/disk/system_b
-    ${RES}    ${matched}=    GenericHelper.Match String    (\\d+)\\s+total.*\\[(\\d+)    ${traces}
-    Should Be Equal    ${RES}    ${True}    Fail to match pattern `(\\d+)\\s+total.*\\[(\\d+)`
-    ${result}    Evaluate    (float($matched[0][0]) + float($matched[0][1])) / 1024 / 1024 / 1024
+    ${RES}    ${matched}=    GenericHelper.Match String    (\\d+)\\s+total.*\\[(\\d+).*\\]    ${traces}
+    Should Be Equal    ${RES}    ${True}    Fail to match pattern `(\\d+)\\s+total.*\\[(\\d+).*\\]`
+    ${result}    Evaluate    (float($matched[0][0]) * float($matched[0][1])) / 1024 / 1024 / 1024
     Should Be Equal    ${result}    ${3.0}
 
 BT
