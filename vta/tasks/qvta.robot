@@ -41,7 +41,11 @@ SWUP
 System Partition
     [Documentation]    system_b is 3G
     [Tags]    
-    qvta.Get System b Space
+    @{traces}    PuttyHelper.Send Command And Return Traces    cmd=df -g /dev/disk/system_b
+    ${RES}    ${matched}=    GenericHelper.Match String    (\\d+)\\s+total.*\\[(\\d+)    ${traces}
+    Should Be Equal    ${RES}    ${True}    Fail to match pattern `(\\d+)\\s+total.*\\[(\\d+)`
+    ${result}    Evaluate    (float($matched[0][0]) + float($matched[0][1])) / 1024 / 1024 / 1024
+    Should Be Equal    ${result}    ${3.0}
 
 BT
     [Documentation]    click bluetooth button
