@@ -39,17 +39,17 @@ SWUP
     swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
 
 System Partition
-    [Documentation]    system_b larger than 3G
-    [Tags]    skip
-    
+    [Documentation]    system_b is 3G
+    [Tags]    
+    qvta.Get System b Space
 
 BT
     [Documentation]    click bluetooth button
     [Tags]    
     [Setup]    generic.Route BT Settings    ${ADB_ID}
-    GenericHelper.Prompt Command    adb shell input tap 250 215
+    GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 250 215
     ${BT_0}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_0.png    ${TEMP}
-    GenericHelper.Prompt Command    adb shell input tap 2400 220
+    GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 2400 220
     ${BT_1}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${BT_0}    ${BT_1}
     Should Not Be Equal    ${RES}    ${True}
@@ -59,7 +59,7 @@ WIFI
     [Tags]    
     [Setup]    generic.Route WIFI Settings    ${ADB_ID}
     ${WIFI_0}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_0.png    ${TEMP}
-    GenericHelper.Prompt Command    adb shell input tap 2400 220
+    GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 2400 220
     ${WIFI_1}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}    thre=${0.1}
     Should Not Be Equal    ${RES}    ${True}
@@ -111,6 +111,7 @@ BSP Display Backlight
 
 LCM PowerONOFF
     [Documentation]    power on/off switch via ACC
+    [Tags]    skip
     generic.Power OFF with Relay
     Sleep    0.5s
     generic.Check Black Screen    ${CAMERA_INDEX}
@@ -120,8 +121,12 @@ LCM PowerONOFF
 DLT Log
     [Documentation]    startup log in dlt
     # PowerM: POWERM_SM_RUN_STATE
+    DLTHelper.Connect    dDlt=${CONF_BASE}[ddlt]
+    DLTHelper.Enable Monitor
     powercycle.Reset by PPS    ${CAMERA_INDEX}
     qvta.Check DLT
+    DLTHelper.Disable Monitor
+    DLTHelper.Disconnect
 
 Android Reboot
     [Documentation]    reboot by android command: adb -s 1234567 reboot

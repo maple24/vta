@@ -3,7 +3,7 @@ Resource    ../resources/powercycle.resource
 Library    ../api/PuttyHelper.py
 Library    ../api/RelayHelper.py
 Library    ../library/GenericHelper.py
-Library    ../api/ArtifaHelper.py    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/    _userdebug_binary_\\d+_\\d+.tgz$
+Library    ../api/ArtifaHelper.py    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/    _userdebug_binary.tgz$
 Library    OperatingSystem
 
 *** Keywords ***
@@ -48,8 +48,20 @@ Open Picture in USB
     GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 540 500
 Open Audio in USB
     [Arguments]    ${adbid}
+    # select music player
     GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 50 577
     GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 370 500
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 700 260
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 2350 115
+    # replay
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 50 577
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 370 500
+Get System b Space
+    @{traces}    PuttyHelper.Send Command And Return Traces    cmd=df -g /dev/disk/system_b
+    ${RES}    ${matched}=    GenericHelper.Match String    (\\d+)\\s+total.*\\[(\\d+)    ${traces}
+    Should Be Equal    ${RES}    ${True}    Fail to match pattern `(\\d+)\\s+total.*\\[(\\d+)`
+    ${result}    Evaluate    (float($matched[0][0]) + float($matched[0][1])) / 1024 / 1024 / 1024
+    Should Be Equal    ${result}    ${3.0}
 Get SOC Version
     [Documentation]    Get SOC version with putty command 'cat buildinfo.txt'
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=MAIN_VERSION\=(.*)    cmd=cat /mnt/Buildinfo.txt    timeout=10

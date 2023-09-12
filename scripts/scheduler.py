@@ -47,8 +47,8 @@ class PeriodicReleaseChecker:
 
     def periodic_job(self, script: str, condition = 24):
         ar = ArtifaHelper(
-            repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/",
-            pattern="_userdebug_binary_\d+_\d+.tgz$",
+            repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
+            pattern="_userdebug_binary.tgz$",
         )
         is_new_released, version = ar.monitor(thres=condition)
         self.get()

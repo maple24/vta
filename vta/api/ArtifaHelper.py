@@ -27,7 +27,7 @@ class ArtifaHelper:
         self,
         repo: str = "zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-fc_main_dev/daily/",
         pattern: str = "_userdebug.tgz$",
-        server: str = "https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/",
+        server: str = "https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/",
         auth: tuple = ("ets1szh", "estbangbangde6"),
         dstfolder: str = "downloads",
     ) -> None:
@@ -199,8 +199,8 @@ class ArtifaHelper:
 
 if __name__ == "__main__":
     ar = ArtifaHelper(
-        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/",
-        pattern="_userdebug_binary_\d+_\d+.tgz$",
+        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
+        pattern="_userdebug_binary.tgz$",
     )
     
     f_lastModified = ar.get_latest()
