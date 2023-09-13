@@ -38,6 +38,11 @@ SWUP
     swup.Enter Recovery Mode    ${ADB_ID}
     swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
 
+GetVersion
+    [Documentation]    get soc version
+    ${SOCVersion}    qvta.Get SOC Version
+    Set Suite Variable    ${SOCVersion}
+
 System Partition
     [Documentation]    system_b  3G
     [Tags]    
