@@ -45,7 +45,7 @@ class PeriodicReleaseChecker:
             with open(self.file, "a") as f:
                 f.write(record + "\n")
 
-    def periodic_job(self, script: str, condition = 24):
+    def periodic_job(self, script: str, condition = 24, timeout = 60):
         ar = ArtifaHelper(
             repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
             pattern="_userdebug_binary.tgz$",
@@ -55,11 +55,12 @@ class PeriodicReleaseChecker:
         if is_new_released and version not in self.records:
             self.run_task(script)
             self.update(record=version)
+            time.sleep(60*timeout)
         else:
             logger.info("Release is not new")
 
     def run_task(self, script: str):
-        logger.success("Start task!")
+        logger.success(f"Start task {script}!")
         try:
             subprocess.Popen([script], shell=True)
         except subprocess.CalledProcessError as e:
@@ -76,6 +77,6 @@ if __name__ == "__main__":
     script = os.path.join(ROOT, "QVTa.bat")
     release_checker = PeriodicReleaseChecker()
     release_checker.periodic_job(script=script)
-    schedule.every(1).hour.do(release_checker.periodic_job, script=script)
+    schedule.every(5).minutes.do(release_checker.periodic_job, script=script)
     # threading.Thread(target=release_checker.run_scheduler).start()
     release_checker.run_scheduler()
