@@ -128,7 +128,7 @@ BSP Display Backlight
 
 LCM PowerONOFF
     [Documentation]    power on/off switch via ACC
-    [Tags]    skip
+    [Tags]    
     generic.Power OFF with Relay
     Sleep    0.5s
     generic.Check Black Screen    ${CAMERA_INDEX}

@@ -71,4 +71,4 @@ if LISTENER:
 if MODIFIER:
     common += ["--prerunmodifier", f"{MODIFIERPATH}"]
 variable = ["--variable", f"SLOT:SLOT_{SLOT}"]
-rc = run_cli(common + variable + ["--exclude", "skip", f"{TASKPATH}"], exit=False)
+rc = run_cli(common + variable + ["--exclude", "skip", f"{TASKPATH}"], exit=True)

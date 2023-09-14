@@ -206,23 +206,14 @@ class ArtifaHelper:
 
 
 if __name__ == "__main__":
-    # ar = ArtifaHelper(
-    #     repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
-    #     pattern="_userdebug_binary.tgz$",
-    # )
-    # f_lastModified = ar.get_latest()
-    # print(f_lastModified)
-    # def func():
-    #     print("helloworld")
-        
     ar = ArtifaHelper(
-        repo="zeekr/8295_ZEEKR/daily_cx1e/",
-        pattern="",
-        server="https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/",
-        auth=("bosch-gitauto", "Bosch-gitauto@123")
+        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
+        pattern="_userdebug_binary.tgz$",
     )
-    ar.download(url="https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/zeekr/8295_ZEEKR/daily_cx1e/20230910_POSTCS/CX1E00CNTDB0910DEV0129/qfil_CX1E00CNTDB0910DEV0129.zip")
-    # ar.connection_test()
+    f_lastModified = ar.get_latest()
+    print(f_lastModified)
+    def func():
+        print("helloworld")
         
     # ar.monitor(thres=33, callback=func)
     # monitor

@@ -45,26 +45,27 @@ class PeriodicReleaseChecker:
             with open(self.file, "a") as f:
                 f.write(record + "\n")
 
-    def periodic_job(self, script: str, condition = 24, timeout = 60):
-        ar = ArtifaHelper(
-            repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
-            pattern="_userdebug_binary.tgz$",
-        )
-        is_new_released, version = ar.monitor(thres=condition)
-        self.get()
-        if is_new_released and version not in self.records:
-            self.run_task(script)
-            self.update(record=version)
-            time.sleep(60*timeout)
-        else:
-            logger.info("Release is not new")
+    def periodic_job(self, artifacts: list, scripts: list, condition = 24, timeout = 60):
+        for art, scr in zip(artifacts, scripts):
+            ar = ArtifaHelper(**art)
+            is_new_released, version = ar.monitor(thres=condition)
+            self.get()
+            if is_new_released and version not in self.records:
+                self.update(record=version)
+                self.run_task(scr)
+            else:
+                logger.info("Release is not new")
 
     def run_task(self, script: str):
         logger.success(f"Start task {script}!")
         try:
-            subprocess.Popen([script], shell=True)
+            result = subprocess.run([script], shell=True)
+            if result.returncode != 0:
+                logger.error(f"Schedule terminated due to errorcode! {result.returncode}")
+                exit()
         except subprocess.CalledProcessError as e:
             logger.error("Error executing batch script:", e)
+            exit()
 
     def run_scheduler(self):
         while True:
@@ -74,9 +75,22 @@ class PeriodicReleaseChecker:
 
 if __name__ == "__main__":
     ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2])
-    script = os.path.join(ROOT, "QVTa.bat")
+    artifacts = [
+        {
+            "repo": "zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
+            "pattern": "_userdebug_binary.tgz$",
+        },
+        {
+            "repo": "zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/",
+            "pattern": "_userdebug.tgz$",
+        },
+    ]
+    scripts = [
+        os.path.join(ROOT, "QVTa_binary.bat"),
+        os.path.join(ROOT, "QVTa_source.bat")
+    ]
     release_checker = PeriodicReleaseChecker()
-    release_checker.periodic_job(script=script)
-    schedule.every(5).minutes.do(release_checker.periodic_job, script=script)
+    release_checker.periodic_job(artifacts=artifacts, scripts=scripts)
+    schedule.every(5).minutes.do(release_checker.periodic_job, artifacts=artifacts, scripts=scripts)
     # threading.Thread(target=release_checker.run_scheduler).start()
     release_checker.run_scheduler()
