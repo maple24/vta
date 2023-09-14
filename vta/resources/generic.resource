@@ -82,7 +82,7 @@ Check USB Picture
     Should Be Equal    ${RES}    ${0}    USB picture does not match!
 Check 1Hz Audio
     ${RES}    ${dreturn}    AgentHelper.Req To Test Audio    ${1}    ${1}
-    Should Be Equal    ${dreturn}[ch1][freq]    ${996}
+    Should Be Equal    ${dreturn}[ch1][freq]    ${996}    Do not detect 1000Hz sound!
 Check Android Home and Thermal
     [Arguments]    ${cameraindex}
     PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr

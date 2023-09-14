@@ -47,7 +47,15 @@ class ArtifaHelper:
         return self.dstfolder
 
     def get_swpath(self, name: str = "all_images_8295") -> str:
-        return os.path.join(self.dstfolder, name)
+        all_images_path = os.path.join(self.dstfolder, name)
+        host_all_images_path = os.path.join(self.dstfolder, 'HOST', name)
+        if os.path.exists(all_images_path):
+            return all_images_path
+        elif os.path.exists(host_all_images_path):
+            return host_all_images_path
+        else:
+            logger.warning(f"No path Found! {name}")
+            return
 
     def connection_test(self) -> None:
         path = ArtifactoryPath(self.server + self.repo, auth=self.auth, verify=False)
@@ -198,15 +206,23 @@ class ArtifaHelper:
 
 
 if __name__ == "__main__":
+    # ar = ArtifaHelper(
+    #     repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
+    #     pattern="_userdebug_binary.tgz$",
+    # )
+    # f_lastModified = ar.get_latest()
+    # print(f_lastModified)
+    # def func():
+    #     print("helloworld")
+        
     ar = ArtifaHelper(
-        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
-        pattern="_userdebug_binary.tgz$",
+        repo="zeekr/8295_ZEEKR/daily_cx1e/",
+        pattern="",
+        server="https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/",
+        # auth=("bosch-gitauto", "Bosch-gitauto@123")
     )
-    
-    f_lastModified = ar.get_latest()
-    print(f_lastModified)
-    def func():
-        print("helloworld")
+    ar.download(url="https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/zeekr/8295_ZEEKR/daily_cx1e/20230910_POSTCS/CX1E00CNTDB0910DEV0129/qfil_CX1E00CNTDB0910DEV0129.zip")
+    # ar.connection_test()
         
     # ar.monitor(thres=33, callback=func)
     # monitor

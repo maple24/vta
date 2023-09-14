@@ -15,10 +15,10 @@ Get Device ID
     Should Be Equal As Integers    ${device_number}    ${1}
     Set Suite Variable    ${device_id}    ${device_id_list}[0]
 Click ZEEKR BT Button
-    GenericHelper.Prompt Command    adb shell input tap ${BT_BUTTON_ZEEKR}[0] ${BT_BUTTON_ZEEKR}[1]    
+    GenericHelper.Prompt Command    adb shell input tap ${BT_BUTTON_ZEEKR}[0] ${BT_BUTTON_ZEEKR}[1]
     Sleep    2s
 Click ZEEKR WIFI Button
-    GenericHelper.Prompt Command    adb shell input tap ${WIFI_BUTTON_ZEEKR}[0] ${WIFI_BUTTON_ZEEKR}[1]    
+    GenericHelper.Prompt Command    adb shell input tap ${WIFI_BUTTON_ZEEKR}[0] ${WIFI_BUTTON_ZEEKR}[1]
 Click BT Button
     GenericHelper.Prompt Command    adb shell input tap ${BT_BUTTON}[0] ${BT_BUTTON}[1]
 Click WIFI Button
@@ -26,7 +26,7 @@ Click WIFI Button
 Route Zeekr BT Settings
     Route Zeekr Car Launcher
     Route Zeekr Car Settings
-    GenericHelper.Prompt Command    adb shell input tap ${BT_SETTINGS_ZEEKR}[0] ${BT_SETTINGS_ZEEKR}[1]  
+    GenericHelper.Prompt Command    adb shell input tap ${BT_SETTINGS_ZEEKR}[0] ${BT_SETTINGS_ZEEKR}[1]
 Route ZEEKR WIFI Settings
     Log To Console    unready
 Route Zeekr Car Settings
@@ -39,9 +39,9 @@ BT
     [Documentation]    click bt on/off button and check status change
     [Tags]
     [Setup]    generic.Route BT Settings    ${device_id}
-    GenericHelper.Prompt Command    adb shell input tap ${BT_SETTINGS}[0] ${BT_SETTINGS}[1]
     ${BT_0}    SystemHelper.Android Screencapture    ${device_id}    BT_0.png    ${TEMP}
     Click BT Button
+    Sleep    1s
     ${BT_1}    SystemHelper.Android Screencapture    ${device_id}    BT_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${BT_0}    ${BT_1}
     Should Not Be Equal    ${RES}    ${True}
@@ -52,6 +52,7 @@ WIFI
     [Setup]    generic.Route WIFI Settings    ${device_id}
     ${WIFI_0}    SystemHelper.Android Screencapture    ${device_id}    WIFI_0.png    ${TEMP}
     Click WIFI Button
+    Sleep    1s
     ${WIFI_1}    SystemHelper.Android Screencapture    ${device_id}    WIFI_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}    thre=${0.1}
     Should Not Be Equal    ${RES}    ${True}
@@ -61,6 +62,7 @@ ZEEKR BT
     [Setup]    Route ZEEKR BT Settings    ${device_id}
     ${BT_0}    SystemHelper.Android Screencapture    ${device_id}    BT_0.png    ${TEMP}
     Click ZEEKR BT Button
+    Sleep    1s
     ${BT_1}    SystemHelper.Android Screencapture    ${device_id}    BT_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${BT_0}    ${BT_1}    thre=${0.5}
     Should Not Be Equal    ${RES}    ${True}
@@ -71,6 +73,7 @@ ZEEKR WIFI
     [Setup]    Route ZEEKR WIFI Settings
     ${WIFI_0}    SystemHelper.Android Screencapture    ${device_id}    WIFI_0.png    ${TEMP}
     Click ZEEKR WIFI Button
+    Sleep    1s
     ${WIFI_1}    SystemHelper.Android Screencapture    ${device_id}    WIFI_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}    thre=${0.1}
     Should Not Be Equal    ${RES}    ${True}

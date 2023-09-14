@@ -29,7 +29,7 @@ ${image_name}    all_images
 ${server}    https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/
 ${repo}    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/
 ${pattern}    _userdebug_binary.tgz$
-@{auth}    ets1szh    estbangbangde6
+@{auth}    bosch-gitauto    Bosch-gitauto@123
 
 
 *** Keywords ***
@@ -52,7 +52,7 @@ Download From Artifactory
 *** Test Cases ***
 SWUP
     [Documentation]    software upgrade
-    ${image_path}    Download From Artifactory
+    ${image_path}    Download From Artifactory    url=https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/zeekr/8295_ZEEKR/daily_cx1e/20230910_POSTCS/CX1E00CNTDB0910DEV0129/qfil_CX1E00CNTDB0910DEV0129.zip
     generic.UDisk to PC
     ${udisk}    GenericHelper.Get Removable Drives
     Remove Directory    ${udisk}//${image_name}    recursive=${True}
