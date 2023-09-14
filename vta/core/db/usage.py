@@ -8,7 +8,8 @@ class Team(SQLModel, table=True):
     name: str = Field(index=True)
     headquarters: str
     heroes: List["Hero"] = Relationship(back_populates="team")
-    
+
+
 # Create the Hero class model, representing the hero table.
 class Hero(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -37,6 +38,7 @@ def create_db_and_tables():
 #     hero_2 = Hero(name="Spider-Boy", secret_name="Pedro Parqueador")
 #     hero_3 = Hero(name="Rusty-Man", secret_name="Tommy Sharp", age=48)
 
+
 #     # Create a new session and use it to add the heroes to the database, and then commit the changes.
 #     with Session(engine) as session:
 #         session.add(hero_1)
@@ -60,7 +62,7 @@ def create_heroes():
         #     team_id=team_preventers.id,
         # )
         # hero_spider_boy = Hero(name="Spider-Boy", secret_name="Pedro Parqueador")
-        
+
         # Assign a Relationship
         hero_deadpond = Hero(
             name="Deadpond", secret_name="Dive Wilson", team=team_z_force
@@ -73,7 +75,7 @@ def create_heroes():
         session.add(hero_deadpond)
         session.add(hero_rusty_man)
         session.add(hero_spider_boy)
-        
+
         # Create a Team with Heroes¶
         hero_black_lion = Hero(name="Black Lion", secret_name="Trevor Challa", age=35)
         hero_sure_e = Hero(name="Princess Sure-E", secret_name="Sure-E")
@@ -115,6 +117,7 @@ def select_heroes():
         for hero in heroes:
             print(hero)
 
+
 def insert_hero(name: str):
     with Session(engine) as session:
         stmt = select(Team).where(Team.name == name)
@@ -124,15 +127,16 @@ def insert_hero(name: str):
             new_team = Team(name=name, headquarters="maplestory")
             session.add(new_team)
             team = new_team
-            
-        new_record = Hero(name='maple', secret_name='jin', team=team)
+
+        new_record = Hero(name="maple", secret_name="jin", team=team)
         session.add(new_record)
         session.commit()
+
 
 def main():
     # create_db_and_tables()
     # create_heroes()
-    insert_hero(name='maple')
+    insert_hero(name="maple")
     select_heroes()
 
 

@@ -24,7 +24,7 @@ DB_CREDENTIAL = {
     "username": "ets1szh",
     "password": "estbangbangde",
     "host": "10.161.235.42",
-    "database": "zeekr"
+    "database": "zeekr",
 }
 
 # enable mail

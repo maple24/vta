@@ -40,11 +40,7 @@ class DLTHelper:
     def _filter(self, rawBytes):
         # test
         data = (
-            rawBytes[15:19]
-            + b" "
-            + rawBytes[19:23]
-            + b" "
-            + rawBytes[28:-3]
+            rawBytes[15:19] + b" " + rawBytes[19:23] + b" " + rawBytes[28:-3]
         ).decode("utf-8", errors="ignore")
         # zeerk
         # data = (

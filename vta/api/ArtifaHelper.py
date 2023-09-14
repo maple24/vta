@@ -15,6 +15,7 @@ from collections.abc import Callable
 import tarfile
 import zipfile
 from tqdm import tqdm
+from utility.Downloader import Multiple_Thread_Downloader, Single_Thread_Downloader
 
 urllib3.disable_warnings()
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
@@ -30,11 +31,13 @@ class ArtifaHelper:
         server: str = "https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/",
         auth: tuple = ("ets1szh", "estbangbangde6"),
         dstfolder: str = "downloads",
+        multithread: bool = False,
     ) -> None:
         self.server = server
         self.repo = repo
         self.pattern = pattern
         self.auth = auth
+        self.multithread = multithread
         self.dstfolder = os.path.join(ROOT, dstfolder)
 
         if not os.path.exists(self.dstfolder):
@@ -48,7 +51,7 @@ class ArtifaHelper:
 
     def get_swpath(self, name: str = "all_images_8295") -> str:
         all_images_path = os.path.join(self.dstfolder, name)
-        host_all_images_path = os.path.join(self.dstfolder, 'HOST', name)
+        host_all_images_path = os.path.join(self.dstfolder, "HOST", name)
         if os.path.exists(all_images_path):
             return all_images_path
         elif os.path.exists(host_all_images_path):
@@ -67,34 +70,16 @@ class ArtifaHelper:
             raise
 
     def download(self, url: str) -> str:
-        chunk_size = 1024 * 1024
-        t_s = time.time()
-        arti_path = ArtifactoryPath(url, auth=self.auth, verify=False)
-        local_file = os.path.join(self.dstfolder, os.path.basename(arti_path))
-        file_size = round(ArtifactoryPath.stat(arti_path).size / 1024 / 1024, 2)
-        logger.info(f"The file size is: {file_size} MB")
-        count = 0
-        try:
-            fi = arti_path.open()
-            fo = open(local_file, "wb")
-            logger.info(f"Downloading the file- {local_file}")
-            while True:
-                piece = fi.read(chunk_size)
-                if piece:
-                    fo.write(piece)
-                    fo.flush()
-                    count += 1
-                    logger.debug(f"Downloading progress - [{count}MB/{file_size}MB]")
-                else:
-                    logger.success(f"OK!Download file success - {local_file}")
-                    break
-        except Exception as e:
-            logger.error(f"Error occurs in downloading: {e}")
-        t_e = time.time()
-        logger.success("Finish->time cost: ", t_e - t_s)
+        if self.multithread:
+            downloader = Multiple_Thread_Downloader()
+        else:
+            downloader = Single_Thread_Downloader()
+        downloader.start(url, self.auth, self.dstfolder)
         return os.path.join(self.dstfolder, url.split("/")[-1])
 
-    def monitor(self, thres: int, callback: Optional[Callable] = None) -> Tuple[bool, str]:
+    def monitor(
+        self, thres: int, callback: Optional[Callable] = None
+    ) -> Tuple[bool, str]:
         f_lastModified = self.get_latest()
         tz = pytz.timezone("Asia/Shanghai")
         now = datetime.now(tz)
@@ -212,11 +197,12 @@ if __name__ == "__main__":
     )
     f_lastModified = ar.get_latest()
     print(f_lastModified)
+
     def func():
         print("helloworld")
-        
+
     # ar.monitor(thres=33, callback=func)
     # monitor
 
-    # package = ar.download(f_lastModified["url"])
+    package = ar.download(f_lastModified["url"])
     # ArtifaHelper.unzip(package)

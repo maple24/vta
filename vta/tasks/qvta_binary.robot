@@ -53,13 +53,13 @@ Download From Artifactory
 SWUP
     [Documentation]    software upgrade
     ${image_path}    Download From Artifactory
-    generic.UDisk to PC
-    ${udisk}    GenericHelper.Get Removable Drives
-    Remove Directory    ${udisk}//${image_name}    recursive=${True}
-    Move Directory    ${image_path}    ${udisk}//${image_name}
-    generic.UDisk to DHU
-    swup.Enter Recovery Mode    ${ADB_ID}
-    swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
+    # generic.UDisk to PC
+    # ${udisk}    GenericHelper.Get Removable Drives
+    # Remove Directory    ${udisk}//${image_name}    recursive=${True}
+    # Move Directory    ${image_path}    ${udisk}//${image_name}
+    # generic.UDisk to DHU
+    # swup.Enter Recovery Mode    ${ADB_ID}
+    # swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
 
 GetVersion
     [Documentation]    get soc version

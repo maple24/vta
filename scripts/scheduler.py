@@ -5,6 +5,7 @@ import sys
 import os
 import time
 from loguru import logger
+
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2]))
 from vta.api.ArtifaHelper import ArtifaHelper
 
@@ -45,7 +46,7 @@ class PeriodicReleaseChecker:
             with open(self.file, "a") as f:
                 f.write(record + "\n")
 
-    def periodic_job(self, artifacts: list, scripts: list, condition = 24, timeout = 60):
+    def periodic_job(self, artifacts: list, scripts: list, condition=24, timeout=60):
         for art, scr in zip(artifacts, scripts):
             ar = ArtifaHelper(**art)
             is_new_released, version = ar.monitor(thres=condition)
@@ -61,7 +62,9 @@ class PeriodicReleaseChecker:
         try:
             result = subprocess.run([script], shell=True)
             if result.returncode != 0:
-                logger.error(f"Schedule terminated due to errorcode! {result.returncode}")
+                logger.error(
+                    f"Schedule terminated due to errorcode! {result.returncode}"
+                )
                 exit()
         except subprocess.CalledProcessError as e:
             logger.error("Error executing batch script:", e)
@@ -87,10 +90,12 @@ if __name__ == "__main__":
     ]
     scripts = [
         os.path.join(ROOT, "QVTa_binary.bat"),
-        os.path.join(ROOT, "QVTa_source.bat")
+        os.path.join(ROOT, "QVTa_source.bat"),
     ]
     release_checker = PeriodicReleaseChecker()
     release_checker.periodic_job(artifacts=artifacts, scripts=scripts)
-    schedule.every(5).minutes.do(release_checker.periodic_job, artifacts=artifacts, scripts=scripts)
+    schedule.every(5).minutes.do(
+        release_checker.periodic_job, artifacts=artifacts, scripts=scripts
+    )
     # threading.Thread(target=release_checker.run_scheduler).start()
     release_checker.run_scheduler()

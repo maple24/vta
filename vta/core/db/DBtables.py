@@ -34,14 +34,14 @@ class Bench(SQLModel):
 class TestRecords(BaseModel):
     id: Optional[int] = Field(default=None, primary_key=True)
     DHU_id: Optional[int] = Field(default=None, foreign_key="dhu.id")
-    tester_id: Optional[int] = Field(default=None, foreign_key="tester.id")  
-    bench_id: Optional[int] = Field(default=None, foreign_key="bench.id")  
+    tester_id: Optional[int] = Field(default=None, foreign_key="tester.id")
+    bench_id: Optional[int] = Field(default=None, foreign_key="bench.id")
     test_type: str
     start_time: Optional[datetime]
     end_time: Optional[datetime]
     result: str
     comments: Optional[str] = None
-    
+
 
 class Stability(BaseModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
