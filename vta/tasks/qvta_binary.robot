@@ -69,7 +69,7 @@ GetVersion
 System Partition
     [Documentation]    system_b  3G
     [Tags]    
-    @{traces}    PuttyHelper.Send Command And Return Traces    cmd=df -g /dev/disk/system_b
+    @{traces}    PuttyHelper.Send Command And Return Traces    cmd=df -g /dev/disk/system_b    wait=${1.0}
     ${RES}    ${matched}=    GenericHelper.Match String    (\\d+)\\s+total.*\\[(\\d+).*\\]    ${traces}
     Should Be Equal    ${RES}    ${True}    Fail to match pattern `(\\d+)\\s+total.*\\[(\\d+).*\\]`
     ${result}    Evaluate    (float($matched[0][0]) * float($matched[0][1])) / 1024 / 1024 / 1024
