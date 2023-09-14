@@ -9,7 +9,7 @@ Library    ../api/RelayHelper.py
 Library    ../api/DLTHelper.py
 Library    ../library/GenericHelper.py
 Library    ../library/SystemHelper.py
-Library    ../api/ArtifaHelper.py    ${repo}    ${pattern}    ${server}    ${auth}
+Library    ../api/ArtifaHelper.py    ${repo}    ${pattern}    ${server}    ${dunder}
 Library    OperatingSystem
 
 Variables    ../conf/settings.py
@@ -29,7 +29,7 @@ ${image_name}    all_images
 ${server}    https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/
 ${repo}    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/
 ${pattern}    _userdebug_binary.tgz$
-@{auth}    ets1szh    estbangbangde6
+@{dunder}    ets1szh    estbangbangde6
 
 
 *** Keywords ***
