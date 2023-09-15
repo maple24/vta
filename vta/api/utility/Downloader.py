@@ -13,16 +13,12 @@ class Single_Thread_Downloader:
     def __init__(self, chunk_size=1024 * 1024) -> None:
         self.chunk_size = chunk_size
         self.__content_size = 0
-        
+
     def __establish_connect(self, url, auth):
         artiPath = ArtifactoryPath(url, auth=auth, verify=False)
         hrd = artiPath.open()
         self.__content_size = int(hrd.headers["Content-Length"])
-        logger.info(
-            "***********Connection established.********** \nThe file size: {}KB**********".format(
-                self.__content_size / 1024
-            )
-        )
+        logger.success("Connection established.")
         return artiPath
 
     def start(self, url: str, auth: tuple, dstfolder: str) -> str:
@@ -40,12 +36,14 @@ class Single_Thread_Downloader:
                     fo.write(piece)
                     fo.flush()
                     count += 1
-                    logger.debug(f"Downloading progress - [{count}MB/{self.__content_size / 1024 / 1024:.2f}MB]")
+                    logger.debug(
+                        f"Downloading progress - [{count}MB/{self.__content_size / 1024 / 1024:.2f}MB]"
+                    )
                 else:
                     logger.success(f"OK!Download file success - {local_file}")
                     break
         except Exception as e:
-            logger.error(f"Error occurs in downloading: {e}")
+            logger.exception(f"Error occurs in downloading: {e}")
         t_e = time.time()
         logger.success("Finish->time cost: ", t_e - t_s)
 
@@ -92,11 +90,7 @@ class Multiple_Thread_Downloader:
         artiPath = ArtifactoryPath(deployPath, auth=auth, verify=False)
         hrd = artiPath.open()
         self.__content_size = int(hrd.headers["Content-Length"])
-        logger.info(
-            "***********Connection established.********** \nThe file size: {}KB**********".format(
-                self.__content_size / 1024
-            )
-        )
+        logger.success("Connection established.")
         return artiPath
 
     def __page_dispatcher(self):
@@ -120,7 +114,7 @@ class Multiple_Thread_Downloader:
         description: for each thread, pointer moves according to size of every patches; for each patch, pointer moves 1 chunksize a time
         """
         # the byte range for the current thread responsible for
-        headers = {"Range": "bytes={}-{}".format(page["start_pos"], page["end_pos"])}
+        headers = {"Range": f"bytes={page['start_pos']}-{page['end_pos']}"}
         thread_name = threading.current_thread().name
         # initialize the thread status
         self.__threads_status[thread_name] = {
@@ -150,28 +144,22 @@ class Multiple_Thread_Downloader:
                         chunk_num += 1
                         if self.__threads_status[thread_name]["status"] == 0:
                             if page["start_pos"] < page["end_pos"]:
-                                logger.info(
-                                    "|- {}  Downloaded: {}MB / {:.2f}MB".format(
-                                        thread_name,
-                                        chunk_num,
-                                        self.__threads_status[thread_name]["page_size"]
-                                        / 1024
-                                        / 1024,
-                                    )
+                                logger.debug(
+                                    f"{thread_name}  Downloaded: {chunk_num}MB / {self.__threads_status[thread_name]['page_size'] / 1024 / 1024:.2f}MB"
                                 )
                             else:
-                                logger.info("|=> {} Finished.".format(thread_name))
+                                logger.success(f"{thread_name} Finished.")
                         elif self.__threads_status[thread_name]["status"] == 1:
-                            logger.warning("|XXX {} Crushed.".format(thread_name))
+                            logger.warning(f"{thread_name} Crushed.")
                     # the pointer moves forward along withe the writing execution
                     page["start_pos"] += len(data)
                     self.__threads_status[thread_name]["page"] = page
 
         except requests.RequestException as exception:
-            logger.exception("XXX From {}: ".format(exception))
+            logger.exception(f"{exception}")
             self.__threads_status[thread_name]["status"] = 1
             self.__crash_event.set()
-        logger.success(f"++++++++++++{thread_name} Done download++++++++++++")
+        logger.success(f"{thread_name} Done download")
 
     def __run(self, deployPath, auth, dstfolder):
         """
@@ -181,7 +169,6 @@ class Multiple_Thread_Downloader:
         :param target_file: the path for local storage including the extension
         :param urlhandler: handler for url including redirction or non-exist
         """
-        # thread_list = []
         arti_path = self.__establish_connect(deployPath, auth)
         target_file = os.path.join(dstfolder, os.path.basename(arti_path))
         self.__threads_status["url"] = deployPath
@@ -189,15 +176,8 @@ class Multiple_Thread_Downloader:
         self.__threads_status["content_size"] = self.__content_size
         self.__crash_event.clear()
         logger.info(
-            "***********The file meta information***********\nURL: {}\nFile Name: {}\nSize: {:.2f}GB".format(
-                self.__threads_status["url"],
-                self.__threads_status["target_file"],
-                self.__threads_status["content_size"] / 1024 / 1024 / 1024,
-            )
+            f"The file meta information \nURL: {self.__threads_status['url']}\nFile Name: {self.__threads_status['target_file']}\nSize: {self.__threads_status['content_size'] / 1024 / 1024 / 1024:.2f}GB"
         )
-        logger.info("***********Download started***********")
-        # handle url
-        # url = urlhandler(deployPath)
         with open(target_file, "wb+") as file:
             thread_poll = []
             for page in self.__page_dispatcher():
@@ -206,21 +186,14 @@ class Multiple_Thread_Downloader:
                 )
                 thread_poll.append(thd)
                 thd.start()
-                # thd.start()
-                # thread_list.append(thd)
-            # while threading.active_count() > 1:  # 2&3 is set for GUI application
-            # try:
             for download_thread in thread_poll:
                 download_thread.join()
-            # except (KeyboardInterrupt, SystemExit):
-            #     logger.info("Download is terminated!")
-            #     sys.exit(1)
 
         # if crash in downloading
         if self.__crash_event.is_set():
-            logger.exception("***********Error for downloading!!!************")
-            raise Exception("Error for downloading!!!")
-        logger.success("***********Download finished***********")
+            logger.exception("Error for downloading!!!")
+            sys.exit()
+        logger.success("Download finished")
 
     def start(self, url, auth, dstfolder):
         """
@@ -237,7 +210,5 @@ class Multiple_Thread_Downloader:
         # total tme used for downloading
         span = time.time() - start_time
         logger.info(
-            "***********Downloading finished, total time used:{}s, average speed:{:.2f}KB/s***********".format(
-                (span - 0.5), (self.__content_size / 1024 / (span - 0.5))
-            )
+            f"Downloading finished, total time used:{span - 0.5}s, average speed:{self.__content_size / 1024 / (span - 0.5):.2f}KB/s"
         )

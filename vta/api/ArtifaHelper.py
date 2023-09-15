@@ -6,7 +6,6 @@ import urllib3
 import json
 import re
 import os
-import time
 from datetime import datetime
 import pytz
 from loguru import logger
@@ -15,6 +14,7 @@ from collections.abc import Callable
 import tarfile
 import zipfile
 from tqdm import tqdm
+
 try:
     from utility.Downloader import Multiple_Thread_Downloader, Single_Thread_Downloader
 except:
@@ -34,7 +34,7 @@ class ArtifaHelper:
         server: str = "https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/",
         auth: tuple = ("ets1szh", "estbangbangde6"),
         dstfolder: str = "downloads",
-        multithread: bool = False,
+        multithread: bool = True,
     ) -> None:
         self.server = server
         self.repo = repo
@@ -42,6 +42,10 @@ class ArtifaHelper:
         self.auth = auth
         self.multithread = multithread
         self.dstfolder = os.path.join(ROOT, dstfolder)
+        self.session = requests.Session()
+        self.session.mount("http://", HTTPAdapter(max_retries=3))
+        self.session.mount("https://", HTTPAdapter(max_retries=3))
+        self.session.keep_alive = True
 
         if not os.path.exists(self.dstfolder):
             os.mkdir(self.dstfolder)
@@ -71,6 +75,23 @@ class ArtifaHelper:
             logger.error(e)
         except:
             raise
+
+    def fetch_url(self, api: str) -> None:
+        logger.info("Requesting Artifactory server, please wait...")
+        try:
+            response = self.session.get(
+                self.server + api, auth=self.auth, verify=False, timeout=60
+            )
+        except urllib3.exceptions.ReadTimeoutError:
+            logger.error("Request time out!")
+            sys.exit(1)
+        except requests.exceptions.ProxyError:
+            logger.error("Proxy is required!")
+            sys.exit(1)
+        else:
+            logger.info("Done request successfully.")
+            data = json.loads(response.text)
+        return data
 
     def download(self, url: str) -> str:
         if self.multithread:
@@ -102,49 +123,61 @@ class ArtifaHelper:
             return False, f_lastModified["uri"]
 
     def get_latest(self) -> Optional[dict]:
-        session = requests.Session()
-        session.mount("http://", HTTPAdapter(max_retries=3))
-        session.mount("https://", HTTPAdapter(max_retries=3))
-        session.keep_alive = True
-        logger.info("Requesting Artifactory server, please wait...")
+        api = "api/storage/" + self.repo
+
+        t_lastModified = ""
+        f_lastModified = ""
+        try:
+            for data in self.__recursive_process_url(api):
+                if data["lastModified"] > t_lastModified and re.search(
+                    self.pattern, data["downloadUri"]
+                ):
+                    t_lastModified = data["lastModified"]
+                    f_lastModified = data
+        except KeyError as e:
+            logger.exception(e)
+            sys.exit(1)
+
+        f_lastModified["url"] = f_lastModified["downloadUri"]
+        logger.success(f"Get latest version {f_lastModified['url']}")
+        return f_lastModified
+
+    def get_latest_pro(self) -> Optional[dict]:
+        # only works for artifactory pro
         api = (
             "api/storage/"
             + self.repo
             + "?list&deep=1&listFolders=0&mdTimestamps=0&includeRootPath=0"
         )
-        try:
-            response = session.get(
-                self.server + api, auth=self.auth, verify=False, timeout=60
-            )
-        except urllib3.exceptions.ReadTimeoutError:
-            logger.error("Request time out!")
-            sys.exit(1)
-        except requests.exceptions.ProxyError:
-            logger.error("Proxy is required!")
-            sys.exit(1)
-        else:
-            logger.info("Done request successfully.")
-            data = json.loads(response.text)
 
         t_lastModified = ""
         f_lastModified = ""
-        if "files" not in data:
-            logger.error("Make sure your pattern and repo are correct.")
+        try:
+            for file in self.fetch_url(api)["files"]:
+                if file["lastModified"] > t_lastModified and re.search(
+                    self.pattern, file["uri"]
+                ):
+                    t_lastModified = file["lastModified"]
+                    f_lastModified = file
+        except KeyError as e:
+            logger.exception(e)
             sys.exit(1)
-        for file in data["files"]:
-            if file["lastModified"] > t_lastModified and re.search(
-                self.pattern, file["uri"]
-            ):
-                t_lastModified = file["lastModified"]
-                f_lastModified = file
 
-        if not f_lastModified:
-            logger.error("Response is empty!!")
-            sys.exit(1)
         f_lastModified["url"] = self._get_url(f_lastModified["uri"])
         logger.success(f"Get latest version {f_lastModified['url']}")
         return f_lastModified
 
+    def __recursive_process_url(self, initial_api):
+        data = self.fetch_url(initial_api)
+        if data is not None:
+            if "children" in data:
+                for child_url in data["children"]:
+                    yield from self.__recursive_process_url(
+                        initial_api + child_url["uri"]
+                    )
+            else:
+                yield data
+                
     @staticmethod
     def unzip(
         dsfile: str, dcfolder: Optional[str] = None, members: Optional[list] = None
@@ -198,8 +231,13 @@ if __name__ == "__main__":
         repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
         pattern="_userdebug_binary.tgz$",
     )
-    f_lastModified = ar.get_latest()
-    print(f_lastModified)
+    # ar = ArtifaHelper(
+    #     repo="zeekr/8295_ZEEKR/daily_cx1e/",
+    #     pattern="qfil_.*",
+    #     server="https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/",
+    #     auth=("bosch-gitauto", "Bosch-gitauto@123"),
+    # )
+    f_lastModified = ar.get_latest_pro()
 
     def func():
         print("helloworld")
@@ -207,5 +245,5 @@ if __name__ == "__main__":
     # ar.monitor(thres=33, callback=func)
     # monitor
 
-    package = ar.download(f_lastModified["url"])
+    # package = ar.download(f_lastModified["url"])
     # ArtifaHelper.unzip(package)
