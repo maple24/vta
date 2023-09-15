@@ -82,9 +82,10 @@ BT
     GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 250 215
     ${BT_0}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_0.png    ${TEMP}
     GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 2400 220
+    Sleep    1s
     ${BT_1}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${BT_0}    ${BT_1}
-    Should Not Be Equal    ${RES}    ${True}
+    Should Not Be Equal    ${RES}    ${True}    BT status does not change after clicking button!
 
 WIFI
     [Documentation]    Click wifi button and check status
@@ -92,9 +93,10 @@ WIFI
     [Setup]    generic.Route WIFI Settings    ${ADB_ID}
     ${WIFI_0}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_0.png    ${TEMP}
     GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 2400 220
+    Sleep    1s
     ${WIFI_1}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}    thre=${0.1}
-    Should Not Be Equal    ${RES}    ${True}
+    Should Not Be Equal    ${RES}    ${True}    WIFI status does not change after clicking button!
 
 BSP Camera DMS
     [Documentation]    Check DMS camera
