@@ -1,11 +1,11 @@
 *** Settings ***
-Resource    ../resources/powercycle.resource
-Resource    ../resources/generic.resource
-Resource    ../resources/qvta.resource
-Library    ../api/TSmasterAPI/TSClient.py
-Library    ../api/APIFlexClient.py
+Resource    ../../resources/powercycle.resource
+Resource    ../../resources/generic.resource
+Resource    ../../resources/qvta.resource
+Library    ../../api/TSmasterAPI/TSClient.py
+Library    ../../api/APIFlexClient.py
 
-Variables    ../conf/settings.py
+Variables    ../../conf/settings.py
 
 Suite Setup    generic.INIT    ${CONF_BASE}
 Suite Teardown    generic.DEINIT

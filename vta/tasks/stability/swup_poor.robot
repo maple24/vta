@@ -1,13 +1,13 @@
 *** Settings ***
-Resource    ../resources/generic.resource
-Resource    ../resources/swup.resource
-Resource    ../resources/qvta.resource
+Resource    ../../resources/generic.resource
+Resource    ../../resources/swup.resource
+Resource    ../../resources/qvta.resource
 Library    String
 Library    OperatingSystem
-Library    ../api/RelayHelper.py
-Library    ../library/GenericHelper.py
-Library    ../api/APIFlexClient.py
-Variables    ../conf/settings.py
+Library    ../../api/RelayHelper.py
+Library    ../../library/GenericHelper.py
+Library    ../../api/APIFlexClient.py
+Variables    ../../conf/settings.py
 
 Suite Setup    generic.INIT    ${CONF_BASE}
 Suite Teardown    generic.DEINIT
@@ -15,6 +15,7 @@ Suite Teardown    generic.DEINIT
 *** Variables ***
 ${SLOT}    SLOT_1
 ${CONF_BASE}    ${${SLOT}}
+${ADB_ID}    ${CONF_BASE}[adbid]
 ${image_name}    all_images
 ${SWUP_timeout}    30 minutes
 
@@ -67,5 +68,5 @@ SWUP Execution
     ${keyword_list}    Create List    USB0    USB1    USB2
     generic.Randomly Run Keywords    ${keyword_list}
     Mount
-    swup.Enter Recovery Mode
+    swup.Enter Recovery Mode    ${ADB_ID}
     Check Success    ${SWUP_timeout}

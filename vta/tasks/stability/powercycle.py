@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3]))
+sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
 """
 if you want to import without adding system path, call module as part of package

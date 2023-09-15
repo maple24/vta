@@ -1,12 +1,12 @@
 *** Settings ***
-Resource    ../resources/powercycle.resource
-Resource    ../resources/generic.resource
-Resource    ../resources/qvta.resource
-Library    ../api/AgentHelper.py
-Library    ../api/TSmasterAPI/TSClient.py
+Resource    ../../resources/powercycle.resource
+Resource    ../../resources/generic.resource
+Resource    ../../resources/qvta.resource
+Library    ../../api/AgentHelper.py
+Library    ../../api/TSmasterAPI/TSClient.py
 
-Variables    ../conf/settings.py
-Variables    ../conf/setups.py
+Variables    ../../conf/settings.py
+Variables    ../../conf/setups.py
 
 Suite Setup    generic.INIT    ${CONF_BASE}
 Suite Teardown    generic.DEINIT

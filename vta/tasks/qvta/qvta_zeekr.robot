@@ -1,18 +1,18 @@
 *** Settings ***
-Resource    ../resources/generic.resource
-Resource    ../resources/qvta.resource
-Resource    ../resources/swup.resource
-Resource    ../resources/powercycle.resource
+Resource    ../../resources/generic.resource
+Resource    ../../resources/qvta.resource
+Resource    ../../resources/swup.resource
+Resource    ../../resources/powercycle.resource
 
-Library    ../api/AgentHelper.py
-Library    ../api/RelayHelper.py
-Library    ../api/DLTHelper.py
-Library    ../library/GenericHelper.py
-Library    ../library/SystemHelper.py
-Library    ../api/ArtifaHelper.py    ${repo}    ${pattern}    ${server}    ${dunder}
+Library    ../../api/AgentHelper.py
+Library    ../../api/RelayHelper.py
+Library    ../../api/DLTHelper.py
+Library    ../../library/GenericHelper.py
+Library    ../../library/SystemHelper.py
+Library    ../../api/ArtifaHelper.py    ${repo}    ${pattern}    ${server}    ${dunder}
 Library    OperatingSystem
 
-Variables    ../conf/settings.py
+Variables    ../../conf/settings.py
 
 Suite Setup    generic.INIT    ${CONF_BASE}
 Suite Teardown    generic.DEINIT
@@ -24,12 +24,12 @@ ${CONF_BASE}    ${${SLOT}}
 ${ADB_ID}    ${CONF_BASE}[adbid]
 ${CAMERA_INDEX}    ${CONF_BASE}[cameraindex]
 ${SWUP_timeout}    30 minutes
-${mail_subject}    Zeekr QVTa
 ${image_name}    all_images
 ${server}    https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/
 ${repo}    zeekr/8295_ZEEKR/daily_cx1e/
 ${pattern}    qfil_.*
 @{dunder}    bosch-gitauto    Bosch-gitauto@123
+${mail_subject}    [QVTa Report] ${repo}
 
 
 *** Keywords ***
@@ -51,7 +51,7 @@ Download From Artifactory
 
 *** Test Cases ***
 SWUP
-    [Documentation]    software upgrade
+    [Documentation]    Software upgrade
     ${image_path}    Download From Artifactory    url=${None}
     generic.UDisk to PC
     ${udisk}    GenericHelper.Get Removable Drives
@@ -62,6 +62,6 @@ SWUP
     swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
 
 GetVersion
-    [Documentation]    get soc version
+    [Documentation]    Get soc version
     ${SOCVersion}    qvta.Get SOC Version
     Set Suite Variable    ${SOCVersion}

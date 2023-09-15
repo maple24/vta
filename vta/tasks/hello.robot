@@ -29,6 +29,7 @@ TC1
 #     END
 
 TC3
+    [Documentation]    helloworld
     Wait Until Keyword Succeeds    1 minutes    10 sec    generic.Hello World
 
 TC4

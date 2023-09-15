@@ -1,12 +1,12 @@
 *** Settings ***
-Resource    ../resources/generic.resource
-Resource    ../resources/swup.resource
-Resource    ../resources/qvta.resource
+Resource    ../../resources/generic.resource
+Resource    ../../resources/swup.resource
+Resource    ../../resources/qvta.resource
 Library    String
 Library    OperatingSystem
-Library    ../api/RelayHelper.py
-Library    ../library/GenericHelper.py
-Variables    ../conf/settings.py
+Library    ../../api/RelayHelper.py
+Library    ../../library/GenericHelper.py
+Variables    ../../conf/settings.py
 
 Suite Setup    generic.INIT    ${CONF_BASE}
 Suite Teardown    generic.DEINIT

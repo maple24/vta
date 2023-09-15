@@ -1,18 +1,18 @@
 *** Settings ***
-Resource    ../resources/generic.resource
-Resource    ../resources/qvta.resource
-Resource    ../resources/swup.resource
-Resource    ../resources/powercycle.resource
+Resource    ../../resources/generic.resource
+Resource    ../../resources/qvta.resource
+Resource    ../../resources/swup.resource
+Resource    ../../resources/powercycle.resource
 
-Library    ../api/AgentHelper.py
-Library    ../api/RelayHelper.py
-Library    ../api/DLTHelper.py
-Library    ../library/GenericHelper.py
-Library    ../library/SystemHelper.py
-Library    ../api/ArtifaHelper.py    ${repo}    ${pattern}    ${server}    ${dunder}
+Library    ../../api/AgentHelper.py
+Library    ../../api/RelayHelper.py
+Library    ../../api/DLTHelper.py
+Library    ../../library/GenericHelper.py
+Library    ../../library/SystemHelper.py
+Library    ../../api/ArtifaHelper.py    ${repo}    ${pattern}    ${server}    ${dunder}
 Library    OperatingSystem
 
-Variables    ../conf/settings.py
+Variables    ../../conf/settings.py
 
 Suite Setup    generic.INIT    ${CONF_BASE}
 Suite Teardown    generic.DEINIT
@@ -24,12 +24,12 @@ ${CONF_BASE}    ${${SLOT}}
 ${ADB_ID}    ${CONF_BASE}[adbid]
 ${CAMERA_INDEX}    ${CONF_BASE}[cameraindex]
 ${SWUP_timeout}    30 minutes
-${mail_subject}    Zeekr QVTa
 ${image_name}    all_images
 ${server}    https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/
 ${repo}    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/
 ${pattern}    _userdebug_binary.tgz$
 @{dunder}    ets1szh    estbangbangde6
+${mail_subject}    [QVTa Report] ${repo}
 
 
 *** Keywords ***
@@ -51,23 +51,23 @@ Download From Artifactory
 
 *** Test Cases ***
 SWUP
-    [Documentation]    software upgrade
+    [Documentation]    Software upgrade
     ${image_path}    Download From Artifactory
-    # generic.UDisk to PC
-    # ${udisk}    GenericHelper.Get Removable Drives
-    # Remove Directory    ${udisk}//${image_name}    recursive=${True}
-    # Move Directory    ${image_path}    ${udisk}//${image_name}
-    # generic.UDisk to DHU
-    # swup.Enter Recovery Mode    ${ADB_ID}
-    # swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
+    generic.UDisk to PC
+    ${udisk}    GenericHelper.Get Removable Drives
+    Remove Directory    ${udisk}//${image_name}    recursive=${True}
+    Move Directory    ${image_path}    ${udisk}//${image_name}
+    generic.UDisk to DHU
+    swup.Enter Recovery Mode    ${ADB_ID}
+    swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
 
 GetVersion
-    [Documentation]    get soc version
+    [Documentation]    Get soc version from QNX
     ${SOCVersion}    qvta.Get SOC Version
     Set Suite Variable    ${SOCVersion}
 
 System Partition
-    [Documentation]    system_b  3G
+    [Documentation]    Test system_b partition is 3G
     [Tags]    
     @{traces}    PuttyHelper.Send Command And Return Traces    cmd=df -g /dev/disk/system_b    wait=${1.0}
     ${RES}    ${matched}=    GenericHelper.Match String    (\\d+)\\s+total.*\\[(\\d+).*\\]    ${traces}
@@ -76,7 +76,7 @@ System Partition
     Should Be Equal    ${result}    ${3.0}
 
 BT
-    [Documentation]    click bluetooth button
+    [Documentation]    Click bluetooth button and check status
     [Tags]    
     [Setup]    generic.Route BT Settings    ${ADB_ID}
     GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 250 215
@@ -87,7 +87,7 @@ BT
     Should Not Be Equal    ${RES}    ${True}
 
 WIFI
-    [Documentation]    click wifi button
+    [Documentation]    Click wifi button and check status
     [Tags]    
     [Setup]    generic.Route WIFI Settings    ${ADB_ID}
     ${WIFI_0}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_0.png    ${TEMP}
@@ -97,37 +97,38 @@ WIFI
     Should Not Be Equal    ${RES}    ${True}
 
 BSP Camera DMS
-    [Documentation]    check DMS camera
+    [Documentation]    Check DMS camera
     qvta.Open DMS
     ${RES}    AgentHelper.Req To Test Profile    ${CAMERA_INDEX}    DMS
     qvta.Exit Camera
     Should Be Equal    ${RES}    ${0}    DMS profile does not match!
 
 BSP Camera OMS
-    [Documentation]    check OMS camera
+    [Documentation]    Check OMS camera
     qvta.Open OMS
     ${RES}    AgentHelper.Req To Test Profile    ${CAMERA_INDEX}    OMS
     qvta.Exit Camera
     Should Be Equal    ${RES}    ${0}    OMS profile does not match!
 
 BSP Display CSD
-    [Documentation]    check CSD display
+    [Documentation]    Check CSD display
     generic.Route Carlauncher    ${ADB_ID}
+    Sleep    1s
     generic.Check Android Home    ${CAMERA_INDEX}
 
 BSP Display Cluster
-    [Documentation]    check CSD display
+    [Documentation]    Check Cluster display
     [Tags]    skip
 
 BSP Display Backlight
-    [Documentation]    check backlight in CSD
+    [Documentation]    Check backlight in CSD
     qvta.Open Backlight
     ${RES}    AgentHelper.Req To Test Profile    ${CAMERA_INDEX}    Backlight
     generic.Putty CtrlC
     Should Be Equal    ${RES}    ${0}    Backlight does not match!
 
 LCM PowerONOFF
-    [Documentation]    power on/off switch via ACC
+    [Documentation]    System wakeup and sleep
     [Tags]    
     generic.Power OFF with Relay
     Sleep    0.5s
@@ -136,7 +137,7 @@ LCM PowerONOFF
     Wait Until Keyword Succeeds    2 minutes    5s    generic.Check Android Home    ${CAMERA_INDEX}
 
 DLT Log
-    [Documentation]    startup log in dlt
+    [Documentation]    Check startup log from dlt
     # PowerM: POWERM_SM_RUN_STATE
     DLTHelper.Connect    dDlt=${CONF_BASE}[ddlt]
     DLTHelper.Enable Monitor
@@ -146,11 +147,11 @@ DLT Log
     DLTHelper.Disconnect
 
 Android Reboot
-    [Documentation]    reboot by android command: adb -s 1234567 reboot
+    [Documentation]    Reboot by android command
     powercycle.Reset by Android Command    ${CAMERA_INDEX}    ${ADB_ID}
 
 Media Picture
-    [Documentation]    open picture in USB3.0
+    [Documentation]    Open picture in USB3.0
     # open picture
     generic.Route Files    ${ADB_ID}
     qvta.Open Picture in USB    ${ADB_ID}
@@ -159,7 +160,7 @@ Media Picture
     generic.Route Carlauncher    ${ADB_ID}
 
 Audio 1kHz
-    [Documentation]    test audio with 1000khz
+    [Documentation]    Test audio with 1000khz sound
     generic.Route Files    ${ADB_ID}
     qvta.Open Audio in USB    ${ADB_ID}
     Wait Until Keyword Succeeds    30s    1s    generic.Check 1Hz Audio

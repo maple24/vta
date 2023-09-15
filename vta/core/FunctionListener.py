@@ -22,43 +22,44 @@ def mail_generator(info_container, result_container):
         <table id="Details" cellpadding="0" style="margin-left:auto;margin-right:auto;">
             <thead>
                 <tr>
-                    <td colspan="3" align="center" style="background-color: rgb(127, 127, 127); font-weight: bold;">Test Report</td>
+                    <td colspan="4" align="center" style="background-color: rgb(127, 127, 127); font-weight: bold;">Test Report</td>
                 </tr>
                 <tr>
                     <td>Date</td>
-                    <td colspan="2">{info_container["Date"]}</td>
+                    <td colspan="3">{info_container["Date"]}</td>
                 </tr>
                 <tr>
                     <td>SOC Build</td>
-                    <td colspan="2">{info_container["socBuild"]}</td>
+                    <td colspan="3" style="color: red;font-weight: bold;">{info_container["socBuild"]}</td>
                 </tr>
                 <tr>
                     <td>Test Type</td>
-                    <td colspan="2">{info_container["testType"]}</td>
+                    <td colspan="3">{info_container["testType"]}</td>
                 </tr>
                 <tr>
                     <td>Test Bench</td>
-                    <td colspan="2">{info_container["testBench"]}</td>
+                    <td colspan="3">{info_container["testBench"]}</td>
                 </tr>
                 <tr>
                     <td>Test Suite</td>
-                    <td colspan="2" style="color: MediumSeaGreen;font-weight: bold;">{info_container["TSName"]}</td>
+                    <td colspan="3" style="color: MediumSeaGreen;font-weight: bold;">{info_container["TSName"]}</td>
                 </tr>
                 <tr>
                     <td>Pass Rate</td>
-                    <td colspan="2">{info_container["PassRate"]: .2%}</td>
+                    <td colspan="3">{info_container["PassRate"]: .2%}</td>
                 </tr>
                 <tr>
                     <td>Duration</td>
-                    <td colspan="2">{info_container["Duration"]: .2f}m</td>
+                    <td colspan="3">{info_container["Duration"]: .2f}m</td>
                 </tr>
                 <tr>
-                    <td colspan="3" align="center" style="background-color: rgb(127, 127, 127); font-weight: bold;">Test Cases</td>
+                    <td colspan="4" align="center" style="background-color: rgb(127, 127, 127); font-weight: bold;">Test Cases</td>
                 </tr>
                 <tr class="Title">
                     <td>Use Case</td>
                     <td>Result</td>
                     <td>Comment</td>
+                    <td>Documentation</td>
                 </tr>
     """
     for key, value in result_container.items():
@@ -68,6 +69,7 @@ def mail_generator(info_container, result_container):
                 <td><a href="#">{key}</a></td>
                 <td class="pass">PASS</td>
                 <td>{value["message"]}</td>
+                <td>{value["documentation"]}</td>
             <tr>
         """
         if value["status"] == "FAIL":
@@ -76,6 +78,7 @@ def mail_generator(info_container, result_container):
                 <td><a href="#">{key}</a></td>
                 <td class="fail">FAIL</td>
                 <td>{value["message"]}</td>
+                <td>{value["documentation"]}</td>
             <tr>
         """
         if value["status"] == "BLOCK":
@@ -84,6 +87,7 @@ def mail_generator(info_container, result_container):
                 <td><a href="#">{key}</a></td>
                 <td class="block">BLOCK</td>
                 <td>{value["message"]}</td>
+                <td>{value["documentation"]}</td>
             <tr>
         """
     # html_table += f"""
@@ -277,6 +281,7 @@ class FunctionListener:
         else:
             self.result_container.update({testcaseURL: {"status": result.status}})
             self.result_container[testcaseURL].update({"message": result.message})
+        self.result_container[testcaseURL].update({"documentation": data.doc})
         if result.status == "PASS":
             self.pass_count += 1
 
