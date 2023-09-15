@@ -15,7 +15,10 @@ from collections.abc import Callable
 import tarfile
 import zipfile
 from tqdm import tqdm
-from utility.Downloader import Multiple_Thread_Downloader, Single_Thread_Downloader
+try:
+    from utility.Downloader import Multiple_Thread_Downloader, Single_Thread_Downloader
+except:
+    from .utility.Downloader import Multiple_Thread_Downloader, Single_Thread_Downloader
 
 urllib3.disable_warnings()
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
