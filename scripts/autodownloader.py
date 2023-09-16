@@ -1,20 +1,40 @@
 import sys
 import os
 import re
+import shutil
+import time
+import schedule
 from rich.console import Console
-from rich.pretty import pprint
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2]))
 from vta.api.ArtifaHelper import ArtifaHelper
 console = Console()
 
-def is_file_exist(folder: str, filename: str) -> bool:
-    if os.path.exists(os.path.join(folder, filename)):
-        return True
-    return False
+def main(credentials, destination):
+    autodownloader = ArtifaHelper(**credentials)
+    api = "api/storage/" + credentials.get("repo")
+
+    for file in autodownloader.get_all_files(api):
+        uri = file["downloadUri"]
+        filename = os.path.basename(uri)
+        filepath = os.path.join(autodownloader.dstfolder, filename)
+        if re.search(credentials.get("pattern"), uri):
+            if not os.path.exists(filepath):
+                autodownloader.download(uri)
+                try:
+                    shutil.move(filepath, destination)
+                except shutil.Error:
+                    console.log("Shutil error!")
+                except Exception as e:
+                    console.log(f"Unexpected error {e}")
+                else:
+                    console.log(f"Moved directory from {filepath} to {destination}.")
+            else:
+                console.log(f"File {filename} already exists.")
+
 
 if __name__ == '__main__':
+    destination = r"\\SZHVM00556.APAC.BOSCH.COM\01_Project\BinaryExchange\Zeekr\System test\Temp_Version"
     credentials = {
-        "dstfolder": r"C:\Users\ZIU7WX\Desktop\doc\personal\project\rubbish\vta\downloads",
         "repo":"zeekr/8295_ZEEKR/daily_cx1e/",
         "pattern":"qfil_.*",
         "server":"https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/",
@@ -22,14 +42,12 @@ if __name__ == '__main__':
         "multithread": True
     }
 
-    autodownloader = ArtifaHelper(**credentials)
-    api = "api/storage/" + credentials.get("repo")
-
-    for file in autodownloader.get_all_files(api):
-        uri = file["downloadUri"]
-        filename = os.path.basename(uri)
-        if re.search(credentials.get("pattern"), uri):
-            if not is_file_exist(credentials.get("dstfolder"), filename):
-                autodownloader.download(uri)
-            else:
-                console.log(f"File {filename} already exists.")
+    main(credentials, destination)
+    schedule.every().hour.do(main, credentials, destination)
+    
+    while True:
+    
+        # Checks whether a scheduled task
+        # is pending to run or not
+        schedule.run_pending()
+        time.sleep(1)
