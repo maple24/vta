@@ -10,7 +10,7 @@ from datetime import datetime
 import pytz
 from loguru import logger
 from typing import Optional, Tuple
-from collections.abc import Callable
+from collections.abc import Callable, Generator
 import tarfile
 import zipfile
 from tqdm import tqdm
@@ -128,7 +128,7 @@ class ArtifaHelper:
         t_lastModified = ""
         f_lastModified = ""
         try:
-            for data in self.__recursive_process_url(api):
+            for data in self.get_all_files(api):
                 if data["lastModified"] > t_lastModified and re.search(
                     self.pattern, data["downloadUri"]
                 ):
@@ -167,12 +167,12 @@ class ArtifaHelper:
         logger.success(f"Get latest version {f_lastModified['url']}")
         return f_lastModified
 
-    def __recursive_process_url(self, initial_api):
+    def get_all_files(self, initial_api: str):
         data = self.fetch_url(initial_api)
         if data is not None:
             if "children" in data:
                 for child_url in data["children"]:
-                    yield from self.__recursive_process_url(
+                    yield from self.get_all_files(
                         initial_api + child_url["uri"]
                     )
             else:
@@ -227,21 +227,19 @@ class ArtifaHelper:
 
 
 if __name__ == "__main__":
-    ar = ArtifaHelper(
-        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
-        pattern="_userdebug_binary.tgz$",
-    )
     # ar = ArtifaHelper(
-    #     repo="zeekr/8295_ZEEKR/daily_cx1e/",
-    #     pattern="qfil_.*",
-    #     server="https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/",
-    #     auth=("bosch-gitauto", "Bosch-gitauto@123"),
+    #     repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
+    #     pattern="_userdebug_binary.tgz$",
     # )
-    f_lastModified = ar.get_latest_pro()
-
-    def func():
-        print("helloworld")
-
+    ar = ArtifaHelper(
+        repo="zeekr/8295_ZEEKR/daily_cx1e/",
+        pattern="qfil_.*",
+        server="https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/",
+        auth=("bosch-gitauto", "Bosch-gitauto@123"),
+    )
+    f_lastModified = ar.fetch_url(api=f"api/storage/{ar.repo}")
+    from rich.pretty import pprint
+    pprint(f_lastModified)
     # ar.monitor(thres=33, callback=func)
     # monitor
 

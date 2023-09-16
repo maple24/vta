@@ -67,34 +67,13 @@ Get Version
     Set Suite Variable    ${SOCVersion}
 
 System Partition
-    [Documentation]    Test system_b partition is 3G
+    [Documentation]    Check system_b partition is 3G
     [Tags]    
     @{traces}    PuttyHelper.Send Command And Return Traces    cmd=df -g /dev/disk/system_b    wait=${1.0}
     ${RES}    ${matched}=    GenericHelper.Match String    (\\d+)\\s+total.*\\[(\\d+).*\\]    ${traces}
     Should Be Equal    ${RES}    ${True}    Fail to match pattern `(\\d+)\\s+total.*\\[(\\d+).*\\]`
     ${result}    Evaluate    (float($matched[0][0]) * float($matched[0][1])) / 1024 / 1024 / 1024
     Should Be Equal    ${result}    ${3.0}
-
-BT
-    [Documentation]    Click bluetooth button and check status
-    [Tags]    
-    [Setup]    generic.Route BT Settings    ${ADB_ID}
-    GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 250 215
-    ${BT_0}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_0.png    ${TEMP}
-    GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 2400 220
-    ${BT_1}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_1.png    ${TEMP}
-    ${RES}    GenericHelper.Image Diff    ${BT_0}    ${BT_1}
-    Should Not Be Equal    ${RES}    ${True}
-
-WIFI
-    [Documentation]    Click wifi button and check status
-    [Tags]    
-    [Setup]    generic.Route WIFI Settings    ${ADB_ID}
-    ${WIFI_0}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_0.png    ${TEMP}
-    GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 2400 220
-    ${WIFI_1}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_1.png    ${TEMP}
-    ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}    thre=${0.1}
-    Should Not Be Equal    ${RES}    ${True}
 
 BSP Camera DMS
     [Documentation]    Check DMS camera
@@ -149,6 +128,30 @@ DLT Log
 Android Reboot
     [Documentation]    Reboot by android command
     powercycle.Reset by Android Command    ${CAMERA_INDEX}    ${ADB_ID}
+
+BT
+    [Documentation]    Click bluetooth button and check status
+    [Tags]    
+    [Setup]    generic.Route BT Settings    ${ADB_ID}
+    GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 250 215
+    Sleep    1s
+    ${BT_0}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_0.png    ${TEMP}
+    GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 2400 220
+    Sleep    1s
+    ${BT_1}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_1.png    ${TEMP}
+    ${RES}    GenericHelper.Image Diff    ${BT_0}    ${BT_1}
+    Should Not Be Equal    ${RES}    ${True}
+
+WIFI
+    [Documentation]    Click wifi button and check status
+    [Tags]    
+    [Setup]    generic.Route WIFI Settings    ${ADB_ID}
+    ${WIFI_0}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_0.png    ${TEMP}
+    GenericHelper.Prompt Command    adb -s ${ADB_ID} shell input tap 2400 220
+    Sleep    1s
+    ${WIFI_1}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_1.png    ${TEMP}
+    ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}    thre=${0.1}
+    Should Not Be Equal    ${RES}    ${True}
 
 Media Picture
     [Documentation]    Open picture in USB3.0

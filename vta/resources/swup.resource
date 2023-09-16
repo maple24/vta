@@ -9,6 +9,7 @@ Enter Recovery Mode
     [Documentation]    enter recovery mode
     [Arguments]    ${adbid}
     generic.Route EngineeringMode    ${adbid}
+    Sleep    1s
     # click upgrade button
     GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 600 160
     Sleep    1s
