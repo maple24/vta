@@ -227,19 +227,22 @@ class ArtifaHelper:
 
 
 if __name__ == "__main__":
-    # ar = ArtifaHelper(
-    #     repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
-    #     pattern="_userdebug_binary.tgz$",
-    # )
     ar = ArtifaHelper(
-        repo="zeekr/8295_ZEEKR/daily_cx1e/",
-        pattern="qfil_.*",
-        server="https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/",
-        auth=("bosch-gitauto", "Bosch-gitauto@123"),
+        server="https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/",
+        # repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
+        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev_zeekr_dhu_r1_release/daily/",
+        pattern="_userdebug.tgz$",
     )
-    f_lastModified = ar.fetch_url(api=f"api/storage/{ar.repo}")
-    from rich.pretty import pprint
-    pprint(f_lastModified)
+    ar.get_latest()
+    # ar = ArtifaHelper(
+    #     repo="zeekr/8295_ZEEKR/daily_cx1e/",
+    #     pattern="qfil_.*",
+    #     server="https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/",
+    #     auth=("bosch-gitauto", "Bosch-gitauto@123"),
+    # )
+    # f_lastModified = ar.fetch_url(api=f"api/storage/{ar.repo}")
+    # from rich.pretty import pprint
+    # pprint(f_lastModified)
     # ar.monitor(thres=33, callback=func)
     # monitor
 

@@ -87,10 +87,16 @@ if __name__ == "__main__":
             "repo": "zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/",
             "pattern": "_userdebug.tgz$",
         },
+        {
+            "server": "https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/",
+            "repo": "zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev_zeekr_dhu_r1_release/daily/",
+            "pattern": "_userdebug.tgz$",
+        },
     ]
     scripts = [
         os.path.join(ROOT, "QVTa_binary.bat"),
         os.path.join(ROOT, "QVTa_source.bat"),
+        os.path.join(ROOT, "QVTa_release_source.bat"),
     ]
     release_checker = PeriodicReleaseChecker()
     release_checker.periodic_job(artifacts=artifacts, scripts=scripts)

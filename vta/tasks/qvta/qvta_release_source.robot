@@ -25,8 +25,8 @@ ${ADB_ID}    ${CONF_BASE}[adbid]
 ${CAMERA_INDEX}    ${CONF_BASE}[cameraindex]
 ${SWUP_timeout}    30 minutes
 ${image_name}    all_images
-${server}    https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/
-${repo}    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/
+${server}    https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/
+${repo}    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev_zeekr_dhu_r1_release/daily/
 ${pattern}    _userdebug.tgz$
 @{dunder}    ets1szh    estbangbangde6
 ${mail_subject}    [QVTa Report] ${repo}
@@ -140,7 +140,7 @@ BT
     Sleep    1s
     ${BT_1}    SystemHelper.Android Screencapture    ${ADB_ID}    BT_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${BT_0}    ${BT_1}
-    Should Not Be Equal    ${RES}    ${True}
+    Should Not Be Equal    ${RES}    ${True}    BT status does not change after clicking button!
 
 WIFI
     [Documentation]    Click wifi button and check status
@@ -151,7 +151,7 @@ WIFI
     Sleep    1s
     ${WIFI_1}    SystemHelper.Android Screencapture    ${ADB_ID}    WIFI_1.png    ${TEMP}
     ${RES}    GenericHelper.Image Diff    ${WIFI_0}    ${WIFI_1}    thre=${0.1}
-    Should Not Be Equal    ${RES}    ${True}
+    Should Not Be Equal    ${RES}    ${True}    WIFI status does not change after clicking button!
 
 Media Picture
     [Documentation]    Open picture in USB3.0

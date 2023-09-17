@@ -46,8 +46,5 @@ if __name__ == '__main__':
     schedule.every().hour.do(main, credentials, destination)
     
     while True:
-    
-        # Checks whether a scheduled task
-        # is pending to run or not
         schedule.run_pending()
         time.sleep(1)

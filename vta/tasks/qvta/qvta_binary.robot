@@ -37,7 +37,7 @@ Download From Artifactory
     [Documentation]    download latest version from artifactory and unzip
     [Arguments]    ${url}=${None}
     IF    $url == $None
-        ${source}    ArtifaHelper.Get Latest
+        ${source}    ArtifaHelper.Get Latest Pro
         Should Not Be Equal As Strings    ${source}    ${None}    Fail to get latest version!
         ${url}    Set Variable    ${source}[url]
     END
