@@ -34,7 +34,7 @@ class ArtifaHelper:
         server: str = "https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/",
         auth: tuple = ("ets1szh", "estbangbangde6"),
         dstfolder: str = "downloads",
-        multithread: bool = True,
+        multithread: bool = False,
     ) -> None:
         self.server = server
         self.repo = repo
@@ -230,10 +230,10 @@ if __name__ == "__main__":
     ar = ArtifaHelper(
         server="https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/",
         # repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
-        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev_zeekr_dhu_r1_release/daily/",
-        pattern="_userdebug.tgz$",
+        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary_zeekr_dhu_r1_release/daily/",
+        pattern="_userdebug_binary.tgz$",
     )
-    ar.get_latest()
+    ar.get_latest_pro()
     # ar = ArtifaHelper(
     #     repo="zeekr/8295_ZEEKR/daily_cx1e/",
     #     pattern="qfil_.*",
