@@ -228,7 +228,7 @@ class ArtifaHelper:
 
 if __name__ == "__main__":
     ar = ArtifaHelper(
-        server="https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/",
+        # server="https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/",
         # repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
         repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary_zeekr_dhu_r1_release/daily/",
         pattern="_userdebug_binary.tgz$",
