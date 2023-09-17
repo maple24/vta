@@ -25,7 +25,7 @@ ${ADB_ID}    ${CONF_BASE}[adbid]
 ${CAMERA_INDEX}    ${CONF_BASE}[cameraindex]
 ${SWUP_timeout}    30 minutes
 ${image_name}    all_images
-${server}    https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/
+${server}    https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/
 ${repo}    zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary_zeekr_dhu_r1_release/daily/
 ${pattern}    _userdebug_binary.tgz$
 @{dunder}    ets1szh    estbangbangde6
