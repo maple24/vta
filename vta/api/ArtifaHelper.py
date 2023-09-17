@@ -93,6 +93,9 @@ class ArtifaHelper:
             data = json.loads(response.text)
         return data
 
+    def checksum(self) -> bool:
+        ...
+
     def download(self, url: str) -> str:
         if self.multithread:
             downloader = Multiple_Thread_Downloader()
@@ -230,10 +233,11 @@ if __name__ == "__main__":
     ar = ArtifaHelper(
         # server="https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/",
         # repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
-        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary_zeekr_dhu_r1_release/daily/",
-        pattern="_userdebug_binary.tgz$",
+        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev_zeekr_dhu_r1_release/daily/",
+        pattern="_userdebug.tgz$",
+        multithread=True
     )
-    ar.get_latest_pro()
+    f_lastModified = ar.get_latest()
     # ar = ArtifaHelper(
     #     repo="zeekr/8295_ZEEKR/daily_cx1e/",
     #     pattern="qfil_.*",
@@ -241,6 +245,7 @@ if __name__ == "__main__":
     #     auth=("bosch-gitauto", "Bosch-gitauto@123"),
     # )
     # f_lastModified = ar.fetch_url(api=f"api/storage/{ar.repo}")
+    # f_lastModified = ar.get_latest()
     # from rich.pretty import pprint
     # pprint(f_lastModified)
     # ar.monitor(thres=33, callback=func)

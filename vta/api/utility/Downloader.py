@@ -45,7 +45,7 @@ class Single_Thread_Downloader:
         except Exception as e:
             logger.exception(f"Error occurs in downloading: {e}")
         t_e = time.time()
-        logger.success("Finish->time cost: ", t_e - t_s)
+        logger.success(f"Finish->time cost: {t_e - t_s}")
 
 
 class Multiple_Thread_Downloader:

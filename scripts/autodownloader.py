@@ -18,7 +18,7 @@ def main(credentials, destination):
         filename = os.path.basename(uri)
         filepath = os.path.join(autodownloader.dstfolder, filename)
         if re.search(credentials.get("pattern"), uri):
-            if not os.path.exists(filepath):
+            if not os.path.exists(os.path.join(destination, filename)):
                 autodownloader.download(uri)
                 try:
                     shutil.move(filepath, destination)
