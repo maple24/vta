@@ -175,12 +175,10 @@ class ArtifaHelper:
         if data is not None:
             if "children" in data:
                 for child_url in data["children"]:
-                    yield from self.get_all_files(
-                        initial_api + child_url["uri"]
-                    )
+                    yield from self.get_all_files(initial_api + child_url["uri"])
             else:
                 yield data
-                
+
     @staticmethod
     def unzip(
         dsfile: str, dcfolder: Optional[str] = None, members: Optional[list] = None
@@ -232,12 +230,13 @@ class ArtifaHelper:
 if __name__ == "__main__":
     ar = ArtifaHelper(
         # server="https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/",
-        # repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_binary/daily/",
-        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev_zeekr_dhu_r1_release/daily/",
+        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/",
+        # repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev_zeekr_dhu_r1_release/daily/",
         pattern="_userdebug.tgz$",
-        multithread=True
+        multithread=True,
     )
     f_lastModified = ar.get_latest()
+
     # ar = ArtifaHelper(
     #     repo="zeekr/8295_ZEEKR/daily_cx1e/",
     #     pattern="qfil_.*",
@@ -246,8 +245,9 @@ if __name__ == "__main__":
     # )
     # f_lastModified = ar.fetch_url(api=f"api/storage/{ar.repo}")
     # f_lastModified = ar.get_latest()
-    # from rich.pretty import pprint
-    # pprint(f_lastModified)
+    from rich.pretty import pprint
+
+    pprint(f_lastModified)
     # ar.monitor(thres=33, callback=func)
     # monitor
 
