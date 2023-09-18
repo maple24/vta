@@ -247,14 +247,18 @@ if __name__ == "__main__":
     #     pattern="qfil_.*",
     #     server="https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/",
     #     auth=("bosch-gitauto", "Bosch-gitauto@123"),
+    #     multithread=True
     # )
     # f_lastModified = ar.fetch_url(api=f"api/storage/{ar.repo}")
+    # f_lastModified = ar.fetch_url(api=f"/api/download?repoKey=zeekr&path=8295_ZEEKR/daily_cx1e/20230916_POSTCS/CX1E00CNTDB0916DEV0135/qfil_CX1E00CNTDB0916DEV0135.zip")
+    # print(f_lastModified)
     # f_lastModified = ar.get_latest()
-    from rich.pretty import pprint
+    # from rich.pretty import pprint
 
-    pprint(f_lastModified)
+    # pprint(f_lastModified)
     # ar.monitor(thres=33, callback=func)
     # monitor
 
-    # package = ar.download(f_lastModified["url"])
+    package = ar.download(f_lastModified["url"])
+    # package = ar.download("https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/zeekr/8295_ZEEKR/daily_cx1e/20230918_POSTCS_TMP/CX1E00CNTDB0918DEVTMP1/qfil_CX1E00CNTDB0918DEVTMP1.zip")
     # ArtifaHelper.unzip(package)

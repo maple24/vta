@@ -1,7 +1,6 @@
 import time
 import threading
 import requests.adapters
-import urllib3
 from requests.adapters import HTTPAdapter
 from artifactory import ArtifactoryPath
 import sys
@@ -58,7 +57,7 @@ class Multiple_Thread_Downloader:
         target_file="/path/to/file.ext")
     """
 
-    def __init__(self, threads_num=7, chunk_size=1024 * 1024, timeout=1000, max_retries=10):
+    def __init__(self, threads_num=20, chunk_size=1024 * 1024, timeout=60, max_retries=5):
         """
         initialization
         :param threads_num=5: number of threads created, 5 by default
@@ -68,15 +67,16 @@ class Multiple_Thread_Downloader:
         self.threads_num = threads_num
         self.chunk_size = chunk_size
         self.timeout = timeout if timeout != 0 else threads_num
-
+        self.max_retries = max_retries
+        
         self.__content_size = 0
         self.__file_lock = threading.Lock()
         self.__threads_status = {}
         self.__crash_event = threading.Event()
 
         self.session = requests.Session()
-        self.session.mount("http://", HTTPAdapter(max_retries=max_retries))
-        self.session.mount("https://", HTTPAdapter(max_retries=max_retries))
+        self.session.mount("http://", HTTPAdapter(max_retries=self.max_retries))
+        self.session.mount("https://", HTTPAdapter(max_retries=self.max_retries))
 
     def __establish_connect(self, deployPath, auth):
         """
@@ -111,50 +111,58 @@ class Multiple_Thread_Downloader:
         description: for each thread, pointer moves according to size of every patches; for each patch, pointer moves 1 chunksize a time
         """
         # the byte range for the current thread responsible for
-        headers = {"Range": f"bytes={page['start_pos']}-{page['end_pos']}"}
-        thread_name = threading.current_thread().name
-        # initialize the thread status
-        self.__threads_status[thread_name] = {
-            "page_size": page["end_pos"] - page["start_pos"],
-            "page": page,
-            "status": 0,
-        }
-        try:
-            with self.session.get(
-                url=deployPath,
-                auth=auth,
-                verify=False,
-                headers=headers,
-                stream=True,
-                timeout=self.timeout,
-            ) as response:
-                chunk_num = 0
-                for data in response.iter_content(chunk_size=self.chunk_size):
-                    # write the chunk size bytes to the target file and needs Rlock here
-                    with self.__file_lock:
-                        # seek the start position to write from
-                        file.seek(page["start_pos"])
-                        # write datd
-                        file.write(data)
-                        chunk_num += 1
-                        if self.__threads_status[thread_name]["status"] == 0:
-                            if page["start_pos"] < page["end_pos"]:
-                                logger.debug(
-                                    f"{thread_name}  Downloaded: {chunk_num * self.chunk_size / 1024 / 1024}MB / {self.__threads_status[thread_name]['page_size'] / 1024 / 1024:.2f}MB"
-                                )
-                            else:
-                                logger.success(f"{thread_name} Finished.")
-                        elif self.__threads_status[thread_name]["status"] == 1:
-                            logger.warning(f"{thread_name} Crushed.")
-                    # the pointer moves forward along withe the writing execution
-                    page["start_pos"] += len(data)
-                    self.__threads_status[thread_name]["page"] = page
-        except requests.RequestException as exception:
-            logger.exception(f"{exception}")
+        retry_count = 0
+        while retry_count < self.max_retries:
+            headers = {"Range": f"bytes={page['start_pos']}-{page['end_pos']}"}
+            thread_name = threading.current_thread().name
+            # initialize the thread status
+            self.__threads_status[thread_name] = {
+                "page_size": page["end_pos"] - page["start_pos"],
+                "page": page,
+                "status": 0,
+            }
+            try:
+                with self.session.get(
+                    url=deployPath,
+                    auth=auth,
+                    verify=False,
+                    headers=headers,
+                    stream=True,
+                    timeout=self.timeout,
+                ) as response:
+                    chunk_num = 0
+                    for data in response.iter_content(chunk_size=self.chunk_size):
+                        # write the chunk size bytes to the target file and needs Rlock here
+                        with self.__file_lock:
+                            # seek the start position to write from
+                            file.seek(page["start_pos"])
+                            # write datd
+                            file.write(data)
+                            chunk_num += 1
+                            if self.__threads_status[thread_name]["status"] == 0:
+                                if page["start_pos"] < page["end_pos"]:
+                                    logger.debug(
+                                        f"{thread_name}  Downloaded: {chunk_num * self.chunk_size / 1024 / 1024}MB / {self.__threads_status[thread_name]['page_size'] / 1024 / 1024:.2f}MB"
+                                    )
+                                else:
+                                    logger.success(f"{thread_name} Finished.")
+                            elif self.__threads_status[thread_name]["status"] == 1:
+                                logger.warning(f"{thread_name} Crushed.")
+                        # the pointer moves forward along withe the writing execution
+                        page["start_pos"] += len(data)
+                        self.__threads_status[thread_name]["page"] = page
+                    break
+            except requests.RequestException as exception:
+                logger.exception(f"{exception}")
+                retry_count += 1
+                if retry_count < self.max_retries:
+                    logger.info(f"{thread_name} Retrying (attempt {retry_count})...")
+        if retry_count == self.max_retries:
+            logger.error(f"Max retry attempts reached. {thread_name} Download failed.")
             self.__threads_status[thread_name]["status"] = 1
             self.__crash_event.set()
-            exit(1)
-        logger.success(f"{thread_name} Done download")
+        else:
+            logger.success(f"{thread_name} Finish download")
 
     def __run(self, deployPath, auth, dstfolder):
         """

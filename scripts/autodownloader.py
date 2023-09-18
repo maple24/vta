@@ -30,7 +30,7 @@ def main(credentials, destination):
         if re.search(credentials.get("pattern"), uri):
             if not os.path.exists(os.path.join(destination, filename)):
                 downloaded = autodownloader.download(uri)
-                if autodownloader.checksum(downloaded, file["sha1"]):
+                if autodownloader.checksum(downloaded, file["checksums"]["sha1"]):
                     try:
                         shutil.move(filepath, destination)
                     except shutil.Error:
