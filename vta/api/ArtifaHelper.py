@@ -26,7 +26,6 @@ ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 
 
 class ArtifaHelper:
-
     def __init__(
         self,
         repo: str = "zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-fc_main_dev/daily/",
@@ -42,10 +41,6 @@ class ArtifaHelper:
         self.auth = auth
         self.multithread = multithread
         self.dstfolder = os.path.join(ROOT, dstfolder)
-        self.session = requests.Session()
-        self.session.mount("http://", HTTPAdapter(max_retries=3))
-        self.session.mount("https://", HTTPAdapter(max_retries=3))
-        self.session.keep_alive = True
 
         if not os.path.exists(self.dstfolder):
             os.mkdir(self.dstfolder)
@@ -79,7 +74,7 @@ class ArtifaHelper:
     def fetch_url(self, api: str) -> None:
         logger.info("Requesting Artifactory server, please wait...")
         try:
-            response = self.session.get(
+            response = requests.get(
                 self.server + api, auth=self.auth, verify=False, timeout=60
             )
         except urllib3.exceptions.ReadTimeoutError:
@@ -94,7 +89,7 @@ class ArtifaHelper:
         return data
 
     def checksum(self, filepath, origin) -> bool:
-        with open(filepath, 'rb') as f:
+        with open(filepath, "rb") as f:
             sha1 = hashlib.sha1()
             while True:
                 chunk = f.read(16 * 1024)
@@ -104,7 +99,7 @@ class ArtifaHelper:
         if sha1.hexdigest() == origin:
             return True
         return False
-        
+
     def download(self, url: str) -> str:
         if self.multithread:
             downloader = Multiple_Thread_Downloader()

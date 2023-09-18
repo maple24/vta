@@ -15,7 +15,7 @@ mylogger = logger.add(
     diagnose=False,
     format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
     rotation="1 week",
-    level="DEBUG",
+    level="INFO",
 )
 
 
@@ -38,7 +38,9 @@ def main(credentials, destination):
                     except Exception as e:
                         logger.exception(f"Unexpected error {e}")
                     else:
-                        logger.success(f"Moved directory from {filepath} to {destination}.")
+                        logger.success(
+                            f"Moved directory from {filepath} to {destination}."
+                        )
                 else:
                     logger.error(f"{downloaded} Checksum does not match!")
                     sys.exit(1)

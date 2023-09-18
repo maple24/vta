@@ -1,7 +1,7 @@
 import time
 import threading
-from contextlib import closing
 import requests.adapters
+import urllib3
 from requests.adapters import HTTPAdapter
 from artifactory import ArtifactoryPath
 import sys
@@ -37,7 +37,7 @@ class Single_Thread_Downloader:
                     fo.flush()
                     count += 1
                     logger.debug(
-                        f"Downloading progress - [{count}MB/{self.__content_size / 1024 / 1024:.2f}MB]"
+                        f"Downloading progress - [{count * self.chunk_size / 1024 / 1024}MB/{self.__content_size / 1024 / 1024:.2f}MB]"
                     )
                 else:
                     logger.success(f"OK!Download file success - {local_file}")
@@ -58,13 +58,7 @@ class Multiple_Thread_Downloader:
         target_file="/path/to/file.ext")
     """
 
-    def __init__(
-        self,
-        threads_num=7,
-        chunk_size=1024 * 1024,
-        timeout=60,
-        maxretries = 3
-    ):
+    def __init__(self, threads_num=7, chunk_size=1024 * 1024, timeout=1000, max_retries=10):
         """
         initialization
         :param threads_num=5: number of threads created, 5 by default
@@ -80,7 +74,9 @@ class Multiple_Thread_Downloader:
         self.__threads_status = {}
         self.__crash_event = threading.Event()
 
-        requests.adapters.DEFAULT_RETRIES = 2
+        self.session = requests.Session()
+        self.session.mount("http://", HTTPAdapter(max_retries=max_retries))
+        self.session.mount("https://", HTTPAdapter(max_retries=max_retries))
 
     def __establish_connect(self, deployPath, auth):
         """
@@ -124,15 +120,13 @@ class Multiple_Thread_Downloader:
             "status": 0,
         }
         try:
-            with closing(
-                requests.get(
-                    url=deployPath,
-                    auth=auth,
-                    verify=False,
-                    headers=headers,
-                    stream=True,
-                    timeout=self.timeout,
-                )
+            with self.session.get(
+                url=deployPath,
+                auth=auth,
+                verify=False,
+                headers=headers,
+                stream=True,
+                timeout=self.timeout,
             ) as response:
                 chunk_num = 0
                 for data in response.iter_content(chunk_size=self.chunk_size):
@@ -146,7 +140,7 @@ class Multiple_Thread_Downloader:
                         if self.__threads_status[thread_name]["status"] == 0:
                             if page["start_pos"] < page["end_pos"]:
                                 logger.debug(
-                                    f"{thread_name}  Downloaded: {chunk_num}MB / {self.__threads_status[thread_name]['page_size'] / 1024 / 1024:.2f}MB"
+                                    f"{thread_name}  Downloaded: {chunk_num * self.chunk_size / 1024 / 1024}MB / {self.__threads_status[thread_name]['page_size'] / 1024 / 1024:.2f}MB"
                                 )
                             else:
                                 logger.success(f"{thread_name} Finished.")
@@ -155,11 +149,11 @@ class Multiple_Thread_Downloader:
                     # the pointer moves forward along withe the writing execution
                     page["start_pos"] += len(data)
                     self.__threads_status[thread_name]["page"] = page
-
         except requests.RequestException as exception:
             logger.exception(f"{exception}")
             self.__threads_status[thread_name]["status"] = 1
             self.__crash_event.set()
+            exit(1)
         logger.success(f"{thread_name} Done download")
 
     def __run(self, deployPath, auth, dstfolder):
