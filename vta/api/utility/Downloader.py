@@ -63,6 +63,7 @@ class Multiple_Thread_Downloader:
         threads_num=7,
         chunk_size=1024 * 1024,
         timeout=60,
+        maxretries = 3
     ):
         """
         initialization

@@ -25,7 +25,7 @@ Check Android Home and Thermal
     PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
     IF    ${VIDEO} == ${True}
         ${RES}    APIFlexClient.Req To Test Profile    Android_Home
-        Should Be Equal    ${RES}    ${True}
+        Should Be True    ${RES}
     END
 
 
@@ -42,7 +42,7 @@ CheckPowerCycle
     IF    '${senario}'=='command'
         Log    run powercycle with putty command
         ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset -b normal    timeout=30
-        Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
+        Should Be True    ${RES}    Fail to get shutdown trace!
     ELSE IF    '${senario}'=='pps'
         Log    run powercycle with pps
         generic.Power OFF with PPS
@@ -70,7 +70,7 @@ CheckPowerCycle
         generic.ACC ON
     END
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Pull up)    timeout=60    login=${False}
-    Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
+    Should Be True    ${RES}    Fail to get startup trace!
     Wait Until Keyword Succeeds    2 minutes    5 sec    Check Android Home and Thermal
 CheckCrash
     [Tags]

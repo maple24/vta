@@ -30,7 +30,7 @@ Open Backlight
 Check DLT
     @{traces}=    DLTHelper.Get Trace Container
     ${RES}    ${matched}=    GenericHelper.Match String    (POWERM_SM_RUN_STATE)    ${traces}
-    Should Be Equal    ${RES}    ${True}    Fail to match pattern `POWERM_SM_RUN_STATE`!
+    Should Be True    ${RES}    Fail to match pattern `POWERM_SM_RUN_STATE`!
 Open Picture in USB
     [Arguments]    ${adbid}
     GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 50 577
@@ -48,10 +48,10 @@ Open Audio in USB
 Get SOC Version
     [Documentation]    Get SOC version with putty command 'cat buildinfo.txt'
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=MAIN_VERSION\=(.*)    cmd=cat /mnt/Buildinfo.txt    timeout=10
-    Should Be Equal    ${RES}    ${True}    Unable to get SOC version
+    Should Be True    ${RES}    Unable to get SOC version
     RETURN    ${MATCHED}[0]
 Get SCC Version
     [Documentation]    Get SCC version with putty command 'swup_scc -i 1'
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=SCC FW Version Info: (.*)    cmd=swup_scc -i 1    timeout=10
-    Should Be Equal    ${RES}    ${True}    Unable to get SCC version
+    Should Be True    ${RES}    Unable to get SCC version
     RETURN    ${MATCHED}[0]

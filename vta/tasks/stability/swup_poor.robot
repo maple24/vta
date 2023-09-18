@@ -48,7 +48,7 @@ Check Normal Mode
 Check Profile
     PuttyHelper.Send Command And Return Traces    cat /dev/thermalmgr
     ${RES}    APIFlexClient.Req To Test Profile    Android_Home    0.9
-    Should Be Equal    ${RES}    ${True}
+    Should Be True    ${RES}
 Check Success
     [Arguments]    ${SWUP_timeout}
     Wait Until Keyword Succeeds    ${SWUP_timeout}    5 sec    Check Normal Mode

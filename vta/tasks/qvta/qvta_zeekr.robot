@@ -43,6 +43,8 @@ Download From Artifactory
     END
     ${package}    ArtifaHelper.Download    ${url}
     File Should Exist    ${package}    File not exist!
+    ${checksum}    ArtifaHelper.Checksum    ${package}    ${source}[sha1]
+    Should Be True    ${checksum}    Checksum does not match!
     ArtifaHelper.Unzip    ${package}
     ${image}    ArtifaHelper.Get Swpath    name=all_images_8295
     Directory Should Exist    ${image}    Image directory does not exist!

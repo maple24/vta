@@ -29,15 +29,19 @@ def main(credentials, destination):
         filepath = os.path.join(autodownloader.dstfolder, filename)
         if re.search(credentials.get("pattern"), uri):
             if not os.path.exists(os.path.join(destination, filename)):
-                autodownloader.download(uri)
-                try:
-                    shutil.move(filepath, destination)
-                except shutil.Error:
-                    logger.exception("Shutil error!")
-                except Exception as e:
-                    logger.exception(f"Unexpected error {e}")
+                downloaded = autodownloader.download(uri)
+                if autodownloader.checksum(downloaded, file["sha1"]):
+                    try:
+                        shutil.move(filepath, destination)
+                    except shutil.Error:
+                        logger.exception("Shutil error!")
+                    except Exception as e:
+                        logger.exception(f"Unexpected error {e}")
+                    else:
+                        logger.success(f"Moved directory from {filepath} to {destination}.")
                 else:
-                    logger.success(f"Moved directory from {filepath} to {destination}.")
+                    logger.error(f"{downloaded} Checksum does not match!")
+                    sys.exit(1)
             else:
                 logger.warning(f"File {filename} already exists.")
 

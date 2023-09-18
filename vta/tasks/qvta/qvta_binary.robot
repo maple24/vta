@@ -43,6 +43,8 @@ Download From Artifactory
     END
     ${package}    ArtifaHelper.Download    ${url}
     File Should Exist    ${package}    File not exist!
+    ${checksum}    ArtifaHelper.Checksum    ${package}    ${source}[sha1]
+    Should Be True    ${checksum}    Checksum does not match!
     ArtifaHelper.Unzip    ${package}
     ${image}    ArtifaHelper.Get Swpath    name=all_images_8295
     Directory Should Exist    ${image}    Image directory does not exist!
@@ -71,7 +73,7 @@ System Partition
     [Tags]    
     @{traces}    PuttyHelper.Send Command And Return Traces    cmd=df -g /dev/disk/system_b    wait=${1.0}
     ${RES}    ${matched}=    GenericHelper.Match String    (\\d+)\\s+total.*\\[(\\d+).*\\]    ${traces}
-    Should Be Equal    ${RES}    ${True}    Fail to match pattern `(\\d+)\\s+total.*\\[(\\d+).*\\]`
+    Should Be True    ${RES}    Fail to match pattern `(\\d+)\\s+total.*\\[(\\d+).*\\]`
     ${result}    Evaluate    (float($matched[0][0]) * float($matched[0][1])) / 1024 / 1024 / 1024
     Should Be Equal    ${result}    ${3.0}
 

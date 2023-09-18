@@ -14,6 +14,7 @@ from collections.abc import Callable, Generator
 import tarfile
 import zipfile
 from tqdm import tqdm
+import hashlib
 
 try:
     from utility.Downloader import Multiple_Thread_Downloader, Single_Thread_Downloader
@@ -25,7 +26,6 @@ ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 
 
 class ArtifaHelper:
-    ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
     def __init__(
         self,
@@ -93,9 +93,18 @@ class ArtifaHelper:
             data = json.loads(response.text)
         return data
 
-    def checksum(self) -> bool:
-        ...
-
+    def checksum(self, filepath, origin) -> bool:
+        with open(filepath, 'rb') as f:
+            sha1 = hashlib.sha1()
+            while True:
+                chunk = f.read(16 * 1024)
+                if not chunk:
+                    break
+                sha1.update(chunk)
+        if sha1.hexdigest() == origin:
+            return True
+        return False
+        
     def download(self, url: str) -> str:
         if self.multithread:
             downloader = Multiple_Thread_Downloader()
@@ -103,27 +112,6 @@ class ArtifaHelper:
             downloader = Single_Thread_Downloader()
         downloader.start(url, self.auth, self.dstfolder)
         return os.path.join(self.dstfolder, url.split("/")[-1])
-
-    def monitor(
-        self, thres: int, callback: Optional[Callable] = None
-    ) -> Tuple[bool, str]:
-        f_lastModified = self.get_latest()
-        tz = pytz.timezone("Asia/Shanghai")
-        now = datetime.now(tz)
-        t = datetime.strptime(f_lastModified["lastModified"], "%Y-%m-%dT%H:%M:%S.%f%z")
-        diff_hrs = (now - t).total_seconds() / 60 / 60
-        if diff_hrs < thres:
-            logger.success(
-                f"The latest version {f_lastModified['uri']} was built within {thres} hrs."
-            )
-            if callback:
-                callback()
-            return True, f_lastModified["uri"]
-        else:
-            logger.info(
-                f"No actifacts found in {thres} hrs. The latest version was built {diff_hrs} hrs ago."
-            )
-            return False, f_lastModified["uri"]
 
     def get_latest(self) -> Optional[dict]:
         api = "api/storage/" + self.repo
@@ -142,6 +130,7 @@ class ArtifaHelper:
             sys.exit(1)
 
         f_lastModified["url"] = f_lastModified["downloadUri"]
+        f_lastModified["sha1"] = f_lastModified["checksums"]["sha1"]
         logger.success(f"Get latest version {f_lastModified['url']}")
         return f_lastModified
 
@@ -178,6 +167,27 @@ class ArtifaHelper:
                     yield from self.get_all_files(initial_api + child_url["uri"])
             else:
                 yield data
+
+    def monitor(
+        self, thres: int, callback: Optional[Callable] = None
+    ) -> Tuple[bool, str]:
+        f_lastModified = self.get_latest()
+        tz = pytz.timezone("Asia/Shanghai")
+        now = datetime.now(tz)
+        t = datetime.strptime(f_lastModified["lastModified"], "%Y-%m-%dT%H:%M:%S.%f%z")
+        diff_hrs = (now - t).total_seconds() / 60 / 60
+        if diff_hrs < thres:
+            logger.success(
+                f"The latest version {f_lastModified['uri']} was built within {thres} hrs."
+            )
+            if callback:
+                callback()
+            return True, f_lastModified["uri"]
+        else:
+            logger.info(
+                f"No actifacts found in {thres} hrs. The latest version was built {diff_hrs} hrs ago."
+            )
+            return False, f_lastModified["uri"]
 
     @staticmethod
     def unzip(
@@ -235,7 +245,7 @@ if __name__ == "__main__":
         pattern="_userdebug.tgz$",
         multithread=True,
     )
-    f_lastModified = ar.get_latest()
+    f_lastModified = ar.get_latest_pro()
 
     # ar = ArtifaHelper(
     #     repo="zeekr/8295_ZEEKR/daily_cx1e/",

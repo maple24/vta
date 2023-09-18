@@ -17,7 +17,7 @@ Check Display
     [Documentation]    Check profile display using webcam, args: list
     [Arguments]    ${dispalys}    ${cameraindex}
     # ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(msg code 1547)    cmd=susd_invoke 1547 0
-    # Should Be Equal    ${RES}    ${True}    Fail to get response message!
+    # Should Be True    ${RES}    Fail to get response message!
     # Sleep    0.5s
     FOR    ${element}    IN    @{dispalys}
         ${RES}    Run Keyword If    ${element}[index]!=${0}    AgentHelper.Req To Test Profile    ${cameraindex}   ${element}[profile]
@@ -40,7 +40,7 @@ Check Normal Trace
     @{traces}    PuttyHelper.Get Trace Container
     FOR    ${element}    IN    @{patterns}
         ${RES}    ${matched}=    GenericHelper.Match String    ${element}    ${traces}
-        Should Be Equal    ${RES}    ${True}    Trace not found! ${element}
+        Should Be True    ${RES}    Trace not found! ${element}
     END
 
 Check Error Trace
@@ -55,9 +55,9 @@ Check Error Trace
 Reset by CMD
     [Documentation]    Run powercycle with putty command 'bosch_reset'
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset -b normal    timeout=60
-    Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
+    Should Be True    ${RES}    Fail to get shutdown trace!
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
-    Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
+    Should Be True    ${RES}    Fail to get startup trace!
     Sleep    10s
 
 Reset by PPS
@@ -79,11 +79,11 @@ GWM Reset by CAN
 
     GWM_ShutdownbyCAN
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM killed)    timeout=30
-    Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
+    Should Be True    ${RES}    Fail to get shutdown trace!
 
     GWM_StartupbyCAN
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Log Type: B)    timeout=60
-    Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
+    Should Be True    ${RES}    Fail to get startup trace!
 
 GWM Shutdown by CAN
     [Documentation]    Run powercycle with can signals

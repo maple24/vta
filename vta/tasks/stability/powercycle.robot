@@ -39,7 +39,7 @@ StepCheckPowerCycle
     IF    '${STEPS}[${TEST_NAME}][type]'=='command'
         Log    run powercycle with putty command
         ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(LCM Shutdown)    cmd=bosch_reset -b normal    timeout=30
-        Should Be Equal    ${RES}    ${True}    Fail to get shutdown trace!
+        Should Be True    ${RES}    Fail to get shutdown trace!
     ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='pps'
         Log    run powercycle with pps
         generic.Power OFF with PPS
@@ -67,7 +67,7 @@ StepCheckPowerCycle
         generic.ACC ON
     END
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
-    Should Be Equal    ${RES}    ${True}    Fail to get startup trace!
+    Should Be True    ${RES}    Fail to get startup trace!
     Wait Until Keyword Succeeds    2 minutes    5 sec    generic.Check Android Home and Thermal    ${CAMERA_INDEX}
 
 StepCheckOMS

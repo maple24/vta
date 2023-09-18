@@ -91,7 +91,7 @@ Check Trace From Container
     [Arguments]    ${pattern}
     @{traces}=    PuttyHelper.Get Trace Container
     ${RES}    ${matched}=    GenericHelper.Match String    ${pattern}    ${traces}
-    Should Be Equal    ${RES}    ${True}    Fail to match pattern ${pattern}!
+    Should Be True    ${RES}    Fail to match pattern ${pattern}!
 INIT
     [Documentation]    Init all instances
     [Arguments]    ${CONF}
