@@ -4,6 +4,7 @@ Library    ../api/RelayHelper.py
 Library    ../library/GenericHelper.py
 Library    ../api/AgentHelper.py
 Library    ../api/DLTHelper.py
+Library    ../api/TSmasterAPI/TSCOM.py
 Library    OperatingSystem
 
 *** Keywords ***
@@ -98,6 +99,7 @@ INIT
     PuttyHelper.Connect    dPutty=${CONF}[dputty]
     PuttyHelper.Enable Monitor
     RelayHelper.Init Relay    drelay=${CONF}[drelay]
+    TSCOM.Connect    dtsmaster=${CONF}[dtsmaster]
     # DLTHelper.Connect    dDlt=${CONF}[ddlt]
     # DLTHelper.Enable Monitor
     Define Global
@@ -105,6 +107,7 @@ DEINIT
     [Documentation]    Deinit all instances
     PuttyHelper.Disconnect
     PuttyHelper.Disable Monitor
+    TSCOM.Disconnect
     # DLTHelper.Disconnect
     # DLTHelper.Disable Monitor
 Define Global

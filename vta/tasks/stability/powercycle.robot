@@ -3,7 +3,7 @@ Resource    ../../resources/powercycle.resource
 Resource    ../../resources/generic.resource
 Resource    ../../resources/qvta.resource
 Library    ../../api/AgentHelper.py
-Library    ../../api/TSmasterAPI/TSClient.py
+Library    ../../api/TSmasterAPI/TSCOM.py
 
 Variables    ../../conf/settings.py
 Variables    ../../conf/setups.py
@@ -56,10 +56,9 @@ StepCheckPowerCycle
         generic.Power ON with Relay
     ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='network'
         Log    run powercycle with network
-        TSClient.Init Tsmaster    ${${SLOT}}[dtsmaster]
-        TSClient.Shutdown
+        TSCOM.Shutdown
         Sleep    0.5s
-        TSClient.Startup
+        TSCOM.Startup
     ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='acc'
         Log    run powercycle with acc
         generic.ACC OFF
