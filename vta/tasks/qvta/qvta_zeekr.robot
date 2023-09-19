@@ -49,6 +49,30 @@ Download From Artifactory
     ${image}    ArtifaHelper.Get Swpath    name=all_images_8295
     Directory Should Exist    ${image}    Image directory does not exist!
     RETURN    ${image}
+ZEEKR Login
+    [Documentation]    login to zeekr system
+    [Arguments]    ${adbid}
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 820 1315
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 1275 1430
+    Sleep    2s
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 1250 1430
+    Sleep    3s
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 1275 1430
+    Sleep    3s
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 1450 985
+ZEEKR Recovery Mode
+    [Arguments]    ${adbid}
+    generic.Route EngineeringMode    ${adbid}
+    Sleep    1s
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 730 190
+    Sleep    1s
+    GenericHelper.Prompt Command    adb -s ${adbid} shell input tap 2455 275
+Check ZEEKR SWUP Success
+    [Arguments]    ${SWUP_timeout}    ${cameraindex}    ${adbid}
+    Wait Until Keyword Succeeds    ${SWUP_timeout}    5 sec    Check Normal Mode and Thermal
+    Sleep    10s
+    ZEEKR Login    ${adbid}
+    Wait Until Keyword Succeeds    2 minutes    5 sec    generic.Check Android Home and Thermal    ${cameraindex}
 
 
 *** Test Cases ***
@@ -60,8 +84,8 @@ SWUP
     Remove Directory    ${udisk}//${image_name}    recursive=${True}
     Move Directory    ${image_path}    ${udisk}//${image_name}
     generic.UDisk to DHU
-    swup.Enter Recovery Mode    ${ADB_ID}
-    swup.Check SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
+    ZEEKR Recovery Mode    ${ADB_ID}
+    Check ZEEKR SWUP Success    ${SWUP_timeout}    ${CAMERA_INDEX}    ${ADB_ID}
 
 Get Version
     [Documentation]    Get soc version
