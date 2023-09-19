@@ -33,7 +33,7 @@ class ArtifaHelper:
         server: str = "https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/",
         auth: tuple = ("ets1szh", "estbangbangde6"),
         dstfolder: str = "downloads",
-        multithread: bool = False,
+        multithread: bool = True,
     ) -> None:
         self.server = server
         self.repo = repo
