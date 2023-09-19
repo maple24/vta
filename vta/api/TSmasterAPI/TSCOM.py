@@ -5,6 +5,8 @@ from loguru import logger
 
 
 class TSCOM:
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
+    
     def __init__(self) -> None:
         pythoncom.CoInitialize()
         self.com = None
