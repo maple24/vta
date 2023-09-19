@@ -43,16 +43,16 @@ StepCheckPowerCycle
     ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='pps'
         Log    run powercycle with pps
         generic.Power OFF with PPS
-        Sleep    0.5s
+        Sleep    1s
         generic.Power ON with PPS
         Sleep    5s
         generic.Power OFF with PPS
-        Sleep    0.5s
+        Sleep    1s
         generic.Power ON with PPS
     ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='relay'
         Log    run powercycle with pps
         generic.Power OFF with Relay
-        Sleep    0.5s
+        Sleep    1s
         generic.Power ON with Relay
     ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='network'
         Log    run powercycle with network
@@ -62,7 +62,7 @@ StepCheckPowerCycle
     ELSE IF    '${STEPS}[${TEST_NAME}][type]'=='acc'
         Log    run powercycle with acc
         generic.ACC OFF
-        Sleep    0.5s
+        Sleep    1s
         generic.ACC ON
     END
     ${RES}    ${MATCHED}    PuttyHelper.Wait For Trace    pattern=(Startup done)    timeout=60    login=${False}
