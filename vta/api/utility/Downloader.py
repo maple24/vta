@@ -2,6 +2,7 @@ import time
 import threading
 import requests.adapters
 from requests.adapters import HTTPAdapter
+from contextlib import closing
 from artifactory import ArtifactoryPath
 import sys
 import os
@@ -122,14 +123,14 @@ class Multiple_Thread_Downloader:
                 "status": 0,
             }
             try:
-                with self.session.get(
+                with closing(self.session.get(
                     url=deployPath,
                     auth=auth,
                     verify=False,
                     headers=headers,
                     stream=True,
                     timeout=self.timeout,
-                ) as response:
+                )) as response:
                     chunk_num = 0
                     for data in response.iter_content(chunk_size=self.chunk_size):
                         # write the chunk size bytes to the target file and needs Rlock here

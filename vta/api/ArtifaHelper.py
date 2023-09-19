@@ -1,7 +1,6 @@
 from artifactory import ArtifactoryPath
 import sys
 import requests
-from requests.adapters import HTTPAdapter
 import urllib3
 import json
 import re
@@ -235,8 +234,8 @@ class ArtifaHelper:
 if __name__ == "__main__":
     ar = ArtifaHelper(
         # server="https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/",
-        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/",
-        # repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev_zeekr_dhu_r1_release/daily/",
+        # repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev/daily/",
+        repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev_zeekr_dhu_r1_release/daily/",
         pattern="_userdebug.tgz$",
         multithread=True,
     )
@@ -259,6 +258,6 @@ if __name__ == "__main__":
     # ar.monitor(thres=33, callback=func)
     # monitor
 
-    package = ar.download(f_lastModified["url"])
+    # package = ar.download(f_lastModified["url"])
     # package = ar.download("https://hw-snc-jfrog-dmz.zeekrlife.com/artifactory/zeekr/8295_ZEEKR/daily_cx1e/20230918_POSTCS_TMP/CX1E00CNTDB0918DEVTMP1/qfil_CX1E00CNTDB0918DEVTMP1.zip")
     # ArtifaHelper.unzip(package)
