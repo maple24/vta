@@ -39,4 +39,5 @@ class TSCOM:
         )
 
     def disconnect(self):
-        self.app.disconnect()
+        if self.app:
+            self.app.disconnect()
