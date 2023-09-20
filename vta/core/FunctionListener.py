@@ -29,6 +29,10 @@ def mail_generator(info_container, result_container):
                     <td colspan="3">{info_container["Date"]}</td>
                 </tr>
                 <tr>
+                    <td>Artifact</td>
+                    <td colspan="3">{info_container["artifact"]}</td>
+                </tr>
+                <tr>
                     <td>SOC Build</td>
                     <td colspan="3" style="color: red;font-weight: bold;">{info_container["socBuild"]}</td>
                 </tr>
@@ -292,6 +296,7 @@ class FunctionListener:
         self.test_type = "Functional"
         self.soc_version = BuiltIn().get_variable_value("${SOCVersion}")
         self.subject = BuiltIn().get_variable_value("${mail_subject}")
+        self.artifact = BuiltIn().get_variable_value("${artifact}")
         self.result = result.status
         if self.rqm_enabled:
             tsrID = self._upload_test_suite_result(data, result)

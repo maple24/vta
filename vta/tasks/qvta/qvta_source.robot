@@ -41,6 +41,8 @@ Download From Artifactory
         Should Not Be Equal As Strings    ${source}    ${None}    Fail to get latest version!
         ${url}    Set Variable    ${source}[url]
     END
+    ${artifact} =  Evaluate  os.path.basename($url)
+    Set Suite Variable    ${artifact}
     ${package}    ArtifaHelper.Download    ${url}
     File Should Exist    ${package}    File not exist!
     ${checksum}    ArtifaHelper.Checksum    ${package}    ${source}[sha1]
