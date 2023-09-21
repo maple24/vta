@@ -14,6 +14,7 @@ import tarfile
 import zipfile
 from tqdm import tqdm
 import hashlib
+from concurrent.futures import ThreadPoolExecutor
 
 try:
     from utility.Downloader import Multiple_Thread_Downloader, Single_Thread_Downloader
@@ -33,12 +34,14 @@ class ArtifaHelper:
         auth: tuple = ("ets1szh", "estbangbangde6"),
         dstfolder: str = "downloads",
         multithread: bool = True,
+        pro: bool = True
     ) -> None:
         self.server = server
         self.repo = repo
         self.pattern = pattern
         self.auth = auth
         self.multithread = multithread
+        self.pro = pro
         self.dstfolder = os.path.join(ROOT, dstfolder)
 
         if not os.path.exists(self.dstfolder):
@@ -165,7 +168,10 @@ class ArtifaHelper:
     def monitor(
         self, thres: int, callback: Optional[Callable] = None
     ) -> Tuple[bool, str]:
-        f_lastModified = self.get_latest()
+        if self.pro:
+            f_lastModified = self.get_latest_pro()
+        else:
+            f_lastModified = self.get_latest()
         tz = pytz.timezone("Asia/Shanghai")
         now = datetime.now(tz)
         t = datetime.strptime(f_lastModified["lastModified"], "%Y-%m-%dT%H:%M:%S.%f%z")
@@ -238,8 +244,9 @@ if __name__ == "__main__":
         repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev_zeekr_dhu_r1_release/daily/",
         pattern="_userdebug.tgz$",
         multithread=True,
+        pro=True
     )
-    f_lastModified = ar.get_latest_pro()
+    f_lastModified = ar.monitor(thres=24)
 
     # ar = ArtifaHelper(
     #     repo="zeekr/8295_ZEEKR/daily_cx1e/",
