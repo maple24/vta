@@ -310,6 +310,7 @@ class FunctionListener:
         self.info_container.update({"testBench": self.bench_id})
         self.info_container.update({"testType": self.test_type})
         self.info_container.update({"socBuild": self.soc_version})
+        self.info_container.update({"artifact": self.artifact})
         # self.info_container.update({"Hardware": Hardware})
         # self.info_container.update({"Variant": Variant})
         self.info_container.update({"Duration": (self.stop - self.start) / 60})
