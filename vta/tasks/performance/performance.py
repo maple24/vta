@@ -1,165 +1,110 @@
-import os
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+import random
 import sys
+import os
+import time
 from loguru import logger
-from typing import Union, List
-import csv
+from typing import Callable
+import subprocess
+import re
+from pydantic import BaseModel
+from enum import Enum
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
 from vta.library.GenericHelper import GenericHelper
 from vta.library.SystemHelper import SystemHelper
 
-BIN = os.path.join(os.path.dirname(__file__), "bin")
-RESULT = os.path.join(os.path.dirname(__file__), "result")
-
 
 class Performance:
-    def __init__(
-        self, deviceID: str, comport: str, username: str, password: str
-    ) -> None:
-        self.deviceID = deviceID
-        self.comport = comport
-        self.username = username
-        self.password = password
-        if not os.path.exists(RESULT):
-            os.mkdir(RESULT)
-        if not os.path.exists(BIN):
-            logger.error("Binary folder does not exist!")
-            sys.exit(1)
+    RESULT = os.path.join(os.path.dirname(__file__), "result")
 
-    def bootchart(self):
-        ...
+    def __init__(self, duration=30, callback: str = None):
+        self.duration = duration
+        self.fig, self.ax = plt.subplots()
+        (self.line,) = self.ax.plot([], [], lw=2)
+        self.x_data = []
+        self.y_data = []
+        self.ax.set_xlabel("Time (s)")
+        self.ax.set_ylabel("CPU Usage (%)")
+        self.ax.set_title("CPU Usage of system_server (Real-time)")
 
-    def android_boot(self):
-        ...
+        operation_map = {
+            "qnx_cpu": Performance.get_qnx_cpu_usage,
+            "qnx_memory": Performance.get_qnx_memory_usage,
+            "aos_cpu": Performance.get_aos_cpu_usage,
+            "aos_memory": Performance.get_aos_memory_usage,
+            "test": Performance.test,
+        }
+        self.callback = operation_map.get(callback, None)
+        if not self.callback:
+            logger.error("Unknown callback function!")
+            exit(1)
 
-    def android_nfs_iospeed(self, disk: str, type: str = "w") -> dict:
-        """test android nfs i/o speed by `dd` command for `nfs_log` and `mount` disk
-        write: dd if=/dev/zero of=/data/vendor/nfs/nfs_log/test.image count=100 bs=1440k
-        read: dd if={}/test.image of=/dev/null count=100 bs=1440k
-        """
-        pattern = "\d+\sbytes\s\(.+\)\scopied,\s.+,\s(.+)"
-        if type == "w":
-            logger.info(f"Testing write speed of {disk}")
-            data = GenericHelper.prompt_command(
-                f"adb -s {self.deviceID} shell dd if=/dev/zero of={disk}/test.image count=100 bs=1440k"
-            )
-            res, matched = GenericHelper.match_string(pattern=pattern, data=data)
-            if res:
-                return {f"nfs_{disk}_Write": matched[0][0]}
-        elif type == "r":
-            logger.info(f"Testing read speed of {disk}")
-            data = GenericHelper.prompt_command(
-                f"adb -s {self.deviceID} shell dd if={disk}/test.image of=/dev/null count=100 bs=1440k"
-            )
-            res, matched = GenericHelper.match_string(pattern=pattern, data=data)
-            if res:
-                return {f"nfs_{disk}_Read": matched[0][0]}
+        self.ani = FuncAnimation(
+            self.fig, self.update_plot, interval=1000, cache_frame_data=False
+        )
+        self.fig.canvas.mpl_connect("close_event", self.on_close)
+
+    def update_plot(self, i):
+        elapsed_time = time.time() - self.start_time
+        if elapsed_time >= self.duration:
+            self.ani.event_source.stop()
+            self.save_plot()
         else:
-            logger.warning(f"Unknown test type: {type}")
+            data = self.callback()
+            if data:
+                self.x_data.append(elapsed_time)
+                self.y_data.append(data)
+                self.line.set_data(self.x_data, self.y_data)
+                self.ax.relim()
+                self.ax.autoscale_view()
 
-    def android_ufs_iospeed(self, disk: str = "/data") -> dict:
-        """test android ufs i/o speed by `tiotest_la` tool
-        ./data/tiotest_la.out -t 1 -d /data/ -b 2097152 -f 200 -L
-        return: {'Write': '354.371', 'Read': '662.324'}
-        """
-        pattern = "\| (Write|Read)\s+.*\s+([0-9\.]+\sMB/s)"
-        tiotest = os.path.join(BIN, "tiotest_la")
-        androidPath = "/data"
-        tiotest_android = f"{androidPath}/tiotest_la"
-        SystemHelper.PC2Android(
-            localPath=tiotest, androidPath=androidPath, deviceID=self.deviceID
-        )
-        GenericHelper.prompt_command(
-            f"adb -s {self.deviceID} shell chmod +x {tiotest_android}"
-        )
-        data = GenericHelper.prompt_command(
-            f"adb -s {self.deviceID} shell {tiotest_android} -t 1 -d {disk} -b 2097152 -f 200 -L",
-            timeout=20.0,
-        )
-        res, matched = GenericHelper.match_string(pattern=pattern, data=data)
-        if res:
-            return {
-                f"aos_ufs_{matched[0][0]}": matched[0][1],
-                f"aos_ufs_{matched[1][0]}": matched[1][1],
-            }
+    def save_plot(self):
+        plt.savefig(os.path.join(self.RESULT, "cpu_usage_plot.png"))
+        plt.close()
 
-    def qnx_ufs_iospeed(self, disk: str = "/data") -> dict:
-        """test android ufs i/o speend by `tiotest_qnx` tool
-        on -p 63 /var/log/tiotest_qnx -t 1 -d /otaupdate -b 2097152 -f 200 -L
-        """
-        pattern = "\| (Write|Read)\s+.*\s+([0-9\.]+\sMB/s)"
-        tiotest = os.path.join(BIN, "tiotest_qnx")
-        tiotest_qnx = f"{SystemHelper.disk_mapping.get('qnx')}/tiotest_qnx"
-        SystemHelper.PC2QNX(
-            comport=self.comport,
-            localPath=tiotest,
-            deviceID=self.deviceID,
-            username=self.username,
-            password=self.password,
-        )
-        SystemHelper.serial_command(f"chmod +x {tiotest_qnx}")
-        data = SystemHelper.serial_command(
-            f"on -p 63 {tiotest_qnx} -t 1 -d {disk} -b 2097152 -f 200 -L"
-        )
-        res, matched = GenericHelper.match_string(pattern=pattern, data=data)
-        if res:
-            return {
-                f"qnx_ufs_{matched[0][0]}": matched[0][1],
-                f"qnx_ufs_{matched[1][0]}": matched[1][1],
-            }
+    def on_close(self, event):
+        self.save_plot()
 
-    def android_cpu_mem(self, cmd: str, file: str) -> None:
-        """
-        cmd: top -b -n 1
-        output: aos_top.log
-        """
-        tmp = "/sdcard"
-        output = f"{tmp}/{file}"
-        GenericHelper.prompt_command(f'adb -s {self.deviceID} shell "{cmd} > {output}"')
-        SystemHelper.Android2PC(
-            androidPath=output, localPath=RESULT, deviceID=self.deviceID
-        )
-
-    def qnx_cpu_mem(self, cmd: str, file: str) -> None:
-        """
-        cmd: top -b -i 1
-        output: qnx_top.log
-        """
-        tmp = "/var"
-        output = f"{tmp}/{file}"
-        SystemHelper.serial_command(
-            cmd=f"{cmd} > {output}",
-            comport=self.comport,
-            username=self.username,
-            password=self.password,
-        )
-        SystemHelper.QNX2PC(
-            comport=self.comport,
-            qnxPath=output,
-            localPath=RESULT,
-            deviceID=self.deviceID,
-            username=self.username,
-            password=self.password,
-        )
+    def animate(self):
+        self.start_time = time.time()
+        plt.show()
 
     @staticmethod
-    def dict2csv(file: str, data: Union[List[dict], dict]) -> None:
-        if isinstance(data, list):
-            fieldnames = data[0].keys()
+    def get_qnx_cpu_usage():
+        command = "top -n 1 -b | grep system_server"
+        result = subprocess.run(
+            command,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        match = re.search(r"system_server.*?(\d+\.\d+)%", result.stdout)
+        if match:
+            return float(match.group(1))
         else:
-            fieldnames = data.keys()
-            data = [data]
-        with open(file, "w", newline="") as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerows(data)
-        logger.success("Succeed to write to csv file!")
+            return None
+
+    @staticmethod
+    def get_qnx_memory_usage():
+        ...
+
+    @staticmethod
+    def get_aos_cpu_usage():
+        ...
+
+    @staticmethod
+    def get_aos_memory_usage():
+        ...
+
+    @staticmethod
+    def test():
+        return random.choice([1, 2])
 
 
 if __name__ == "__main__":
-    p = Performance(
-        deviceID="605712f4", comport="com8", username="zeekr", password="Aa123123"
-    )
-    res = p.android_ufs_iospeed()
-    print(res)
+    myplot = Performance(duration=10, callback="test")
+    myplot.animate()

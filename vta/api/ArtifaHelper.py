@@ -34,7 +34,7 @@ class ArtifaHelper:
         auth: tuple = ("ets1szh", "estbangbangde6"),
         dstfolder: str = "downloads",
         multithread: bool = True,
-        pro: bool = True
+        pro: bool = True,
     ) -> None:
         self.server = server
         self.repo = repo
@@ -244,7 +244,7 @@ if __name__ == "__main__":
         repo="zeekr-dhu-repos/builds/rb-zeekr-dhu_hqx424-pcs01_main_dev_zeekr_dhu_r1_release/daily/",
         pattern="_userdebug.tgz$",
         multithread=True,
-        pro=True
+        pro=True,
     )
     f_lastModified = ar.monitor(thres=24)
 
