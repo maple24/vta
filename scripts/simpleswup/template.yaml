@@ -1,0 +1,63 @@
+PythonInterpreter: default
+workspace:
+ clear: True
+user:
+ username: ets1szh
+ password: estbangbangde5
+ email: test.est@bcn.bosch.com
+putty:
+ enabled: True
+ comport: com4
+ username: root
+ password:
+ command:
+  - bosch_swdl -b recovery: (Success)
+  - bosch_reset: (check config file)
+relay:
+ enabled: True
+ device: multiplexer
+ comport: com11
+ port_index:
+  USB2PC: "21"
+  USB2DUT: "11"
+ types:
+  - cleware
+  - mcube
+  - xinke
+  - multiplexer
+download:
+ enabled: True
+ source: artifactory
+ types: 
+  - artifactory
+  - networkdrive
+move:
+ enabled: True
+ destination: auto  #"auto" or "specified"
+ package: all_images
+swup:
+ enabled: True
+ time: 40
+artifactory:
+ server: https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/
+ repository: gwm-ihu-v35-repos/daily/rb_gwm_v35_pcs01_maindev_sop9_release
+ version: 
+ pattern: SOC-N900\d+.\d+.userdebug\-\d+\-\d+\-\d+.zip
+ downloadmethod: default
+ types:
+  - https://rb-cmbinex-szh-p1.apac.bosch.com/artifactory/
+  - https://rb-cmbinex-fe-p1.de.bosch.com/artifactory/
+networkdrive:
+ path: \\SZHVM00556.APAC.BOSCH.COM\01_Project\BinaryExchange\GAC\SystemTest\SoftwareBuild\AVNT\efuseVersion
+ version: EMKOO_A58_AVNT_S0.220918_SOP_33_U_Efuse_QFIL.zip
+email:
+ enabled: True
+ method: smtp
+ recipients: 
+  - hank.zhou@cn.bosch.com
+ message: 
+  fail_msg: Oops, something went wrong!
+  pass_msg: Good job, SWUP finished successfully!
+ types:
+  - smtp
+  - outlook
