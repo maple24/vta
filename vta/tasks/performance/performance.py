@@ -5,6 +5,7 @@ import sys
 import os
 import time
 import threading
+import re
 import numpy as np
 from loguru import logger
 from typing import Callable
@@ -80,7 +81,13 @@ class Performance:
                 self.ax.autoscale_view()
 
     def save_plot(self):
-        self.fig.savefig(os.path.join(self.RESULT, f"cpu_usage_{self.process}.png"))
+        if "cpu" in self.callback.__name__:
+            title = f"cpu_usage_{self.process}.png"
+        elif "memory" in self.callback.__name__:
+            title = f"mem_usage_{self.process}.png"
+        else:
+            title = "test.png"
+        self.fig.savefig(os.path.join(self.RESULT, title))
         plt.close()
 
     def on_close(self, event):
@@ -133,13 +140,30 @@ class Performance:
             return value
 
     def get_qnx_memory_usage(self):
-        ...
+        #                    diag_server |        1466484 |          18228 |          27558 |             56 |          12488 |           1532 |          13472 |                 0 |             10 |
+        self.process = "diag_server"
+        pattern = r'\s(\d+)\s\|'
+        command = f"showmem | grep {self.process}"
+        self.ax.set_ylabel("Mem Usage (%)")
+        self.ax.set_title(f"Mem Usage of {self.process} (Real-time)")
+        data = self.mputty.send_command_and_return_traces(
+            cmd=command, wait=3, login=False
+        )
+        matches = re.findall(pattern, data[-1])
+        if matches:
+            logger.success(f"Matched {matches}")
+            return int(matches[2])
+        else:
+            logger.warning("Nothing matched!")
 
     def get_aos_cpu_usage(self):
-        ...
+        # "15384 shell        20   0  10G 4.9M 3.7M R  5.0   0.0   0:00.43 top -d 1"
+        command = 'adb shell "top -n 1| grep com.android.car"'
+        pattern = r'\s([A-Z]+)\s+(\d+\.\d+)\s+'
 
     def get_aos_memory_usage(self):
-        ...
+        #   559  10967908K    7184K    2509K    2376K       0K       0K       0K       0K  /vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti
+        command = ""
 
     def test(self):
         return random.choice([1, 2])
@@ -147,7 +171,7 @@ class Performance:
 
 if __name__ == "__main__":
     myplot = Performance(
-        duration=10,
-        callback="test",
+        duration=60,
+        callback="qnx_memory",
     )
     myplot.animate()
