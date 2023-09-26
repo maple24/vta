@@ -48,10 +48,10 @@ class Performance:
         self.ax.set_xlabel("Time (s)")
 
         operation_map = {
-            "qnx_cpu": self.get_qnx_cpu_usage,
-            "qnx_memory": self.get_qnx_memory_usage,
-            "aos_cpu": self.get_aos_cpu_usage,
-            "aos_memory": self.get_aos_memory_usage,
+            "qnx_cpu": self.qnx_cpu_usage,
+            "qnx_memory": self.qnx_memory_usage,
+            "aos_cpu": self.aos_cpu_usage,
+            "aos_memory": self.aos_memory_usage,
             "test": self.test,
         }
         self.callback = operation_map.get(callback, None)
@@ -81,12 +81,7 @@ class Performance:
                 self.ax.autoscale_view()
 
     def save_plot(self):
-        if "cpu" in self.callback.__name__:
-            title = f"cpu_usage_{self.process}.png"
-        elif "memory" in self.callback.__name__:
-            title = f"mem_usage_{self.process}.png"
-        else:
-            title = "test.png"
+        title = f"{self.callback.__name__}_{self.process}.png"
         self.fig.savefig(os.path.join(self.RESULT, title))
         plt.close()
 
@@ -120,7 +115,7 @@ class Performance:
             y=avg_value, color="red", linestyle="--", label=f"Avg: {avg_value:.2f}%"
         )
 
-    def get_qnx_cpu_usage(self):
+    def qnx_cpu_usage(self):
         # 3010567     6  10 Sem       1:16:29   5.59% qvm
         value = 0
         self.process = "AudioSystemControllerDeamon"
@@ -139,10 +134,10 @@ class Performance:
                 value += float(i[0])
             return value
 
-    def get_qnx_memory_usage(self):
+    def qnx_memory_usage(self):
         #                    diag_server |        1466484 |          18228 |          27558 |             56 |          12488 |           1532 |          13472 |                 0 |             10 |
         self.process = "diag_server"
-        pattern = r'\s(\d+)\s\|'
+        pattern = r"\s(\d+)\s\|"
         command = f"showmem | grep {self.process}"
         self.ax.set_ylabel("Mem Usage (%)")
         self.ax.set_title(f"Mem Usage of {self.process} (Real-time)")
@@ -156,14 +151,36 @@ class Performance:
         else:
             logger.warning("Nothing matched!")
 
-    def get_aos_cpu_usage(self):
+    def aos_cpu_usage(self):
         # "15384 shell        20   0  10G 4.9M 3.7M R  5.0   0.0   0:00.43 top -d 1"
-        command = 'adb shell "top -n 1| grep com.android.car"'
-        pattern = r'\s([A-Z]+)\s+(\d+\.\d+)\s+'
+        value = 0
+        self.process = "com.android.car"
+        command = f'adb shell "top -n 1| grep {self.process}"'
+        pattern = r"\s[A-Z]+\s+(\d+\.\d+)\s+"
+        self.ax.set_ylabel("CPU Usage (%)")
+        self.ax.set_title(f"CPU Usage of {self.process} (Real-time)")
+        data = GenericHelper.prompt_command(command)
+        res, matched = GenericHelper.match_string(pattern, data)
+        if not res:
+            logger.warning("Nothing matched!")
+        else:
+            for i in matched:
+                value += float(i[0])
+            return value
 
-    def get_aos_memory_usage(self):
+    def aos_memory_usage(self):
         #   559  10967908K    7184K    2509K    2376K       0K       0K       0K       0K  /vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti
-        command = ""
+        self.process = "android.hardware.bluetooth"
+        GenericHelper.prompt_command("adb root")
+        command = f'adb shell "procrank | grep {self.process}"'
+        pattern = r"(\d+)K\s+"
+        data = GenericHelper.prompt_command(command, timeout=10)
+        matches = re.findall(pattern, data[-1])
+        if matches:
+            logger.success(f"Matched {matches}")
+            return int(matches[2])
+        else:
+            logger.warning("Nothing matched!")
 
     def test(self):
         return random.choice([1, 2])
@@ -171,7 +188,7 @@ class Performance:
 
 if __name__ == "__main__":
     myplot = Performance(
-        duration=60,
-        callback="qnx_memory",
+        duration=30,
+        callback="aos_memory",
     )
     myplot.animate()
