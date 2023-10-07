@@ -9,7 +9,7 @@ class Performance:
     RESULT = os.path.join(os.path.dirname(__file__), "result")
 
     @staticmethod
-    def split_contents(file: str, separator_pattern: str) -> list[str]:
+    def content_splits(file: str, separator_pattern: str) -> list[str]:
         # separator_pattern = r"\d+ processes; \d+ threads;"
         chunks = []
         with open(file, "r") as file:
@@ -18,8 +18,8 @@ class Performance:
         return chunks
 
     @staticmethod
-    def data_extraction(chunks: list, pattern: str) -> list:
-        # pattern = r"(\d+\.\d+)%\sAudioSystemControllerDeamon"
+    def qnx_cpu_data_extraction(chunks: list, process: str) -> list:
+        pattern = r"(\d+\.\d+)%\s" + process
         data = []
         for chunk in chunks:
             matches = re.findall(pattern, chunk)
@@ -40,9 +40,16 @@ class Performance:
         try:
             plt.figure(figsize=(10, 5))
             plt.plot(x_data, y_data, label="CPU Usage")
-            plt.xlabel("Time (s)")
             plt.ylabel(y_label)
             plt.title(title)
+
+            # mark max point and average line
+            max_index = y_data.index(max(y_data))
+            average = sum(y_data) / len(y_data)
+            plt.scatter(max_index, max(y_data), color='red', label='Max Point', marker='o')
+            plt.axhline(y=average, color='green', linestyle='--', label='Average Line')
+
+            # save
             plt.savefig(file_name)
             plt.close()
         except Exception as e:
@@ -53,10 +60,14 @@ class Performance:
 
 if __name__ == "__main__":
     file = os.path.join(os.path.dirname(__file__), "qnx_cpu.txt")
-    chunks = Performance.split_contents(
+    
+    # qnx_cpu
+    processes = ["qvm", "AudioSystemControllerDeamon"]
+    chunks = Performance.content_splits(
         file, separator_pattern=r"\d+ processes; \d+ threads;"
     )
-    y_data = Performance.data_extraction(
-        chunks, pattern=r"(\d+\.\d+)%\sAudioSystemControllerDeamon"
-    )
-    Performance.save_plot(y_data)
+    for process in processes:
+        y_data = Performance.qnx_cpu_data_extraction(
+            chunks, process=process
+        )
+        Performance.save_plot(y_data, title=process)
