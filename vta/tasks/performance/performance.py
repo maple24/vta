@@ -9,6 +9,10 @@ class Performance:
     RESULT = os.path.join(os.path.dirname(__file__), "result")
 
     @staticmethod
+    def remove_escape_characters(text):
+        return re.sub(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])", "", text)
+
+    @staticmethod
     def content_splits(file: str, separator_pattern: str) -> list[str]:
         # qnxcpu: separator_pattern = r"\d+ processes; \d+ threads;"
         # qnxmem: separator_pattern = r'\*+\s*E\s*N\s*D\s*\*+'
@@ -17,7 +21,8 @@ class Performance:
         chunks = []
         with open(file, "r") as file:
             content = file.read()
-            chunks = re.split(separator_pattern, content)
+            cleaned_content = Performance.remove_escape_characters(content)
+            chunks = re.split(separator_pattern, cleaned_content)
         return chunks
 
     @staticmethod
@@ -76,47 +81,47 @@ class Performance:
 
 if __name__ == "__main__":
     # qnx_cpu
-    # file = os.path.join(os.path.dirname(__file__), "qnx_cpu.txt")
-    # per_type = "QNX CPU Usage"
-    # processes = ["qvm", "AudioSystemControllerDeamon"]
-    # chunks = Performance.content_splits(
-    #     file, separator_pattern=r"\d+ processes; \d+ threads;"
-    # )
-    # for process in processes:
-    #     pattern = r"(\d+\.\d+)%\s" + process
-    #     y_data = Performance.data_extraction(
-    #         chunks, pattern
-    #     )
-    #     Performance.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process}")
+    file = os.path.join(os.path.dirname(__file__), "qnx_cpu.txt")
+    per_type = "QNX CPU Usage"
+    processes = ["qvm", "AudioSystemControllerDeamon"]
+    chunks = Performance.content_splits(
+        file, separator_pattern=r"\d+ processes; \d+ threads;"
+    )
+    for process in processes:
+        pattern = r"(\d+\.\d+)%\s" + process
+        y_data = Performance.data_extraction(chunks, pattern)
+        Performance.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process}")
 
     # qnx_mem
-    # file = os.path.join(os.path.dirname(__file__), "qnx_mem.txt")
-    # per_type = "QNX Memory Usage"
-    # processes = ["diag_service", "procnto-smp-instr"]
-    # chunks = Performance.content_splits(
-    #     file, separator_pattern=r"\*+\s*E\s*N\s*D\s*\*+"
-    # )
-    # for process in processes:
-    #     pattern = process + r"\s\|.*?\|.*?\|\s+(\d+)\s\|"
-    #     y_data = Performance.data_extraction(chunks, pattern)
-    #     Performance.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process}")
+    file = os.path.join(os.path.dirname(__file__), "qnx_mem.txt")
+    per_type = "QNX Memory Usage"
+    processes = ["diag_service", "procnto-smp-instr"]
+    chunks = Performance.content_splits(
+        file, separator_pattern=r"\*+\s*E\s*N\s*D\s*\*+"
+    )
+    for process in processes:
+        pattern = process + r"\s\|.*?\|.*?\|\s+(\d+)\s\|"
+        y_data = Performance.data_extraction(chunks, pattern)
+        Performance.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process}")
 
     # aos_cpu
     file = os.path.join(os.path.dirname(__file__), "aos_cpu.txt")
     per_type = "AOS CPU Usage"
-    processes = []
-    chunks = Performance.content_splits(
-        file, separator_pattern=r"Tasks.*?total.*?running.*?sleeping.*?stopped.*?zombie"
-    )
+    processes = ["system_server", "[system]"]
+    chunks = Performance.content_splits(file, separator_pattern=r"Tasks.*?zombie")
+    for process in processes:
+        pattern = r"\s[A-Z]+\s+(\d+\.\d+).*?" + process
+        y_data = Performance.data_extraction(chunks, pattern)
+        Performance.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process}")
 
     # aos_mem
-    # file = os.path.join(os.path.dirname(__file__), "aos_mem.txt")
-    # per_type = "AOS Memory Usage"
-    # processes = ["system_server", "/system/bin/audioserver"]
-    # chunks = Performance.content_splits(
-    #     file, separator_pattern="RAM.*?slab"
-    # )
-    # for process in processes:
-    #     pattern = r".*?K.*?K\s+(\d+)K.*?" + process
-    #     y_data = Performance.data_extraction(chunks, pattern)
-    #     Performance.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process.replace('/', '_')}")
+    file = os.path.join(os.path.dirname(__file__), "aos_mem.txt")
+    per_type = "AOS Memory Usage"
+    processes = ["system_server", "/system/bin/audioserver"]
+    chunks = Performance.content_splits(file, separator_pattern="RAM.*?slab")
+    for process in processes:
+        pattern = r".*?K.*?K\s+(\d+)K.*?" + process
+        y_data = Performance.data_extraction(chunks, pattern)
+        Performance.save_plot(
+            y_data, y_label=per_type, title=f"{per_type}_{process.replace('/', '_')}"
+        )
