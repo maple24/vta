@@ -12,10 +12,13 @@ def load_config(file: str) -> list[dict]:
 
 
 if __name__ == "__main__":
-    config_file = os.path.join(os.path.dirname(__file__), "perf.json")
+    # main_path = sys.executable # for pyinstaller
+    # main_path = "." # for pyinstaller
+    main_path = __file__
+    config_file = os.path.join(os.path.dirname(main_path), "perf.json")
     config = load_config(config_file)
     for cfg in config:
-        file: str = os.path.join(os.path.dirname(__file__), cfg.get("source"))
+        file: str = os.path.join(os.path.dirname(main_path), cfg.get("source"))
         per_type: str = cfg.get("type")
         processes: list[str] = cfg.get("processes")
         title: str = cfg.get("title")

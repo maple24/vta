@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 
 class Performance:
+    # RESULT = os.path.join('., "result")
     RESULT = os.path.join(os.path.dirname(__file__), "result")
     if not os.path.exists(RESULT):
         os.mkdir(RESULT)
