@@ -1,5 +1,4 @@
 import os
-import sys
 import re
 from loguru import logger
 import matplotlib.pyplot as plt
@@ -7,6 +6,43 @@ import matplotlib.pyplot as plt
 
 class Performance:
     RESULT = os.path.join(os.path.dirname(__file__), "result")
+    if not os.path.exists(RESULT):
+        os.mkdir(RESULT)
+
+    def __init__(self, per_type) -> None:
+        self.per_type = per_type
+        self.type_result = os.path.join(self.RESULT, self.per_type)
+        if not os.path.exists(self.type_result):
+            os.mkdir(self.type_result)
+
+    @property
+    def seperator_pattern(self):
+        mappings = {
+            "qnxcpu": r"\d+ processes; \d+ threads;",
+            "qnxmem": r"\*+\s*E\s*N\s*D\s*\*+",
+            "aoscpu": r"Tasks.*?zombie",
+            "aosmem": r"RAM.*?slab",
+        }
+        return mappings.get(self.per_type)
+
+    def match_pattern(self, process):
+        mappings = {
+            "qnxcpu": r"(\d+\.\d+)%\s" + process,
+            "qnxmem": process + r"\s\|.*?\|.*?\|\s+(\d+)\s\|",
+            "aoscpu": r"\s[A-Z]+\s+(\d+\.\d+).*?" + process,
+            "aosmem": r".*?K.*?K\s+(\d+)K.*?" + process,
+        }
+        return mappings.get(self.per_type)
+    
+    @property
+    def units(self):
+        mappings = {
+            "qnxcpu": "%",
+            "qnxmem": "KB",
+            "aoscpu": "%",
+            "aosmem": "K",
+        }
+        return mappings.get(self.per_type)
 
     @staticmethod
     def remove_escape_characters(text):
@@ -14,10 +50,6 @@ class Performance:
 
     @staticmethod
     def content_splits(file: str, separator_pattern: str) -> list[str]:
-        # qnxcpu: separator_pattern = r"\d+ processes; \d+ threads;"
-        # qnxmem: separator_pattern = r'\*+\s*E\s*N\s*D\s*\*+'
-        # aoscpu: separator_pattern = r''
-        # aosmem: separator_pattern = r'RAM.*?slab'
         chunks = []
         with open(file, "r") as file:
             content = file.read()
@@ -27,10 +59,6 @@ class Performance:
 
     @staticmethod
     def data_extraction(chunks: list, pattern: str):
-        # qnxcpu: pattern = r"(\d+\.\d+)%\s" + process
-        # qnxmem: pattern = process + r"\s\|.*?\|.*?\|\s+(\d+)\s\|"
-        # aoscpu:
-        # aosmem: pattern = r".*?K.*?K\s+(\d+)K.*?" + process
         if len(chunks) <= 1:
             logger.error("Chunks are empty! Terminated!")
             exit(1)
@@ -42,14 +70,14 @@ class Performance:
         logger.debug(data)
         return data
 
-    @staticmethod
     def save_plot(
+        self,
         y_data: list,
         x_data: list = None,
         y_label: str = "default",
         title: str = "default",
     ):
-        file_name = f"{os.path.join(Performance.RESULT, title)}.png"
+        file_name = f"{os.path.join(self.type_result, title)}.png"
         if not y_data:
             logger.warning(f"{title} data is empty!")
             return
@@ -58,7 +86,7 @@ class Performance:
         try:
             plt.figure(figsize=(10, 5))
             plt.plot(x_data, y_data)
-            plt.ylabel(y_label)
+            plt.ylabel(f"{y_label} ({self.units})")
             plt.title(title)
 
             # mark max point and average line
@@ -82,6 +110,7 @@ class Performance:
 if __name__ == "__main__":
     # qnx_cpu
     file = os.path.join(os.path.dirname(__file__), "qnx_cpu.txt")
+    mp = Performance("qnxcpu")
     per_type = "QNX CPU Usage"
     processes = ["qvm", "AudioSystemControllerDeamon"]
     chunks = Performance.content_splits(
@@ -90,10 +119,11 @@ if __name__ == "__main__":
     for process in processes:
         pattern = r"(\d+\.\d+)%\s" + process
         y_data = Performance.data_extraction(chunks, pattern)
-        Performance.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process}")
+        mp.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process}")
 
     # qnx_mem
     file = os.path.join(os.path.dirname(__file__), "qnx_mem.txt")
+    mp = Performance("qnxmem")
     per_type = "QNX Memory Usage"
     processes = ["diag_service", "procnto-smp-instr"]
     chunks = Performance.content_splits(
@@ -102,26 +132,28 @@ if __name__ == "__main__":
     for process in processes:
         pattern = process + r"\s\|.*?\|.*?\|\s+(\d+)\s\|"
         y_data = Performance.data_extraction(chunks, pattern)
-        Performance.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process}")
+        mp.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process}")
 
     # aos_cpu
     file = os.path.join(os.path.dirname(__file__), "aos_cpu.txt")
+    mp = Performance("aoscpu")
     per_type = "AOS CPU Usage"
     processes = ["system_server", "[system]"]
     chunks = Performance.content_splits(file, separator_pattern=r"Tasks.*?zombie")
     for process in processes:
         pattern = r"\s[A-Z]+\s+(\d+\.\d+).*?" + process
         y_data = Performance.data_extraction(chunks, pattern)
-        Performance.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process}")
+        mp.save_plot(y_data, y_label=per_type, title=f"{per_type}_{process}")
 
     # aos_mem
     file = os.path.join(os.path.dirname(__file__), "aos_mem.txt")
+    mp = Performance("aosmem")
     per_type = "AOS Memory Usage"
     processes = ["system_server", "/system/bin/audioserver"]
     chunks = Performance.content_splits(file, separator_pattern="RAM.*?slab")
     for process in processes:
         pattern = r".*?K.*?K\s+(\d+)K.*?" + process
         y_data = Performance.data_extraction(chunks, pattern)
-        Performance.save_plot(
+        mp.save_plot(
             y_data, y_label=per_type, title=f"{per_type}_{process.replace('/', '_')}"
         )

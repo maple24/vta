@@ -1,0 +1,54 @@
+{
+    "name": "Performance Test",
+    "version": "0.1",
+    "data": [
+        {
+            "type": "qnxcpu",
+            "enabled": true,
+            "title": "QNX CPU Usage",
+            "source": "qnx_cpu.txt",
+            "processes": [
+                "qvm",
+                "AudioSystemControllerDeamon",
+                "secpolgenerate",
+                "slogger2",
+                "spi_service",
+                "inc_tp"
+            ]
+        },
+        {
+            "type": "qnxmem",
+            "enabled": true,
+            "title": "QNX Memory Usage",
+            "source": "qnx_mem.txt",
+            "processes": [
+                "diag_service",
+                "procnto-smp-instr",
+                "slogger2",
+                "watchdog",
+                "i2c_service",
+                "diag_service"
+            ]
+        },
+        {
+            "type": "aoscpu",
+            "enabled": true,
+            "title": "AOS CPU Usage",
+            "source": "aos_cpu.txt",
+            "processes": [
+                "system_server",
+                "[system]"
+            ]
+        },
+        {
+            "type": "aosmem",
+            "enabled": true,
+            "title": "AOS Memory Usage",
+            "source": "aos_mem.txt",
+            "processes": [
+                "system_server",
+                "/system/bin/audioserver"
+            ]
+        }
+    ]
+}
