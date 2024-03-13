@@ -1,7 +1,8 @@
 import os
 import sys
-import serial
 import time
+
+import serial
 from loguru import logger
 
 

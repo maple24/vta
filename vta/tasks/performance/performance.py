@@ -1,7 +1,8 @@
 import os
 import re
-from loguru import logger
+
 import matplotlib.pyplot as plt
+from loguru import logger
 
 
 class Performance:
@@ -34,7 +35,7 @@ class Performance:
             "aosmem": r".*?K.*?K\s+(\d+)K.*?" + process,
         }
         return mappings.get(self.per_type)
-    
+
     @property
     def units(self):
         mappings = {
@@ -96,9 +97,22 @@ class Performance:
             plt.scatter(
                 max_index, max(y_data), color="red", label="Max Point", marker="o"
             )
-            plt.text(max_index, max(y_data), f'Max Value: {max(y_data): .2f}', color="red", ha='right', va='bottom')
+            plt.text(
+                max_index,
+                max(y_data),
+                f"Max Value: {max(y_data): .2f}",
+                color="red",
+                ha="right",
+                va="bottom",
+            )
             plt.axhline(y=average, color="green", linestyle="--", label="Average Line")
-            plt.text(0.5, average, f'Average Value: {average: 0.2f}', color="green", va='bottom')
+            plt.text(
+                0.5,
+                average,
+                f"Average Value: {average: 0.2f}",
+                color="green",
+                va="bottom",
+            )
             # save
             plt.savefig(file_name)
             plt.close()

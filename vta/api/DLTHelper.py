@@ -2,8 +2,9 @@ import queue
 import re
 import threading
 import time
-import serial
 from typing import Optional, Tuple
+
+import serial
 from loguru import logger
 
 

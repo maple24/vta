@@ -5,10 +5,10 @@ insensitive and supports '*' (match anything) and '?' (match single character)
 as wildcards.
 """
 
-from robot.api import SuiteVisitor
-from robot.utils import Matcher
-from robot.libraries.BuiltIn import BuiltIn
 from loguru import logger
+from robot.api import SuiteVisitor
+from robot.libraries.BuiltIn import BuiltIn
+from robot.utils import Matcher
 
 
 class ExcludeTests(SuiteVisitor):

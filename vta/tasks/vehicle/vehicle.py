@@ -1,16 +1,17 @@
+import csv
+import os
+import random
 import re
 import sys
-import os
-from typing import Optional, List, Union
-from loguru import logger
 import time
-import csv
-import random
+from typing import List, Optional, Union
+
+from loguru import logger
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
-from vta.api.PuttyHelper import PuttyHelper
 from vta.api.CANoeHelper import CANoeHelper
+from vta.api.PuttyHelper import PuttyHelper
 from vta.library.GenericHelper import GenericHelper
 
 

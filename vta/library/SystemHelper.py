@@ -1,8 +1,9 @@
 import os
-from typing import Optional
-from loguru import logger
 import time
+from typing import Optional
+
 import serial
+from loguru import logger
 
 try:
     from GenericHelper import GenericHelper

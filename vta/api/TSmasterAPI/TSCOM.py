@@ -1,6 +1,7 @@
-import win32com.client
-import pythoncom
 import time
+
+import pythoncom
+import win32com.client
 from loguru import logger
 
 

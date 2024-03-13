@@ -1,8 +1,9 @@
-from rtcclient.utils import setup_basic_logging
-from rtcclient import RTCClient
 from typing import Union
-from loguru import logger
+
 import MySQLdb
+from loguru import logger
+from rtcclient import RTCClient
+from rtcclient.utils import setup_basic_logging
 
 # you can remove this if you don't need logging
 setup_basic_logging()

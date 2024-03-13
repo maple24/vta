@@ -1,5 +1,6 @@
-import serial
 import os
+
+import serial
 from loguru import logger
 
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])

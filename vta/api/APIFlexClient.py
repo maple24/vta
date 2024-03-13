@@ -1,5 +1,5 @@
-from utility.HTTPRequester import HTTPRequester
 from loguru import logger
+from utility.HTTPRequester import HTTPRequester
 
 
 class APIFlexClient:

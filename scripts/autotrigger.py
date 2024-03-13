@@ -1,9 +1,10 @@
-import schedule
-import threading
+import os
 import subprocess
 import sys
-import os
+import threading
 import time
+
+import schedule
 from loguru import logger
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-2]))

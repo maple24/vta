@@ -9,20 +9,22 @@ import sys
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3]))
 import time
+
 from loguru import logger
 
 logger.add("simpleswup.log", rotation="1 week", mode="w")
-from toolkits import (
-    load_config,
-    decompress,
-    EmailClient,
-    get_removable_drives,
-    copy_directory,
-    remove_directory,
-    copy_file,
-)
-from ArtiHelper import artimonitor, Aritifacoty_Download
 import argparse
+
+from ArtiHelper import Aritifacoty_Download, artimonitor
+from toolkits import (
+    EmailClient,
+    copy_directory,
+    copy_file,
+    decompress,
+    get_removable_drives,
+    load_config,
+    remove_directory,
+)
 
 
 def main(config: str) -> None:

@@ -1,6 +1,6 @@
-from typing import Optional, List
+from typing import List, Optional
 
-from sqlmodel import Field, Session, SQLModel, create_engine, select, Relationship
+from sqlmodel import Field, Relationship, Session, SQLModel, create_engine, select
 
 
 class Team(SQLModel, table=True):

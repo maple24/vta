@@ -6,24 +6,25 @@ date: 2021.12.07
 import urllib3
 
 urllib3.disable_warnings()
-import requests
 import json
-import re
-import requests.adapters
-from requests.adapters import HTTPAdapter
-import os
-from artifactory import ArtifactoryPath
-import time
-import sys
-import threading
 import logging
-from contextlib import closing
-import tarfile
-import zipfile
-from tqdm import tqdm
-import pytz
-from datetime import datetime
+import os
+import re
 import subprocess
+import sys
+import tarfile
+import threading
+import time
+import zipfile
+from contextlib import closing
+from datetime import datetime
+
+import pytz
+import requests
+import requests.adapters
+from artifactory import ArtifactoryPath
+from requests.adapters import HTTPAdapter
+from tqdm import tqdm
 
 
 class Aritifacoty_Download:

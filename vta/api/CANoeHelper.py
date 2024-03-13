@@ -1,5 +1,5 @@
-from loguru import logger
 import win32com.client
+from loguru import logger
 
 
 class CANoeHelper:

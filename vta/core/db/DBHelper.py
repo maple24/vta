@@ -1,13 +1,14 @@
-from loguru import logger
-from sqlmodel import Session, SQLModel, create_engine, select
-from sqlalchemy.engine import URL
 from datetime import datetime
 from typing import Union
 
+from loguru import logger
+from sqlalchemy.engine import URL
+from sqlmodel import Session, SQLModel, create_engine, select
+
 try:
-    from .DBtables import BaseModel, Stability, Hero, BugTicket
+    from .DBtables import BaseModel, BugTicket, Hero, Stability
 except:
-    from DBtables import BaseModel, Stability, Hero, BugTicket
+    from DBtables import BaseModel, BugTicket, Hero, Stability
 
 
 class DBHelper:

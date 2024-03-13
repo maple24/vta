@@ -1,21 +1,21 @@
 # General tools to help Jenkins
-import shutil
 import os
+import re
+import shutil
 import sys
-import yaml
+import tarfile
+import time
+import zipfile
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from smtplib import SMTP
+
+import serial
 import win32api
 import win32con
 import win32file
-import serial
-import time
-import re
-import sys
-import tarfile
-import zipfile
+import yaml
 from tqdm import tqdm
-from smtplib import SMTP
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 
 
 def load_config(config: str):

@@ -27,14 +27,15 @@
 # 2022-05-20:
 #  -
 # ******************************************************************************
-from requests.exceptions import ConnectionError
-import requests
 import os
-from io import BytesIO
-from lxml import etree
 import time
 import urllib.parse
+from io import BytesIO
+
+import requests
 from loguru import logger
+from lxml import etree
+from requests.exceptions import ConnectionError
 
 # Disable request warning
 from requests.packages.urllib3.exceptions import InsecureRequestWarning

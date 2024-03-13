@@ -1,5 +1,6 @@
-from loguru import logger
 import os
+
+from loguru import logger
 from performance_deprecated import Performance
 
 logger.add(

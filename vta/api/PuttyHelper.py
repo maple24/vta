@@ -1,9 +1,10 @@
-import re
-from typing import Optional, Tuple
-import serial
-import time
-import threading
 import queue
+import re
+import threading
+import time
+from typing import Optional, Tuple
+
+import serial
 from loguru import logger
 
 

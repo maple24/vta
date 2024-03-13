@@ -1,6 +1,7 @@
-from typing import Any, Dict, Optional, Tuple
-from sqlmodel import Field, SQLModel, TIMESTAMP, Column
 from datetime import datetime
+from typing import Any, Dict, Optional, Tuple
+
+from sqlmodel import TIMESTAMP, Column, Field, SQLModel
 
 
 class BaseModel(SQLModel):

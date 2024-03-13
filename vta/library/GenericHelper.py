@@ -1,14 +1,15 @@
-import time
-import psutil
-import subprocess
-from typing import Tuple, Optional
-import re
-from loguru import logger
 import os
+import re
 import socket
+import subprocess
+import time
+from typing import Optional, Tuple
+
+import psutil
 import win32api
 import win32con
 import win32file
+from loguru import logger
 
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 

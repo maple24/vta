@@ -1,11 +1,12 @@
+import argparse
 import os
+import sys
 import time
 from datetime import datetime
-from robot import run_cli, rebot_cli
+
 from loguru import logger
-import sys
-import argparse
-from utils import rotate_folder, find_file
+from robot import rebot_cli, run_cli
+from utils import find_file, rotate_folder
 
 # User argument interface
 parser = argparse.ArgumentParser()

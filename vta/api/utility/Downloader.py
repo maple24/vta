@@ -1,12 +1,13 @@
-import time
-import threading
-import requests.adapters
-from requests.adapters import HTTPAdapter
-from contextlib import closing
-from artifactory import ArtifactoryPath
-import sys
 import os
+import sys
+import threading
+import time
+from contextlib import closing
+
+import requests.adapters
+from artifactory import ArtifactoryPath
 from loguru import logger
+from requests.adapters import HTTPAdapter
 
 
 class Single_Thread_Downloader:

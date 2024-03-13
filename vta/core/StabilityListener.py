@@ -1,10 +1,11 @@
-from loguru import logger
-from typing import Optional
-from robot.libraries.BuiltIn import BuiltIn
 from datetime import datetime
+from typing import Optional
+
 from db.DBHelper import DBHelper
 from db.DBtables import Stability
+from loguru import logger
 from mail.EMAILClient import EmailClient
+from robot.libraries.BuiltIn import BuiltIn
 
 
 class StabilityListener:

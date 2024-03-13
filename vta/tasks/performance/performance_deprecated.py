@@ -1,8 +1,9 @@
+import csv
 import os
 import sys
+from typing import List, Union
+
 from loguru import logger
-from typing import Union, List
-import csv
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 

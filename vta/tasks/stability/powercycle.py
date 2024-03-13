@@ -9,5 +9,4 @@ if you want to import without adding system path, call module as part of package
 """
 from vta.library.GenericHelper import GenericHelper
 
-
 print(GenericHelper.get_hostname())

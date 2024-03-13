@@ -2,16 +2,18 @@
 @date: July 08, 2022
 @author: ZHU JIN (BCSC-EPA4) RobotFramework Listener
 """
-# robot --listener .\PythonListener.py --outputdir temp --output start.xml -X .\TEST.robot
-from mail.EMAILClient import EmailClient
-from mail.mail_template import html_head, html_body, html_signature
 import timeit
 from datetime import datetime
-from robot.libraries.BuiltIn import BuiltIn
 from typing import Optional
+
 from loguru import logger
-from rqm.CRQM import CRQMClient
+
+# robot --listener .\PythonListener.py --outputdir temp --output start.xml -X .\TEST.robot
+from mail.EMAILClient import EmailClient
+from mail.mail_template import html_body, html_head, html_signature
+from robot.libraries.BuiltIn import BuiltIn
 from RobotVisitor import getallTestCases
+from rqm.CRQM import CRQMClient
 
 
 def mail_generator(info_container, result_container):

@@ -1,6 +1,6 @@
-from robot.running import TestSuiteBuilder
+from robot.api.deco import keyword, library
 from robot.model import SuiteVisitor
-from robot.api.deco import library, keyword
+from robot.running import TestSuiteBuilder
 
 
 class TestCasesFinder(SuiteVisitor):

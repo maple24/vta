@@ -1,20 +1,21 @@
-from artifactory import ArtifactoryPath
-import sys
-import requests
-import urllib3
+import hashlib
 import json
-import re
 import os
-from datetime import datetime
-import pytz
-from loguru import logger
-from typing import Optional, Tuple
-from collections.abc import Callable, Generator
+import re
+import sys
 import tarfile
 import zipfile
-from tqdm import tqdm
-import hashlib
+from collections.abc import Callable, Generator
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
+from typing import Optional, Tuple
+
+import pytz
+import requests
+import urllib3
+from artifactory import ArtifactoryPath
+from loguru import logger
+from tqdm import tqdm
 
 try:
     from utility.Downloader import Multiple_Thread_Downloader, Single_Thread_Downloader

@@ -1,4 +1,5 @@
-from ctypes import c_bool, c_double, byref
+from ctypes import byref, c_bool, c_double
+
 from msl.loadlib import Server32
 
 

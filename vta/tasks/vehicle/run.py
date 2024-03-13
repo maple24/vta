@@ -1,6 +1,7 @@
-from vehicle import Vehicle
 import os
+
 from loguru import logger
+from vehicle import Vehicle
 
 logger.add(
     os.path.join(os.path.dirname(__file__), "vehicle.log"),

@@ -1,20 +1,21 @@
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-import random
-import sys
 import os
-import time
-import threading
+import random
 import re
+import sys
+import threading
+import time
+from typing import Callable
+
+import matplotlib.pyplot as plt
 import numpy as np
 from loguru import logger
-from typing import Callable
+from matplotlib.animation import FuncAnimation
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
+from vta.api.PuttyHelper import PuttyHelper
 from vta.library.GenericHelper import GenericHelper
 from vta.library.SystemHelper import SystemHelper
-from vta.api.PuttyHelper import PuttyHelper
 
 
 class Performance:
