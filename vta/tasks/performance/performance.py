@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 class Performance:
-    # RESULT = os.path.join('., "result")
+    # RESULT = os.path.join('.', "result") # for pyinstaller
     RESULT = os.path.join(os.path.dirname(__file__), "result")
     if not os.path.exists(RESULT):
         os.mkdir(RESULT)
@@ -96,8 +96,9 @@ class Performance:
             plt.scatter(
                 max_index, max(y_data), color="red", label="Max Point", marker="o"
             )
+            plt.text(max_index, max(y_data), f'Max Value: {max(y_data): .2f}', color="red", ha='right', va='bottom')
             plt.axhline(y=average, color="green", linestyle="--", label="Average Line")
-
+            plt.text(0.5, average, f'Average Value: {average: 0.2f}', color="green", va='bottom')
             # save
             plt.savefig(file_name)
             plt.close()

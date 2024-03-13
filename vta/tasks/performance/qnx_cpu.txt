@@ -1,0 +1,3417 @@
+Computing times...137 processes; 1433 threads;
+CPU states: 3.3% user, 0.1% kernel
+CPU  0 Idle: 90.3% 
+CPU  1 Idle: 91.9% 
+CPU  2 Idle: 97.2% 
+CPU  3 Idle: 98.1% 
+CPU  4 Idle: 98.1% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:38   0.51% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:18   0.43% qcore               
+  1642616     6  10 NSlp      0:01:07   0.33% logMain             
+  2494471     9  10 Sem       0:00:52   0.14% qvm                 
+  2494471     2  10 Sem       0:00:44   0.13% qvm                 
+  2494471     7  10 Sem       0:00:51   0.12% qvm                 
+  2494471     8  10 Sem       0:00:52   0.11% qvm                 
+  2494471     6  10 Sem       0:00:52   0.09% qvm                 
+    65553     6  45 Intr      0:00:14   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 NSlp      0:00:13   0.06% inc_tp              
+        1    19  10 Rcv       0:00:00   0.06% kernel              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  2494471     5  10 Sem       0:00:30   0.03% qvm                 
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+   110616     2  21 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+        1    26  10 Run       0:00:00   0.02% kernel              
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+ 16818264     1  10 Rply      0:00:00   0.02% top                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554     4  15 Rcv       0:00:06   0.02% i2c_service         
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554    14  41 Intr      0:00:00   0.01% i2c_service         
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+  1650814     4  10 CdV       0:00:01   0.01% thermal_manager     
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+  2494471     4  10 Sem       0:00:14   0.01% qvm                 
+
+             Min        Max       Average 
+CPU 0 idle:   90%        90%        90% 
+CPU 1 idle:   91%        91%        91% 
+CPU 2 idle:   97%        97%        97% 
+CPU 3 idle:   98%        98%        98% 
+CPU 4 idle:   98%        98%        98% 
+CPU 5 idle:   98%        98%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.2% user, 0.0% kernel
+CPU  0 Idle: 84.9% 
+CPU  1 Idle: 90.9% 
+CPU  2 Idle: 96.6% 
+CPU  3 Idle: 97.6% 
+CPU  4 Idle: 97.9% 
+CPU  5 Idle: 99.0% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:38   0.88% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:19   0.78% qcore               
+  1642616     6  10 NSlp      0:01:08   0.32% logMain             
+  2494471     9  10 Sem       0:00:52   0.21% qvm                 
+  2494471     6  10 Sem       0:00:52   0.19% qvm                 
+  2494471     7  10 Sem       0:00:51   0.19% qvm                 
+  2494471     8  10 Sem       0:00:52   0.19% qvm                 
+  2494471     2  10 Sem       0:00:44   0.13% qvm                 
+    65553     6  45 Intr      0:00:14   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 NSlp      0:00:13   0.06% inc_tp              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+    65554     4  15 Rcv       0:00:06   0.03% i2c_service         
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  2494471     5  10 Sem       0:00:30   0.02% qvm                 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+        1    26  41 Rcv       0:00:00   0.02% kernel              
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  21 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+        1    22  10 Run       0:00:00   0.01% kernel              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+  2494471     4  10 Sem       0:00:14   0.01% qvm                 
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:01   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        87% 
+CPU 1 idle:   90%        91%        90% 
+CPU 2 idle:   96%        97%        96% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   97%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.7% user, 0.0% kernel
+CPU  0 Idle: 85.8% 
+CPU  1 Idle: 90.1% 
+CPU  2 Idle: 95.4% 
+CPU  3 Idle: 97.4% 
+CPU  4 Idle: 95.6% 
+CPU  5 Idle: 98.8% 
+CPU  6 Idle: 99.2% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:39   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:19   0.69% qcore               
+  2494471     9  10 Sem       0:00:52   0.34% qvm                 
+  1642616     6  10 NSlp      0:01:08   0.32% logMain             
+  2494471     8  10 Sem       0:00:52   0.27% qvm                 
+  2494471     6  10 Sem       0:00:52   0.27% qvm                 
+  2494471     7  10 Sem       0:00:51   0.23% qvm                 
+  2494471     5  10 Sem       0:00:30   0.21% qvm                 
+  2494471     2  10 Sem       0:00:45   0.21% qvm                 
+    65553     6  45 Intr      0:00:14   0.06% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 Rply      0:00:13   0.06% inc_tp              
+        1    22  10 Rcv       0:00:00   0.04% kernel              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65554     4  15 Rcv       0:00:06   0.03% i2c_service         
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  2494471     4  10 Sem       0:00:14   0.03% qvm                 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+   110616     2  21 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+    65546     5   9 NSlp      0:00:00   0.01% memorydump          
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+        1    26  10 Run       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        91%        90% 
+CPU 2 idle:   95%        97%        96% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.3% user, 0.0% kernel
+CPU  0 Idle: 86.5% 
+CPU  1 Idle: 90.6% 
+CPU  2 Idle: 94.8% 
+CPU  3 Idle: 97.8% 
+CPU  4 Idle: 97.9% 
+CPU  5 Idle: 98.4% 
+CPU  6 Idle: 99.2% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 Run       0:02:39   0.87% AudioSystemControllerDeamon
+    65552    18  15 Rcv       0:02:19   0.78% qcore               
+  1642616     6  10 NSlp      0:01:08   0.33% logMain             
+  2494471     6  10 Sem       0:00:53   0.24% qvm                 
+  2494471     8  10 Sem       0:00:52   0.23% qvm                 
+  2494471     7  10 Sem       0:00:51   0.22% qvm                 
+  2494471     9  10 Sem       0:00:52   0.19% qvm                 
+  2494471     2  10 Sem       0:00:45   0.14% qvm                 
+    65553     6  45 Intr      0:00:14   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+  2494471     4  10 Sem       0:00:14   0.03% qvm                 
+    65554     4  15 Run       0:00:06   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  21 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+        1    22  41 Rcv       0:00:00   0.02% kernel              
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     5  10 Sem       0:00:30   0.01% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+        1    26  10 Rcv       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        91%        90% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 3.6% user, 0.0% kernel
+CPU  0 Idle: 88.5% 
+CPU  1 Idle: 92.8% 
+CPU  2 Idle: 95.9% 
+CPU  3 Idle: 97.7% 
+CPU  4 Idle: 97.8% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:39   0.50% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:19   0.43% qcore               
+  1642616     6  10 NSlp      0:01:08   0.32% logMain             
+  2494471     6  10 Sem       0:00:53   0.31% qvm                 
+  2494471     7  10 Sem       0:00:51   0.23% qvm                 
+  2494471     9  10 Sem       0:00:52   0.21% qvm                 
+  2494471     8  10 Sem       0:00:52   0.20% qvm                 
+  2494471     2  10 Sem       0:00:45   0.13% qvm                 
+    65553     6  45 Intr      0:00:14   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  2494471     4  10 Sem       0:00:14   0.03% qvm                 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  21 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+        1    19  10 Rcv       0:00:00   0.02% kernel              
+    65554     4  15 Rcv       0:00:06   0.02% i2c_service         
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+  2494471     5  10 Sem       0:00:30   0.01% qvm                 
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+        1    26  10 Run       0:00:00   0.01% kernel              
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        92%        90% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 3.1% user, 0.0% kernel
+CPU  0 Idle: 89.9% 
+CPU  1 Idle: 94.4% 
+CPU  2 Idle: 96.8% 
+CPU  3 Idle: 98.2% 
+CPU  4 Idle: 97.7% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1642616     6  10 NSlp      0:01:08   0.31% logMain             
+  1368173    17  15 NSlp      0:02:39   0.30% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:19   0.26% qcore               
+  2494471     7  10 Sem       0:00:52   0.22% qvm                 
+  2494471     9  10 Sem       0:00:52   0.20% qvm                 
+  2494471     8  10 Sem       0:00:52   0.19% qvm                 
+  2494471     6  10 Sem       0:00:53   0.16% qvm                 
+  2494471     2  10 Sem       0:00:45   0.14% qvm                 
+    65553     6  45 Intr      0:00:14   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:30   0.05% qvm                 
+   114715     5 120 NSlp      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+   110616     2  21 Rcv       0:00:05   0.03% io-pkt-v6-hc        
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471     4  10 Sem       0:00:14   0.02% qvm                 
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+        1    26  30 Rcv       0:00:00   0.02% kernel              
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+        1    19  10 Run       0:00:00   0.01% kernel              
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+    65554     4  15 Rcv       0:00:06   0.01% i2c_service         
+  2494471     1  10 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        87% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.0% user, 0.0% kernel
+CPU  0 Idle: 86.0% 
+CPU  1 Idle: 92.4% 
+CPU  2 Idle: 95.5% 
+CPU  3 Idle: 97.8% 
+CPU  4 Idle: 97.5% 
+CPU  5 Idle: 98.7% 
+CPU  6 Idle: 99.2% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:40   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:20   0.69% qcore               
+  1642616     6  10 NSlp      0:01:08   0.32% logMain             
+  2494471     8  10 Sem       0:00:52   0.21% qvm                 
+  2494471     7  10 Sem       0:00:52   0.20% qvm                 
+  2494471     6  10 Sem       0:00:53   0.19% qvm                 
+  2494471     9  10 Sem       0:00:52   0.18% qvm                 
+  2494471     2  10 Sem       0:00:45   0.14% qvm                 
+    65553     6  45 Intr      0:00:14   0.06% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:30   0.05% qvm                 
+   114715     5 120 NSlp      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+    65554     4  15 Rcv       0:00:06   0.03% i2c_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  2494471     4  10 Sem       0:00:14   0.03% qvm                 
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  21 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+        1    26  41 Rcv       0:00:00   0.01% kernel              
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+        1    19  10 Run       0:00:00   0.01% kernel              
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+        1    22  10 Rcv       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.2% user, 0.0% kernel
+CPU  0 Idle: 85.5% 
+CPU  1 Idle: 92.1% 
+CPU  2 Idle: 95.1% 
+CPU  3 Idle: 98.2% 
+CPU  4 Idle: 97.7% 
+CPU  5 Idle: 98.2% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:40   0.89% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:20   0.78% qcore               
+  1642616     6  10 NSlp      0:01:08   0.32% logMain             
+  2494471     9  10 Sem       0:00:53   0.20% qvm                 
+  2494471     7  10 Sem       0:00:52   0.19% qvm                 
+  2494471     8  10 Sem       0:00:52   0.18% qvm                 
+  2494471     6  10 Sem       0:00:53   0.18% qvm                 
+  2494471     2  10 Sem       0:00:45   0.13% qvm                 
+    65553     6  45 Intr      0:00:14   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:30   0.05% qvm                 
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+   114715     5 120 NSlp      0:00:09   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+    65554     4  15 Rcv       0:00:06   0.03% i2c_service         
+  2494471     4  10 Sem       0:00:14   0.03% qvm                 
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+        1    19  10 Rcv       0:00:00   0.03% kernel              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+   110616     2  10 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+  2494471     3  10 Run       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65553     7  45 Intr      0:00:03   0.02% spi_service         
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+  1368173     1  15 Rcv       0:00:01   0.00% AudioSystemControllerDeamon
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 3.9% user, 0.0% kernel
+CPU  0 Idle: 86.7% 
+CPU  1 Idle: 91.0% 
+CPU  2 Idle: 96.8% 
+CPU  3 Idle: 98.2% 
+CPU  4 Idle: 97.8% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.0% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:40   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:20   0.69% qcore               
+  1642616     6  10 NSlp      0:01:09   0.32% logMain             
+  2494471     7  10 Sem       0:00:52   0.18% qvm                 
+  2494471     9  10 Sem       0:00:53   0.17% qvm                 
+  2494471     8  10 Sem       0:00:52   0.17% qvm                 
+  2494471     2  10 Sem       0:00:45   0.14% qvm                 
+  2494471     6  10 Sem       0:00:53   0.13% qvm                 
+    65553     6  45 Intr      0:00:14   0.06% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+  2494471     4  10 Sem       0:00:14   0.06% qvm                 
+   114715     5 120 NSlp      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.02% SerializerDiagnostics
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+   110616     2  21 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+        1    19  10 Rcv       0:00:00   0.02% kernel              
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  2494471     5  10 Sem       0:00:30   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+        1    20  10 Run       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.2% user, 0.0% kernel
+CPU  0 Idle: 85.0% 
+CPU  1 Idle: 91.3% 
+CPU  2 Idle: 96.2% 
+CPU  3 Idle: 97.8% 
+CPU  4 Idle: 97.5% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.1% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:41   0.89% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:21   0.78% qcore               
+  1642616     6  10 NSlp      0:01:09   0.33% logMain             
+  2494471     9  10 Sem       0:00:53   0.23% qvm                 
+  2494471     6  10 Sem       0:00:53   0.18% qvm                 
+  2494471     7  10 Sem       0:00:52   0.17% qvm                 
+  2494471     8  10 Sem       0:00:53   0.17% qvm                 
+  2494471     2  10 Sem       0:00:45   0.14% qvm                 
+    65553     6  45 Intr      0:00:14   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+   114715     5 120 NSlp      0:00:09   0.04% inc_tp              
+  2494471     5  10 Sem       0:00:30   0.04% qvm                 
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  2494471     4  10 Sem       0:00:14   0.02% qvm                 
+   110616     2  21 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+        1    20  41 Rcv       0:00:00   0.02% kernel              
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+        1    22  30 Rcv       0:00:00   0.01% kernel              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.1% user, 0.0% kernel
+CPU  0 Idle: 85.4% 
+CPU  1 Idle: 92.1% 
+CPU  2 Idle: 95.8% 
+CPU  3 Idle: 97.5% 
+CPU  4 Idle: 97.7% 
+CPU  5 Idle: 99.0% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:41   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:21   0.69% qcore               
+  1642616     6  10 NSlp      0:01:09   0.32% logMain             
+  2494471     7  10 Sem       0:00:52   0.23% qvm                 
+  2494471     6  10 Sem       0:00:53   0.23% qvm                 
+  2494471     9  10 Sem       0:00:53   0.21% qvm                 
+  2494471     8  10 Sem       0:00:53   0.20% qvm                 
+  2494471     2  10 Sem       0:00:45   0.13% qvm                 
+   114715     3 120 NSlp      0:00:14   0.07% inc_tp              
+    65553     6  45 Intr      0:00:14   0.06% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+  2494471     4  10 Sem       0:00:14   0.06% qvm                 
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+        1    19  10 Rcv       0:00:00   0.03% kernel              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+   110616     2  21 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+  2494471     5  10 Sem       0:00:30   0.01% qvm                 
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+        1    22  10 Run       0:00:00   0.01% kernel              
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.2% user, 0.0% kernel
+CPU  0 Idle: 85.2% 
+CPU  1 Idle: 91.9% 
+CPU  2 Idle: 95.5% 
+CPU  3 Idle: 97.1% 
+CPU  4 Idle: 98.0% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 Run       0:02:41   0.86% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:21   0.78% qcore               
+  1642616     6  10 NSlp      0:01:09   0.33% logMain             
+  2494471     8  10 Sem       0:00:53   0.25% qvm                 
+  2494471     9  10 Sem       0:00:53   0.21% qvm                 
+  2494471     7  10 Sem       0:00:52   0.19% qvm                 
+  2494471     6  10 Sem       0:00:53   0.15% qvm                 
+  2494471     2  10 Sem       0:00:45   0.14% qvm                 
+    65553     5 120 Rcv       0:00:14   0.07% spi_service         
+    65553     6  45 Intr      0:00:14   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  2494471     4  10 Sem       0:00:15   0.02% qvm                 
+        1    22  41 Rcv       0:00:00   0.02% kernel              
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+   110616     2  21 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+        1    20  10 Run       0:00:00   0.02% kernel              
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+  2494471     5  10 Sem       0:00:30   0.01% qvm                 
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+    65546     5   9 NSlp      0:00:00   0.01% memorydump          
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   99%        99%        99% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.1% user, 0.0% kernel
+CPU  0 Idle: 84.6% 
+CPU  1 Idle: 92.8% 
+CPU  2 Idle: 96.2% 
+CPU  3 Idle: 98.1% 
+CPU  4 Idle: 97.4% 
+CPU  5 Idle: 98.5% 
+CPU  6 Idle: 98.9% 
+CPU  7 Idle: 99.2% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:42   0.81% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:22   0.69% qcore               
+  1642616     6  10 NSlp      0:01:09   0.32% logMain             
+  2494471     9  10 Sem       0:00:53   0.23% qvm                 
+  2494471     8  10 Sem       0:00:53   0.22% qvm                 
+  2494471     7  10 Sem       0:00:52   0.19% qvm                 
+  2494471     6  10 Sem       0:00:53   0.17% qvm                 
+  2494471     2  10 Sem       0:00:45   0.13% qvm                 
+    65553     5 120 Rcv       0:00:14   0.07% spi_service         
+    65553     6  45 Intr      0:00:14   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:30   0.06% qvm                 
+  2494471     4  10 Sem       0:00:15   0.05% qvm                 
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  21 Rcv       0:00:05   0.02% io-pkt-v6-hc        
+        1    20  41 Rcv       0:00:00   0.02% kernel              
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+        1    22  10 Run       0:00:00   0.01% kernel              
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.0% user, 0.0% kernel
+CPU  0 Idle: 86.6% 
+CPU  1 Idle: 90.5% 
+CPU  2 Idle: 97.0% 
+CPU  3 Idle: 97.7% 
+CPU  4 Idle: 97.7% 
+CPU  5 Idle: 98.8% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:42   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:22   0.69% qcore               
+  1642616     6  10 NSlp      0:01:09   0.33% logMain             
+  2494471     7  10 Sem       0:00:52   0.27% qvm                 
+  2494471     9  10 Sem       0:00:53   0.21% qvm                 
+  2494471     8  10 Sem       0:00:53   0.17% qvm                 
+  2494471     2  10 Sem       0:00:45   0.14% qvm                 
+  2494471     6  10 Sem       0:00:53   0.13% qvm                 
+    65553     6  45 Intr      0:00:14   0.07% spi_service         
+   114715     3 120 Rply      0:00:14   0.07% inc_tp              
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:09   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+        1    22  10 Rcv       0:00:00   0.03% kernel              
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  2494471     4  10 Sem       0:00:15   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+  2494471     5  10 Sem       0:00:30   0.01% qvm                 
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+    65554     7  10 Rcv       0:00:01   0.00% i2c_service         
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   99%        99%        99% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.4% user, 0.0% kernel
+CPU  0 Idle: 84.2% 
+CPU  1 Idle: 91.9% 
+CPU  2 Idle: 96.4% 
+CPU  3 Idle: 97.8% 
+CPU  4 Idle: 97.2% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 98.4% 
+CPU  7 Idle: 98.9% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:42   0.89% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:22   0.78% qcore               
+  1642616     6  10 NSlp      0:01:09   0.32% logMain             
+  2494471     6  10 Sem       0:00:53   0.25% qvm                 
+  2494471     7  10 Sem       0:00:52   0.23% qvm                 
+  2494471     5  10 Sem       0:00:30   0.21% qvm                 
+  2494471     9  10 Sem       0:00:53   0.17% qvm                 
+  2494471     8  10 Sem       0:00:53   0.15% qvm                 
+  2494471     2  10 Sem       0:00:45   0.13% qvm                 
+    65553     6  45 Intr      0:00:14   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  2494471     4  10 Sem       0:00:15   0.02% qvm                 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+        1    22  41 Rcv       0:00:00   0.01% kernel              
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+        1    20  10 Run       0:00:00   0.01% kernel              
+     8194     5  10 Rcv       0:00:02   0.01% secpolgenerate      
+  2494471     1  10 Rcv       0:00:02   0.01% qvm                 
+        1    19  10 Rcv       0:00:00   0.01% kernel              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        85% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.1% user, 0.0% kernel
+CPU  0 Idle: 86.4% 
+CPU  1 Idle: 91.0% 
+CPU  2 Idle: 96.6% 
+CPU  3 Idle: 97.0% 
+CPU  4 Idle: 97.9% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.2% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:43   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:22   0.69% qcore               
+  1642616     6  10 NSlp      0:01:09   0.32% logMain             
+  2494471     9  10 Sem       0:00:53   0.28% qvm                 
+  2494471     7  10 Sem       0:00:52   0.20% qvm                 
+  2494471     8  10 Sem       0:00:53   0.19% qvm                 
+  2494471     6  10 Sem       0:00:53   0.17% qvm                 
+  2494471     2  10 Sem       0:00:45   0.14% qvm                 
+    65553     6  45 Intr      0:00:14   0.06% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+        1    22  10 Run       0:00:00   0.02% kernel              
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+  2494471     5  10 Sem       0:00:30   0.01% qvm                 
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+        1    20  10 Rcv       0:00:00   0.01% kernel              
+  2494471     1  10 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        85% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.3% user, 0.0% kernel
+CPU  0 Idle: 84.2% 
+CPU  1 Idle: 91.0% 
+CPU  2 Idle: 96.6% 
+CPU  3 Idle: 97.6% 
+CPU  4 Idle: 97.8% 
+CPU  5 Idle: 99.0% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:43   0.89% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:23   0.78% qcore               
+  1642616     6  10 NSlp      0:01:10   0.32% logMain             
+  2494471     6  10 Sem       0:00:54   0.26% qvm                 
+  2494471     7  10 Sem       0:00:52   0.22% qvm                 
+  2494471     8  10 Sem       0:00:53   0.21% qvm                 
+  2494471     9  10 Sem       0:00:53   0.20% qvm                 
+  2494471     2  10 Sem       0:00:45   0.13% qvm                 
+    65553     6  45 Intr      0:00:14   0.06% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+        1    22  10 Rcv       0:00:00   0.02% kernel              
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+  2494471     5  10 Sem       0:00:30   0.01% qvm                 
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  10 Rcv       0:00:02   0.01% qvm                 
+        1    20  41 Rcv       0:00:00   0.00% kernel              
+        1    19  10 Run       0:00:00   0.00% kernel              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        85% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 3.3% user, 0.0% kernel
+CPU  0 Idle: 88.7% 
+CPU  1 Idle: 94.6% 
+CPU  2 Idle: 96.7% 
+CPU  3 Idle: 97.7% 
+CPU  4 Idle: 98.1% 
+CPU  5 Idle: 98.7% 
+CPU  6 Idle: 99.2% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:43   0.40% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:23   0.35% qcore               
+  1642616     6  10 NSlp      0:01:10   0.31% logMain             
+  2494471     7  10 Sem       0:00:53   0.24% qvm                 
+  2494471     9  10 Sem       0:00:53   0.20% qvm                 
+  2494471     8  10 Sem       0:00:53   0.18% qvm                 
+  2494471     6  10 Sem       0:00:54   0.17% qvm                 
+  2494471     2  10 Sem       0:00:45   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:30   0.05% qvm                 
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.01% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+    65554     4  15 Rcv       0:00:07   0.01% i2c_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+        1    19  10 Run       0:00:00   0.01% kernel              
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+        1    26  10 Rcv       0:00:00   0.01% kernel              
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+        1    20  10 Rcv       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        85% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 3.3% user, 0.0% kernel
+CPU  0 Idle: 89.3% 
+CPU  1 Idle: 94.4% 
+CPU  2 Idle: 97.0% 
+CPU  3 Idle: 97.6% 
+CPU  4 Idle: 97.6% 
+CPU  5 Idle: 98.8% 
+CPU  6 Idle: 98.5% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:43   0.39% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:23   0.35% qcore               
+  1642616     6  10 NSlp      0:01:10   0.31% logMain             
+  2494471     6  10 Sem       0:00:54   0.22% qvm                 
+  2494471     8  10 Sem       0:00:53   0.22% qvm                 
+  2494471     7  10 Sem       0:00:53   0.18% qvm                 
+  2494471     9  10 Sem       0:00:53   0.18% qvm                 
+  2494471     2  10 Sem       0:00:45   0.15% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:30   0.06% qvm                 
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  2494471     4  10 Sem       0:00:15   0.02% qvm                 
+  1626233     1  10 NSlp      0:00:06   0.02% SerializerDiagnostics
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+        1    19  10 Run       0:00:00   0.02% kernel              
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+        1    20  10 Rcv       0:00:00   0.01% kernel              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     4  15 Rcv       0:00:07   0.01% i2c_service         
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+137 processes; 1433 threads;
+CPU states: 4.2% user, 0.0% kernel
+CPU  0 Idle: 85.1% 
+CPU  1 Idle: 91.1% 
+CPU  2 Idle: 96.4% 
+CPU  3 Idle: 97.8% 
+CPU  4 Idle: 97.6% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2775M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 Rply      0:02:44   0.89% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:23   0.78% qcore               
+  1642616     6  10 NSlp      0:01:10   0.32% logMain             
+  2494471     9  10 Sem       0:00:54   0.20% qvm                 
+  2494471     6  10 Sem       0:00:54   0.20% qvm                 
+  2494471     7  10 Sem       0:00:53   0.18% qvm                 
+  2494471     8  10 Sem       0:00:53   0.18% qvm                 
+  2494471     2  10 Sem       0:00:45   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.07% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:30   0.05% qvm                 
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 NSlp      0:00:09   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+        1    19  10 Run       0:00:00   0.02% kernel              
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+        1    26  41 Rcv       0:00:00   0.01% kernel              
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2775MB      2775MB  
+Processes:   137        137        137    
+Threads:     1433        1433        1433    
+
+134 processes; 1430 threads;
+CPU states: 4.0% user, 0.0% kernel
+CPU  0 Idle: 85.6% 
+CPU  1 Idle: 92.4% 
+CPU  2 Idle: 96.2% 
+CPU  3 Idle: 97.8% 
+CPU  4 Idle: 97.8% 
+CPU  5 Idle: 98.6% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2778M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:44   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:24   0.69% qcore               
+  1642616     6  10 NSlp      0:01:10   0.32% logMain             
+  2494471     8  10 Sem       0:00:53   0.18% qvm                 
+  2494471     7  10 Sem       0:00:53   0.17% qvm                 
+  2494471     6  10 Sem       0:00:54   0.16% qvm                 
+  2494471     9  10 Sem       0:00:54   0.15% qvm                 
+  2494471     2  10 Sem       0:00:46   0.14% qvm                 
+  2494471     4  10 Sem       0:00:15   0.07% qvm                 
+    65553     5 120 Rcv       0:00:14   0.07% spi_service         
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+   114715     5 120 NSlp      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+        1    19  10 Run       0:00:00   0.03% kernel              
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+        1    26  10 Rcv       0:00:00   0.02% kernel              
+  2494471     5  10 Sem       0:00:30   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+    65546     5   9 NSlp      0:00:00   0.01% memorydump          
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        85% 
+CPU 1 idle:   90%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2778MB      2775MB  
+Processes:   134        137        136    
+Threads:     1430        1433        1432    
+
+134 processes; 1430 threads;
+CPU states: 4.0% user, 0.0% kernel
+CPU  0 Idle: 87.4% 
+CPU  1 Idle: 89.6% 
+CPU  2 Idle: 96.5% 
+CPU  3 Idle: 97.9% 
+CPU  4 Idle: 97.8% 
+CPU  5 Idle: 98.8% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2778M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:44   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:24   0.69% qcore               
+  1642616     6  10 NSlp      0:01:10   0.32% logMain             
+  2494471     9  10 Sem       0:00:54   0.21% qvm                 
+  2494471     6  10 Sem       0:00:54   0.20% qvm                 
+  2494471     7  10 Sem       0:00:53   0.19% qvm                 
+  2494471     2  10 Sem       0:00:46   0.14% qvm                 
+  2494471     8  10 Sem       0:00:53   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.07% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+  2494471     4  10 Sem       0:00:15   0.05% qvm                 
+   114715     5 120 NSlp      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+        1    20  10 Run       0:00:00   0.02% kernel              
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+        1    19  41 Rcv       0:00:00   0.01% kernel              
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+    65553     7  45 Intr      0:00:03   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+  2494471     5  10 Sem       0:00:30   0.01% qvm                 
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   118835     2  21 Rcv       0:00:01   0.01% devb-ufs-qualcomm   
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   95%        98%        97% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2778MB      2775MB  
+Processes:   134        137        136    
+Threads:     1430        1433        1432    
+
+134 processes; 1430 threads;
+CPU states: 4.3% user, 0.0% kernel
+CPU  0 Idle: 86.3% 
+CPU  1 Idle: 92.6% 
+CPU  2 Idle: 95.1% 
+CPU  3 Idle: 98.1% 
+CPU  4 Idle: 94.9% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2778M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:45   0.89% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:24   0.78% qcore               
+  1642616     6  10 NSlp      0:01:10   0.32% logMain             
+  2494471     6  10 Sem       0:00:54   0.24% qvm                 
+  2494471     8  10 Sem       0:00:54   0.22% qvm                 
+  2494471     7  10 Sem       0:00:53   0.22% qvm                 
+  2494471     9  10 Sem       0:00:54   0.17% qvm                 
+  2494471     2  10 Sem       0:00:46   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.07% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+  2494471     4  10 Sem       0:00:15   0.05% qvm                 
+   114715     5 120 NSlp      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+        1    20  30 Rcv       0:00:00   0.02% kernel              
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:03   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+  2494471     5  10 Sem       0:00:30   0.01% qvm                 
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+        1    19  10 Rcv       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.01% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2778MB      2775MB  
+Processes:   134        137        136    
+Threads:     1430        1433        1432    
+
+134 processes; 1430 threads;
+CPU states: 4.0% user, 0.0% kernel
+CPU  0 Idle: 86.2% 
+CPU  1 Idle: 91.3% 
+CPU  2 Idle: 96.4% 
+CPU  3 Idle: 97.7% 
+CPU  4 Idle: 97.8% 
+CPU  5 Idle: 99.0% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2778M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:45   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:24   0.69% qcore               
+  1642616     6  10 NSlp      0:01:10   0.32% logMain             
+  2494471     6  10 Sem       0:00:54   0.22% qvm                 
+  2494471     8  10 Sem       0:00:54   0.21% qvm                 
+  2494471     9  10 Sem       0:00:54   0.18% qvm                 
+  2494471     7  10 Sem       0:00:53   0.16% qvm                 
+  2494471     2  10 Sem       0:00:46   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:14   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+        1    26  41 Rcv       0:00:00   0.03% kernel              
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   114715     4 120 Rcv       0:00:03   0.01% inc_tp              
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+  2494471     5  10 Sem       0:00:30   0.01% qvm                 
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+        1    20  10 Run       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        86% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2778MB      2775MB  
+Processes:   134        137        136    
+Threads:     1430        1433        1432    
+
+131 processes; 1427 threads;
+CPU states: 4.3% user, 0.0% kernel
+CPU  0 Idle: 84.7% 
+CPU  1 Idle: 91.4% 
+CPU  2 Idle: 95.8% 
+CPU  3 Idle: 97.6% 
+CPU  4 Idle: 97.8% 
+CPU  5 Idle: 98.8% 
+CPU  6 Idle: 99.2% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2782M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:45   0.88% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:25   0.78% qcore               
+  1642616     6  10 NSlp      0:01:11   0.32% logMain             
+  2494471     6  10 Sem       0:00:54   0.25% qvm                 
+  2494471     7  10 Sem       0:00:53   0.21% qvm                 
+  2494471     9  10 Sem       0:00:54   0.19% qvm                 
+  2494471     8  10 Sem       0:00:54   0.19% qvm                 
+  2494471     2  10 Sem       0:00:46   0.14% qvm                 
+    65553     5 120 Rcv       0:00:14   0.07% spi_service         
+    65553     6  45 Intr      0:00:15   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+   114715     5 120 NSlp      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:08   0.04% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+        1    20  10 Rcv       0:00:00   0.03% kernel              
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471     4  10 Sem       0:00:15   0.02% qvm                 
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+  2494471     5  10 Sem       0:00:30   0.01% qvm                 
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+        1    26  10 Run       0:00:00   0.01% kernel              
+  2494471     1  10 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+134 processes; 1430 threads;
+CPU states: 4.2% user, 0.1% kernel
+CPU  0 Idle: 84.9% 
+CPU  1 Idle: 92.1% 
+CPU  2 Idle: 94.7% 
+CPU  3 Idle: 97.6% 
+CPU  4 Idle: 96.7% 
+CPU  5 Idle: 98.7% 
+CPU  6 Idle: 99.1% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2778M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:46   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:25   0.69% qcore               
+  1642616     6  10 Run       0:01:11   0.33% logMain             
+  2494471     9  10 Sem       0:00:54   0.20% qvm                 
+  2494471     7  10 Sem       0:00:53   0.20% qvm                 
+  2494471     8  10 Sem       0:00:54   0.20% qvm                 
+  2494471     6  10 Sem       0:00:54   0.18% qvm                 
+  2494471     2  10 Sem       0:00:46   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.07% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+        1    22  30 Rcv       0:00:00   0.06% kernel              
+  2494471     5  10 Sem       0:00:30   0.05% qvm                 
+   110616     2  10 Rcv       0:00:06   0.04% io-pkt-v6-hc        
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  2494471     4  10 Sem       0:00:15   0.04% qvm                 
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+        1    15  10 Run       0:00:00   0.02% kernel              
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+        1    19  10 Rcv       0:00:00   0.02% kernel              
+        1    20  10 Rcv       0:00:00   0.02% kernel              
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   98%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+134 processes; 1430 threads;
+CPU states: 4.4% user, 0.0% kernel
+CPU  0 Idle: 86.7% 
+CPU  1 Idle: 90.3% 
+CPU  2 Idle: 96.3% 
+CPU  3 Idle: 97.3% 
+CPU  4 Idle: 97.4% 
+CPU  5 Idle: 97.9% 
+CPU  6 Idle: 98.8% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2778M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 Run       0:02:46   0.84% AudioSystemControllerDeamon
+    65552    18  15 Rcv       0:02:25   0.78% qcore               
+  1642616     6  10 NSlp      0:01:11   0.32% logMain             
+  2494471     7  10 Sem       0:00:53   0.27% qvm                 
+  2494471     5  10 Sem       0:00:30   0.24% qvm                 
+  2494471     8  10 Sem       0:00:54   0.17% qvm                 
+  2494471     9  10 Sem       0:00:54   0.17% qvm                 
+  2494471     6  10 Sem       0:00:54   0.17% qvm                 
+  2494471     2  10 Sem       0:00:46   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.07% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+        1    22  10 Rcv       0:00:00   0.01% kernel              
+        1    15  10 Run       0:00:00   0.01% kernel              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.01% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+134 processes; 1430 threads;
+CPU states: 4.1% user, 0.0% kernel
+CPU  0 Idle: 85.3% 
+CPU  1 Idle: 91.0% 
+CPU  2 Idle: 96.6% 
+CPU  3 Idle: 97.9% 
+CPU  4 Idle: 97.4% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2778M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:46   0.83% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:26   0.69% qcore               
+  1642616     6  10 NSlp      0:01:11   0.32% logMain             
+  2494471     7  10 Sem       0:00:53   0.21% qvm                 
+  2494471     6  10 Sem       0:00:55   0.21% qvm                 
+  2494471     9  10 Sem       0:00:54   0.19% qvm                 
+  2494471     8  10 Sem       0:00:54   0.19% qvm                 
+  2494471     2  10 Sem       0:00:46   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:31   0.06% qvm                 
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:06   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  2494471     4  10 Sem       0:00:15   0.02% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+        1    22  41 Rcv       0:00:00   0.01% kernel              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+        1    15  10 Rcv       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+        1    14  10 Run       0:00:00   0.01% kernel              
+
+             Min        Max       Average 
+CPU 0 idle:   84%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   97%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2775MB      2782MB      2776MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.4% user, 0.1% kernel
+CPU  0 Idle: 83.4% 
+CPU  1 Idle: 91.3% 
+CPU  2 Idle: 96.1% 
+CPU  3 Idle: 96.6% 
+CPU  4 Idle: 97.5% 
+CPU  5 Idle: 98.8% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:47   0.80% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:26   0.69% qcore               
+  1642616     6  10 NSlp      0:01:11   0.33% logMain             
+  2494471     9  10 Sem       0:00:54   0.27% qvm                 
+  2494471     7  10 Sem       0:00:53   0.25% qvm                 
+  2494471     6  10 Sem       0:00:55   0.22% qvm                 
+  2494471     8  10 Sem       0:00:54   0.19% qvm                 
+  2494471     2  10 Sem       0:00:46   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.06% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:31   0.06% qvm                 
+        1    15  10 Rcv       0:00:00   0.05% kernel              
+        1    14  10 Rcv       0:00:00   0.05% kernel              
+        1    22  10 Run       0:00:00   0.05% kernel              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   110616     2  21 Rcv       0:00:06   0.04% io-pkt-v6-hc        
+  1642616     7  10 CdV       0:00:09   0.04% logMain             
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+        1    19  10 Rcv       0:00:00   0.03% kernel              
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  2494471     4  10 Sem       0:00:15   0.02% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65553     7  45 Intr      0:00:04   0.02% spi_service         
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.2% user, 0.0% kernel
+CPU  0 Idle: 86.3% 
+CPU  1 Idle: 90.4% 
+CPU  2 Idle: 96.2% 
+CPU  3 Idle: 97.3% 
+CPU  4 Idle: 97.9% 
+CPU  5 Idle: 98.3% 
+CPU  6 Idle: 99.2% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:47   0.89% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:26   0.78% qcore               
+  1642616     6  10 NSlp      0:01:11   0.32% logMain             
+  2494471     9  10 Sem       0:00:54   0.24% qvm                 
+  2494471     6  10 Sem       0:00:55   0.17% qvm                 
+  2494471     8  10 Sem       0:00:54   0.17% qvm                 
+  2494471     7  10 Sem       0:00:54   0.15% qvm                 
+  2494471     2  10 Sem       0:00:46   0.13% qvm                 
+  2494471     5  10 Sem       0:00:31   0.08% qvm                 
+    65553     6  45 Intr      0:00:15   0.06% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:09   0.04% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+        1    22  10 Rcv       0:00:00   0.03% kernel              
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+    65546     5   9 NSlp      0:00:00   0.01% memorydump          
+        1    15  10 Run       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 3.0% user, 0.0% kernel
+CPU  0 Idle: 90.9% 
+CPU  1 Idle: 93.7% 
+CPU  2 Idle: 96.9% 
+CPU  3 Idle: 98.1% 
+CPU  4 Idle: 97.5% 
+CPU  5 Idle: 98.8% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1642616     6  10 NSlp      0:01:11   0.31% logMain             
+  1368173    17  15 NSlp      0:02:47   0.29% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:26   0.26% qcore               
+  2494471     9  10 Sem       0:00:54   0.20% qvm                 
+  2494471     6  10 Sem       0:00:55   0.19% qvm                 
+  2494471     8  10 Sem       0:00:54   0.19% qvm                 
+  2494471     7  10 Sem       0:00:54   0.16% qvm                 
+  2494471     2  10 Sem       0:00:46   0.13% qvm                 
+  2494471     4  10 Sem       0:00:15   0.07% qvm                 
+    65553     6  45 Intr      0:00:15   0.06% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:31   0.05% qvm                 
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+        1    15  10 Rcv       0:00:00   0.02% kernel              
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+  1368173    14  15 NSlp      0:00:04   0.01% AudioSystemControllerDeamon
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+        1    19  10 Rcv       0:00:00   0.01% kernel              
+    65554     4  15 Rcv       0:00:07   0.01% i2c_service         
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 3.4% user, 0.0% kernel
+CPU  0 Idle: 88.7% 
+CPU  1 Idle: 93.3% 
+CPU  2 Idle: 96.0% 
+CPU  3 Idle: 98.2% 
+CPU  4 Idle: 98.0% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.1% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:47   0.49% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:27   0.43% qcore               
+  1642616     6  10 NSlp      0:01:12   0.32% logMain             
+  2494471     7  10 Sem       0:00:54   0.23% qvm                 
+  2494471     8  10 Sem       0:00:54   0.22% qvm                 
+  2494471     9  10 Sem       0:00:55   0.16% qvm                 
+  2494471     6  10 Sem       0:00:55   0.15% qvm                 
+  2494471     2  10 Sem       0:00:46   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:31   0.06% qvm                 
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 Rply      0:00:09   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+        1    22  10 Run       0:00:00   0.02% kernel              
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65554     4  15 Rcv       0:00:07   0.02% i2c_service         
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+  2494471     4  10 Sem       0:00:15   0.01% qvm                 
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+        1    19  10 Rcv       0:00:00   0.01% kernel              
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.1% user, 0.0% kernel
+CPU  0 Idle: 85.7% 
+CPU  1 Idle: 91.5% 
+CPU  2 Idle: 96.8% 
+CPU  3 Idle: 97.8% 
+CPU  4 Idle: 96.9% 
+CPU  5 Idle: 98.6% 
+CPU  6 Idle: 99.1% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:48   0.88% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:27   0.78% qcore               
+  1642616     6  10 NSlp      0:01:12   0.32% logMain             
+  2494471     6  10 Sem       0:00:55   0.20% qvm                 
+  2494471     9  10 Sem       0:00:55   0.18% qvm                 
+  2494471     7  10 Sem       0:00:54   0.17% qvm                 
+  2494471     8  10 Sem       0:00:54   0.16% qvm                 
+  2494471     2  10 Sem       0:00:46   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+  2494471     5  10 Sem       0:00:31   0.06% qvm                 
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+        1    19  41 Rcv       0:00:00   0.03% kernel              
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:04   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+  2494471     4  10 Sem       0:00:15   0.01% qvm                 
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+        1    22  10 Run       0:00:00   0.01% kernel              
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.1% user, 0.0% kernel
+CPU  0 Idle: 86.3% 
+CPU  1 Idle: 91.1% 
+CPU  2 Idle: 95.9% 
+CPU  3 Idle: 98.1% 
+CPU  4 Idle: 97.9% 
+CPU  5 Idle: 98.7% 
+CPU  6 Idle: 99.0% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:48   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:27   0.69% qcore               
+  1642616     6  10 NSlp      0:01:12   0.32% logMain             
+  2494471     8  10 Sem       0:00:54   0.27% qvm                 
+  2494471     7  10 Sem       0:00:54   0.22% qvm                 
+  2494471     6  10 Sem       0:00:55   0.17% qvm                 
+  2494471     9  10 Sem       0:00:55   0.15% qvm                 
+  2494471     2  10 Sem       0:00:46   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.07% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:09   0.04% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+        1    22  10 Run       0:00:00   0.02% kernel              
+  2494471     5  10 Sem       0:00:31   0.02% qvm                 
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  2494471     4  10 Sem       0:00:15   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  10 Rcv       0:00:02   0.01% qvm                 
+        1    15  41 Rcv       0:00:00   0.01% kernel              
+   114715     6 120 Rcv       0:00:02   0.01% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.3% user, 0.0% kernel
+CPU  0 Idle: 85.8% 
+CPU  1 Idle: 90.8% 
+CPU  2 Idle: 95.4% 
+CPU  3 Idle: 97.3% 
+CPU  4 Idle: 97.8% 
+CPU  5 Idle: 98.6% 
+CPU  6 Idle: 99.2% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 Rply      0:02:48   0.83% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:27   0.78% qcore               
+  1642616     6  10 NSlp      0:01:12   0.32% logMain             
+  2494471     7  10 Sem       0:00:54   0.26% qvm                 
+  2494471     9  10 Sem       0:00:55   0.25% qvm                 
+  2494471     8  10 Sem       0:00:55   0.22% qvm                 
+  2494471     6  10 Sem       0:00:55   0.22% qvm                 
+  2494471     2  10 Sem       0:00:46   0.15% qvm                 
+    65553     5 120 Rcv       0:00:15   0.07% spi_service         
+    65553     6  45 Intr      0:00:15   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:09   0.04% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+        1    15  41 Rcv       0:00:00   0.02% kernel              
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+  2494471     5  10 Sem       0:00:31   0.01% qvm                 
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+        1    22  10 Run       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.1% user, 0.0% kernel
+CPU  0 Idle: 86.8% 
+CPU  1 Idle: 91.2% 
+CPU  2 Idle: 96.4% 
+CPU  3 Idle: 97.3% 
+CPU  4 Idle: 96.9% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:49   0.86% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:28   0.69% qcore               
+  1642616     6  10 NSlp      0:01:12   0.32% logMain             
+  2494471     7  10 Sem       0:00:54   0.25% qvm                 
+  2494471     9  10 Sem       0:00:55   0.21% qvm                 
+  2494471     8  10 Sem       0:00:55   0.19% qvm                 
+  2494471     6  10 Sem       0:00:55   0.14% qvm                 
+  2494471     2  10 Sem       0:00:46   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:09   0.04% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+        1    15  41 Rcv       0:00:00   0.01% kernel              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+  2494471     5  10 Sem       0:00:31   0.01% qvm                 
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+        1    19  10 Run       0:00:00   0.01% kernel              
+        1    22  10 Rcv       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.0% user, 0.0% kernel
+CPU  0 Idle: 86.4% 
+CPU  1 Idle: 91.7% 
+CPU  2 Idle: 95.7% 
+CPU  3 Idle: 97.8% 
+CPU  4 Idle: 97.4% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:49   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:28   0.69% qcore               
+  1642616     6  10 NSlp      0:01:12   0.32% logMain             
+  2494471     9  10 Sem       0:00:55   0.24% qvm                 
+  2494471     7  10 Sem       0:00:54   0.20% qvm                 
+  2494471     8  10 Sem       0:00:55   0.17% qvm                 
+  2494471     6  10 Sem       0:00:55   0.17% qvm                 
+  2494471     2  10 Sem       0:00:46   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.06% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:31   0.06% qvm                 
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+        1    19  10 Rcv       0:00:00   0.02% kernel              
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+        1    22  10 Run       0:00:00   0.01% kernel              
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.2% user, 0.0% kernel
+CPU  0 Idle: 85.1% 
+CPU  1 Idle: 92.2% 
+CPU  2 Idle: 96.6% 
+CPU  3 Idle: 97.8% 
+CPU  4 Idle: 96.8% 
+CPU  5 Idle: 98.5% 
+CPU  6 Idle: 99.0% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:49   0.88% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:28   0.78% qcore               
+  1642616     6  10 NSlp      0:01:12   0.32% logMain             
+  2494471     7  10 Sem       0:00:54   0.21% qvm                 
+  2494471     6  10 Sem       0:00:55   0.18% qvm                 
+  2494471     8  10 Sem       0:00:55   0.18% qvm                 
+  2494471     9  10 Sem       0:00:55   0.17% qvm                 
+  2494471     2  10 Sem       0:00:47   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 Rply      0:00:14   0.06% inc_tp              
+  2494471     4  10 Sem       0:00:15   0.06% qvm                 
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:09   0.04% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+    65553     7  45 Intr      0:00:04   0.02% spi_service         
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+        1    19  10 Run       0:00:00   0.02% kernel              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+  2494471     5  10 Sem       0:00:31   0.01% qvm                 
+        1    22  10 Rcv       0:00:00   0.01% kernel              
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+   118835     2  21 Rcv       0:00:01   0.01% devb-ufs-qualcomm   
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.3% user, 0.0% kernel
+CPU  0 Idle: 87.5% 
+CPU  1 Idle: 90.4% 
+CPU  2 Idle: 96.1% 
+CPU  3 Idle: 97.0% 
+CPU  4 Idle: 96.0% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:50   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:29   0.69% qcore               
+  1642616     6  10 NSlp      0:01:12   0.32% logMain             
+  2494471     6  10 Sem       0:00:55   0.26% qvm                 
+  2494471     7  10 Sem       0:00:54   0.23% qvm                 
+  2494471     5  10 Sem       0:00:31   0.21% qvm                 
+  2494471     9  10 Sem       0:00:55   0.20% qvm                 
+  2494471     8  10 Sem       0:00:55   0.14% qvm                 
+  2494471     2  10 Sem       0:00:47   0.13% qvm                 
+  2494471     4  10 Sem       0:00:15   0.07% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.07% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:07   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+        1    19  10 Run       0:00:00   0.03% kernel              
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+        1    15  10 Rcv       0:00:00   0.02% kernel              
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+    65546     5   9 NSlp      0:00:00   0.01% memorydump          
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.2% user, 0.0% kernel
+CPU  0 Idle: 86.8% 
+CPU  1 Idle: 89.0% 
+CPU  2 Idle: 96.6% 
+CPU  3 Idle: 97.7% 
+CPU  4 Idle: 97.5% 
+CPU  5 Idle: 98.8% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:50   0.89% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:29   0.78% qcore               
+  1642616     6  10 NSlp      0:01:13   0.32% logMain             
+  2494471     7  10 Sem       0:00:54   0.24% qvm                 
+  2494471     6  10 Sem       0:00:55   0.22% qvm                 
+  2494471     9  10 Sem       0:00:55   0.18% qvm                 
+  2494471     8  10 Sem       0:00:55   0.18% qvm                 
+  2494471     2  10 Sem       0:00:47   0.13% qvm                 
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+    65553     6  45 Intr      0:00:15   0.06% spi_service         
+   114715     3 120 NSlp      0:00:14   0.06% inc_tp              
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+  2494471     5  10 Sem       0:00:31   0.04% qvm                 
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1626233     1  10 NSlp      0:00:07   0.02% SerializerDiagnostics
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+        1    15  10 Run       0:00:00   0.02% kernel              
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+        1    19  41 Rcv       0:00:00   0.01% kernel              
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.1% user, 0.0% kernel
+CPU  0 Idle: 86.0% 
+CPU  1 Idle: 92.7% 
+CPU  2 Idle: 95.2% 
+CPU  3 Idle: 97.7% 
+CPU  4 Idle: 97.9% 
+CPU  5 Idle: 97.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:50   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:29   0.69% qcore               
+  1642616     6  10 NSlp      0:01:13   0.32% logMain             
+  2494471     9  10 Sem       0:00:55   0.22% qvm                 
+  2494471     6  10 Sem       0:00:56   0.22% qvm                 
+  2494471     8  10 Sem       0:00:55   0.21% qvm                 
+  2494471     7  10 Sem       0:00:55   0.20% qvm                 
+  2494471     2  10 Sem       0:00:47   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 Rply      0:00:15   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:31   0.04% qvm                 
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:09   0.04% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+        1    15  10 Rcv       0:00:00   0.02% kernel              
+  2494471     4  10 Sem       0:00:15   0.02% qvm                 
+   110616     2  30 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  10 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+        1    22  10 Rcv       0:00:00   0.00% kernel              
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1432 threads;
+CPU states: 4.1% user, 0.0% kernel
+CPU  0 Idle: 85.1% 
+CPU  1 Idle: 90.5% 
+CPU  2 Idle: 96.6% 
+CPU  3 Idle: 98.1% 
+CPU  4 Idle: 98.1% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2774M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 Run       0:02:51   0.80% AudioSystemControllerDeamon
+    65552    18  15 Run       0:02:29   0.77% qcore               
+  1642616     6  10 NSlp      0:01:13   0.32% logMain             
+  2494471     9  10 Sem       0:00:55   0.23% qvm                 
+  2494471     6  10 Sem       0:00:56   0.20% qvm                 
+  2494471     7  10 Sem       0:00:55   0.20% qvm                 
+  2494471     8  10 Sem       0:00:55   0.19% qvm                 
+  2494471     2  10 Sem       0:00:47   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 NSlp      0:00:15   0.06% inc_tp              
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:09   0.04% logMain             
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+    65554     4  15 Rply      0:00:07   0.03% i2c_service         
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  2494471     4  10 Sem       0:00:15   0.02% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 Send      0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+        1    14  41 Rcv       0:00:00   0.02% kernel              
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.02% qvm                 
+    65553     7  45 Intr      0:00:04   0.02% spi_service         
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     5  10 Sem       0:00:31   0.01% qvm                 
+        1    15  10 Rcv       0:00:00   0.01% kernel              
+  2494471     1  10 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2774MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.2% user, 0.0% kernel
+CPU  0 Idle: 85.5% 
+CPU  1 Idle: 90.9% 
+CPU  2 Idle: 96.0% 
+CPU  3 Idle: 97.9% 
+CPU  4 Idle: 97.9% 
+CPU  5 Idle: 98.7% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2773M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:51   0.88% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:30   0.69% qcore               
+  1642616     6  10 NSlp      0:01:13   0.32% logMain             
+  2494471     8  10 Sem       0:00:55   0.23% qvm                 
+  2494471     6  10 Sem       0:00:56   0.22% qvm                 
+  2494471     9  10 Sem       0:00:55   0.20% qvm                 
+  2494471     7  10 Sem       0:00:55   0.18% qvm                 
+  2494471     2  10 Sem       0:00:47   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 Rply      0:00:15   0.06% inc_tp              
+   114715     5 120 NSlp      0:00:10   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+        1    22  10 Run       0:00:00   0.02% kernel              
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+        1    14  10 Rcv       0:00:00   0.01% kernel              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+  2494471     3  10 Sem       0:00:13   0.01% qvm                 
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+  2494471     5  10 Sem       0:00:31   0.01% qvm                 
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        94%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2773MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 2.9% user, 0.0% kernel
+CPU  0 Idle: 90.6% 
+CPU  1 Idle: 95.3% 
+CPU  2 Idle: 96.8% 
+CPU  3 Idle: 97.7% 
+CPU  4 Idle: 97.9% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2773M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1642616     6  10 NSlp      0:01:13   0.31% logMain             
+  2494471     8  10 Sem       0:00:55   0.23% qvm                 
+  2494471     9  10 Sem       0:00:56   0.21% qvm                 
+  1368173    17  15 NSlp      0:02:51   0.19% AudioSystemControllerDeamon
+  2494471     7  10 Sem       0:00:55   0.18% qvm                 
+  2494471     6  10 Sem       0:00:56   0.18% qvm                 
+    65552    18  11 Rcv       0:02:30   0.17% qcore               
+  2494471     2  10 Sem       0:00:47   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.06% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 NSlp      0:00:15   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:31   0.05% qvm                 
+   114715     5 120 NSlp      0:00:10   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+        1    22  10 Rcv       0:00:00   0.03% kernel              
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+  2494471     3  10 Sem       0:00:13   0.01% qvm                 
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+        1    19  10 Run       0:00:00   0.01% kernel              
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+    65554     4  15 Rcv       0:00:07   0.00% i2c_service         
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        95%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2773MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 3.5% user, 0.0% kernel
+CPU  0 Idle: 87.0% 
+CPU  1 Idle: 94.0% 
+CPU  2 Idle: 96.2% 
+CPU  3 Idle: 98.0% 
+CPU  4 Idle: 98.1% 
+CPU  5 Idle: 98.8% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2773M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:51   0.59% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:30   0.52% qcore               
+  1642616     6  10 NSlp      0:01:13   0.31% logMain             
+  2494471     9  10 Sem       0:00:56   0.22% qvm                 
+  2494471     7  10 Sem       0:00:55   0.17% qvm                 
+  2494471     8  10 Sem       0:00:55   0.16% qvm                 
+  2494471     6  10 Sem       0:00:56   0.16% qvm                 
+  2494471     2  10 Sem       0:00:47   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 Rply      0:00:15   0.06% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 NSlp      0:00:10   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+        1    14  10 Rcv       0:00:00   0.02% kernel              
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+    65554     4  15 Rcv       0:00:07   0.02% i2c_service         
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+  2494471     3  10 Sem       0:00:13   0.01% qvm                 
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+  2494471     5  10 Sem       0:00:31   0.01% qvm                 
+        1    19  10 Run       0:00:00   0.01% kernel              
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   89%        95%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   94%        98%        96% 
+CPU 5 idle:   97%        99%        98% 
+CPU 6 idle:   98%        99%        98% 
+CPU 7 idle:   98%        99%        98% 
+Mem Avail:   2773MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 14.3% user, 0.0% kernel
+CPU  0 Idle: 85.8% 
+CPU  1 Idle: 88.1% 
+CPU  2 Idle: 95.9% 
+CPU  3 Idle: 97.6% 
+CPU  4 Idle: 71.9% 
+CPU  5 Idle: 81.6% 
+CPU  6 Idle: 78.3% 
+CPU  7 Idle: 85.6% 
+Memory: 16373M total, 2773M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  2494471     5  10 Run       0:00:35   9.74% qvm                 
+  1368173    17  15 NSlp      0:02:52   0.89% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:30   0.78% qcore               
+  1642616     6  10 NSlp      0:01:13   0.33% logMain             
+  2494471     7  10 Sem       0:00:55   0.31% qvm                 
+  2494471     8  10 Sem       0:00:55   0.30% qvm                 
+  2494471     9  10 Sem       0:00:56   0.27% qvm                 
+  2494471     6  10 Sem       0:00:56   0.21% qvm                 
+  2494471     2  10 Sem       0:00:47   0.14% qvm                 
+    65553     5 120 Rcv       0:00:15   0.07% spi_service         
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+   114715     3 120 NSlp      0:00:15   0.06% inc_tp              
+   114715     5 120 NSlp      0:00:10   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:09   0.04% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+        1    19  41 Rcv       0:00:00   0.03% kernel              
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+  2494471     3  10 Sem       0:00:13   0.01% qvm                 
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+        1    14  10 Run       0:00:00   0.01% kernel              
+   118835     2  21 Rcv       0:00:01   0.01% devb-ufs-qualcomm   
+
+             Min        Max       Average 
+CPU 0 idle:   83%        90%        85% 
+CPU 1 idle:   88%        95%        91% 
+CPU 2 idle:   94%        97%        95% 
+CPU 3 idle:   96%        98%        97% 
+CPU 4 idle:   71%        98%        96% 
+CPU 5 idle:   81%        99%        97% 
+CPU 6 idle:   78%        99%        98% 
+CPU 7 idle:   85%        99%        98% 
+Mem Avail:   2773MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 12.6% user, 0.0% kernel
+CPU  0 Idle: 79.7% 
+CPU  1 Idle: 82.2% 
+CPU  2 Idle: 81.7% 
+CPU  3 Idle: 92.5% 
+CPU  4 Idle: 89.5% 
+CPU  5 Idle: 79.9% 
+CPU  6 Idle: 95.4% 
+CPU  7 Idle: 97.9% 
+Memory: 16373M total, 2773M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  2494471     5  10 Sem       0:00:36   3.93% qvm                 
+  2494471     7  10 Sem       0:00:56   1.38% qvm                 
+  2494471     8  10 Sem       0:00:56   1.30% qvm                 
+  2494471     6  10 Sem       0:00:56   1.27% qvm                 
+  2494471     9  10 Sem       0:00:56   1.27% qvm                 
+  1368173    17  15 NSlp      0:02:52   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:31   0.69% qcore               
+  1642616     6  10 NSlp      0:01:13   0.33% logMain             
+  2494471     2  10 Sem       0:00:47   0.24% qvm                 
+  2494471     4  10 Sem       0:00:15   0.07% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.07% spi_service         
+   114715     3 120 Rply      0:00:15   0.06% inc_tp              
+   114715     5 120 NSlp      0:00:10   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+    65551     2 120 Rcv       0:00:07   0.03% qcgpio              
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+   110616     2  21 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+        1    14  30 Rcv       0:00:00   0.02% kernel              
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.02% i2c_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  2494471     3  10 Sem       0:00:13   0.01% qvm                 
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.01% inc_tp              
+    65554     7  10 CdV       0:00:01   0.00% i2c_service         
+
+             Min        Max       Average 
+CPU 0 idle:   79%        90%        85% 
+CPU 1 idle:   82%        95%        91% 
+CPU 2 idle:   81%        97%        95% 
+CPU 3 idle:   92%        98%        97% 
+CPU 4 idle:   71%        98%        96% 
+CPU 5 idle:   79%        99%        97% 
+CPU 6 idle:   78%        99%        98% 
+CPU 7 idle:   85%        99%        98% 
+Mem Avail:   2773MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+137 processes; 1433 threads;
+CPU states: 4.2% user, 0.0% kernel
+CPU  0 Idle: 84.8% 
+CPU  1 Idle: 90.9% 
+CPU  2 Idle: 96.4% 
+CPU  3 Idle: 97.8% 
+CPU  4 Idle: 97.7% 
+CPU  5 Idle: 98.9% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 99.3% 
+Memory: 16373M total, 2773M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:52   0.89% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:31   0.78% qcore               
+  1642616     6  10 NSlp      0:01:14   0.32% logMain             
+  2494471     9  10 Sem       0:00:56   0.22% qvm                 
+  2494471     7  10 Sem       0:00:56   0.20% qvm                 
+  2494471     6  10 Sem       0:00:57   0.16% qvm                 
+  2494471     8  10 Sem       0:00:56   0.16% qvm                 
+  2494471     2  10 Sem       0:00:47   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.07% spi_service         
+   114715     3 120 NSlp      0:00:15   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:36   0.05% qvm                 
+   114715     5 120 NSlp      0:00:10   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+        1    19  10 Run       0:00:00   0.04% kernel              
+  1642616     7  10 CdV       0:00:09   0.04% logMain             
+  2494471     4  10 Sem       0:00:15   0.04% qvm                 
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+    65551     2 120 Rcv       0:00:08   0.03% qcgpio              
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.03% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+  2494471     3  10 Sem       0:00:13   0.01% qvm                 
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+    65546     5   9 NSlp      0:00:00   0.01% memorydump          
+        1    14  41 Rcv       0:00:00   0.01% kernel              
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+
+             Min        Max       Average 
+CPU 0 idle:   79%        90%        85% 
+CPU 1 idle:   82%        95%        91% 
+CPU 2 idle:   81%        97%        95% 
+CPU 3 idle:   92%        98%        97% 
+CPU 4 idle:   71%        98%        96% 
+CPU 5 idle:   79%        99%        97% 
+CPU 6 idle:   78%        99%        98% 
+CPU 7 idle:   85%        99%        98% 
+Mem Avail:   2773MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+134 processes; 1430 threads;
+CPU states: 4.1% user, 0.0% kernel
+CPU  0 Idle: 87.1% 
+CPU  1 Idle: 90.4% 
+CPU  2 Idle: 96.7% 
+CPU  3 Idle: 97.8% 
+CPU  4 Idle: 97.2% 
+CPU  5 Idle: 98.5% 
+CPU  6 Idle: 99.1% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2777M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:53   0.79% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:31   0.69% qcore               
+  1642616     6  10 NSlp      0:01:14   0.32% logMain             
+  2494471     7  10 Sem       0:00:56   0.24% qvm                 
+  2494471     9  10 Sem       0:00:56   0.21% qvm                 
+  2494471     8  10 Sem       0:00:56   0.20% qvm                 
+  2494471     6  10 Sem       0:00:57   0.16% qvm                 
+  2494471     2  10 Sem       0:00:47   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 Rply      0:00:15   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:36   0.05% qvm                 
+  2494471     4  10 Sem       0:00:15   0.04% qvm                 
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+    65551     2 120 Rcv       0:00:08   0.03% qcgpio              
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:06   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+        1    19  10 Run       0:00:00   0.02% kernel              
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+  2494471     3  10 Sem       0:00:13   0.01% qvm                 
+    65554     5  21 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  11 Rcv       0:00:02   0.01% qvm                 
+        1    22  10 Rcv       0:00:00   0.01% kernel              
+   114715     6 120 Rcv       0:00:02   0.01% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   79%        90%        85% 
+CPU 1 idle:   82%        95%        91% 
+CPU 2 idle:   81%        97%        95% 
+CPU 3 idle:   92%        98%        97% 
+CPU 4 idle:   71%        98%        96% 
+CPU 5 idle:   79%        99%        97% 
+CPU 6 idle:   78%        99%        98% 
+CPU 7 idle:   85%        99%        98% 
+Mem Avail:   2773MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+134 processes; 1429 threads;
+CPU states: 4.0% user, 0.0% kernel
+CPU  0 Idle: 85.8% 
+CPU  1 Idle: 91.9% 
+CPU  2 Idle: 96.2% 
+CPU  3 Idle: 97.6% 
+CPU  4 Idle: 97.9% 
+CPU  5 Idle: 98.6% 
+CPU  6 Idle: 99.2% 
+CPU  7 Idle: 99.4% 
+Memory: 16373M total, 2777M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 Rply      0:02:53   0.79% AudioSystemControllerDeamon
+    65552    18  15 Run       0:02:31   0.70% qcore               
+  1642616     6  10 NSlp      0:01:14   0.32% logMain             
+  2494471     9  10 Sem       0:00:57   0.22% qvm                 
+  2494471     7  10 Sem       0:00:56   0.19% qvm                 
+  2494471     6  10 Sem       0:00:57   0.18% qvm                 
+  2494471     8  10 Sem       0:00:56   0.18% qvm                 
+  2494471     2  10 Sem       0:00:47   0.14% qvm                 
+    65553     6  45 Intr      0:00:15   0.06% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 NSlp      0:00:15   0.06% inc_tp              
+  2494471     5  10 Sem       0:00:36   0.04% qvm                 
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+  2494471     4  10 Sem       0:00:15   0.04% qvm                 
+  1642616     7  10 CdV       0:00:09   0.04% logMain             
+    65554     4  15 Rply      0:00:07   0.03% i2c_service         
+    65551     2 120 Rcv       0:00:08   0.03% qcgpio              
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+        1    19  10 Run       0:00:00   0.03% kernel              
+  1323119     1  10 NSlp      0:00:06   0.02% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+  1626233     1  10 NSlp      0:00:07   0.02% SerializerDiagnostics
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+  2494471     3  10 Sem       0:00:13   0.01% qvm                 
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+        1    14  41 Rcv       0:00:00   0.01% kernel              
+  2494471     1  10 Rcv       0:00:02   0.01% qvm                 
+  1368173     1  15 Rcv       0:00:02   0.00% AudioSystemControllerDeamon
+
+             Min        Max       Average 
+CPU 0 idle:   79%        90%        85% 
+CPU 1 idle:   82%        95%        91% 
+CPU 2 idle:   81%        97%        95% 
+CPU 3 idle:   92%        98%        97% 
+CPU 4 idle:   71%        98%        96% 
+CPU 5 idle:   79%        99%        97% 
+CPU 6 idle:   78%        99%        98% 
+CPU 7 idle:   85%        99%        98% 
+Mem Avail:   2773MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
+134 processes; 1430 threads;
+CPU states: 4.4% user, 0.0% kernel
+CPU  0 Idle: 84.6% 
+CPU  1 Idle: 91.3% 
+CPU  2 Idle: 96.7% 
+CPU  3 Idle: 98.0% 
+CPU  4 Idle: 96.9% 
+CPU  5 Idle: 98.6% 
+CPU  6 Idle: 99.3% 
+CPU  7 Idle: 98.7% 
+Memory: 16373M total, 2777M avail, page size 4K
+
+      PID   TID PRI STATE    HH:MM:SS    CPU  COMMAND             
+  1368173    17  15 NSlp      0:02:53   0.88% AudioSystemControllerDeamon
+    65552    18  11 Rcv       0:02:32   0.77% qcore               
+  1642616     6  10 NSlp      0:01:14   0.32% logMain             
+  2494471     5  10 Sem       0:00:37   0.24% qvm                 
+  2494471     7  10 Sem       0:00:56   0.21% qvm                 
+  2494471     9  10 Sem       0:00:57   0.20% qvm                 
+  2494471     6  10 Sem       0:00:57   0.18% qvm                 
+  2494471     8  10 Sem       0:00:56   0.16% qvm                 
+  2494471     2  10 Sem       0:00:47   0.13% qvm                 
+    65553     6  45 Intr      0:00:15   0.07% spi_service         
+    65553     5 120 Rcv       0:00:15   0.06% spi_service         
+   114715     3 120 NSlp      0:00:15   0.06% inc_tp              
+   114715     5 120 Rply      0:00:10   0.04% inc_tp              
+    12291     1  10 Rcv       0:00:10   0.04% slogger2            
+  1642616     7  10 CdV       0:00:09   0.03% logMain             
+    65554     4  15 Rcv       0:00:07   0.03% i2c_service         
+    65553     4 120 Rcv       0:00:08   0.03% spi_service         
+    65551     2 120 Rcv       0:00:08   0.03% qcgpio              
+  2494471     4  10 Sem       0:00:15   0.03% qvm                 
+  1626233     1  10 NSlp      0:00:07   0.03% SerializerDiagnostics
+  1323119     1  10 NSlp      0:00:07   0.03% ZeekrPlayEngine_1.0 
+  1380467     4  11 NSlp      0:00:06   0.02% sm52inc-dispatcher  
+  1679484     1  11 NSlp      0:00:05   0.02% soc-normal-bootmode-sender
+  2494471    18  11 CdV       0:00:05   0.02% qvm                 
+  1679483     1  11 NSlp      0:00:05   0.02% signature-unit-controller
+   110616     2  10 Rcv       0:00:06   0.02% io-pkt-v6-hc        
+  1368173    14  15 NSlp      0:00:05   0.02% AudioSystemControllerDeamon
+        1    19  30 Rcv       0:00:00   0.02% kernel              
+        1    14  10 Run       0:00:00   0.02% kernel              
+    65553     7  45 Intr      0:00:04   0.01% spi_service         
+    65554    11  41 Intr      0:00:04   0.01% i2c_service         
+   118828    10  43 NSlp      0:00:04   0.01% kgsl                
+   114715     4 120 Rcv       0:00:04   0.01% inc_tp              
+  2494471     3  10 Sem       0:00:13   0.01% qvm                 
+  1380467     1  11 NSlp      0:00:03   0.01% sm52inc-dispatcher  
+    65554     5  10 Rcv       0:00:03   0.01% i2c_service         
+   118827     7  30 NSlp      0:00:03   0.01% vehicle_service     
+     8194     5  10 Rcv       0:00:03   0.01% secpolgenerate      
+  2494471     1  10 Rcv       0:00:02   0.01% qvm                 
+   114715     6 120 Rcv       0:00:02   0.00% inc_tp              
+
+             Min        Max       Average 
+CPU 0 idle:   79%        90%        85% 
+CPU 1 idle:   82%        95%        91% 
+CPU 2 idle:   81%        97%        95% 
+CPU 3 idle:   92%        98%        97% 
+CPU 4 idle:   71%        98%        96% 
+CPU 5 idle:   79%        99%        97% 
+CPU 6 idle:   78%        99%        98% 
+CPU 7 idle:   85%        99%        98% 
+Mem Avail:   2773MB      2782MB      2775MB  
+Processes:   131        137        136    
+Threads:     1427        1433        1432    
+
