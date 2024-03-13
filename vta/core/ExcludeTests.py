@@ -1,3 +1,9 @@
+# ============================================================================================================
+# C O P Y R I G H T
+# ------------------------------------------------------------------------------------------------------------
+# \copyright (C) 2024 Robert Bosch GmbH. All rights reserved.
+# ============================================================================================================
+
 """Pre-run modifier that excludes tests by their name.
 
 Tests to exclude are specified by using a pattern that is both case and space
