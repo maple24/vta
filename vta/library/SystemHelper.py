@@ -5,10 +5,7 @@ from typing import Optional
 import serial
 from loguru import logger
 
-try:
-    from GenericHelper import GenericHelper
-except:
-    from .GenericHelper import GenericHelper
+from vta.library.GenericHelper import GenericHelper
 
 
 class SystemHelper:
