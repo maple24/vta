@@ -11,8 +11,7 @@ import re
 import sys
 import tarfile
 import zipfile
-from collections.abc import Callable, Generator
-from concurrent.futures import ThreadPoolExecutor
+from collections.abc import Callable
 from datetime import datetime
 from typing import Optional, Tuple
 
@@ -23,10 +22,7 @@ from artifactory import ArtifactoryPath
 from loguru import logger
 from tqdm import tqdm
 
-try:
-    from utility.Downloader import Multiple_Thread_Downloader, Single_Thread_Downloader
-except:
-    from .utility.Downloader import Multiple_Thread_Downloader, Single_Thread_Downloader
+from vta.api.utility.Downloader import Multiple_Thread_Downloader, Single_Thread_Downloader
 
 urllib3.disable_warnings()
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])

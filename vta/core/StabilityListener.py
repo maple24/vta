@@ -7,10 +7,10 @@
 from datetime import datetime
 from typing import Optional
 
-from db.DBHelper import DBHelper
-from db.DBtables import Stability
+from vta.core.db.DBHelper import DBHelper
+from vta.core.db.DBtables import Stability
 from loguru import logger
-from mail.EMAILClient import EmailClient
+from vta.core.mail.EMAILClient import EmailClient
 from robot.libraries.BuiltIn import BuiltIn
 
 

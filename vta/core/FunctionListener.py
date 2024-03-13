@@ -15,11 +15,11 @@ from typing import Optional
 from loguru import logger
 
 # robot --listener .\PythonListener.py --outputdir temp --output start.xml -X .\TEST.robot
-from mail.EMAILClient import EmailClient
-from mail.mail_template import html_body, html_head, html_signature
+from vta.core.mail.EMAILClient import EmailClient
+from vta.core.mail.mail_template import html_body, html_head, html_signature
 from robot.libraries.BuiltIn import BuiltIn
 from RobotVisitor import getallTestCases
-from rqm.CRQM import CRQMClient
+from vta.core.rqm.CRQM import CRQMClient
 
 
 def mail_generator(info_container, result_container):
