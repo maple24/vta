@@ -25,6 +25,8 @@ jobs:
       if: always()
     - run: poetry run ensure_header --check
       if: always()
+    - run: poetry run pytest
+      if: always()
     - name: Run markdownlint
       run: markdownlint '**/*.md'
       if: always()
