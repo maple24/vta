@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "vta"
+version = "0.1.0"
+description = "Vite Test Automation Framework"
+authors = ["ziu7wx <jin.zhu5@bosch.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+artifactory = "^0.1.17"
+black = "^24.3.0"
+charset-normalizer = "^3.3.2"
+isort = "^5.13.2"
+loguru = "^0.7.2"
+lxml = "^5.1.0"
+matplotlib = "^3.8.3"
+mypy = "^1.9.0"
+mysqlclient = "^2.2.4"
+numpy = "^1.26.4"
+poetry-core = "^1.9.0"
+protobuf = "^5.26.0"
+psutil = "^5.9.8"
+pydantic = "^2.6.4"
+pygments = "^2.17.2"
+pyserial = "^3.5"
+pytz = "^2024.1"
+pywin32 = "^306"
+requests = "^2.31.0"
+rich = "^13.7.1"
+robotframework = "^7.0"
+schedule = "^1.2.1"
+sqlmodel = "^0.0.16"
+tqdm = "^4.66.2"
+typer = "^0.9.0"
+typing-extensions = "^4.10.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^6.0.0"
+pytest-mock = "*"
+
+[tool.poetry.scripts]
+ensure_header = "ensure_license_header:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,31 @@
+name: basic checks
+
+on: pull_request
+
+jobs:
+  basic_checks:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+    - run: |
+        pip install pipx
+        pipx install poetry
+        poetry install
+        poetry shell
+        npm install -g markdownlint-cli
+    - run: isort --diff --check src
+      if: always()
+    - run: black --diff --check src
+      if: always()
+    - run: flake8 src
+      if: always()
+    - run: mypy src
+      if: always()
+    - run: ensure_header --check
+      if: always()
+    - name: Run markdownlint
+      run: markdownlint '**/*.md'
+      if: always()

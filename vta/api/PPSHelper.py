@@ -4,10 +4,6 @@
 # \copyright (C) 2024 Robert Bosch GmbH. All rights reserved.
 # ============================================================================================================
 
-import os
-import sys
-import time
-
 import serial
 from loguru import logger
 
