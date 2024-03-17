@@ -2,6 +2,8 @@ import subprocess
 
 from loguru import logger
 
+from ensure_license_header import main as ensure_header
+
 
 def run_command(command):
     logger.info(f"Running command: {command}")
@@ -13,14 +15,10 @@ def run_command(command):
 
 
 def main():
-    commands = [
-        "black .",
-        "flake8",
-        "mypy .",
-        "isort .",
-    ]
+    commands = ["black .", "isort ."]
     for command in commands:
         run_command(command)
+    ensure_header()
 
 
 if __name__ == "__main__":
