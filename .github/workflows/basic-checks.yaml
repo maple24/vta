@@ -14,17 +14,16 @@ jobs:
         pip install pipx
         pipx install poetry
         poetry install
-        poetry shell
         npm install -g markdownlint-cli
-    - run: isort --diff --check src
+    - run: poetry run isort --diff --check src
       if: always()
-    - run: black --diff --check src
+    - run: poetry run black --diff --check src
       if: always()
-    - run: flake8 src
+    - run: poetry run flake8 src
       if: always()
-    - run: mypy src
+    - run: poetry run mypy src
       if: always()
-    - run: ensure_header --check
+    - run: poetry run ensure_header --check
       if: always()
     - name: Run markdownlint
       run: markdownlint '**/*.md'

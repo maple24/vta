@@ -33,10 +33,17 @@ sqlmodel = "^0.0.16"
 tqdm = "^4.66.2"
 typer = "^0.9.0"
 typing-extensions = "^4.10.0"
+flake8 = "^7.0.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^6.0.0"
 pytest-mock = "*"
+
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "*"
 
 [tool.poetry.scripts]
 ensure_header = "ensure_license_header:main"
