@@ -5,6 +5,7 @@
 # ============================================================================================================
 
 from loguru import logger
+
 from vta.api.utility.HTTPRequester import HTTPRequester
 
 

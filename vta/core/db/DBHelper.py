@@ -18,8 +18,7 @@ except:
 
 
 class DBHelper:
-    def __init__(self) -> None:
-        ...
+    def __init__(self) -> None: ...
 
     def connect(self, table: BaseModel, credential: dict, echo=False) -> None:
         """
@@ -78,11 +77,9 @@ class DBHelper:
         logger.info("Close database session!")
         self.session.close()
 
-    def delete_table(self):
-        ...
+    def delete_table(self): ...
 
-    def delete_row(self):
-        ...
+    def delete_row(self): ...
 
 
 if __name__ == "__main__":

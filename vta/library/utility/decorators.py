@@ -4,6 +4,7 @@
 # \copyright (C) 2024 Robert Bosch GmbH. All rights reserved.
 # ============================================================================================================
 
+
 def Singleton(cls):
     _instance = {}
 

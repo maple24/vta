@@ -7,11 +7,12 @@
 from datetime import datetime
 from typing import Optional
 
+from loguru import logger
+from robot.libraries.BuiltIn import BuiltIn
+
 from vta.core.db.DBHelper import DBHelper
 from vta.core.db.DBtables import Stability
-from loguru import logger
 from vta.core.mail.EMAILClient import EmailClient
-from robot.libraries.BuiltIn import BuiltIn
 
 
 class StabilityListener:
@@ -91,8 +92,7 @@ class StabilityListener:
         self.mail_credential = BuiltIn().get_variable_value("${MAIL_CREDENTIAL}")
         self._remove_tests(test)
 
-    def start_test(self, test, result):
-        ...
+    def start_test(self, test, result): ...
 
     def end_test(self, test, result):
         if tmp := BuiltIn().get_variable_value("${TEST_MESSAGE}"):

@@ -34,11 +34,9 @@ class Performance:
             logger.error("Binary folder does not exist!")
             sys.exit(1)
 
-    def bootchart(self):
-        ...
+    def bootchart(self): ...
 
-    def android_boot(self):
-        ...
+    def android_boot(self): ...
 
     def android_nfs_iospeed(self, disk: str, type: str = "w") -> dict:
         """test android nfs i/o speed by `dd` command for `nfs_log` and `mount` disk

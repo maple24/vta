@@ -13,12 +13,12 @@ from datetime import datetime
 from typing import Optional
 
 from loguru import logger
+from robot.libraries.BuiltIn import BuiltIn
+from RobotVisitor import getallTestCases
 
 # robot --listener .\PythonListener.py --outputdir temp --output start.xml -X .\TEST.robot
 from vta.core.mail.EMAILClient import EmailClient
 from vta.core.mail.mail_template import html_body, html_head, html_signature
-from robot.libraries.BuiltIn import BuiltIn
-from RobotVisitor import getallTestCases
 from vta.core.rqm.CRQM import CRQMClient
 
 

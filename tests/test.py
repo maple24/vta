@@ -4,6 +4,7 @@
 # \copyright (C) 2024 Robert Bosch GmbH. All rights reserved.
 # ============================================================================================================
 
+
 class Person:
     def __init__(self, name, age) -> None:
         self.name = name

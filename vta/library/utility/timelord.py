@@ -17,7 +17,6 @@ def get_day_abbreviation():
 
 
 if __name__ == "__main__":
-    from datetime import datetime
 
     # get current datetime
     dt = datetime.now()

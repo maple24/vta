@@ -15,13 +15,13 @@ jobs:
         pipx install poetry
         poetry install
         npm install -g markdownlint-cli
-    - run: poetry run isort --diff --check src
+    - run: poetry run isort --diff --check vta
       if: always()
-    - run: poetry run black --diff --check src
+    - run: poetry run black --diff --check vta
       if: always()
-    - run: poetry run flake8 src
+    - run: poetry run flake8 vta
       if: always()
-    - run: poetry run mypy src
+    - run: poetry run mypy vta
       if: always()
     - run: poetry run ensure_header --check
       if: always()

@@ -42,7 +42,6 @@ import requests
 from loguru import logger
 from lxml import etree
 from requests.exceptions import ConnectionError
-
 # Disable request warning
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
@@ -925,9 +924,9 @@ class CRQMClient:
             nsmap,
         )
         if oRobotFile != None:
-            oRobotFile.find(
-                f'{{{self.NAMESPACES["ns2"]}}}value', nsmap
-            ).text = sRobotFile
+            oRobotFile.find(f'{{{self.NAMESPACES["ns2"]}}}value', nsmap).text = (
+                sRobotFile
+            )
 
         # link to provided valid team-area
         if sTeam:
@@ -1543,10 +1542,9 @@ class CRQMClient:
                         res.text, tagID="ns2:webId"
                     )
                 except Exception as error:
-                    returnObj[
-                        "message"
-                    ] = "Extract ID information from response failed. Reason: %s" % str(
-                        error
+                    returnObj["message"] = (
+                        "Extract ID information from response failed. Reason: %s"
+                        % str(error)
                     )
         else:
             # Get new creation ID from response
@@ -1564,10 +1562,9 @@ class CRQMClient:
                 returnObj["success"] = True
 
             except Exception as error:
-                returnObj[
-                    "message"
-                ] = "Extract ID information from response failed. Reason: %s" % str(
-                    error
+                returnObj["message"] = (
+                    "Extract ID information from response failed. Reason: %s"
+                    % str(error)
                 )
 
         return returnObj
