@@ -14,6 +14,7 @@
 - 🤝Interacting database with [SQLModel](https://sqlmodel.tiangolo.com/) [Engine](https://docs.sqlalchemy.org/en/20/core/engines.html#mysql)
 - 🌽Run keywords asynchronously [GeventLibrary]<https://github.com/eldaduzman/robotframework-gevent>
 - ⚡️An extremely fast Python linter [Ruff](https://beta.ruff.rs/docs/)
+- 📘Python packaging and dependency management with [Poetry](https://python-poetry.org/)
 - 📤Out-of-box RQM API
 - 📧Mail with smpt server
 - 🏃‍♂️Delete logs automatically
@@ -36,38 +37,41 @@
 
 ## Quick start
 
-1. clone project
+1. Clone project
 
     ```sh
     git clone https://github.com/maple24/vta.git
     ```
 
-2. create python virtual environment
+2. Install dependencies
 
     ```sh
-    cd vta
-    python -m venv .venv
+    poetry install
     ```
 
-3. activate venv and install dependencies
+3. (Optional) Activate virtual environment
 
     ```sh
-    .venv/scripts/activate
-    pip install -r requirements.txt
+    poetry shell
     ```
 
-4. run HelloWorld.bat and check logs in /log
-5. (optional) set your pythonpath for robotframework
+4. (Optional) Run script without activating virtual environment
+
+   ```sh
+    poetry run <script>
+   ```
+
+5. (Optional) Set your pythonpath for robotframework
 
     ```sh
     Go to the Robot Framework Language Server extension and go to extension settings
     In there you'll find: Robot > Language-server: Python
     ```
 
-6. format your code
+6. Format your code
 
     ```sh
-    python -m black .\vta\
+    poetry run format
     ```
 
 ## Architecture

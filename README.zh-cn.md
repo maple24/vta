@@ -14,6 +14,7 @@
 - 🤝使用 [SQLModel](https://sqlmodel.tiangolo.com/) [Engine](https://docs.sqlalchemy.org/en/20/core/engines.html#mysql) 与数据库交互
 - 🌽异步运行关键字 [GeventLibrary](https://github.com/eldaduzman/robotframework-gevent)
 - ⚡️极速 Python 代码检查工具 [Ruff](https://beta.ruff.rs/docs/)
+- 📘 使用 Poetry 进行 Python 打包和依赖管理
 - 📤提供 RQM API
 - 📧通过 SMTP 服务器发送邮件
 - 🏃‍♂️自动删除日志
@@ -42,21 +43,24 @@
     git clone https://github.com/maple24/vta.git
     ```
 
-2. 创建 Python 虚拟环境
+2. 安装依赖
 
     ```sh
-    cd vta
-    python -m venv .venv
+    poetry install
     ```
 
-3. 激活虚拟环境并安装依赖
+3. （可选）激活虚拟环境
 
     ```sh
-    .venv/scripts/activate
-    pip install -r requirements.txt
+    poetry shell
     ```
 
-4. 运行 HelloWorld.bat 并检查日志在 /log 中
+4. （可选）在不激活虚拟环境的情况下运行脚本
+
+   ```sh
+    poetry run <script>
+   ```
+
 5. （可选）为 robotframework 设置您的 pythonpath
 
     ```sh
@@ -67,7 +71,7 @@
 6. 格式化您的代码
 
     ```sh
-    python -m black .\vta\
+    poetry run format
     ```
 
 ## 架构
