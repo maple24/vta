@@ -12,7 +12,7 @@ from pathlib import Path
 
 from loguru import logger
 from robot import run_cli
-from utils import find_file, rotate_folder
+from .utils import find_file, rotate_folder
 
 
 def parse_arguments():
