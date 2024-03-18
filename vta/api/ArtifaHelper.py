@@ -22,10 +22,8 @@ from artifactory import ArtifactoryPath
 from loguru import logger
 from tqdm import tqdm
 
-from vta.api.utility.Downloader import (
-    Multiple_Thread_Downloader,
-    Single_Thread_Downloader,
-)
+from vta.api.utility.Downloader import (Multiple_Thread_Downloader,
+                                        Single_Thread_Downloader)
 
 urllib3.disable_warnings()
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
