@@ -7,6 +7,7 @@
 import os
 import shutil
 import time
+from pathlib import Path
 from typing import Optional
 
 from loguru import logger
@@ -29,12 +30,12 @@ def rotate_folder(folder_path: str, days: int = 7) -> None:
                 )
 
 
-def find_file(directory: str, file_name: str) -> Optional[str]:
+def find_file(directory: Path, file_name: str) -> Optional[Path]:
     for root, dirs, files in os.walk(directory):
         for file in files:
             if file == file_name:
-                return os.path.join(root, file)
-    return file_name
+                return Path(root) / file_name
+    return None
 
 
 if __name__ == "__main__":
