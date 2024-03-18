@@ -12,6 +12,7 @@ from pathlib import Path
 
 from loguru import logger
 from robot import rebot_cli, run_cli
+
 from .utils import find_file, rotate_folder
 
 
