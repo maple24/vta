@@ -65,7 +65,7 @@ def main():
 
     count = 1
     for i in range(args.max_loop):
-        logger.info("Start running test!")
+        logger.info("!!Start running stability test!!")
         try:
             logger.remove()
         except ValueError:
