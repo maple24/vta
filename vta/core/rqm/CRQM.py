@@ -925,9 +925,9 @@ class CRQMClient:
             nsmap,
         )
         if oRobotFile != None:
-            oRobotFile.find(f'{{{self.NAMESPACES["ns2"]}}}value', nsmap).text = (
-                sRobotFile
-            )
+            oRobotFile.find(
+                f'{{{self.NAMESPACES["ns2"]}}}value', nsmap
+            ).text = sRobotFile
 
         # link to provided valid team-area
         if sTeam:
@@ -1543,9 +1543,10 @@ class CRQMClient:
                         res.text, tagID="ns2:webId"
                     )
                 except Exception as error:
-                    returnObj["message"] = (
-                        "Extract ID information from response failed. Reason: %s"
-                        % str(error)
+                    returnObj[
+                        "message"
+                    ] = "Extract ID information from response failed. Reason: %s" % str(
+                        error
                     )
         else:
             # Get new creation ID from response
@@ -1563,9 +1564,10 @@ class CRQMClient:
                 returnObj["success"] = True
 
             except Exception as error:
-                returnObj["message"] = (
-                    "Extract ID information from response failed. Reason: %s"
-                    % str(error)
+                returnObj[
+                    "message"
+                ] = "Extract ID information from response failed. Reason: %s" % str(
+                    error
                 )
 
         return returnObj
@@ -1587,7 +1589,7 @@ class CRQMClient:
               {\
                  'success' : False, \
                  'id': None, \
-                 'message': '', \ 
+                 'message': '', \
                  'status_code': '' \
               }.
         """
@@ -1621,7 +1623,7 @@ class CRQMClient:
            forceCreate (optional) : if True, force to create new Test Environment without existing verification.
 
         Returns:
-           returnObj: a response dictionary which contains status, ID, status_code and error message.      
+           returnObj: a response dictionary which contains status, ID, status_code and error message.
               {\
                  'success' : False, \
                  'id': None, \
@@ -1659,7 +1661,7 @@ class CRQMClient:
            forceCreate (optional) : if True, force to create new Test Suite without existing verification.
 
         Returns:
-           returnObj: a response dictionary which contains status, ID, status_code and error message.      
+           returnObj: a response dictionary which contains status, ID, status_code and error message.
               {\
                  'success' : False, \
                  'id': None, \
