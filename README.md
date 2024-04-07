@@ -15,6 +15,7 @@
 - 🌽Run keywords asynchronously [GeventLibrary]<https://github.com/eldaduzman/robotframework-gevent>
 - ⚡️An extremely fast Python linter [Ruff](https://beta.ruff.rs/docs/)
 - 📘Python packaging and dependency management with [Poetry](https://python-poetry.org/)
+- 💡Command line interface with [Click](https://click.palletsprojects.com/en/8.1.x/)
 - 📤Out-of-box RQM API
 - 📧Mail with smpt server
 - 🏃‍♂️Delete logs automatically

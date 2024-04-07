@@ -14,6 +14,8 @@
 - 🤝使用 [SQLModel](https://sqlmodel.tiangolo.com/) [Engine](https://docs.sqlalchemy.org/en/20/core/engines.html#mysql) 与数据库交互
 - 🌽异步运行关键字 [GeventLibrary](https://github.com/eldaduzman/robotframework-gevent)
 - ⚡️极速 Python 代码检查工具 [Ruff](https://beta.ruff.rs/docs/)
+- 📘Python项目管理工具 [Poetry](https://python-poetry.org/)
+- 💡命令行 [Click](https://click.palletsprojects.com/en/8.1.x/)
 - 📘 使用 Poetry 进行 Python 打包和依赖管理
 - 📤提供 RQM API
 - 📧通过 SMTP 服务器发送邮件
