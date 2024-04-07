@@ -22,8 +22,15 @@ logger.add("simpleswup.log", rotation="1 week", mode="w")
 import argparse
 
 from ArtiHelper import Aritifacoty_Download, artimonitor
-from toolkits import (EmailClient, copy_directory, copy_file, decompress,
-                      get_removable_drives, load_config, remove_directory)
+from toolkits import (
+    EmailClient,
+    copy_directory,
+    copy_file,
+    decompress,
+    get_removable_drives,
+    load_config,
+    remove_directory,
+)
 
 
 def main(config: str) -> None:

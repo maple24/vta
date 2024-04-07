@@ -42,6 +42,7 @@ import requests
 from loguru import logger
 from lxml import etree
 from requests.exceptions import ConnectionError
+
 # Disable request warning
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
