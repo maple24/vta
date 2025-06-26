@@ -156,7 +156,10 @@ if __name__ == "__main__":
         rpc = TSMasterRPC(app_name)
 
         # 示例调用
+        # run simulation
+        # app function
         apiName = "com.can_rbs_activate_node_by_name"
+        # copy database path
         args = ["0", "True", "D01D01PMessageListICCANFD_V21_20", "FLZCU_IC", "False"]
         val = rpc.rpc_tsmaster_call_system_api(apiName, args)
 
