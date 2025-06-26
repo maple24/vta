@@ -5,6 +5,7 @@ import inspect
 from loguru import logger
 from vta.api.TSmasterAPI.consts import TSMASTER_ERROR_CODES
 
+
 class TSMasterRPC:
     """
     TSMasterRPC封装类, 提供TSMaster.dll的功能调用
