@@ -2,10 +2,10 @@ import subprocess
 from loguru import logger
 
 
-class ADBController:
+class ADBClient:
     def __init__(self, adb_path="adb", device_id=None):
         """
-        Initialize the ScreenController class.
+        Initialize the ADBClient class.
         :param adb_path: Path to the adb executable (default assumes adb is in PATH).
         :param device_id: ID of the ADB device to target (optional).
         """
@@ -148,7 +148,7 @@ class ADBController:
 
 if __name__ == "__main__":
     # Specify the device ID if multiple devices are connected
-    screen_controller = ADBController(device_id="DEVICE_ID_HERE")
+    screen_controller = ADBClient(device_id="DEVICE_ID_HERE")
     screen_controller.click_coordinates(500, 500)  # Example: Click at (500, 500)
     screen_controller.swipe(100, 100, 400, 400)  # Example: Swipe from (100, 100) to (400, 400)
     screen_controller.long_press(300, 300)  # Example: Long press at (300, 300)
