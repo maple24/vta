@@ -114,9 +114,9 @@ class RelayHelper:
             logger.success(
                 f"[SetXinke] Succeed to open xinke serial port={port_index}, state_code={state_code}"
             )
-        except:
+        except Exception as e:
             logger.error(
-                f"[SetXinke] Exception set xinke "
+                f"[SetXinke] Exception set xinke {e}:"
                 f"port {self.xinke_comport}, {port_index}, {state_code}"
             )
         finally:
@@ -183,9 +183,9 @@ class RelayHelper:
             obj_multiplexer.write(hexCmdList)
             obj_multiplexer.flush()
 
-        except Exception as err:
+        except Exception as e:
             logger.exception(
-                f"Unable to open multiplexer port {self.multiplexer_comport}"
+                f"Unable to open multiplexer port {self.multiplexer_comport}, {e}"
             )
 
         finally:
@@ -224,7 +224,7 @@ class RelayHelper:
         :param "kwargs" the respective relay device parameters
         :return
         """
-        if dev_type == None:
+        if dev_type is None:
             logger.error("NOK! dev type should be defined!")
             return
         dev_type = dev_type.lower()
