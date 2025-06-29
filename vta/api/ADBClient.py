@@ -145,6 +145,294 @@ class ADBClient:
         self.execute_adb_command(command)
         logger.info(f"Input text: {text}")
 
+    def launch_activity(self, package, activity=None):
+        """
+        Launch an application or specific activity.
+        :param package: Package name of the application.
+        :param activity: Activity name (optional, launches default activity if None).
+        """
+        if activity:
+            command = f"am start -n {package}/{activity}"
+        else:
+            command = f"am start -n {package}"
+        result = self.execute_adb_command(command)
+        logger.info(f"Launched activity: {package}/{activity if activity else ''}")
+        return result
+
+    def launch_car_launcher(self):
+        """Launch the Car Launcher interface"""
+        return self.launch_activity("com.android.car.carlauncher", ".CarLauncher")
+
+    def launch_files(self):
+        """Launch the Files/Documents app"""
+        return self.launch_activity("com.android.documentsui", ".LauncherActivity")
+
+    def launch_engineering_mode(self):
+        """Launch Engineering Mode app"""
+        return self.launch_activity("com.bosch.apps.engineeringmode", ".MainActivity")
+
+    def launch_bluetooth_settings(self):
+        """Launch Bluetooth Settings"""
+        command = "am start -a android.settings.BLUETOOTH_SETTINGS"
+        result = self.execute_adb_command(command)
+        logger.info("Launched Bluetooth Settings")
+        return result
+
+    def launch_wifi_settings(self):
+        """Launch WiFi Settings"""
+        command = "am start -a android.settings.WIFI_SETTINGS"
+        result = self.execute_adb_command(command)
+        logger.info("Launched WiFi Settings")
+        return result
+
+    def launch_settings(self):
+        """Launch main Settings app"""
+        command = "am start -a android.settings.SETTINGS"
+        result = self.execute_adb_command(command)
+        logger.info("Launched Settings")
+        return result
+
+    def launch_maps(self):
+        """Launch Maps/Navigation application"""
+        return self.launch_activity("com.google.android.apps.maps", ".MapsActivity")
+
+    def launch_media(self):
+        """Launch Media player application"""
+        return self.launch_activity("com.android.car.media", ".MediaActivity")
+
+    def launch_phone(self):
+        """Launch Phone/Dialer application"""
+        return self.launch_activity("com.android.car.dialer", ".DialerActivity")
+
+    def launch_vehicle_settings(self):
+        """Launch Vehicle-specific settings"""
+        return self.launch_activity("com.android.car.settings", ".CarSettings")
+
+    def launch_climate_control(self):
+        """Launch Climate Control interface"""
+        return self.launch_activity("com.android.car.hvac", ".HvacController")
+
+    def force_stop_app(self, package_name):
+        """
+        Force stop an application.
+        :param package_name: Package name of the application to stop.
+        """
+        command = f"am force-stop {package_name}"
+        result = self.execute_adb_command(command)
+        logger.info(f"Force stopped application: {package_name}")
+        return result
+
+    def check_if_app_installed(self, package_name):
+        """
+        Check if an application is installed.
+        :param package_name: Package name to check.
+        :return: True if installed, False otherwise.
+        """
+        command = f"pm list packages | grep {package_name}"
+        result = self.execute_adb_command(command)
+        is_installed = result is not None and package_name in result
+        logger.info(f"App {package_name} installed: {is_installed}")
+        return is_installed
+
+    def list_installed_apps(self):
+        """
+        Get a list of all installed applications.
+        :return: List of package names.
+        """
+        command = "pm list packages"
+        result = self.execute_adb_command(command)
+        if result:
+            packages = [line.replace("package:", "") for line in result.split("\n")]
+            logger.info(f"Found {len(packages)} installed packages")
+            return packages
+        return []
+
+    def get_app_version(self, package_name):
+        """
+        Get the version of an installed application.
+        :param package_name: Package name to check.
+        :return: Version string or None if not found.
+        """
+        command = f"dumpsys package {package_name} | grep versionName"
+        result = self.execute_adb_command(command)
+        if result:
+            try:
+                version = result.split("=")[1].strip()
+                logger.info(f"App {package_name} version: {version}")
+                return version
+            except (IndexError, ValueError):
+                logger.error(f"Failed to parse version for {package_name}")
+        return None
+
+    def open_recent_apps(self):
+        """Open the recent apps screen"""
+        command = "input keyevent KEYCODE_APP_SWITCH"
+        self.execute_adb_command(command)
+        logger.info("Opened recent apps")
+
+    def open_notifications(self):
+        """Open notification panel"""
+        # Get screen dimensions
+        dimensions = self.get_screen_dimensions()
+        if dimensions:
+            width, height = dimensions
+            # Swipe from top center of screen down
+            self.swipe(width // 2, 0, width // 2, height // 2, 500)
+            logger.info("Opened notification panel")
+        else:
+            logger.error("Failed to open notifications - couldn't get screen dimensions")
+
+    def open_quick_settings(self):
+        """Open quick settings panel (two swipes from top)"""
+        # Get screen dimensions
+        dimensions = self.get_screen_dimensions()
+        if dimensions:
+            width, height = dimensions
+            # First swipe to open notifications
+            self.swipe(width // 2, 0, width // 2, height // 2, 300)
+            # Second swipe to expand to quick settings
+            self.swipe(width // 2, height // 4, width // 2, height // 2, 300)
+            logger.info("Opened quick settings panel")
+        else:
+            logger.error("Failed to open quick settings - couldn't get screen dimensions")
+
+    def start_split_screen(self):
+        """
+        Activate split screen mode for the current app
+        Note: Must be in an app that supports split screen
+        """
+        # First open recent apps
+        self.open_recent_apps()
+        # Wait for animation
+        import time
+
+        time.sleep(1)
+        # Long press on app icon or title bar (position may vary)
+        dimensions = self.get_screen_dimensions()
+        if dimensions:
+            width, height = dimensions
+            self.long_press(width // 2, height // 6, 1000)
+            # Find and tap "Split screen" option (may need UI dump to locate)
+            self.click_text("Split screen")
+            logger.info("Activated split screen mode")
+        else:
+            logger.error("Failed to activate split screen - couldn't get screen dimensions")
+
+    def is_app_in_foreground(self, package_name):
+        """
+        Check if a specific app is in the foreground.
+        :param package_name: Package name to check.
+        :return: True if in foreground, False otherwise.
+        """
+        command = "dumpsys window windows | grep -E 'mCurrentFocus'"
+        result = self.execute_adb_command(command)
+        if result and package_name in result:
+            logger.info(f"App {package_name} is in foreground")
+            return True
+        logger.info(f"App {package_name} is NOT in foreground")
+        return False
+
+    def get_all_running_activities(self):
+        """
+        Get a list of all running activities.
+        :return: Text output of running activities.
+        """
+        command = "dumpsys activity activities"
+        result = self.execute_adb_command(command)
+        logger.info("Retrieved running activities")
+        return result
+
+    def navigate_to_car_home(self):
+        """Navigate to the car home screen"""
+        self.press_home()
+        logger.info("Navigated to car home screen")
+
+    def change_volume(self, stream_type="3", volume_level=None, direction=None):
+        """
+        Change device volume. Stream types:
+        0=voice call, 1=system, 2=ring, 3=music, 4=alarm, 5=notification
+
+        :param stream_type: Audio stream type (default: 3 for media)
+        :param volume_level: Specific volume level to set
+        :param direction: "up" or "down" to adjust relative to current
+        """
+        if volume_level is not None:
+            command = f"media volume --stream {stream_type} --set {volume_level}"
+        elif direction == "up":
+            command = "input keyevent 24"  # KEYCODE_VOLUME_UP
+        elif direction == "down":
+            command = "input keyevent 25"  # KEYCODE_VOLUME_DOWN
+        else:
+            logger.error("Must specify either volume_level or direction")
+            return None
+
+        result = self.execute_adb_command(command)
+        logger.info(f"Changed volume: {command}")
+        return result
+
+    def take_screenshot(self, output_path="screenshot.png"):
+        """
+        Take a screenshot and save it to the specified path
+        :param output_path: Path to save the screenshot
+        """
+        remote_path = "/sdcard/screenshot.png"
+        self.execute_adb_command(f"screencap -p {remote_path}")
+
+        # Pull the screenshot from the device
+        if self.device_id:
+            pull_command = f"{self.adb_path} -s {self.device_id} pull {remote_path} {output_path}"
+        else:
+            pull_command = f"{self.adb_path} pull {remote_path} {output_path}"
+
+        subprocess.run(pull_command, shell=True)
+        logger.info(f"Screenshot saved to {output_path}")
+        return output_path
+
+    def clear_app_data(self, package_name):
+        """
+        Clear data for a specific app
+        :param package_name: Package name of the app
+        """
+        command = f"pm clear {package_name}"
+        result = self.execute_adb_command(command)
+        logger.info(f"Cleared data for {package_name}")
+        return result
+
+    def get_focused_app(self):
+        """Get the currently focused app/activity"""
+        command = "dumpsys window | grep mCurrentFocus"
+        result = self.execute_adb_command(command)
+        logger.info(f"Current focus: {result}")
+        return result
+
+    def press_back(self):
+        """Press the back button"""
+        command = "input keyevent 4"  # KEYCODE_BACK
+        self.execute_adb_command(command)
+        logger.info("Pressed back button")
+
+    def press_home(self):
+        """Press the home button"""
+        command = "input keyevent 3"  # KEYCODE_HOME
+        self.execute_adb_command(command)
+        logger.info("Pressed home button")
+
+    def press_menu(self):
+        """Press the menu button"""
+        command = "input keyevent 82"  # KEYCODE_MENU
+        self.execute_adb_command(command)
+        logger.info("Pressed menu button")
+
+    def toggle_car_mode(self, enable=True):
+        """
+        Toggle car mode on/off
+        :param enable: True to enable car mode, False to disable
+        """
+        state = "enable" if enable else "disable"
+        command = f"settings put secure ui_night_mode {1 if enable else 0}"
+        self.execute_adb_command(command)
+        logger.info(f"Car mode {state}d")
+
 
 if __name__ == "__main__":
     # Specify the device ID if multiple devices are connected
