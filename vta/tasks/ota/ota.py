@@ -15,8 +15,7 @@ class OTA:
 
         Args:
             putty_config: Configuration parameters for PuttyHelper
-            adb_config: Configuration parameters for ADBClient
-            tsmaster_config: Configuration parameters for TSMasterRPC
+            device_id: Device ID for ADB and DeviceClient
         """
         self.putty = PuttyHelper()
         self.adb: ADBClient = ADBClient(device_id=device_id)
@@ -194,6 +193,7 @@ class OTA:
                 match = re.match(r"^(\d+)", clean_line)
                 if match:
                     return int(match.group(1))
+        logger.error("Unable to find line count!")
         return 0
 
     def trigger_upgrade_via_dhu(self) -> bool:
@@ -215,96 +215,75 @@ class OTA:
             return False
         if not self._is_upgrade_triggered():
             return False
+        return True
 
-    def monitor_download_status(self, timeout: int = 1800) -> bool:
+    def _record_log_start_line(self, attr_name: str, log_path: str = "/ota/bsw/log/subda.log"):
+        """
+        Record the current log line count for later delta checks.
+        Args:
+            attr_name: The attribute name to store the start line (e.g., '_download_log_start_line').
+            log_path: The log file path to check.
+        """
+        setattr(self, attr_name, self._get_log_line_count(log_path))
+
+    @wait_and_retry(timeout=1800, interval=2)
+    def monitor_download_status(self) -> bool:
         """
         Monitor the OTA download status by polling only new log lines for key patterns.
         Returns True if download completes, False otherwise.
         """
         log_path = "/ota/bsw/log/subda.log"
         patterns = {
-            "progress": re.compile(r"download progress:\s*\d+%"),
-            "inprogress": re.compile(r"download status:\s*InProgress"),
             "completed": re.compile(r"DOWNLOAD-COMPLETED"),
         }
-        logger.info(f"Polling OTA download status from subda.log (timeout: {timeout}s)")
+        logger.info("Polling OTA download status from subda.log (single check)")
 
-        start_time = time.time()
-        start_line = self._get_log_line_count(log_path)
-        found_progress = False
-        found_inprogress = False
+        start_line = getattr(self, "_download_log_start_line", 0)
+        current_line = self._get_log_line_count(log_path)
+        num_new_lines = max(0, current_line - start_line)
+        traces = []
+        if num_new_lines > 0:
+            setattr(self, "_download_log_start_line", current_line)
+            traces = self.putty.send_command_and_return_traces(
+                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}"
+            )
 
-        while time.time() - start_time < timeout:
-            current_line = self._get_log_line_count(log_path)
-            num_new_lines = max(0, current_line - start_line)
-            traces = []
-            if num_new_lines > 0:
-                traces = self.putty.send_command_and_return_traces(
-                    f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}"
-                )
-                start_line = current_line  # Move start_line forward
+        for line in traces:
+            if patterns["completed"].search(line):
+                logger.success("Package download completed successfully")
+                return True
 
-            for line in traces:
-                if not found_progress and patterns["progress"].search(line):
-                    found_progress = True
-                    logger.info("Found download progress log.")
-                if not found_inprogress and patterns["inprogress"].search(line):
-                    found_inprogress = True
-                    logger.info("Found download in-progress log.")
-                if patterns["completed"].search(line):
-                    logger.success("Package download completed successfully")
-                    return True
-
-            if found_progress and found_inprogress:
-                logger.info("Download is in progress (progress and status detected)")
-            time.sleep(2)
-
-        logger.error("Package download completion pattern not detected within timeout")
+        logger.info("Package download completion pattern not detected yet")
         return False
 
-    def monitor_upgrade_status(self, timeout: int = 1800) -> bool:
+    @wait_and_retry(timeout=1800, interval=2)
+    def monitor_upgrade_status(self) -> bool:
         """
         Monitor the OTA upgrade status by polling only new log lines for key patterns.
         Returns True if upgrade completes, False otherwise.
         """
         log_path = "/ota/bsw/log/subda.log"
         patterns = {
-            "progress": re.compile(r"m_installStatus:\s*INSTALLATION-PROGRESS"),
-            "percent": re.compile(r"Current installation progress:\s*\d+"),
             "completed": re.compile(r"INSTALLATION-COMPLETED"),
         }
-        logger.info(f"Polling OTA upgrade status from subda.log (timeout: {timeout}s)")
+        logger.info("Polling OTA upgrade status from subda.log (single check)")
 
-        start_time = time.time()
-        start_line = self._get_log_line_count(log_path)
-        found_progress = False
-        found_percent = False
+        start_line = getattr(self, "_upgrade_log_start_line", 0)
+        current_line = self._get_log_line_count(log_path)
+        num_new_lines = max(0, current_line - start_line)
+        traces = []
+        if num_new_lines > 0:
+            setattr(self, "_upgrade_log_start_line", current_line)
+            traces = self.putty.send_command_and_return_traces(
+                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}"
+            )
 
-        while time.time() - start_time < timeout:
-            current_line = self._get_log_line_count(log_path)
-            num_new_lines = max(0, current_line - start_line)
-            traces = []
-            if num_new_lines > 0:
-                traces = self.putty.send_command_and_return_traces(
-                    f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}"
-                )
-                start_line = current_line  # Move start_line forward
+        for line in traces:
+            if patterns["completed"].search(line):
+                logger.success("Upgrade completed successfully")
+                return True
 
-            for line in traces:
-                if not found_progress and patterns["progress"].search(line):
-                    found_progress = True
-                    logger.info("Found installation progress log.")
-                if not found_percent and patterns["percent"].search(line):
-                    found_percent = True
-                    logger.info("Found installation percent log.")
-                if patterns["completed"].search(line):
-                    logger.success("Upgrade completed successfully")
-                    return True
-
-            if found_progress and found_percent:
-                logger.info("Upgrade is in progress (progress and percent detected)")
-            time.sleep(2)
-        logger.error("Upgrade completion pattern not detected within timeout")
+        logger.info("Upgrade completion pattern not detected yet")
         return False
     
     def perform_ota_test(
@@ -346,7 +325,8 @@ class OTA:
                 if not self.switch_vehicle_mode("driving"):
                     logger.error("Failed to switch to driving mode")
                     return False
-
+                # Record log start line before monitoring download
+                self._record_log_start_line('_download_log_start_line')
                 logger.info("Monitoring download status.")
                 if not self.monitor_download_status():
                     logger.error("Download package failed.")
@@ -370,6 +350,8 @@ class OTA:
 
             # Step 3: Monitor upgrade (if not skipped)
             if not skip_upgrade_monitor:
+                # Record log start line before monitoring upgrade
+                self._record_log_start_line('_upgrade_log_start_line')
                 logger.info("Monitoring upgrade status.")
                 if not self.monitor_upgrade_status():
                     logger.error("OTA test failed during upgrade process")
