@@ -3,11 +3,10 @@ from vta.api.ADBClient import ADBClient
 from vta.api.TSmasterAPI.TSRPC import TSMasterRPC
 from vta.api.DeviceClient import DeviceClient
 from vta.library.utility.decorators import wait_and_retry
+from vta.library.utility.timelord import countdown
 from loguru import logger
 import time
 import re
-
-from vta.library.utility.timelord import countdown
 
 
 class OTA:
@@ -27,7 +26,7 @@ class OTA:
         self.device.connect(device_id=device_id)
         self._set_log_level()
         self.device_id = device_id
-    
+
     def _set_log_level(self):
         """
         Send 'dmesg -n 1' command in Putty before starting OTA test.
@@ -245,25 +244,21 @@ class OTA:
         logger.info("Waiting for device restart to complete (Putty 'login' or screen 'map')")
         # Step 1: Try to find 'login' prompt in Putty
         login_pattern = r"lynkco\s+login\s*:"
-        result, match = self.putty.wait_for_trace(
-            pattern=login_pattern,
-            cmd="",
-            timeout=timeout,
-            login=False
-        )
+        result, match = self.putty.wait_for_trace(pattern=login_pattern, cmd="", timeout=timeout, login=False)
         if result:
             logger.success("Detected 'login' prompt in Putty. Restart complete.")
             return True
 
         # Step 2: If not found, check for text on the screen
         logger.info("Did not detect 'login' in Putty, checking for '地图' text on screen.")
-        if self.device.check_text_exists(self.device_id, "地图"):
+        check_map = wait_and_retry(timeout=20, interval=1)(self.device.check_text_exists)
+        if check_map(self.device_id, "地图"):
             logger.success("Detected 'map' text on screen. Restart complete.")
             return True
 
         logger.error("Timeout waiting for device restart to complete (no 'login' or 'map' detected).")
         return False
-    
+
     @wait_and_retry(timeout=1800, interval=2)
     def monitor_download_status(self) -> bool:
         """
@@ -323,7 +318,7 @@ class OTA:
 
         logger.info("Upgrade completion pattern not detected yet")
         return False
-    
+
     def perform_ota_test(
         self,
         skip_download: bool = False,
@@ -366,7 +361,7 @@ class OTA:
                 if not self._is_downloading_in_progress():
                     return False
                 # Record log start line before monitoring download
-                self._record_log_start_line('_download_log_start_line')
+                self._record_log_start_line("_download_log_start_line")
                 logger.info("Monitoring download status.")
                 if not self.monitor_download_status():
                     logger.error("Download package failed.")
@@ -390,7 +385,7 @@ class OTA:
             # Step 3: Monitor upgrade (if not skipped)
             if not skip_upgrade_monitor:
                 # Record log start line before monitoring upgrade
-                self._record_log_start_line('_upgrade_log_start_line')
+                self._record_log_start_line("_upgrade_log_start_line")
                 logger.info("Monitoring upgrade status.")
                 if not self.monitor_upgrade_status():
                     logger.error("OTA test failed during upgrade process")
