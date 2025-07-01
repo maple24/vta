@@ -229,7 +229,7 @@ class OTA:
         """
         setattr(self, attr_name, self._get_log_line_count(log_path))
 
-    def _check_restart_complete(self, timeout=30) -> bool:
+    def _check_restart_complete(self, timeout=60) -> bool:
         """
         Wait for the device to finish restarting by checking for the 'login' prompt
         in Putty using wait_for_trace. If not found, check for 'map' text on the screen.
@@ -251,7 +251,7 @@ class OTA:
 
         # Step 2: If not found, check for text on the screen
         logger.info("Did not detect 'login' in Putty, checking for '地图' text on screen.")
-        check_map = wait_and_retry(timeout=20, interval=1)(self.device.check_text_exists)
+        check_map = wait_and_retry(timeout=timeout, interval=2)(self.device.check_text_exists)
         if check_map(self.device_id, "地图"):
             self._set_log_level()
             logger.success("Detected 'map' text on screen. Restart complete.")
