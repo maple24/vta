@@ -76,7 +76,7 @@ class PuttyHelper:
             self.putty_object = serial.Serial(
                 port=comport, baudrate=baudrate, timeout=3.0
             )
-        except:
+        except Exception:
             logger.exception("Failed to open serial port!")
             exit(1)
         t = threading.Thread(target=self._serial_reader)

@@ -444,3 +444,13 @@ if __name__ == "__main__":
     screen_controller.get_screen_dimensions()  # Example: Retrieve screen dimensions
     screen_controller.click_text("Settings")  # Example: Click on text "Settings"
     screen_controller.input_text("Hello World")  # Example: Input text "Hello World"
+
+    """
+    How to find the current focused activity?
+    adb shell dumpsys window | findstr "mCurrentFocus mFocusedApp"
+    >>  mCurrentFocus=Window{4adcfc2 u10 com.ecarx.hud/com.ecarx.hud.view.MainActivity}
+    >>  mFocusedApp=ActivityRecord{5a41581 u10 com.ecarx.hud/.view.MainActivity t1000479}
+    >>  mCurrentFocus=Window{f437091 u10 com.flyme.auto.update/com.flyme.auto.update.UpdateMainActivity}
+    >>  mFocusedApp=ActivityRecord{1334ba5 u10 com.flyme.auto.update/.UpdateMainActivity t1000487}
+    adb shell am start -n com.flyme.auto.update/.UpdateMainActivity
+    """

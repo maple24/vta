@@ -149,6 +149,16 @@ class TSMasterRPC:
         args = [f">>>External script debug : {text}", f"{log_level}"]
         return self.rpc_tsmaster_call_system_api(apiName, args)
 
+    def __del__(self):
+        """析构方法, 释放DLL资源"""
+        try:
+            if self.dll and hasattr(self.dll, "rpc_tsmaster_destroy_client"):
+                self.dll.rpc_tsmaster_destroy_client.argtypes = [c_size_t]
+                self.dll.rpc_tsmaster_destroy_client(self._app_handle)
+                logger.info("TSMasterRPC instance destroyed and client released.")
+        except Exception as e:
+            logger.warning(f"Error during destruction: {e}")
+
 
 # 示例使用
 if __name__ == "__main__":
@@ -166,3 +176,4 @@ if __name__ == "__main__":
 
     except Exception as e:
         logger.error(f"Error: {e}")
+    # 0/ZCU_CANFD1/ZCUD/ZcudZCUCANFD1Fr10/VehModMngtGlbSafe1UsgModSts
