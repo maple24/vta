@@ -164,7 +164,7 @@ class OTA:
             logger.warning("Failed to trigger upgrade")
             return False
 
-    @wait_and_retry(timeout=200, interval=10)
+    @wait_and_retry(timeout=300, interval=10)
     def _is_downloading_in_progress(self) -> bool:
         """
         Check if the OTA package is currently downloading by navigating to the upgrade page
@@ -178,11 +178,11 @@ class OTA:
             logger.error("Failed to navigate to upgrade page")
             return False
 
-        if self.device.check_text_exists(self.device_id, "下载中"):
-            logger.success("OTA downloading is in progress: '下载中' found on the page")
+        if self.device.check_text_exists(self.device_id, "发现新版本"):
+            logger.success("OTA downloading is in progress: '发现新版本' found on the page")
             return True
         else:
-            logger.info("OTA downloading is not in progress: '下载中' not found")
+            logger.info("OTA downloading is not in progress: '发现新版本' not found")
             return False
 
     def _get_log_line_count(self, log_path: str) -> int:
