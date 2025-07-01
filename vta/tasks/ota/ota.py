@@ -192,8 +192,10 @@ class OTA:
                 clean_line = clean_line.replace("\r", "").strip()
                 match = re.match(r"^(\d+)", clean_line)
                 if match:
-                    return int(match.group(1))
-        logger.error("Unable to find line count!")
+                    count = int(match.group(1))
+                    logger.info(f"The line cound of subda.log is {count}")
+                    return count
+        logger.error("Unable to get line count!")
         return 0
 
     def trigger_upgrade_via_dhu(self) -> bool:
