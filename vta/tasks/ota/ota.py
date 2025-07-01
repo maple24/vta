@@ -258,7 +258,7 @@ class OTA:
 
     def monitor_upgrade_status(self, timeout: int = 1800) -> bool:
         """
-        Monitor the OTA upgrade status by polling subda.log for key patterns.
+        Monitor the OTA upgrade status by polling only new log lines for key patterns.
         Returns True if upgrade completes, False otherwise.
         """
         log_path = "/ota/bsw/log/subda.log"
@@ -270,11 +270,20 @@ class OTA:
         logger.info(f"Polling OTA upgrade status from subda.log (timeout: {timeout}s)")
 
         start_time = time.time()
+        start_line = self._get_log_line_count(log_path)
         found_progress = False
         found_percent = False
 
         while time.time() - start_time < timeout:
-            traces = self.putty.send_command_and_return_traces(f"tail -n 50 {log_path}", wait=1, login=False)
+            current_line = self._get_log_line_count(log_path)
+            num_new_lines = max(0, current_line - start_line)
+            traces = []
+            if num_new_lines > 0:
+                traces = self.putty.send_command_and_return_traces(
+                    f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}"
+                )
+                start_line = current_line  # Move start_line forward
+
             for line in traces:
                 if not found_progress and patterns["progress"].search(line):
                     found_progress = True
@@ -291,7 +300,7 @@ class OTA:
             time.sleep(2)
         logger.error("Upgrade completion pattern not detected within timeout")
         return False
-
+    
     def perform_ota_test(
         self,
         skip_download: bool = False,
