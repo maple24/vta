@@ -156,6 +156,14 @@ class OTA:
             logger.info("Upgrade is not ready: '立即更新' not found")
             return False
 
+    def _is_upgrade_triggered(self):
+        if self.device.check_text_exists(self.device_id, "取消更新"):
+            logger.success("Upgrade is triggered, please wait for 2 mins.")
+            return True
+        else:
+            logger.warning("Failed to trigger upgrade")
+            return False
+
     @wait_and_retry(timeout=200, interval=10)
     def _is_downloading_in_progress(self) -> bool:
         """
@@ -196,19 +204,16 @@ class OTA:
             bool: True if the upgrade was successfully triggered
         """
         logger.info("Triggering upgrade via DHU")
-        try:
-            # Step 1: Navigate to the upgrade page (replace with actual navigation commands)
-            if not self._navigate_to_upgrade_page():
-                return False
+        # Step 1: Navigate to the upgrade page (replace with actual navigation commands)
+        if not self._navigate_to_upgrade_page():
+            return False
 
-            # Step 2: Click the upgrade text
-            retry_click = wait_and_retry(timeout=10, interval=1)(self.device.click_text)
-            if not retry_click(self.device_id, "立即更新"):
-                logger.error("Do not found `立即更新`, unable to upgrade")
-                return False
-
-        except Exception as e:
-            logger.error(f"Failed to trigger upgrade via DHU: {e}")
+        # Step 2: Click the upgrade text
+        retry_click = wait_and_retry(timeout=10, interval=1)(self.device.click_text)
+        if not retry_click(self.device_id, "立即更新"):
+            logger.error("Do not found `立即更新`, unable to upgrade")
+            return False
+        if not self._is_upgrade_triggered():
             return False
 
     def monitor_download_status(self, timeout: int = 1800) -> bool:
