@@ -17,7 +17,7 @@ def get_day_abbreviation():
     )  # Get the day of the week as an integer (0 = Monday, 1 = Tuesday, etc.)
     return days[day_of_week]  # Get the abbreviation for the day of the week
 
-def countdown(seconds):
+def countdown(seconds: int):
     """
     Displays a countdown timer with a progress bar for the given number of seconds.
     """
@@ -27,7 +27,7 @@ def countdown(seconds):
             progress.update(task, completed=seconds - remaining)
             time.sleep(1)
         progress.update(task, completed=seconds)
-    print("Time's up!")
+
 
 if __name__ == "__main__":
 

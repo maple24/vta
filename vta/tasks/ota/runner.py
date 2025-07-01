@@ -1,11 +1,20 @@
 import click
+import sys
+from pathlib import Path
 from rich.console import Console
 from rich.table import Table
 from loguru import logger
+from vta.core.runner.utils import rotate_folder
 from vta.tasks.ota.ota import OTA
+from datetime import datetime
 
+ROOT: Path = Path(__file__).resolve().parent.parent.parent.parent
+LOG_PATH: Path = ROOT / "log" / datetime.now().strftime('%A_%m%d%Y_%H%M')
+LOG_PATH.mkdir(parents=True, exist_ok=True)
+
+logger.add(sys.stdout, level="DEBUG")
+rotate_folder(ROOT / "log")
 console = Console()
-
 
 @click.command()
 @click.option("--iterations", prompt="Enter the number of iterations for the OTA test", type=int)
@@ -13,6 +22,18 @@ def main(iterations):
     results = []
 
     for i in range(iterations):
+        # Unique log file for each iteration
+        timestamp = datetime.now().strftime('%m%d%Y_%H%M%S')
+        iteration_log_path = LOG_PATH / f"log_iter_{i+1}_{timestamp}.log"
+        file_handler_id = logger.add(
+            str(iteration_log_path),
+            backtrace=True,
+            diagnose=False,
+            format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
+            rotation="1 week",
+            level="TRACE",
+        )
+
         logger.info(f"Starting iteration {i + 1} of {iterations}")
         putty_config = {
             "putty_enabled": True,
@@ -38,9 +59,10 @@ def main(iterations):
         else:
             logger.error(f"Iteration {i + 1} failed")
         del ota
-        
-    generate_report(results)
 
+        logger.remove(file_handler_id)
+
+    generate_report(results)
 
 def generate_report(results):
     success_count = results.count(True)
@@ -60,7 +82,6 @@ def generate_report(results):
     table.add_row("[bold red]FAIL[/bold red]", str(failure_count))
 
     console.print(table)
-
 
 if __name__ == "__main__":
     main()

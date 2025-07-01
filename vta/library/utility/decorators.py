@@ -5,6 +5,9 @@
 # ============================================================================================================
 import time
 from functools import wraps
+from rich.console import Console
+
+console = Console()
 
 
 def wait_and_retry(timeout: int = 10, interval: float = 1.0, retry_times: int = None):
@@ -20,20 +23,31 @@ def wait_and_retry(timeout: int = 10, interval: float = 1.0, retry_times: int = 
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
+            func_name = func.__name__
             if retry_times is not None:
-                for _ in range(retry_times):
+                console.rule(f"[bold cyan]wait_and_retry: {func_name} (max {retry_times} attempts)")
+                for attempt in range(1, retry_times + 1):
+                    console.log(f"[yellow]Attempt {attempt}/{retry_times} for [bold]{func_name}[/]")
                     result = func(*args, **kwargs)
                     if result:
+                        console.log(f"[green]'{func_name}' succeeded on attempt {attempt}[/]")
                         return result
                     time.sleep(interval)
+                console.log(f"[red]'{func_name}' failed after {retry_times} attempts[/]")
                 return False
             else:
+                console.rule(f"[bold cyan]wait_and_retry: {func_name} (timeout {timeout}s)")
                 end_time = time.time() + timeout
+                attempt = 1
                 while time.time() < end_time:
+                    console.log(f"[yellow]Attempt {attempt} for [bold]{func_name}[/] (timeout mode)")
                     result = func(*args, **kwargs)
                     if result:
+                        console.log(f"[green]'{func_name}' succeeded on attempt {attempt}[/]")
                         return result
                     time.sleep(interval)
+                    attempt += 1
+                console.log(f"[red]'{func_name}' failed after timeout ({timeout}s)[/]")
                 return False
 
         return wrapper
@@ -66,7 +80,10 @@ class Demo:
         self.counter += 1
         print(f"Attempt {self.counter}")
         # Only return True on the third attempt
-        return self.counter >= 3
+        if self.counter >= 3:
+            return True
+        else:
+            return False
 
     @wait_and_retry(timeout=5, interval=0.1)
     def simple_method(self):
@@ -79,8 +96,8 @@ def hello():
 
 
 if __name__ == "__main__":
-    # demo = Demo()
-    # result = demo.simple_method()
-    # print("Result:", result)
-    retry_hello = wait_and_retry(timeout=2, interval=1)(hello)
-    retry_hello()
+    demo = Demo()
+    result = demo.count_times()
+    print("Result:", result)
+    # retry_hello = wait_and_retry(timeout=2, interval=1)(hello)
+    # retry_hello()

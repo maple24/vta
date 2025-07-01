@@ -7,6 +7,8 @@ from loguru import logger
 import time
 import re
 
+from vta.library.utility.timelord import countdown
+
 
 class OTA:
     def __init__(self, putty_config: dict, device_id: str) -> None:
@@ -28,13 +30,13 @@ class OTA:
     
     def _set_log_level(self):
         """
-        Send 'dmsg -n 1' command in Putty before starting OTA test.
+        Send 'dmesg -n 1' command in Putty before starting OTA test.
         """
         try:
-            logger.info("Preparing Putty: sending 'dmsg -n 1'")
-            self.putty.send_command("dmsg -n 1")
+            logger.info("Preparing Putty: sending 'dmesg -n 1'")
+            self.putty.send_command("dmesg -n 1")
         except Exception as e:
-            logger.error(f"Failed to send 'dmsg -n 1' in Putty: {e}")
+            logger.error(f"Failed to send 'dmesg -n 1' in Putty: {e}")
 
     def switch_vehicle_mode(self, mode: str) -> bool:
         """
@@ -228,6 +230,40 @@ class OTA:
         """
         setattr(self, attr_name, self._get_log_line_count(log_path))
 
+    def _check_restart_complete(self, timeout=30) -> bool:
+        """
+        Wait for the device to finish restarting by checking for the 'login' prompt
+        in Putty using wait_for_trace. If not found, check for 'map' text on the screen.
+
+        Args:
+            timeout: Maximum time to wait in seconds.
+            interval: Time between checks in seconds.
+
+        Returns:
+            bool: True if restart is complete, False otherwise.
+        """
+        logger.info("Waiting for device restart to complete (Putty 'login' or screen 'map')")
+        # Step 1: Try to find 'login' prompt in Putty
+        login_pattern = r"lynkco\s+login\s*:"
+        result, match = self.putty.wait_for_trace(
+            pattern=login_pattern,
+            cmd="",
+            timeout=timeout,
+            login=False
+        )
+        if result:
+            logger.success("Detected 'login' prompt in Putty. Restart complete.")
+            return True
+
+        # Step 2: If not found, check for text on the screen
+        logger.info("Did not detect 'login' in Putty, checking for '地图' text on screen.")
+        if self.device.check_text_exists(self.device_id, "地图"):
+            logger.success("Detected 'map' text on screen. Restart complete.")
+            return True
+
+        logger.error("Timeout waiting for device restart to complete (no 'login' or 'map' detected).")
+        return False
+    
     @wait_and_retry(timeout=1800, interval=2)
     def monitor_download_status(self) -> bool:
         """
@@ -247,7 +283,7 @@ class OTA:
         if num_new_lines > 0:
             setattr(self, "_download_log_start_line", current_line)
             traces = self.putty.send_command_and_return_traces(
-                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", login=False
+                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", wait=1, login=False
             )
 
         for line in traces:
@@ -277,7 +313,7 @@ class OTA:
         if num_new_lines > 0:
             setattr(self, "_upgrade_log_start_line", current_line)
             traces = self.putty.send_command_and_return_traces(
-                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", login=False
+                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", wait=1, login=False
             )
 
         for line in traces:
@@ -327,6 +363,8 @@ class OTA:
                 if not self.switch_vehicle_mode("driving"):
                     logger.error("Failed to switch to driving mode")
                     return False
+                if not self._is_downloading_in_progress():
+                    return False
                 # Record log start line before monitoring download
                 self._record_log_start_line('_download_log_start_line')
                 logger.info("Monitoring download status.")
@@ -347,7 +385,7 @@ class OTA:
                 if not self.trigger_upgrade_via_dhu():
                     logger.error("Failed to trigger upgrade via DHU")
                     return False
-                time.sleep(120)
+                countdown(120)
             else:
                 logger.warning("Trigger upgrade step skipped.")
 
@@ -358,6 +396,8 @@ class OTA:
                 logger.info("Monitoring upgrade status.")
                 if not self.monitor_upgrade_status():
                     logger.error("OTA test failed during upgrade process")
+                    return False
+                if not self._check_restart_complete():
                     return False
             else:
                 logger.warning("Upgrade monitor step skipped.")
@@ -427,7 +467,7 @@ if __name__ == "__main__":
         logger.error("OTA test execution failed")
 
     """
-    dmsg -n 1
+    dmesg -n 1
 
     root@lynkco:~# ota_tool -g
     using ota partition /ota
