@@ -347,7 +347,7 @@ class OTA:
                     logger.error("Download package failed.")
                     return False
             else:
-                logger.info("Download step skipped.")
+                logger.warning("Download step skipped.")
 
             # Step 2: Trigger upgrade (if not skipped)
             if not skip_trigger_upgrade:
@@ -361,7 +361,7 @@ class OTA:
                     logger.error("Failed to trigger upgrade via DHU")
                     return False
             else:
-                logger.info("Trigger upgrade step skipped.")
+                logger.warning("Trigger upgrade step skipped.")
 
             # Step 3: Monitor upgrade (if not skipped)
             if not skip_upgrade_monitor:
@@ -370,7 +370,7 @@ class OTA:
                     logger.error("OTA test failed during upgrade process")
                     return False
             else:
-                logger.info("Upgrade monitor step skipped.")
+                logger.warning("Upgrade monitor step skipped.")
 
             # Step 4: Check slot switch (if not skipped)
             if not skip_slot_check:
@@ -382,7 +382,7 @@ class OTA:
                     logger.error("OTA test failed: slot did not switch")
                     return False
             else:
-                logger.info("Slot check step skipped.")
+                logger.warning("Slot check step skipped.")
                 logger.success("OTA test completed with selected steps skipped.")
                 return True
 

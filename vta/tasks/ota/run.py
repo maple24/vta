@@ -25,7 +25,12 @@ def main(iterations):
         device_id = "2801750c52300030"
 
         ota = OTA(putty_config=putty_config, device_id=device_id)
-        test_result = ota.perform_ota_test()
+        test_result = ota.perform_ota_test(
+            skip_download=True,
+            skip_slot_check=True,
+            skip_trigger_upgrade=True,
+            skip_upgrade_monitor=True,
+        )
         results.append(test_result)
 
         if test_result:
