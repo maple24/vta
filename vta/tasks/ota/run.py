@@ -37,7 +37,8 @@ def main(iterations):
             logger.success(f"Iteration {i + 1} completed successfully")
         else:
             logger.error(f"Iteration {i + 1} failed")
-
+        del ota
+        
     generate_report(results)
 
 
