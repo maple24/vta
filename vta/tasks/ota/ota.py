@@ -247,7 +247,7 @@ class OTA:
         if num_new_lines > 0:
             setattr(self, "_download_log_start_line", current_line)
             traces = self.putty.send_command_and_return_traces(
-                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}"
+                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", login=False
             )
 
         for line in traces:
@@ -277,7 +277,7 @@ class OTA:
         if num_new_lines > 0:
             setattr(self, "_upgrade_log_start_line", current_line)
             traces = self.putty.send_command_and_return_traces(
-                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}"
+                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", login=False
             )
 
         for line in traces:
