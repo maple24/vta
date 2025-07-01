@@ -178,11 +178,15 @@ class OTA:
             logger.error("Failed to navigate to upgrade page")
             return False
 
-        if self.device.check_text_exists(self.device_id, "发现新版本"):
-            logger.success("OTA downloading is in progress: '发现新版本' found on the page")
+        # Check for either "发现新版本" or "安装包下载中"
+        if (
+            self.device.check_text_exists(self.device_id, "发现新版本")
+            or self.device.check_text_exists(self.device_id, "安装包下载中")
+        ):
+            logger.success("OTA downloading is in progress: '发现新版本' or '安装包下载中' found on the page")
             return True
         else:
-            logger.info("OTA downloading is not in progress: '发现新版本' not found")
+            logger.info("OTA downloading is not in progress: neither '发现新版本' nor '安装包下载中' found")
             return False
 
     def _get_log_line_count(self, log_path: str) -> int:
