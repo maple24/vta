@@ -1,0 +1,457 @@
+from vta.api.PuttyHelper import PuttyHelper
+from vta.api.ADBClient import ADBClient
+from vta.api.TSmasterAPI.TSRPC import TSMasterRPC
+from vta.api.UIClient import UIClient
+from vta.library.utility.decorators import wait_and_retry
+from loguru import logger
+import time
+import re
+
+
+class OTA:
+    def __init__(self, putty_config: dict, device_id: str) -> None:
+        """
+        Initialize the OTA class with required tools.
+
+        Args:
+            putty_config: Configuration parameters for PuttyHelper
+            adb_config: Configuration parameters for ADBClient
+            tsmaster_config: Configuration parameters for TSMasterRPC
+        """
+        self.putty = PuttyHelper()
+        self.adb: ADBClient = ADBClient(device_id=device_id)
+        self.tsmaster = TSMasterRPC()
+        self.ui = UIClient()
+        self.putty.connect(putty_config)
+        self.ui.connect(device_id=device_id)
+        self._set_log_level()
+    
+    def _set_log_level(self):
+        """
+        Send 'dmsg -n 1' command in Putty before starting OTA test.
+        """
+        try:
+            logger.info("Preparing Putty: sending 'dmsg -n 1'")
+            self.putty.send_command("dmsg -n 1")
+        except Exception as e:
+            logger.error(f"Failed to send 'dmsg -n 1' in Putty: {e}")
+
+    def switch_vehicle_mode(self, mode: str) -> bool:
+        """
+        Switch vehicle between inactive and driving modes using set_signal_value.
+
+        Args:
+            mode: "inactive" or "driving"
+
+        Returns:
+            bool: True if mode switch was successful
+        """
+        logger.info(f"Switching vehicle to {mode} mode using set_signal_value")
+        signal_path = "0/ZCU_CANFD1/ZCUD/ZcudZCUCANFD1Fr10/VehModMngtGlbSafe1UsgModSts"
+        mode_signal_map = {
+            "abandon": 0,
+            "inactive": 1,
+            "active": 11,
+            "driving": 13,
+        }
+        if mode not in mode_signal_map:
+            logger.error(f"Invalid mode: {mode}. Use 'inactive' or 'driving'")
+            return False
+
+        value = mode_signal_map[mode]
+        self.tsmaster.set_signal_value(signal_path, value)
+        logger.info(f"Set {signal_path} to {value} for mode {mode}")
+        if not self._wait_signal_value(signal_path, value, timeout=3, interval=1):
+            logger.error(f"Failed to set {signal_path} to {value} after retries")
+            return False
+
+        return True
+
+    def _wait_signal_value(
+        self,
+        signal_path: str,
+        expected_value,
+        timeout=10,
+        interval=1,
+        retry_times=None,
+    ) -> bool:
+        """Wait until the signal value equals expected_value, with retry."""
+
+        @wait_and_retry(timeout=timeout, interval=interval, retry_times=retry_times)
+        def check():
+            return self.tsmaster.get_signal_value(signal_path) == expected_value
+
+        return check()
+
+    def _navigate_to_upgrade_page(self) -> bool:
+        """
+        Private helper to navigate to the upgrade page via ADB.
+
+        Returns:
+            bool: True if navigation command was sent successfully
+        """
+        try:
+            logger.info("Navigating to the upgrade page")
+            self.adb.execute_adb_command("am start -n com.flyme.auto.update/.UpdateMainActivity")
+            time.sleep(0.5)
+            return True
+        except Exception as e:
+            logger.error(f"Failed to navigate to upgrade page: {e}")
+            return False
+
+    def _get_current_ota_slot(self) -> str:
+        """
+        Get the current OTA slot by searching for 'current slot is:' in Putty logs.
+
+        Returns:
+            str: The current slot ('A' or 'B'), or None if not found.
+        """
+        logger.info("Querying current OTA slot using 'ota_tool -g'")
+        pattern = r"current slot is:([AB])"
+        result, match = self.putty.wait_for_trace(pattern=pattern, command="ota_tool -g", timeout=10, login=False)
+        if result and match and match[0]:
+            slot = match[0]
+            logger.info(f"Current OTA slot: {slot}")
+            return slot
+        else:
+            logger.error("Failed to parse current OTA slot from output")
+            return None
+
+    def _is_ota_upgrade_successful(self, previous_slot: str) -> bool:
+        """
+        Check if OTA upgrade was successful by comparing OTA slots.
+
+        Args:
+            previous_slot: The OTA slot before upgrade.
+
+        Returns:
+            bool: True if the slot has changed, indicating a successful upgrade.
+        """
+        current_slot = self._get_current_ota_slot()
+        if current_slot and previous_slot and current_slot != previous_slot:
+            logger.success(f"OTA upgrade successful: slot changed from {previous_slot} to {current_slot}")
+            return True
+        else:
+            logger.error(f"OTA upgrade failed: slot did not change (still {current_slot})")
+            return False
+
+    def _is_upgrade_ready(self) -> bool:
+        """
+        Check if the upgrade is ready by navigating to the upgrade page and verifying the upgrade text exists.
+
+        Returns:
+            bool: True if the upgrade text is found, False otherwise.
+        """
+        logger.info("Checking if upgrade is ready by navigating to the upgrade page")
+        if not self._navigate_to_upgrade_page():
+            logger.error("Failed to navigate to upgrade page")
+            return False
+
+        # Check if the upgrade text exists (e.g., "立即更新")
+        if self.ui.check_text_exists("立即更新"):
+            logger.success("Upgrade is ready: '立即更新' found on the page")
+            return True
+        else:
+            logger.info("Upgrade is not ready: '立即更新' not found")
+            return False
+
+    @wait_and_retry(timeout=200, interval=10)
+    def _is_downloading_in_progress(self) -> bool:
+        """
+        Check if the OTA package is currently downloading by navigating to the upgrade page
+        and verifying if the 'downloading' text exists.
+
+        Returns:
+            bool: True if downloading is in progress, False otherwise.
+        """
+        logger.info("Checking if OTA downloading is in progress by navigating to the upgrade page")
+        if not self._navigate_to_upgrade_page():
+            logger.error("Failed to navigate to upgrade page")
+            return False
+
+        if self.ui.check_text_exists("安装包下载中"):
+            logger.success("OTA downloading is in progress: '安装包下载中' found on the page")
+            return True
+        else:
+            logger.info("OTA downloading is not in progress: '安装包下载中' not found")
+            return False
+
+    def _get_log_line_count(self, log_path: str) -> int:
+        traces = self.putty.send_command_and_return_traces(f"wc -l {log_path}", wait=1, login=False)
+        if traces:
+            for line in traces:
+                clean_line = re.sub(r"\x1b\[[0-9;?]*[a-zA-Z]", "", line)
+                clean_line = clean_line.replace("\r", "").strip()
+                match = re.match(r"^(\d+)", clean_line)
+                if match:
+                    return int(match.group(1))
+        return 0
+
+    def trigger_upgrade_via_dhu(self) -> bool:
+        """
+        Interact with DHU to trigger the upgrade process.
+
+        Returns:
+            bool: True if the upgrade was successfully triggered
+        """
+        logger.info("Triggering upgrade via DHU")
+        try:
+            # Step 1: Navigate to the upgrade page (replace with actual navigation commands)
+            if not self._navigate_to_upgrade_page():
+                return False
+
+            # Step 2: Click the upgrade text
+            retry_click = wait_and_retry(timeout=10, interval=1)(self.ui.click_text)
+            if not retry_click("立即更新"):
+                logger.error("Do not found `立即更新`, unable to upgrade")
+                return False
+
+        except Exception as e:
+            logger.error(f"Failed to trigger upgrade via DHU: {e}")
+            return False
+
+    def monitor_download_status(self, timeout: int = 1800) -> bool:
+        """
+        Monitor the OTA download status by polling only new log lines for key patterns.
+        Returns True if download completes, False otherwise.
+        """
+        log_path = "/ota/bsw/log/subda.log"
+        patterns = {
+            "progress": re.compile(r"download progress:\s*\d+%"),
+            "inprogress": re.compile(r"download status:\s*InProgress"),
+            "completed": re.compile(r"DOWNLOAD-COMPLETED"),
+        }
+        logger.info(f"Polling OTA download status from subda.log (timeout: {timeout}s)")
+
+        start_time = time.time()
+        start_line = self._get_log_line_count(log_path)
+        found_progress = False
+        found_inprogress = False
+
+        while time.time() - start_time < timeout:
+            current_line = self._get_log_line_count(log_path)
+            num_new_lines = max(0, current_line - start_line)
+            traces = []
+            if num_new_lines > 0:
+                traces = self.putty.send_command_and_return_traces(
+                    f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}"
+                )
+                start_line = current_line  # Move start_line forward
+
+            for line in traces:
+                if not found_progress and patterns["progress"].search(line):
+                    found_progress = True
+                    logger.info("Found download progress log.")
+                if not found_inprogress and patterns["inprogress"].search(line):
+                    found_inprogress = True
+                    logger.info("Found download in-progress log.")
+                if patterns["completed"].search(line):
+                    logger.success("Package download completed successfully")
+                    return True
+
+            if found_progress and found_inprogress:
+                logger.info("Download is in progress (progress and status detected)")
+            time.sleep(2)
+
+        logger.error("Package download completion pattern not detected within timeout")
+        return False
+
+    def monitor_upgrade_status(self, timeout: int = 1800) -> bool:
+        """
+        Monitor the OTA upgrade status by polling subda.log for key patterns.
+        Returns True if upgrade completes, False otherwise.
+        """
+        log_path = "/ota/bsw/log/subda.log"
+        patterns = {
+            "progress": re.compile(r"m_installStatus:\s*INSTALLATION-PROGRESS"),
+            "percent": re.compile(r"Current installation progress:\s*\d+"),
+            "completed": re.compile(r"INSTALLATION-COMPLETED"),
+        }
+        logger.info(f"Polling OTA upgrade status from subda.log (timeout: {timeout}s)")
+
+        start_time = time.time()
+        found_progress = False
+        found_percent = False
+
+        while time.time() - start_time < timeout:
+            traces = self.putty.send_command_and_return_traces(f"tail -n 50 {log_path}", wait=1, login=False)
+            for line in traces:
+                if not found_progress and patterns["progress"].search(line):
+                    found_progress = True
+                    logger.info("Found installation progress log.")
+                if not found_percent and patterns["percent"].search(line):
+                    found_percent = True
+                    logger.info("Found installation percent log.")
+                if patterns["completed"].search(line):
+                    logger.success("Upgrade completed successfully")
+                    return True
+
+            if found_progress and found_percent:
+                logger.info("Upgrade is in progress (progress and percent detected)")
+            time.sleep(2)
+        logger.error("Upgrade completion pattern not detected within timeout")
+        return False
+
+    def perform_ota_test(
+        self,
+        skip_download: bool = False,
+        skip_trigger_upgrade: bool = False,
+        skip_upgrade_monitor: bool = False,
+        skip_slot_check: bool = False,
+    ) -> bool:
+        """
+        Execute a complete OTA test loop with dynamic step control.
+
+        Args:
+            skip_download: Skip the download monitoring step.
+            skip_trigger_upgrade: Skip triggering the upgrade via DHU.
+            skip_upgrade_monitor: Skip monitoring the upgrade status.
+            skip_slot_check: Skip checking if the OTA slot switched.
+
+        Returns:
+            bool: True if the OTA test was successful.
+        """
+        try:
+            logger.info("Starting dynamic OTA test loop")
+
+            previous_slot = self._get_current_ota_slot()
+            if not previous_slot:
+                logger.error("Cannot get previous OTA slot, aborting test.")
+                return False
+
+            # If upgrade is already ready, skip download steps
+            upgrade_ready = self._is_upgrade_ready()
+            if upgrade_ready:
+                logger.info("Upgrade is already ready, skipping download steps.")
+                skip_download = True
+
+            # Step 1: Download (if not skipped)
+            if not skip_download:
+                logger.info("Switching to driving mode for package delivery.")
+                if not self.switch_vehicle_mode("driving"):
+                    logger.error("Failed to switch to driving mode")
+                    return False
+
+                logger.info("Monitoring download status.")
+                if not self.monitor_download_status():
+                    logger.error("Download package failed.")
+                    return False
+            else:
+                logger.info("Download step skipped.")
+
+            # Step 2: Trigger upgrade (if not skipped)
+            if not skip_trigger_upgrade:
+                logger.info("Switching to inactive mode for upgrade.")
+                if not self.switch_vehicle_mode("inactive"):
+                    logger.error("Failed to switch to inactive mode")
+                    return False
+
+                logger.info("Triggering upgrade via DHU.")
+                if not self.trigger_upgrade_via_dhu():
+                    logger.error("Failed to trigger upgrade via DHU")
+                    return False
+            else:
+                logger.info("Trigger upgrade step skipped.")
+
+            # Step 3: Monitor upgrade (if not skipped)
+            if not skip_upgrade_monitor:
+                logger.info("Monitoring upgrade status.")
+                if not self.monitor_upgrade_status():
+                    logger.error("OTA test failed during upgrade process")
+                    return False
+            else:
+                logger.info("Upgrade monitor step skipped.")
+
+            # Step 4: Check slot switch (if not skipped)
+            if not skip_slot_check:
+                logger.info("Checking if OTA slot switched.")
+                if self._is_ota_upgrade_successful(previous_slot):
+                    logger.success("OTA test completed successfully and slot switched")
+                    return True
+                else:
+                    logger.error("OTA test failed: slot did not switch")
+                    return False
+            else:
+                logger.info("Slot check step skipped.")
+                logger.success("OTA test completed with selected steps skipped.")
+                return True
+
+        except Exception as e:
+            logger.error(f"OTA test failed with exception: {e}")
+            return False
+
+    def __del__(self):
+        """
+        Custom method to destroy the OTA instance and clean up resources.
+        """
+        try:
+            logger.info("Destroying OTA instance and cleaning up resources")
+            if hasattr(self, "putty") and self.putty:
+                self.putty.disconnect()
+            if hasattr(self, "tsmaster") and self.tsmaster:
+                self.tsmaster.__del__()
+            if hasattr(self, "ui") and self.ui:
+                self.ui.disconnect()
+        except Exception as e:
+            logger.error(f"Error during OTA instance cleanup: {e}")
+
+
+if __name__ == "__main__":
+    # Putty configuration
+    putty_config = {
+        "putty_enabled": True,
+        "putty_comport": "COM44",
+        "putty_baudrate": 921600,
+        "putty_username": "",
+        "putty_password": "",
+    }
+
+    # ADB configuration
+    device_id = "2801750c52300030"
+
+    # Initialize OTA class with all components
+    ota = OTA(putty_config=putty_config, device_id=device_id)
+
+    # Run the complete OTA test
+    test_result = ota.perform_ota_test(
+        skip_download=True,
+        skip_slot_check=True,
+        skip_trigger_upgrade=True,
+        skip_upgrade_monitor=True,
+    )
+
+    # Print final result
+    if test_result:
+        logger.success("OTA test executed successfully")
+    else:
+        logger.error("OTA test execution failed")
+
+    """
+    dmsg -n 1
+
+    root@lynkco:~# ota_tool -g
+    using ota partition /ota
+    ota_dir /ota
+    [OTA_INFO][hobot_ota_hl.c:491] current slot is:A
+
+    root@lynkco:~# ota_tool -v
+    using ota partition /ota
+    ota_dir /ota
+    OTA Library version is 1.0.1
+    system version is 20250624-024856
+
+    Find install progress from putty
+    tail -f /ota/bsw/log/subda.log   板端查看下载及安装的进度
+    DOWNLOAD-COMPLETED
+    INSTALLATION-COMPLETED
+    tail -f /ota/bsw/log/otaclient.log
+    """
+
+    """
+    install packages
+    logcat | grep OtaMaster
+    logcat -d | grep OtaMaster | tail -n 1
+    DOWNLOAD-COMPLETED
+    OTAFunction send hmi download progress
+    after installation, there will be a popup from 
+    """
