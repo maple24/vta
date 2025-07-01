@@ -2,7 +2,7 @@ from vta.api.PuttyHelper import PuttyHelper
 from vta.api.ADBClient import ADBClient
 from vta.api.TSmasterAPI.TSRPC import TSMasterRPC
 from vta.api.DeviceClient import DeviceClient
-from vta.library.utility.decorators import wait_and_retry
+from vta.library.utility.decorators import timed_step, wait_and_retry
 from vta.library.utility.timelord import countdown
 from loguru import logger
 import time
@@ -260,6 +260,7 @@ class OTA:
         logger.error("Timeout waiting for device restart to complete (no 'login' or 'map' detected).")
         return False
 
+    @timed_step("download_duration")
     @wait_and_retry(timeout=1800, interval=2)
     def monitor_download_status(self) -> bool:
         """
@@ -290,6 +291,7 @@ class OTA:
         logger.info("Package download completion pattern not detected yet")
         return False
 
+    @timed_step("upgrade_duration")
     @wait_and_retry(timeout=1800, interval=2)
     def monitor_upgrade_status(self) -> bool:
         """
@@ -401,6 +403,10 @@ class OTA:
                 logger.info("Checking if OTA slot switched.")
                 if self._is_ota_upgrade_successful(previous_slot):
                     logger.success("OTA test completed successfully and slot switched")
+                    if hasattr(self, "download_duration"):
+                        logger.success(f"Download duration: {self.download_duration:.2f} seconds")
+                    if hasattr(self, "upgrade_duration"):
+                        logger.success(f"Upgrade duration: {self.upgrade_duration:.2f} seconds")
                     return True
                 else:
                     logger.error("OTA test failed: slot did not switch")

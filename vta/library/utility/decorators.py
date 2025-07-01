@@ -5,9 +5,26 @@
 # ============================================================================================================
 import time
 from functools import wraps
+from loguru import logger
 from rich.console import Console
 
 console = Console()
+
+
+def timed_step(attr_name):
+    def decorator(func):
+        def wrapper(self, *args, **kwargs):
+            start = time.time()
+            result = func(self, *args, **kwargs)
+            if result:
+                duration = time.time() - start
+                setattr(self, attr_name, duration)
+                logger.info(f"{func.__name__} completed in {duration:.2f} seconds")
+            return result
+
+        return wrapper
+
+    return decorator
 
 
 def wait_and_retry(timeout: int = 10, interval: float = 1.0, retry_times: int = None):
