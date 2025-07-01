@@ -8,12 +8,10 @@ from vta.core.runner.utils import rotate_folder
 from vta.tasks.ota.ota import OTA
 from datetime import datetime
 
-ROOT: Path = Path(__file__).resolve().parent.parent.parent.parent
-LOG_PATH: Path = ROOT / "log" / datetime.now().strftime('%A_%m%d%Y_%H%M')
+ROOT = Path(__file__).resolve().parent.parent.parent.parent
+LOG_PATH = ROOT / "log" / datetime.now().strftime('%A_%m%d%Y_%H%M')
 LOG_PATH.mkdir(parents=True, exist_ok=True)
 
-logger.add(sys.stdout, level="DEBUG")
-rotate_folder(ROOT / "log")
 console = Console()
 
 @click.command()
@@ -22,10 +20,10 @@ def main(iterations):
     results = []
 
     for i in range(iterations):
-        # Unique log file for each iteration
-        timestamp = datetime.now().strftime('%m%d%Y_%H%M%S')
-        iteration_log_path = LOG_PATH / f"log_iter_{i+1}_{timestamp}.log"
-        file_handler_id = logger.add(
+        logger.remove()
+        logger.add(sys.stdout, level="DEBUG")
+        iteration_log_path = LOG_PATH / f"log_iter_{i+1}_{datetime.now().strftime('%m%d%Y_%H%M%S')}.log"
+        logger.add(
             str(iteration_log_path),
             backtrace=True,
             diagnose=False,
@@ -33,8 +31,9 @@ def main(iterations):
             rotation="1 week",
             level="TRACE",
         )
-
+        rotate_folder(ROOT / "log")
         logger.info(f"Starting iteration {i + 1} of {iterations}")
+
         putty_config = {
             "putty_enabled": True,
             "putty_comport": "COM44",
@@ -42,7 +41,6 @@ def main(iterations):
             "putty_username": "",
             "putty_password": "",
         }
-
         device_id = "2801750c52300030"
 
         ota = OTA(putty_config=putty_config, device_id=device_id)
@@ -59,8 +57,6 @@ def main(iterations):
         else:
             logger.error(f"Iteration {i + 1} failed")
         del ota
-
-        logger.remove(file_handler_id)
 
     generate_report(results)
 

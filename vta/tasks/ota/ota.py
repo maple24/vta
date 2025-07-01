@@ -376,12 +376,10 @@ class OTA:
 
             # Step 2: Trigger upgrade (if not skipped)
             if not skip_trigger_upgrade:
-                logger.info("Switching to inactive mode for upgrade.")
                 if not self.switch_vehicle_mode("inactive"):
                     logger.error("Failed to switch to inactive mode")
                     return False
 
-                logger.info("Triggering upgrade via DHU.")
                 if not self.trigger_upgrade_via_dhu():
                     logger.error("Failed to trigger upgrade via DHU")
                     return False
