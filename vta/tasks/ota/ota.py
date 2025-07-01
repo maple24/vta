@@ -1,7 +1,7 @@
 from vta.api.PuttyHelper import PuttyHelper
 from vta.api.ADBClient import ADBClient
 from vta.api.TSmasterAPI.TSRPC import TSMasterRPC
-from vta.api.UIClient import UIClient
+from vta.api.DeviceClient import DeviceClient
 from vta.library.utility.decorators import wait_and_retry
 from loguru import logger
 import time
@@ -21,10 +21,11 @@ class OTA:
         self.putty = PuttyHelper()
         self.adb: ADBClient = ADBClient(device_id=device_id)
         self.tsmaster = TSMasterRPC()
-        self.ui = UIClient()
+        self.device = DeviceClient()
         self.putty.connect(putty_config)
-        self.ui.connect(device_id=device_id)
+        self.device.connect(device_id=device_id)
         self._set_log_level()
+        self.device_id = device_id
     
     def _set_log_level(self):
         """
@@ -108,7 +109,7 @@ class OTA:
         """
         logger.info("Querying current OTA slot using 'ota_tool -g'")
         pattern = r"current slot is:([AB])"
-        result, match = self.putty.wait_for_trace(pattern=pattern, command="ota_tool -g", timeout=10, login=False)
+        result, match = self.putty.wait_for_trace(pattern=pattern, cmd="ota_tool -g", timeout=10, login=False)
         if result and match and match[0]:
             slot = match[0]
             logger.info(f"Current OTA slot: {slot}")
@@ -148,7 +149,7 @@ class OTA:
             return False
 
         # Check if the upgrade text exists (e.g., "立即更新")
-        if self.ui.check_text_exists("立即更新"):
+        if self.device.check_text_exists(self.device_id, "立即更新"):
             logger.success("Upgrade is ready: '立即更新' found on the page")
             return True
         else:
@@ -169,7 +170,7 @@ class OTA:
             logger.error("Failed to navigate to upgrade page")
             return False
 
-        if self.ui.check_text_exists("安装包下载中"):
+        if self.device.check_text_exists(self.device_id, "安装包下载中"):
             logger.success("OTA downloading is in progress: '安装包下载中' found on the page")
             return True
         else:
@@ -201,8 +202,8 @@ class OTA:
                 return False
 
             # Step 2: Click the upgrade text
-            retry_click = wait_and_retry(timeout=10, interval=1)(self.ui.click_text)
-            if not retry_click("立即更新"):
+            retry_click = wait_and_retry(timeout=10, interval=1)(self.device.click_text)
+            if not retry_click(self.device_id, "立即更新"):
                 logger.error("Do not found `立即更新`, unable to upgrade")
                 return False
 
@@ -399,8 +400,8 @@ class OTA:
                 self.putty.disconnect()
             if hasattr(self, "tsmaster") and self.tsmaster:
                 self.tsmaster.__del__()
-            if hasattr(self, "ui") and self.ui:
-                self.ui.disconnect()
+            if hasattr(self, "ui") and self.device:
+                self.device.disconnect()
         except Exception as e:
             logger.error(f"Error during OTA instance cleanup: {e}")
 

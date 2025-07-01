@@ -5,7 +5,7 @@ from typing import Optional, Tuple, List
 import uiautomator2 as u2
 from loguru import logger
 
-class UIClient:
+class DeviceClient:
     """Class operations to android w/ uiautomator2"""
 
     def __init__(self):
@@ -552,7 +552,7 @@ class UIClient:
 
 if __name__ == '__main__':
     # Initialize the client
-    client = UIClient()
+    client = DeviceClient()
 
     # Device ID (replace with your actual device serial)
     device_id = "2801750c52300030"
