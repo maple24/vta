@@ -57,10 +57,11 @@ def wait_and_retry(timeout: int = 10, interval: float = 1.0, retry_times: int = 
                 end_time = time.time() + timeout
                 attempt = 1
                 while time.time() < end_time:
-                    console.log(f"[yellow]Attempt {attempt} for [bold]{func_name}[/] (timeout mode)")
+                    elapsed = timeout - (end_time - time.time())
+                    console.log(f"[yellow]Time elapsed: {elapsed:.2f}s for [bold]{func_name}[/] (timeout mode)")
                     result = func(*args, **kwargs)
                     if result:
-                        console.log(f"[green]'{func_name}' succeeded on attempt {attempt}[/]")
+                        console.log(f"[green]'{func_name}' succeeded after {elapsed:.2f}s[/]")
                         return result
                     time.sleep(interval)
                     attempt += 1
@@ -114,7 +115,7 @@ def hello():
 
 if __name__ == "__main__":
     demo = Demo()
-    result = demo.count_times()
+    result = demo.simple_method()
     print("Result:", result)
     # retry_hello = wait_and_retry(timeout=2, interval=1)(hello)
     # retry_hello()
