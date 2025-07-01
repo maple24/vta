@@ -347,6 +347,7 @@ class OTA:
                 if not self.trigger_upgrade_via_dhu():
                     logger.error("Failed to trigger upgrade via DHU")
                     return False
+                time.sleep(120)
             else:
                 logger.warning("Trigger upgrade step skipped.")
 
