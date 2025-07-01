@@ -253,6 +253,7 @@ class OTA:
         logger.info("Did not detect 'login' in Putty, checking for '地图' text on screen.")
         check_map = wait_and_retry(timeout=20, interval=1)(self.device.check_text_exists)
         if check_map(self.device_id, "地图"):
+            self._set_log_level()
             logger.success("Detected 'map' text on screen. Restart complete.")
             return True
 
