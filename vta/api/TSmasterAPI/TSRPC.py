@@ -11,7 +11,7 @@ class TSMasterRPC:
     TSMasterRPC封装类, 提供TSMaster.dll的功能调用
     """
 
-    def __init__(self, app_name, dev_mode="can"):
+    def __init__(self, app_name="TSMaster", dev_mode="can"):
         self._app_name = app_name
         self._dev_mode = dev_mode
         self._app_handle = c_size_t()
@@ -162,18 +162,31 @@ class TSMasterRPC:
 
 # 示例使用
 if __name__ == "__main__":
-    try:
-        app_name = "TSMaster"
-        rpc = TSMasterRPC(app_name)
+    # try:
+    #     app_name = "TSMaster"
+    #     rpc = TSMasterRPC(app_name)
 
-        # 示例调用
-        # run simulation
-        # app function
-        apiName = "com.can_rbs_activate_node_by_name"
-        # copy database path
-        args = ["0", "True", "D01D01PMessageListICCANFD_V21_20", "FLZCU_IC", "False"]
-        val = rpc.rpc_tsmaster_call_system_api(apiName, args)
+    #     # 示例调用
+    #     # run simulation
+    #     # app function
+    #     apiName = "com.can_rbs_activate_node_by_name"
+    #     # copy database path
+    #     args = ["0", "True", "D01D01PMessageListICCANFD_V21_20", "FLZCU_IC", "False"]
+    #     val = rpc.rpc_tsmaster_call_system_api(apiName, args)
 
-    except Exception as e:
-        logger.error(f"Error: {e}")
-    # 0/ZCU_CANFD1/ZCUD/ZcudZCUCANFD1Fr10/VehModMngtGlbSafe1UsgModSts
+    # except Exception as e:
+    #     logger.error(f"Error: {e}")
+    app_name = "TSMaster"
+    rpc = TSMasterRPC(app_name)
+    signal_path = "0/ZCU_CANFD1/ZCUD/ZcudZCUCANFD1Fr10/VehModMngtGlbSafe1UsgModSts"
+    mode_signal_map = {
+        "abandon": 0,
+        "inactive": 1,
+        "active": 11,
+        "driving": 13,
+    }
+    drg_mode = "driving"
+    inact_mode = "inactive"
+    # rpc.set_signal_value(signal_path, mode_signal_map[drg_mode])
+    current_value = rpc.get_signal_value(signal_path)
+    print(current_value)

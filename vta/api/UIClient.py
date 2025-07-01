@@ -12,37 +12,37 @@ class UIClient:
         self.adb_obj_container = {}
         logger.info(f"{self.__class__.__name__} initialized.")
 
-    def _get_device(self, dev_id: str) -> Optional[u2.Device]:
-        dev_id = (dev_id or "").strip()
-        if not dev_id:
+    def _get_device(self, device_id: str) -> Optional[u2.Device]:
+        device_id = (device_id or "").strip()
+        if not device_id:
             logger.warning("No device id provided.")
             return None
-        if dev_id not in self.adb_obj_container:
+        if device_id not in self.adb_obj_container:
             try:
-                dev_obj = u2.connect(dev_id)
-                self.adb_obj_container[dev_id] = dev_obj
-                logger.info(f"Connected to device '{dev_id}'.")
+                dev_obj = u2.connect(device_id)
+                self.adb_obj_container[device_id] = dev_obj
+                logger.info(f"Connected to device '{device_id}'.")
             except Exception as e:
-                logger.error(f"Failed to connect to device '{dev_id}': {e}")
+                logger.error(f"Failed to connect to device '{device_id}': {e}")
                 return None
-        return self.adb_obj_container[dev_id]
+        return self.adb_obj_container[device_id]
 
-    def connect(self, dev_id: str) -> bool:
-        dev_id = dev_id.strip()
+    def connect(self, device_id: str) -> bool:
+        device_id = device_id.strip()
         try:
-            dev_obj = u2.connect(dev_id)
-            self.adb_obj_container[dev_id] = dev_obj
-            logger.info(f"Connected to device '{dev_id}'.")
+            dev_obj = u2.connect(device_id)
+            self.adb_obj_container[device_id] = dev_obj
+            logger.info(f"Connected to device '{device_id}'.")
             return True
         except Exception as e:
-            logger.error(f"Error connecting to device '{dev_id}': {e}")
+            logger.error(f"Error connecting to device '{device_id}': {e}")
             return False
 
-    def install_apk(self, dev_id: str, apk_path: str) -> bool:
+    def install_apk(self, device_id: str, apk_path: str) -> bool:
         if not os.path.exists(apk_path):
             logger.error(f"APK not found: {apk_path}")
             return False
-        dev = self._get_device(dev_id)
+        dev = self._get_device(device_id)
         if not dev:
             return False
         try:
@@ -53,8 +53,8 @@ class UIClient:
             logger.error(f"Error installing APK: {e}")
             return False
 
-    def get_screendump(self, dev_id: str, out_path: str) -> bool:
-        dev = self._get_device(dev_id)
+    def get_screendump(self, device_id: str, out_path: str) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             return False
         try:
@@ -65,8 +65,8 @@ class UIClient:
             logger.error(f"Error taking screenshot: {e}")
             return False
 
-    def get_view_info(self, dev_id: str) -> Tuple[bool, List[str]]:
-        dev = self._get_device(dev_id)
+    def get_view_info(self, device_id: str) -> Tuple[bool, List[str]]:
+        dev = self._get_device(device_id)
         if not dev:
             return False, []
         try:
@@ -79,11 +79,11 @@ class UIClient:
             logger.error(f"Error getting view info: {e}")
             return False, []
 
-    def push_file(self, dev_id: str, file_path: str, remote_path: str) -> bool:
+    def push_file(self, device_id: str, file_path: str, remote_path: str) -> bool:
         if not os.path.exists(file_path):
             logger.error(f"File not found: {file_path}")
             return False
-        dev = self._get_device(dev_id)
+        dev = self._get_device(device_id)
         if not dev:
             return False
         try:
@@ -94,8 +94,8 @@ class UIClient:
             logger.error(f"Error pushing file: {e}")
             return False
 
-    def turn_on_off_screen(self, dev_id: str, operation: str = "on") -> bool:
-        dev = self._get_device(dev_id)
+    def turn_on_off_screen(self, device_id: str, operation: str = "on") -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             return False
         try:
@@ -106,92 +106,92 @@ class UIClient:
             else:
                 logger.error(f"Unknown operation: {operation}")
                 return False
-            logger.info(f"Set device '{dev_id}' screen to '{operation}'")
+            logger.info(f"Set device '{device_id}' screen to '{operation}'")
             return True
         except Exception as e:
             logger.error(f"Error turning screen {operation}: {e}")
             return False
 
-    def press_key(self, dev_id: str, keyname: str, delaytime: int = 1) -> bool:
-        dev = self._get_device(dev_id)
+    def press_key(self, device_id: str, keyname: str, delaytime: int = 1) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             return False
         try:
             dev.press(keyname)
-            logger.info(f"Pressed key '{keyname}' on {dev_id}")
+            logger.info(f"Pressed key '{keyname}' on {device_id}")
             time.sleep(delaytime)
             return True
         except Exception as e:
             logger.error(f"Error pressing key: {e}")
             return False
 
-    def click_xy(self, dev_id: str, x: int, y: int, delaytime: int = 1) -> bool:
-        dev = self._get_device(dev_id)
+    def click_xy(self, device_id: str, x: int, y: int, delaytime: int = 1) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             return False
         try:
             dev.click(int(x), int(y))
-            logger.info(f"Clicked at ({x},{y}) on {dev_id}")
+            logger.info(f"Clicked at ({x},{y}) on {device_id}")
             time.sleep(delaytime)
             return True
         except Exception as e:
             logger.error(f"Error clicking at ({x},{y}): {e}")
             return False
 
-    def double_click_xy(self, dev_id: str, x: int, y: int, click_duration: float = 0.1, delaytime: int = 1) -> bool:
-        dev = self._get_device(dev_id)
+    def double_click_xy(self, device_id: str, x: int, y: int, click_duration: float = 0.1, delaytime: int = 1) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             return False
         try:
             dev.double_click(x, y, click_duration)
-            logger.info(f"Double clicked at ({x},{y}) with duration {click_duration} on {dev_id}")
+            logger.info(f"Double clicked at ({x},{y}) with duration {click_duration} on {device_id}")
             time.sleep(delaytime)
             return True
         except Exception as e:
             logger.error(f"Error double clicking at ({x},{y}): {e}")
             return False
 
-    def long_click_xy(self, dev_id: str, x: int, y: int, click_duration: int = 1, delaytime: int = 1) -> bool:
-        dev = self._get_device(dev_id)
+    def long_click_xy(self, device_id: str, x: int, y: int, click_duration: int = 1, delaytime: int = 1) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             return False
         try:
             dev.long_click(x, y, click_duration)
-            logger.info(f"Long clicked at ({x},{y}) with duration {click_duration} on {dev_id}")
+            logger.info(f"Long clicked at ({x},{y}) with duration {click_duration} on {device_id}")
             time.sleep(delaytime)
             return True
         except Exception as e:
             logger.error(f"Error long clicking at ({x},{y}): {e}")
             return False
 
-    def swipe_ext(self, dev_id: str, cmd: str, delaytime: int = 1) -> bool:
-        dev = self._get_device(dev_id)
+    def swipe_ext(self, device_id: str, cmd: str, delaytime: int = 1) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             return False
         try:
             dev.swipe_ext(cmd)
-            logger.info(f"Swiped {cmd} on {dev_id}")
+            logger.info(f"Swiped {cmd} on {device_id}")
             time.sleep(delaytime)
             return True
         except Exception as e:
             logger.error(f"Error swiping {cmd}: {e}")
             return False
 
-    def swipe_xy(self, dev_id: str, x1: int, y1: int, x2: int, y2: int, swipe_time: float = 0.1, delaytime: int = 1) -> bool:
-        dev = self._get_device(dev_id)
+    def swipe_xy(self, device_id: str, x1: int, y1: int, x2: int, y2: int, swipe_time: float = 0.1, delaytime: int = 1) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             return False
         try:
             dev.swipe(int(x1), int(y1), int(x2), int(y2), swipe_time)
-            logger.info(f"Swiped from ({x1},{y1}) to ({x2},{y2}) on {dev_id}")
+            logger.info(f"Swiped from ({x1},{y1}) to ({x2},{y2}) on {device_id}")
             time.sleep(delaytime)
             return True
         except Exception as e:
             logger.error(f"Error swiping from ({x1},{y1}) to ({x2},{y2}): {e}")
             return False
 
-    def swipe_to_find_text(self, dev_id: str, text_to_find: str, swipe_method: str = "swipe_ext", cmd: str = "up", xy: list = [], max_retrial: int = 10) -> bool:
-        dev = self._get_device(dev_id)
+    def swipe_to_find_text(self, device_id: str, text_to_find: str, swipe_method: str = "swipe_ext", cmd: str = "up", xy: list = [], max_retrial: int = 10) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             return False
         for i in range(max_retrial):
@@ -200,17 +200,17 @@ class UIClient:
                 return True
             logger.info(f"Text '{text_to_find}' not found, swiping {cmd} (attempt {i+1})")
             if swipe_method == "swipe_ext":
-                self.swipe_ext(dev_id, cmd, delaytime=1)
+                self.swipe_ext(device_id, cmd, delaytime=1)
             elif swipe_method == "swipe_xy" and len(xy) == 4:
-                self.swipe_xy(dev_id, xy[0], xy[1], xy[2], xy[3], swipe_time=1, delaytime=1)
+                self.swipe_xy(device_id, xy[0], xy[1], xy[2], xy[3], swipe_time=1, delaytime=1)
             else:
                 logger.error(f"Unknown swipe method or invalid xy: {swipe_method}, {xy}")
                 return False
         logger.warning(f"Text '{text_to_find}' not found after {max_retrial} swipes.")
         return False
 
-    def get_ui_hierarchy(self, dev_id: str, out_path: str) -> Tuple[bool, Optional[str]]:
-        dev = self._get_device(dev_id)
+    def get_ui_hierarchy(self, device_id: str, out_path: str) -> Tuple[bool, Optional[str]]:
+        dev = self._get_device(device_id)
         if not dev:
             return False, None
         try:
@@ -223,20 +223,20 @@ class UIClient:
             logger.error(f"Error dumping UI hierarchy: {e}")
             return False, None
 
-    def unlock(self, dev_id: str) -> bool:
-        dev = self._get_device(dev_id)
+    def unlock(self, device_id: str) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             return False
         try:
             dev.unlock()
-            logger.info(f"Device '{dev_id}' unlocked.")
+            logger.info(f"Device '{device_id}' unlocked.")
             return True
         except Exception as e:
             logger.error(f"Error unlocking device: {e}")
             return False
 
-    def set_shell(self, dev_id: str, cmd: str, timeout: int = 5, log_print: bool = True, delaytime: int = 1) -> Tuple[bool, Optional[str]]:
-        dev = self._get_device(dev_id)
+    def set_shell(self, device_id: str, cmd: str, timeout: int = 5, log_print: bool = True, delaytime: int = 1) -> Tuple[bool, Optional[str]]:
+        dev = self._get_device(device_id)
         if not dev:
             return False, None
         try:
@@ -249,8 +249,8 @@ class UIClient:
             logger.error(f"Error running shell command: {e}")
             return False, None
 
-    def logcat_capturer(self, dev_id: str, file_path: str, timeout: int = 60, print2console: bool = False) -> bool:
-        dev = self._get_device(dev_id)
+    def logcat_capturer(self, device_id: str, file_path: str, timeout: int = 60, print2console: bool = False) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             return False
         if os.path.isdir(file_path):
@@ -281,8 +281,8 @@ class UIClient:
         finally:
             r.close()
 
-    def click_item(self, dev_id: str, item_type: str = "text", options: list = []) -> bool:
-        dev = self._get_device(dev_id)
+    def click_item(self, device_id: str, item_type: str = "text", options: list = []) -> bool:
+        dev = self._get_device(device_id)
         if not dev or not options:
             logger.error("Device not found or options empty.")
             return False
@@ -311,110 +311,110 @@ class UIClient:
             logger.error(f"Error in click_item: {e}")
             return False
 
-    def click_text(self, dev_id: str, text: str, exists_timeout: int = 2, delaytime: int = 2) -> bool:
-        dev = self._get_device(dev_id)
+    def click_text(self, device_id: str, text: str, exists_timeout: int = 2, delaytime: int = 2) -> bool:
+        dev = self._get_device(device_id)
         if not dev or not text:
             logger.error("Device not found or text not provided.")
             return False
         try:
             result = dev(text=text).click_exists(timeout=exists_timeout)
             if result:
-                logger.info(f"Clicked text '{text}' on device '{dev_id}'")
+                logger.info(f"Clicked text '{text}' on device '{device_id}'")
             else:
-                logger.info(f"Text '{text}' not found on device '{dev_id}'")
+                logger.info(f"Text '{text}' not found on device '{device_id}'")
             time.sleep(delaytime)
             return result
         except Exception as e:
             logger.error(f"Error in click_text: {e}")
             return False
 
-    def click_resource_id(self, dev_id: str, resid: str, delaytime: int = 2) -> bool:
-        dev = self._get_device(dev_id)
+    def click_resource_id(self, device_id: str, resid: str, delaytime: int = 2) -> bool:
+        dev = self._get_device(device_id)
         if not dev or not resid:
             logger.error("Device not found or resource id not provided.")
             return False
         try:
             if dev(resourceId=resid).exists:
                 result = dev(resourceId=resid).click_exists(timeout=2)
-                logger.info(f"Clicked resourceId '{resid}' on device '{dev_id}'")
+                logger.info(f"Clicked resourceId '{resid}' on device '{device_id}'")
                 time.sleep(delaytime)
                 return result
             else:
-                logger.warning(f"ResourceId '{resid}' not found on device '{dev_id}'")
+                logger.warning(f"ResourceId '{resid}' not found on device '{device_id}'")
                 return False
         except Exception as e:
             logger.error(f"Error in click_resource_id: {e}")
             return False
 
-    def click_class_name(self, dev_id: str, class_name: str, delaytime: int = 2) -> bool:
-        dev = self._get_device(dev_id)
+    def click_class_name(self, device_id: str, class_name: str, delaytime: int = 2) -> bool:
+        dev = self._get_device(device_id)
         if not dev or not class_name:
             logger.error("Device not found or class name not provided.")
             return False
         try:
             if dev(className=class_name).exists:
                 result = dev(className=class_name).click_exists(timeout=2)
-                logger.info(f"Clicked className '{class_name}' on device '{dev_id}'")
+                logger.info(f"Clicked className '{class_name}' on device '{device_id}'")
                 time.sleep(delaytime)
                 return result
             else:
-                logger.warning(f"ClassName '{class_name}' not found on device '{dev_id}'")
+                logger.warning(f"ClassName '{class_name}' not found on device '{device_id}'")
                 return False
         except Exception as e:
             logger.error(f"Error in click_class_name: {e}")
             return False
 
-    def click_description(self, dev_id: str, text: str, delaytime: int = 2) -> bool:
-        dev = self._get_device(dev_id)
+    def click_description(self, device_id: str, text: str, delaytime: int = 2) -> bool:
+        dev = self._get_device(device_id)
         if not dev or not text:
             logger.error("Device not found or description not provided.")
             return False
         try:
             if dev(description=text).exists:
                 result = dev(description=text).click_exists(timeout=2)
-                logger.info(f"Clicked description '{text}' on device '{dev_id}'")
+                logger.info(f"Clicked description '{text}' on device '{device_id}'")
                 time.sleep(delaytime)
                 return result
             else:
-                logger.warning(f"Description '{text}' not found on device '{dev_id}'")
+                logger.warning(f"Description '{text}' not found on device '{device_id}'")
                 return False
         except Exception as e:
             logger.error(f"Error in click_description: {e}")
             return False
 
-    def click_xpath(self, dev_id: str, str_xpath: str, delaytime: int = 2) -> bool:
-        dev = self._get_device(dev_id)
+    def click_xpath(self, device_id: str, str_xpath: str, delaytime: int = 2) -> bool:
+        dev = self._get_device(device_id)
         if not dev or not str_xpath:
             logger.error("Device not found or xpath not provided.")
             return False
         try:
             if dev.xpath(str_xpath).exists:
                 result = dev.xpath(str_xpath).click_exists()
-                logger.info(f"Clicked xpath '{str_xpath}' on device '{dev_id}'")
+                logger.info(f"Clicked xpath '{str_xpath}' on device '{device_id}'")
                 time.sleep(delaytime)
                 return result
             else:
-                logger.warning(f"XPath '{str_xpath}' not found on device '{dev_id}'")
+                logger.warning(f"XPath '{str_xpath}' not found on device '{device_id}'")
                 return False
         except Exception as e:
             logger.error(f"Error in click_xpath: {e}")
             return False
 
-    def click_index(self, dev_id: str, index: int = 0) -> bool:
-        dev = self._get_device(dev_id)
+    def click_index(self, device_id: str, index: int = 0) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             logger.error("Device not found.")
             return False
         try:
             result = dev(index=index).click()
-            logger.info(f"Clicked index '{index}' on device '{dev_id}'")
+            logger.info(f"Clicked index '{index}' on device '{device_id}'")
             return result
         except Exception as e:
             logger.error(f"Error in click_index: {e}")
             return False
 
-    def check_resource_id_exists(self, dev_id: str, resid: str) -> bool:
-        dev = self._get_device(dev_id)
+    def check_resource_id_exists(self, device_id: str, resid: str) -> bool:
+        dev = self._get_device(device_id)
         if not dev or not resid:
             logger.error("Device not found or resource id not provided.")
             return False
@@ -426,8 +426,8 @@ class UIClient:
             logger.error(f"Error checking resource id existence: {e}")
             return False
 
-    def check_text_exists(self, dev_id: str, text: str) -> bool:
-        dev = self._get_device(dev_id)
+    def check_text_exists(self, device_id: str, text: str) -> bool:
+        dev = self._get_device(device_id)
         if not dev or not text:
             logger.error("Device not found or text not provided.")
             return False
@@ -439,8 +439,8 @@ class UIClient:
             logger.error(f"Error checking text existence: {e}")
             return False
 
-    def get_widget_text(self, dev_id: str, text_wd: Optional[str] = None, resid: Optional[str] = None) -> Tuple[bool, str]:
-        dev = self._get_device(dev_id)
+    def get_widget_text(self, device_id: str, text_wd: Optional[str] = None, resid: Optional[str] = None) -> Tuple[bool, str]:
+        dev = self._get_device(device_id)
         if not dev:
             logger.error("Device not found.")
             return False, ""
@@ -459,8 +459,8 @@ class UIClient:
             logger.error(f"Error getting widget text: {e}")
             return False, ""
 
-    def set_widget_text(self, dev_id: str, resid: str, text_to_set: str = "", delaytime: int = 2) -> bool:
-        dev = self._get_device(dev_id)
+    def set_widget_text(self, device_id: str, resid: str, text_to_set: str = "", delaytime: int = 2) -> bool:
+        dev = self._get_device(device_id)
         if not dev or not resid:
             logger.error("Device not found or resource id not provided.")
             return False
@@ -473,13 +473,13 @@ class UIClient:
             logger.error(f"Error setting widget text: {e}")
             return False
 
-    def check_widget_value(self, dev_id: str, resid: str, exp_val: str = "", min_val: str = "", max_val: str = "") -> bool:
-        dev = self._get_device(dev_id)
+    def check_widget_value(self, device_id: str, resid: str, exp_val: str = "", min_val: str = "", max_val: str = "") -> bool:
+        dev = self._get_device(device_id)
         if not dev or not resid:
             logger.error("Device not found or resource id not provided.")
             return False
         try:
-            ok, str_content = self.get_widget_text(dev_id, resid=resid)
+            ok, str_content = self.get_widget_text(device_id, resid=resid)
             if not ok:
                 logger.error(f"Failed to get text from widget '{resid}'")
                 return False
@@ -507,8 +507,8 @@ class UIClient:
             logger.error(f"Error checking widget value: {e}")
             return False
 
-    def scroll_to_find_text(self, dev_id: str, text_to_find: str, recover_resid: str, max_retrial: int = 10) -> bool:
-        dev = self._get_device(dev_id)
+    def scroll_to_find_text(self, device_id: str, text_to_find: str, recover_resid: str, max_retrial: int = 10) -> bool:
+        dev = self._get_device(device_id)
         if not dev:
             logger.error("Device not found.")
             return False
@@ -517,13 +517,13 @@ class UIClient:
                 logger.info(f"Found text '{text_to_find}' after {i} scrolls.")
                 return True
             logger.info(f"Text '{text_to_find}' not found, pressing '{recover_resid}' (attempt {i+1})")
-            self.click_resource_id(dev_id, resid=recover_resid, delaytime=2)
+            self.click_resource_id(device_id, resid=recover_resid, delaytime=2)
         logger.warning(f"Text '{text_to_find}' not found after {max_retrial} scrolls.")
         return False
 
-    def set_shell_and_fetch_trace(self, dev_id: str, scmd: str, max_timeout: int = 10, end_trace: str = "\n") -> Tuple[bool, List[str]]:
+    def set_shell_and_fetch_trace(self, device_id: str, scmd: str, max_timeout: int = 10, end_trace: str = "\n") -> Tuple[bool, List[str]]:
         logger.info(f"Sending shell cmd: {scmd}")
-        p = subprocess.Popen(f"adb -s {dev_id} shell", stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+        p = subprocess.Popen(f"adb -s {device_id} shell", stdout=subprocess.PIPE, stdin=subprocess.PIPE)
         p.stdin.write(f"{scmd}\n".encode('utf-8'))
         p.stdin.flush()
         time.sleep(2)
@@ -542,3 +542,98 @@ class UIClient:
                 return True, shell_trace
             shell_trace.append(out)
         return False, shell_trace
+    
+    def disconnect(self, device_id: str):
+        """Remove the device from the container (optional cleanup)."""
+        if device_id in self.adb_obj_container:
+            del self.adb_obj_container[device_id]
+            logger.info(f"Disconnected device '{device_id}'.")
+
+
+if __name__ == '__main__':
+    # Initialize the client
+    client = UIClient()
+
+    # Device ID (replace with your actual device serial)
+    device_id = "2801750c52300030"
+
+    # Connect to device
+    if client.connect(device_id):
+        print("Connected!")
+
+    # Install an APK
+    # apk_path = r"C:\path\to\your.apk"
+    # if client.install_apk(device_id, apk_path):
+    #     print("APK installed.")
+
+    # Take a screenshot
+    # if client.get_screendump(device_id, r"C:\tmp\screenshot.png"):
+    #     print("Screenshot saved.")
+
+    # # Get current package and activity
+    # ok, info = client.get_view_info(device_id)
+    # if ok:
+    #     print("Current package:", info[0])
+    #     print("Current activity:", info[1])
+
+    # # Push a file to device
+    # if client.push_file(device_id, r"C:\tmp\file.txt", "/sdcard/file.txt"):
+    #     print("File pushed.")
+
+    # # Turn screen on
+    # client.turn_on_off_screen(device_id, "on")
+
+    # # Press the HOME key
+    # client.press_key(device_id, "home")
+
+    # # Click at coordinates (100, 200)
+    # client.click_xy(device_id, 100, 200)
+
+    # # Double click at coordinates (100, 200)
+    # client.double_click_xy(device_id, 100, 200)
+
+    # # Long click at coordinates (100, 200)
+    # client.long_click_xy(device_id, 100, 200)
+
+    # # Swipe up
+    # client.swipe_ext(device_id, "up")
+
+    # # Swipe from (100,200) to (300,400)
+    # client.swipe_xy(device_id, 100, 200, 300, 400)
+
+    # # Swipe to find text
+    # client.swipe_to_find_text(device_id, "Settings")
+
+    # # Dump UI hierarchy to file
+    # ok, path = client.get_ui_hierarchy(device_id, r"C:\tmp\ui.xml")
+    # if ok:
+    #     print("UI hierarchy saved to:", path)
+
+    # # Unlock device
+    # client.unlock(device_id)
+
+    # # Run a shell command
+    # ok, output = client.set_shell(device_id, "ls /sdcard")
+    # if ok:
+    #     print("Shell output:", output)
+
+    # # Capture logcat
+    # client.logcat_capturer(device_id, r"C:\tmp\logcat.log", timeout=10)
+
+    # Click a UI element by text
+    # client.click_text(device_id, "OK")
+
+    # # Click a UI element by resource id
+    # client.click_resource_id(device_id, "com.example:id/button1")
+
+    # Check if text exists
+    if client.check_text_exists(device_id, "Welcome"):
+        print("Text found!")
+
+    # # Set text in a widget
+    # client.set_widget_text(device_id, "com.example:id/input", "Hello World")
+
+    # # Get text from a widget
+    # ok, text = client.get_widget_text(device_id, resid="com.example:id/input")
+    # if ok:
+    #     print("Widget text:", text)
