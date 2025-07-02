@@ -112,10 +112,15 @@ class Demo:
 def hello():
     print("hello world")
 
+@wait_and_retry(retry_times=3, interval=1)
+def greet():
+    print("greet")
+
 
 if __name__ == "__main__":
-    demo = Demo()
-    result = demo.simple_method()
-    print("Result:", result)
+    greet()
+    # demo = Demo()
+    # result = demo.simple_method()
+    # print("Result:", result)
     # retry_hello = wait_and_retry(timeout=2, interval=1)(hello)
     # retry_hello()

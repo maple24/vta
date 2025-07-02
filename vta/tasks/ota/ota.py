@@ -29,11 +29,13 @@ class OTA:
 
     def _set_log_level(self):
         """
-        Send 'dmesg -n 1' command in Putty before starting OTA test.
+        Send 'dmesg -n 1' command in Putty several times before starting OTA test.
         """
         try:
-            logger.info("Preparing Putty: sending 'dmesg -n 1'")
-            self.putty.send_command("dmesg -n 1")
+            logger.info("Preparing Putty: sending 'dmesg -n 1' multiple times")
+            for _ in range(3):
+                self.putty.send_command("dmesg -n 1")
+                time.sleep(0.2)
         except Exception as e:
             logger.error(f"Failed to send 'dmesg -n 1' in Putty: {e}")
 
@@ -100,6 +102,7 @@ class OTA:
             logger.error(f"Failed to navigate to upgrade page: {e}")
             return False
 
+    @wait_and_retry(interval=1, retry_times=3)
     def _get_current_ota_slot(self) -> str:
         """
         Get the current OTA slot by searching for 'current slot is:' in Putty logs.
