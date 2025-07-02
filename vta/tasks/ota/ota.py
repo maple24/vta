@@ -234,35 +234,27 @@ class OTA:
         """
         setattr(self, attr_name, self._get_log_line_count(log_path))
 
-    def _check_restart_complete(self, timeout=60) -> bool:
+    def _check_restart_complete(self, timeout=150) -> bool:
         """
-        Wait for the device to finish restarting by checking for the 'login' prompt
+        Wait for the device to finish restarting by checking for the 'Starting kernel' prompt
         in Putty using wait_for_trace. If not found, check for 'map' text on the screen.
 
         Args:
             timeout: Maximum time to wait in seconds.
-            interval: Time between checks in seconds.
 
         Returns:
             bool: True if restart is complete, False otherwise.
         """
-        logger.info("Waiting for device restart to complete (Putty 'login' or screen 'map')")
-        # Step 1: Try to find 'login' prompt in Putty
-        login_pattern = r"lynkco\s+login\s*:"
+        logger.info("Waiting for device restart to complete (Putty 'Starting kernel')")
+        login_pattern = r"Starting kernel"
         result, match = self.putty.wait_for_trace(pattern=login_pattern, cmd="", timeout=timeout, login=False)
         if result:
-            logger.success("Detected 'login' prompt in Putty. Restart complete.")
-            return True
-
-        # Step 2: If not found, check for text on the screen
-        logger.info("Did not detect 'login' in Putty, checking for '地图' text on screen.")
-        check_map = wait_and_retry(timeout=timeout, interval=2)(self.device.check_text_exists)
-        if check_map(self.device_id, "地图"):
+            logger.success("Detected 'Starting kernel' prompt in Putty. Please wait 30s.")
+            countdown(30)
             self._set_log_level()
-            logger.success("Detected 'map' text on screen. Restart complete.")
             return True
 
-        logger.error("Timeout waiting for device restart to complete (no 'login' or 'map' detected).")
+        logger.error("Timeout waiting for device restart to complete (no 'Starting kernel' detected).")
         return False
 
     @timed_step("download_duration")
