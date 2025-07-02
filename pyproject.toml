@@ -58,7 +58,7 @@ ensure_header = "ensure_license_header:main"
 function_runner = "vta.core.runner.function:runner"
 stability_runner = "vta.core.runner.stability:runner"
 hello = "examples.click_hello:cli"
-ota = "vta.tasks.ota.runner"
+ota = "vta.tasks.ota.runner:main"
 
 
 [build-system]
