@@ -56,6 +56,9 @@ def main(iterations):
             logger.success(f"Iteration {i + 1} completed successfully")
         else:
             logger.error(f"Iteration {i + 1} failed")
+            logger.error("Stopping iterations due to failure")
+            del ota
+            break
         del ota
 
     generate_report(results)
