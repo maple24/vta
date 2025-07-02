@@ -203,6 +203,7 @@ class OTA:
         logger.error("Unable to get line count!")
         return 0
 
+    @wait_and_retry(interval=1, retry_times=3)
     def trigger_upgrade_via_dhu(self) -> bool:
         """
         Interact with DHU to trigger the upgrade process.
