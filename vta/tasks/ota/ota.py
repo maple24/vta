@@ -1,4 +1,4 @@
-from vta.api.PuttyHelper import PuttyHelper
+from vta.api.PuttyHelper import PuttyHelper, SerialConfig
 from vta.api.ADBClient import ADBClient
 from vta.api.TSmasterAPI.TSRPC import TSMasterRPC
 from vta.api.DeviceClient import DeviceClient
@@ -22,7 +22,14 @@ class OTA:
         self.adb: ADBClient = ADBClient(device_id=device_id)
         self.tsmaster = TSMasterRPC()
         self.device = DeviceClient()
-        self.putty.connect(putty_config)
+        
+        # Convert dict config to SerialConfig for new PuttyHelper
+        if isinstance(putty_config, dict):
+            self.putty_config = SerialConfig.from_dict(putty_config)
+        else:
+            self.putty_config = putty_config
+            
+        self.putty.connect(self.putty_config)
         self.device.connect(device_id=device_id)
         self._set_log_level()
         self.device_id = device_id
@@ -112,7 +119,12 @@ class OTA:
         """
         logger.info("Querying current OTA slot using 'ota_tool -g'")
         pattern = r"current slot is:([AB])"
-        result, match = self.putty.wait_for_trace(pattern=pattern, cmd="ota_tool -g", timeout=10, login=False)
+        result, match = self.putty.wait_for_trace(
+            pattern=pattern, 
+            command="ota_tool -g", 
+            timeout=10, 
+            auto_login=False
+        )
         if result and match and match[0]:
             slot = match[0]
             logger.info(f"Current OTA slot: {slot}")
@@ -193,18 +205,39 @@ class OTA:
             return False
 
     def _get_log_line_count(self, log_path: str) -> int:
-        traces = self.putty.send_command_and_return_traces(f"wc -l {log_path}", wait=1, login=False)
-        if traces:
-            for line in traces:
-                clean_line = re.sub(r"\x1b\[[0-9;?]*[a-zA-Z]", "", line)
-                clean_line = clean_line.replace("\r", "").strip()
-                match = re.match(r"^(\d+)", clean_line)
-                if match:
-                    count = int(match.group(1))
-                    logger.info(f"The line cound of subda.log is {count}")
-                    return count
-        logger.error("Unable to get line count!")
-        return 0
+        """
+        Get the line count of a log file using the new PuttyHelper API.
+        
+        Args:
+            log_path: Path to the log file
+            
+        Returns:
+            int: Number of lines in the file, 0 if error
+        """
+        try:
+            traces = self.putty.execute_command(
+                f"wc -l {log_path}", 
+                wait_time=1.0, 
+                auto_login=False
+            )
+            
+            if traces:
+                for line in traces:
+                    # Clean up ANSI escape sequences and carriage returns
+                    clean_line = re.sub(r"\x1b\[[0-9;?]*[a-zA-Z]", "", line)
+                    clean_line = clean_line.replace("\r", "").strip()
+                    match = re.match(r"^(\d+)", clean_line)
+                    if match:
+                        count = int(match.group(1))
+                        logger.info(f"The line count of {log_path} is {count}")
+                        return count
+                        
+            logger.error("Unable to get line count!")
+            return 0
+            
+        except Exception as e:
+            logger.error(f"Error getting log line count: {e}")
+            return 0
 
     @wait_and_retry(interval=1, retry_times=3)
     def trigger_upgrade_via_dhu(self) -> bool:
@@ -250,7 +283,12 @@ class OTA:
         """
         logger.info("Waiting for device restart to complete (Putty 'Starting kernel')")
         login_pattern = r"Starting kernel"
-        result, match = self.putty.wait_for_trace(pattern=login_pattern, cmd="", timeout=timeout, login=False)
+        result, match = self.putty.wait_for_trace(
+            pattern=login_pattern, 
+            command="", 
+            timeout=timeout, 
+            auto_login=False
+        )
         if result:
             logger.success("Detected 'Starting kernel' prompt in Putty. Please wait 30s.")
             countdown(30)
@@ -277,11 +315,18 @@ class OTA:
         current_line = self._get_log_line_count(log_path)
         num_new_lines = max(0, current_line - start_line)
         traces = []
+        
         if num_new_lines > 0:
             setattr(self, "_download_log_start_line", current_line)
-            traces = self.putty.send_command_and_return_traces(
-                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", wait=1, login=False
-            )
+            try:
+                traces = self.putty.execute_command(
+                    f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", 
+                    wait_time=1.0, 
+                    auto_login=False
+                )
+            except Exception as e:
+                logger.error(f"Error reading log lines: {e}")
+                return False
 
         for line in traces:
             if patterns["completed"].search(line):
@@ -308,11 +353,18 @@ class OTA:
         current_line = self._get_log_line_count(log_path)
         num_new_lines = max(0, current_line - start_line)
         traces = []
+        
         if num_new_lines > 0:
             setattr(self, "_upgrade_log_start_line", current_line)
-            traces = self.putty.send_command_and_return_traces(
-                f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", wait=1, login=False
-            )
+            try:
+                traces = self.putty.execute_command(
+                    f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", 
+                    wait_time=1.0, 
+                    auto_login=False
+                )
+            except Exception as e:
+                logger.error(f"Error reading log lines: {e}")
+                return False
 
         for line in traces:
             if patterns["completed"].search(line):
@@ -430,14 +482,14 @@ class OTA:
                 self.putty.disconnect()
             if hasattr(self, "tsmaster") and self.tsmaster:
                 self.tsmaster.__del__()
-            if hasattr(self, "ui") and self.device:
+            if hasattr(self, "device") and self.device:
                 self.device.disconnect()
         except Exception as e:
             logger.error(f"Error during OTA instance cleanup: {e}")
 
 
 if __name__ == "__main__":
-    # Putty configuration
+    # Putty configuration - can use either dict or SerialConfig
     putty_config = {
         "putty_enabled": True,
         "putty_comport": "COM44",
@@ -445,6 +497,15 @@ if __name__ == "__main__":
         "putty_username": "",
         "putty_password": "",
     }
+    
+    # Alternative: using SerialConfig directly
+    # putty_config = SerialConfig(
+    #     enabled=True,
+    #     comport="COM44",
+    #     baudrate=921600,
+    #     username="",
+    #     password=""
+    # )
 
     # ADB configuration
     device_id = "2801750c52300030"
