@@ -242,8 +242,8 @@ if __name__ == "__main__":
     drelay = {
         "relay_enabled": True,
         "multiplexer": {"enabled": False, "comport": "COM13"},
-        "cleware": {"enabled": True, "dev_id": "710452"},
-        "xinke": {"enabled": False, "comport": "COM10"},
+        "cleware": {"enabled": False, "dev_id": "710452"},
+        "xinke": {"enabled": True, "comport": "COM5"},
     }
     obj_relay.init_relay(drelay)
-    obj_relay.set_relay_port(dev_type="cleware", port_index="5", state_code="1")
+    obj_relay.set_relay_port(dev_type="xinke", port_index="1", state_code="1")
