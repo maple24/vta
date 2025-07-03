@@ -1,43 +1,141 @@
-from vta.api.PuttyClient import PuttyClient, SerialConfig
 from vta.api.ADBClient import ADBClient
-from vta.api.TSmasterAPI.TSRPC import TSMasterRPC
+from vta.api.PuttyClient import SerialConfig, PuttyClient
+from vta.api.TSmasterAPI.TSRPC import TSMasterRPC, TSMasterConfig, DeviceMode
 from vta.api.DeviceClient import DeviceClient
 from vta.library.utility.decorators import timed_step, wait_and_retry
 from vta.library.utility.timelord import countdown
 from loguru import logger
 import time
 import re
+from typing import Union, Dict, Any
+from dataclasses import dataclass
+from enum import Enum
+
+
+class VehicleMode(Enum):
+    """Enumeration for vehicle modes."""
+    ABANDON = "abandon"
+    INACTIVE = "inactive"
+    ACTIVE = "active"
+    DRIVING = "driving"
+
+
+@dataclass
+class OTAConfig:
+    """Configuration for OTA operations."""
+    putty_config: Union[Dict[str, Any], SerialConfig]
+    tsmaster_config: Union[Dict[str, Any], TSMasterConfig]
+    device_id: str
+    signal_path: str = "0/ZCU_CANFD1/ZCUD/ZcudZCUCANFD1Fr10/VehModMngtGlbSafe1UsgModSts"
+    log_path: str = "/ota/bsw/log/subda.log"
+    upgrade_app_activity: str = "com.flyme.auto.update/.UpdateMainActivity"
+    
+    def __post_init__(self):
+        # Convert dict configs to proper dataclasses
+        if isinstance(self.putty_config, dict):
+            self.putty_config = SerialConfig.from_dict(self.putty_config)
+        if isinstance(self.tsmaster_config, dict):
+            self.tsmaster_config = TSMasterConfig(**self.tsmaster_config)
+
+
+class VehicleModeManager:
+    """Helper class for managing vehicle modes."""
+    
+    MODE_SIGNAL_MAP = {
+        VehicleMode.ABANDON: 0,
+        VehicleMode.INACTIVE: 1,
+        VehicleMode.ACTIVE: 11,
+        VehicleMode.DRIVING: 13,
+    }
+    
+    def __init__(self, tsmaster: TSMasterRPC, signal_path: str):
+        self.tsmaster = tsmaster
+        self.signal_path = signal_path
+    
+    def set_mode(self, mode: VehicleMode) -> bool:
+        """Set vehicle mode."""
+        try:
+            if isinstance(mode, str):
+                mode = VehicleMode(mode)
+            
+            value = float(self.MODE_SIGNAL_MAP[mode])
+            self.tsmaster.set_signal_value(self.signal_path, value)
+            logger.info(f"Set vehicle mode to {mode.value} (signal value: {value})")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to set vehicle mode to {mode}: {e}")
+            return False
+    
+    def get_current_mode(self) -> VehicleMode:
+        """Get current vehicle mode."""
+        try:
+            value = int(self.tsmaster.get_signal_value(self.signal_path))
+            for mode, signal_value in self.MODE_SIGNAL_MAP.items():
+                if signal_value == value:
+                    return mode
+            logger.warning(f"Unknown vehicle mode signal value: {value}")
+            return None
+        except Exception as e:
+            logger.error(f"Failed to get current vehicle mode: {e}")
+            return None
+    
+    @wait_and_retry(timeout=10, interval=1)
+    def wait_for_mode(self, expected_mode: VehicleMode) -> bool:
+        """Wait until vehicle mode equals expected mode."""
+        current = self.get_current_mode()
+        return current == expected_mode
 
 
 class OTA:
-    def __init__(self, putty_config: dict, device_id: str) -> None:
+    def __init__(self, config: Union[OTAConfig, Dict[str, Any]]) -> None:
         """
         Initialize the OTA class with required tools.
 
         Args:
-            putty_config: Configuration parameters for PuttyHelper
-            device_id: Device ID for ADB and DeviceClient
+            config: OTA configuration object or dictionary
         """
-        self.putty = PuttyClient()
-        self.adb: ADBClient = ADBClient(device_id=device_id)
-        self.tsmaster = TSMasterRPC()
-        self.device = DeviceClient()
-        
-        # Convert dict config to SerialConfig for new PuttyHelper
-        if isinstance(putty_config, dict):
-            self.putty_config = SerialConfig.from_dict(putty_config)
-        else:
-            self.putty_config = putty_config
+        # Handle different config types
+        if isinstance(config, dict):
+            # Extract legacy parameters for backward compatibility
+            putty_config = config.get("putty_config", {})
+            device_id = config.get("device_id", "")
+            tsmaster_config = config.get("tsmaster_config", {})
             
-        self.putty.connect(self.putty_config)
-        self.device.connect(device_id=device_id)
+            self.config = OTAConfig(
+                putty_config=putty_config,
+                tsmaster_config=tsmaster_config,
+                device_id=device_id
+            )
+        else:
+            self.config = config
+        
+        # Initialize components
+        self.putty = PuttyClient()
+        self.adb = ADBClient(device_id=self.config.device_id)
+        self.tsmaster = TSMasterRPC(self.config.tsmaster_config)
+        self.device = DeviceClient()
+        self.vehicle_mode_manager = VehicleModeManager(
+            self.tsmaster, 
+            self.config.signal_path
+        )
+        
+        # Connect to services
+        self._connect_services()
         self._set_log_level()
-        self.device_id = device_id
+
+    def _connect_services(self):
+        """Connect to all required services."""
+        try:
+            self.putty.connect(self.config.putty_config)
+            self.device.connect(device_id=self.config.device_id)
+            logger.success("All services connected successfully")
+        except Exception as e:
+            logger.error(f"Failed to connect services: {e}")
+            raise
 
     def _set_log_level(self):
-        """
-        Send 'dmesg -n 1' command in Putty several times before starting OTA test.
-        """
+        """Send 'dmesg -n 1' command in Putty several times before starting OTA test."""
         try:
             logger.info("Preparing Putty: sending 'dmesg -n 1' multiple times")
             for _ in range(3):
@@ -46,63 +144,43 @@ class OTA:
         except Exception as e:
             logger.error(f"Failed to send 'dmesg -n 1' in Putty: {e}")
 
-    def switch_vehicle_mode(self, mode: str) -> bool:
+    def switch_vehicle_mode(self, mode: Union[str, VehicleMode]) -> bool:
         """
-        Switch vehicle between inactive and driving modes using set_signal_value.
+        Switch vehicle mode using the vehicle mode manager.
 
         Args:
-            mode: "inactive" or "driving"
+            mode: Vehicle mode to switch to
 
         Returns:
             bool: True if mode switch was successful
         """
-        logger.info(f"Switching vehicle to {mode} mode using set_signal_value")
-        signal_path = "0/ZCU_CANFD1/ZCUD/ZcudZCUCANFD1Fr10/VehModMngtGlbSafe1UsgModSts"
-        mode_signal_map = {
-            "abandon": 0,
-            "inactive": 1,
-            "active": 11,
-            "driving": 13,
-        }
-        if mode not in mode_signal_map:
-            logger.error(f"Invalid mode: {mode}. Use 'inactive' or 'driving'")
+        if isinstance(mode, str):
+            try:
+                mode = VehicleMode(mode)
+            except ValueError:
+                logger.error(f"Invalid mode: {mode}")
+                return False
+        
+        logger.info(f"Switching vehicle to {mode.value} mode")
+        
+        if not self.vehicle_mode_manager.set_mode(mode):
             return False
-
-        value = mode_signal_map[mode]
-        self.tsmaster.set_signal_value(signal_path, value)
-        logger.info(f"Set {signal_path} to {value} for mode {mode}")
-        if not self._wait_signal_value(signal_path, value, timeout=3, interval=1):
-            logger.error(f"Failed to set {signal_path} to {value} after retries")
+        
+        # Wait for mode to be applied
+        if not self.vehicle_mode_manager.wait_for_mode(mode):
+            logger.error(f"Failed to confirm vehicle mode switch to {mode.value}")
             return False
-
+        
+        logger.success(f"Successfully switched to {mode.value} mode")
         return True
 
-    def _wait_signal_value(
-        self,
-        signal_path: str,
-        expected_value,
-        timeout=10,
-        interval=1,
-        retry_times=None,
-    ) -> bool:
-        """Wait until the signal value equals expected_value, with retry."""
-
-        @wait_and_retry(timeout=timeout, interval=interval, retry_times=retry_times)
-        def check():
-            return self.tsmaster.get_signal_value(signal_path) == expected_value
-
-        return check()
-
     def _navigate_to_upgrade_page(self) -> bool:
-        """
-        Private helper to navigate to the upgrade page via ADB.
-
-        Returns:
-            bool: True if navigation command was sent successfully
-        """
+        """Navigate to the upgrade page via ADB."""
         try:
             logger.info("Navigating to the upgrade page")
-            self.adb.execute_adb_command("am start -n com.flyme.auto.update/.UpdateMainActivity")
+            self.adb.execute_adb_command(
+                f"am start -n {self.config.upgrade_app_activity}"
+            )
             time.sleep(0.5)
             return True
         except Exception as e:
@@ -111,12 +189,7 @@ class OTA:
 
     @wait_and_retry(interval=1, retry_times=3)
     def _get_current_ota_slot(self) -> str:
-        """
-        Get the current OTA slot by searching for 'current slot is:' in Putty logs.
-
-        Returns:
-            str: The current slot ('A' or 'B'), or None if not found.
-        """
+        """Get the current OTA slot by searching for 'current slot is:' in Putty logs."""
         logger.info("Querying current OTA slot using 'ota_tool -g'")
         pattern = r"current slot is:([AB])"
         result, match = self.putty.wait_for_trace(
@@ -164,7 +237,7 @@ class OTA:
             return False
 
         # Check if the upgrade text exists (e.g., "立即更新")
-        if self.device.check_text_exists(self.device_id, "立即更新"):
+        if self.device.check_text_exists(self.config.device_id, "立即更新"):
             logger.success("Upgrade is ready: '立即更新' found on the page")
             return True
         else:
@@ -172,7 +245,7 @@ class OTA:
             return False
 
     def _is_upgrade_triggered(self):
-        if self.device.check_text_exists(self.device_id, "取消更新"):
+        if self.device.check_text_exists(self.config.device_id, "取消更新"):
             logger.success("Upgrade is triggered, please wait for 2 mins.")
             return True
         else:
@@ -195,8 +268,8 @@ class OTA:
 
         # Check for either "发现新版本" or "安装包下载中"
         if (
-            self.device.check_text_exists(self.device_id, "发现新版本")
-            or self.device.check_text_exists(self.device_id, "安装包下载中")
+            self.device.check_text_exists(self.config.device_id, "发现新版本")
+            or self.device.check_text_exists(self.config.device_id, "安装包下载中")
         ):
             logger.success("OTA downloading is in progress: '发现新版本' or '安装包下载中' found on the page")
             return True
@@ -204,16 +277,10 @@ class OTA:
             logger.info("OTA downloading is not in progress: neither '发现新版本' nor '安装包下载中' found")
             return False
 
-    def _get_log_line_count(self, log_path: str) -> int:
-        """
-        Get the line count of a log file using the new PuttyHelper API.
+    def _get_log_line_count(self, log_path: str = None) -> int:
+        """Get the line count of a log file using the PuttyHelper API."""
+        log_path = log_path or self.config.log_path
         
-        Args:
-            log_path: Path to the log file
-            
-        Returns:
-            int: Number of lines in the file, 0 if error
-        """
         try:
             traces = self.putty.execute_command(
                 f"wc -l {log_path}", 
@@ -229,7 +296,7 @@ class OTA:
                     match = re.match(r"^(\d+)", clean_line)
                     if match:
                         count = int(match.group(1))
-                        logger.info(f"The line count of {log_path} is {count}")
+                        logger.debug(f"Line count of {log_path}: {count}")
                         return count
                         
             logger.error("Unable to get line count!")
@@ -254,20 +321,16 @@ class OTA:
 
         # Step 2: Click the upgrade text
         retry_click = wait_and_retry(timeout=10, interval=1)(self.device.click_text)
-        if not retry_click(self.device_id, "立即更新"):
+        if not retry_click(self.config.device_id, "立即更新"):
             logger.error("Do not found `立即更新`, unable to upgrade")
             return False
         if not self._is_upgrade_triggered():
             return False
         return True
 
-    def _record_log_start_line(self, attr_name: str, log_path: str = "/ota/bsw/log/subda.log"):
-        """
-        Record the current log line count for later delta checks.
-        Args:
-            attr_name: The attribute name to store the start line (e.g., '_download_log_start_line').
-            log_path: The log file path to check.
-        """
+    def _record_log_start_line(self, attr_name: str, log_path: str = None):
+        """Record the current log line count for later delta checks."""
+        log_path = log_path or self.config.log_path
         setattr(self, attr_name, self._get_log_line_count(log_path))
 
     def _check_restart_complete(self, timeout=150) -> bool:
@@ -301,18 +364,14 @@ class OTA:
     @timed_step("download_duration")
     @wait_and_retry(timeout=1800, interval=2)
     def monitor_download_status(self) -> bool:
-        """
-        Monitor the OTA download status by polling only new log lines for key patterns.
-        Returns True if download completes, False otherwise.
-        """
-        log_path = "/ota/bsw/log/subda.log"
+        """Monitor the OTA download status by polling only new log lines for key patterns."""
         patterns = {
             "completed": re.compile(r"DOWNLOAD-COMPLETED"),
         }
         logger.info("Polling OTA download status from subda.log (single check)")
 
         start_line = getattr(self, "_download_log_start_line", 0)
-        current_line = self._get_log_line_count(log_path)
+        current_line = self._get_log_line_count()
         num_new_lines = max(0, current_line - start_line)
         traces = []
         
@@ -320,7 +379,7 @@ class OTA:
             setattr(self, "_download_log_start_line", current_line)
             try:
                 traces = self.putty.execute_command(
-                    f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", 
+                    f"tail -n +{start_line + 1} {self.config.log_path} | head -n {num_new_lines}", 
                     wait_time=1.0, 
                     auto_login=False
                 )
@@ -333,24 +392,20 @@ class OTA:
                 logger.success("Package download completed successfully")
                 return True
 
-        logger.info("Package download completion pattern not detected yet")
+        logger.debug("Package download completion pattern not detected yet")
         return False
 
     @timed_step("upgrade_duration")
     @wait_and_retry(timeout=1800, interval=2)
     def monitor_upgrade_status(self) -> bool:
-        """
-        Monitor the OTA upgrade status by polling only new log lines for key patterns.
-        Returns True if upgrade completes, False otherwise.
-        """
-        log_path = "/ota/bsw/log/subda.log"
+        """Monitor the OTA upgrade status by polling only new log lines for key patterns."""
         patterns = {
             "completed": re.compile(r"INSTALLATION-COMPLETED"),
         }
         logger.info("Polling OTA upgrade status from subda.log (single check)")
 
         start_line = getattr(self, "_upgrade_log_start_line", 0)
-        current_line = self._get_log_line_count(log_path)
+        current_line = self._get_log_line_count()
         num_new_lines = max(0, current_line - start_line)
         traces = []
         
@@ -358,7 +413,7 @@ class OTA:
             setattr(self, "_upgrade_log_start_line", current_line)
             try:
                 traces = self.putty.execute_command(
-                    f"tail -n +{start_line + 1} {log_path} | head -n {num_new_lines}", 
+                    f"tail -n +{start_line + 1} {self.config.log_path} | head -n {num_new_lines}", 
                     wait_time=1.0, 
                     auto_login=False
                 )
@@ -371,7 +426,7 @@ class OTA:
                 logger.success("Upgrade completed successfully")
                 return True
 
-        logger.info("Upgrade completion pattern not detected yet")
+        logger.debug("Upgrade completion pattern not detected yet")
         return False
 
     def perform_ota_test(
@@ -381,18 +436,7 @@ class OTA:
         skip_upgrade_monitor: bool = False,
         skip_slot_check: bool = False,
     ) -> bool:
-        """
-        Execute a complete OTA test loop with dynamic step control.
-
-        Args:
-            skip_download: Skip the download monitoring step.
-            skip_trigger_upgrade: Skip triggering the upgrade via DHU.
-            skip_upgrade_monitor: Skip monitoring the upgrade status.
-            skip_slot_check: Skip checking if the OTA slot switched.
-
-        Returns:
-            bool: True if the OTA test was successful.
-        """
+        """Execute a complete OTA test loop with dynamic step control."""
         try:
             logger.info("Starting dynamic OTA test loop")
 
@@ -410,7 +454,7 @@ class OTA:
             # Step 1: Download (if not skipped)
             if not skip_download:
                 logger.info("Switching to driving mode for package delivery.")
-                if not self.switch_vehicle_mode("driving"):
+                if not self.switch_vehicle_mode(VehicleMode.DRIVING):
                     logger.error("Failed to switch to driving mode")
                     return False
                 if not self._is_downloading_in_progress():
@@ -426,7 +470,7 @@ class OTA:
 
             # Step 2: Trigger upgrade (if not skipped)
             if not skip_trigger_upgrade:
-                if not self.switch_vehicle_mode("inactive"):
+                if not self.switch_vehicle_mode(VehicleMode.INACTIVE):
                     logger.error("Failed to switch to inactive mode")
                     return False
 
@@ -455,10 +499,7 @@ class OTA:
                 logger.info("Checking if OTA slot switched.")
                 if self._is_ota_upgrade_successful(previous_slot):
                     logger.success("OTA test completed successfully and slot switched")
-                    if hasattr(self, "download_duration"):
-                        logger.success(f"Download duration: {self.download_duration:.2f} seconds")
-                    if hasattr(self, "upgrade_duration"):
-                        logger.success(f"Upgrade duration: {self.upgrade_duration:.2f} seconds")
+                    self._log_performance_metrics()
                     return True
                 else:
                     logger.error("OTA test failed: slot did not switch")
@@ -472,25 +513,94 @@ class OTA:
             logger.error(f"OTA test failed with exception: {e}")
             return False
 
-    def __del__(self):
-        """
-        Custom method to destroy the OTA instance and clean up resources.
-        """
+    def _log_performance_metrics(self):
+        """Log performance metrics if available."""
+        if hasattr(self, "download_duration"):
+            logger.success(f"Download duration: {self.download_duration:.2f} seconds")
+        if hasattr(self, "upgrade_duration"):
+            logger.success(f"Upgrade duration: {self.upgrade_duration:.2f} seconds")
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.cleanup()
+
+    def cleanup(self):
+        """Clean up all resources."""
         try:
-            logger.info("Destroying OTA instance and cleaning up resources")
+            logger.info("Cleaning up OTA resources")
             if hasattr(self, "putty") and self.putty:
                 self.putty.disconnect()
             if hasattr(self, "tsmaster") and self.tsmaster:
-                self.tsmaster.__del__()
+                self.tsmaster.disconnect()
             if hasattr(self, "device") and self.device:
-                self.device.disconnect(self.device_id)
+                self.device.disconnect(self.config.device_id)
         except Exception as e:
-            logger.error(f"Error during OTA instance cleanup: {e}")
+            logger.error(f"Error during OTA cleanup: {e}")
+
+    def __del__(self):
+        """Destructor for automatic cleanup."""
+        self.cleanup()
+
+
+# Legacy constructor function for backward compatibility
+def create_ota_from_legacy_config(putty_config: dict, device_id: str, tsmaster_config: dict = None) -> OTA:
+    """Create OTA instance from legacy configuration format."""
+    config = OTAConfig(
+        putty_config=putty_config,
+        tsmaster_config=tsmaster_config or {},
+        device_id=device_id
+    )
+    return OTA(config)
 
 
 if __name__ == "__main__":
-    # Putty configuration - can use either dict or SerialConfig
-    putty_config = {
+    # Example 1: Using new OTAConfig
+    print("=== Example 1: New Configuration Format ===")
+    
+    config = OTAConfig(
+        putty_config={
+            "putty_enabled": True,
+            "putty_comport": "COM44",
+            "putty_baudrate": 921600,
+            "putty_username": "",
+            "putty_password": "",
+        },
+        tsmaster_config={
+            "app_name": "TSMaster",
+            "dev_mode": DeviceMode.CAN,
+            "auto_start_simulation": True
+        },
+        device_id="2801750c52300030"
+    )
+    
+    try:
+        with OTA(config) as ota:
+            # Test vehicle mode switching
+            current_mode = ota.vehicle_mode_manager.get_current_mode()
+            logger.info(f"Current vehicle mode: {current_mode}")
+            
+            # Run OTA test with all steps skipped for demo
+            test_result = ota.perform_ota_test(
+                skip_download=True,
+                skip_slot_check=True,
+                skip_trigger_upgrade=True,
+                skip_upgrade_monitor=True,
+            )
+            
+            if test_result:
+                logger.success("OTA test executed successfully")
+            else:
+                logger.error("OTA test execution failed")
+                
+    except Exception as e:
+        logger.error(f"OTA test failed: {e}")
+
+    # Example 2: Legacy compatibility
+    print("\n=== Example 2: Legacy Compatibility ===")
+    
+    legacy_putty_config = {
         "putty_enabled": True,
         "putty_comport": "COM44",
         "putty_baudrate": 921600,
@@ -498,61 +608,15 @@ if __name__ == "__main__":
         "putty_password": "",
     }
     
-    # Alternative: using SerialConfig directly
-    # putty_config = SerialConfig(
-    #     enabled=True,
-    #     comport="COM44",
-    #     baudrate=921600,
-    #     username="",
-    #     password=""
-    # )
+    try:
+        ota_legacy = create_ota_from_legacy_config(
+            putty_config=legacy_putty_config,
+            device_id="2801750c52300030"
+        )
+        logger.info("Legacy OTA instance created successfully")
+        ota_legacy.cleanup()
+        
+    except Exception as e:
+        logger.error(f"Legacy OTA creation failed: {e}")
 
-    # ADB configuration
-    device_id = "2801750c52300030"
-
-    # Initialize OTA class with all components
-    ota = OTA(putty_config=putty_config, device_id=device_id)
-
-    # Run the complete OTA test
-    test_result = ota.perform_ota_test(
-        skip_download=True,
-        skip_slot_check=True,
-        skip_trigger_upgrade=True,
-        skip_upgrade_monitor=True,
-    )
-
-    # Print final result
-    if test_result:
-        logger.success("OTA test executed successfully")
-    else:
-        logger.error("OTA test execution failed")
-
-    """
-    dmesg -n 1
-
-    root@lynkco:~# ota_tool -g
-    using ota partition /ota
-    ota_dir /ota
-    [OTA_INFO][hobot_ota_hl.c:491] current slot is:A
-
-    root@lynkco:~# ota_tool -v
-    using ota partition /ota
-    ota_dir /ota
-    OTA Library version is 1.0.1
-    system version is 20250624-024856
-
-    Find install progress from putty
-    tail -f /ota/bsw/log/subda.log   板端查看下载及安装的进度
-    DOWNLOAD-COMPLETED
-    INSTALLATION-COMPLETED
-    tail -f /ota/bsw/log/otaclient.log
-    """
-
-    """
-    install packages
-    logcat | grep OtaMaster
-    logcat -d | grep OtaMaster | tail -n 1
-    DOWNLOAD-COMPLETED
-    OTAFunction send hmi download progress
-    after installation, there will be a popup from 
-    """
+    print("\n=== All Examples Completed ===")
