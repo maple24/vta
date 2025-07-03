@@ -16,7 +16,7 @@ from loguru import logger
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
-from vta.api.CANoeHelper import CANoeHelper
+from vta.api.deprecated.CANoeHelper import CANoeHelper
 from vta.api.PuttyHelper import PuttyHelper
 from vta.library.GenericHelper import GenericHelper
 
