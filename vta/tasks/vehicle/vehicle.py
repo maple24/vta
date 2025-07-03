@@ -17,13 +17,13 @@ from loguru import logger
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
 from vta.api.deprecated.CANoeHelper import CANoeHelper
-from vta.api.PuttyHelper import PuttyHelper
+from vta.api.PuttyClient import PuttyClient
 from vta.library.GenericHelper import GenericHelper
 
 
 class Vehicle:
     def __init__(self, dputty: dict, proto: str = "", canoe: bool = False) -> None:
-        self.mputty = PuttyHelper()
+        self.mputty = PuttyClient()
         self.mcanoe = CANoeHelper()
         self.mcanoe.init_canoe(canoe)
         self.mputty.connect(dputty)

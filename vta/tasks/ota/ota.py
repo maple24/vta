@@ -1,4 +1,4 @@
-from vta.api.PuttyHelper import PuttyHelper, SerialConfig
+from vta.api.PuttyClient import PuttyClient, SerialConfig
 from vta.api.ADBClient import ADBClient
 from vta.api.TSmasterAPI.TSRPC import TSMasterRPC
 from vta.api.DeviceClient import DeviceClient
@@ -18,7 +18,7 @@ class OTA:
             putty_config: Configuration parameters for PuttyHelper
             device_id: Device ID for ADB and DeviceClient
         """
-        self.putty = PuttyHelper()
+        self.putty = PuttyClient()
         self.adb: ADBClient = ADBClient(device_id=device_id)
         self.tsmaster = TSMasterRPC()
         self.device = DeviceClient()
@@ -483,7 +483,7 @@ class OTA:
             if hasattr(self, "tsmaster") and self.tsmaster:
                 self.tsmaster.__del__()
             if hasattr(self, "device") and self.device:
-                self.device.disconnect()
+                self.device.disconnect(self.device_id)
         except Exception as e:
             logger.error(f"Error during OTA instance cleanup: {e}")
 

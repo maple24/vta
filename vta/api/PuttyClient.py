@@ -162,7 +162,7 @@ class QueueManager:
                 break
 
 
-class PuttyHelper(SerialInterface):
+class PuttyClient(SerialInterface):
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
     def __init__(self):
@@ -560,7 +560,7 @@ if __name__ == "__main__":
 
     # Example 4: Trace monitoring with context manager
     print("\n=== Example 4: Trace Monitoring ===")
-    with PuttyHelper() as putty:
+    with PuttyClient() as putty:
         try:
             putty.connect(config)
 
