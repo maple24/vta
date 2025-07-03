@@ -5,236 +5,177 @@
 # ============================================================================================================
 
 import os
-
 import serial
+from contextlib import contextmanager
+from functools import wraps
 from loguru import logger
+from typing import Union
 
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 
 
+def safe_relay_operation(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"[{func.__name__}] Exception: {e}")
+    return wrapper
+
+@contextmanager
+def open_serial_port(port: str, baudrate: int, timeout: float, **kwargs) -> serial.Serial:
+    ser = serial.Serial(port, baudrate=baudrate, timeout=timeout, **kwargs)
+    try:
+        yield ser
+    finally:
+        if ser.is_open:
+            ser.close()
+
 class RelayHelper:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
-    def __init__(self):
-        self.dev_enabled = None
-        self.cleware_executor = None
-        self.xinke_comport = None
-        self.multiplexer_comport = None
+    def __init__(self) -> None:
+        # Initialize relay controller attributes with type hints.
+        self.dev_enabled: bool = False
+        self.cleware_executor: str = ""
+        self.xinke_comport: str = ""
+        self.multiplexer_comport: str = ""
+        self.cleware_id: str = ""
 
-    def init_relay(self, drelay):
-        self.dev_enabled = drelay["relay_enabled"]
+    def init_relay(self, drelay: dict) -> None:
+        # Initialize relay devices based on configuration using dict.get for clarity.
+        self.dev_enabled = drelay.get("relay_enabled", False)
         device_count = 0
         if not self.dev_enabled:
-            logger.warning("[Relay] No relay enabled this execution !")
+            logger.warning("[Relay] No relay enabled for this execution!")
             return
 
-        if "xinke" in drelay.keys():
-            if drelay["xinke"]["enabled"]:
-                device_count += 1
-                self.xinke_comport = drelay["xinke"]["comport"].upper()
-                logger.info("[Relay.Xinke] Xinke controller initialized")
+        if drelay.get("xinke", {}).get("enabled", False):
+            device_count += 1
+            self.xinke_comport = drelay["xinke"]["comport"].upper()
+            logger.info("[Relay.Xinke] Xinke controller initialized")
 
-        if "multiplexer" in drelay.keys():
-            if drelay["multiplexer"]["enabled"]:
-                device_count += 1
-                self.multiplexer_comport = drelay["multiplexer"]["comport"].upper()
-                logger.info("[Relay.Multiplexer] Multiplexer controller initialized")
+        if drelay.get("multiplexer", {}).get("enabled", False):
+            device_count += 1
+            self.multiplexer_comport = drelay["multiplexer"]["comport"].upper()
+            logger.info("[Relay.Multiplexer] Multiplexer controller initialized")
 
-        if "cleware" in drelay.keys():
-            if drelay["cleware"]["enabled"]:
-                device_count += 1
-                self.cleware_executor = os.path.join(
-                    ROOT, "vta", "bin", "cleware", "USBswitchCmd.exe"
-                )
-                print(self.cleware_executor)
-                if not os.path.exists(self.cleware_executor):
-                    logger.error("[Relay.Cleware] Not found Cleware executor!")
-                    exit(1)
-                self.cleware_id = drelay["cleware"]["dev_id"]
-                logger.info("[Relay.Cleware] Cleware controller initialized")
+        if drelay.get("cleware", {}).get("enabled", False):
+            device_count += 1
+            self.cleware_executor = os.path.join(
+                ROOT, "vta", "bin", "cleware", "USBswitchCmd.exe"
+            )
+            logger.info(f"[Relay.Cleware] Cleware executor found at {self.cleware_executor}")
+            if not os.path.exists(self.cleware_executor):
+                logger.error("[Relay.Cleware] Cleware executor not found!")
+                exit(1)
+            self.cleware_id = drelay["cleware"].get("dev_id", "")
+            logger.info("[Relay.Cleware] Cleware controller initialized")
 
         if device_count == 0:
-            logger.warning("No valid relay set!")
+            logger.warning("No valid relay device set!")
 
-    def __set_xinke_port(self, port_index, state_code, xinke_type="KBC2105"):
+    @safe_relay_operation
+    def __set_xinke_port(self, port_index: Union[int, str], state_code: Union[int, str], xinke_type: str = "KBC2105") -> None:
         """
-        Description: Set the Xinke relay box port, close=1 |  open=0
-        :param "serial_port" the xinke relay serial port
-        :param "port_index" the xinke relay port to be controlled
-        :param "state_code" the xinke relay port state to be "0 | 1 | ALLON | ALLOFF"
+        Set the Xinke relay port.
+        :param port_index: Relay port index to control.
+        :param state_code: Relay state ("1"/"0" or "ALLON"/"ALLOFF").
+        :param xinke_type: Type of Xinke device.
         """
-        funcCode = {"OFF": 0x11, "ON": 0x12, "ALLOFF": 0x14, "ALLON": 0x13}
-        if xinke_type == "KBC2104":
-            sendHead = 0x55
-        else:
-            sendHead = 0x33
-
-        addrCode = 0x01
-        preDataSection = [0x00, 0x00, 0x00]
-        state_code = str(state_code).strip()
-        state_code = state_code.upper()
-        if state_code not in ["1", "0", "ALLOFF", "ALLON"]:
-            logger.error("[XinkeRelay] INVALID state code assigned, '{state_code}' !")
+        func_code = {"OFF": 0x11, "ON": 0x12, "ALLOFF": 0x14, "ALLON": 0x13}
+        send_head = 0x55 if xinke_type == "KBC2104" else 0x33
+        addr_code = 0x01
+        pre_data = [0x00, 0x00, 0x00]
+        state_str = str(state_code).strip().upper()
+        if state_str not in ["1", "0", "ALLOFF", "ALLON"]:
+            logger.error(f"[XinkeRelay] INVALID state code: '{state_str}'!")
             return
-        if state_code == "ALLOFF" or state_code == "ALLON":
-            nextDataSection = 0x00
-            cmd_key = state_code
-        elif state_code == "1":
-            cmd_key = "ON"
-            nextDataSection = int(str(port_index), 16)
-        else:
-            cmd_key = "OFF"
-            nextDataSection = int(str(port_index), 16)
 
-        # Start send command
-        obj_xinke = None
-        cmdList = []
-        try:
-            obj_xinke = serial.Serial(
-                self.xinke_comport,
-                baudrate=9600,
-                bytesize=8,
-                parity="N",
-                stopbits=1,
-                timeout=0.5,
-            )
-            if obj_xinke.isOpen() is False:
-                logger.error(
-                    f"[SetXinke] Fail to open xinke serial port={self.xinke_comport} !"
-                )
+        cmd_key = "ALLON" if state_str in ["ALLON", "ALLOFF"] else ("ON" if state_str == "1" else "OFF")
+        next_data = 0x00 if state_str in ["ALLON", "ALLOFF"] else int(str(port_index), 16)
+
+        cmd_list = [send_head, addr_code, func_code[cmd_key]] + pre_data + [next_data]
+        checksum = sum(cmd_list[0:7]) % 256
+        cmd_list.append(checksum)
+
+        with open_serial_port(self.xinke_comport, baudrate=9600, timeout=0.5, bytesize=8, parity="N", stopbits=1) as ser:
+            if not ser.is_open:
+                logger.error(f"[SetXinke] Failed to open serial port {self.xinke_comport}!")
                 return
-            cmdList.append(sendHead)
-            cmdList.append(addrCode)
-            cmdList.append(funcCode[cmd_key])
-            cmdList = cmdList + preDataSection
-            cmdList.append(nextDataSection)
-            cmdList.append(sum(cmdList[0:7]) % 256)
-            obj_xinke.write(cmdList)
-            obj_xinke.flush()
-            logger.success(
-                f"[SetXinke] Succeed to open xinke serial port={port_index}, state_code={state_code}"
-            )
-        except Exception as e:
-            logger.error(
-                f"[SetXinke] Exception set xinke {e}:"
-                f"port {self.xinke_comport}, {port_index}, {state_code}"
-            )
-        finally:
-            obj_xinke.close()
+            ser.write(bytearray(cmd_list))
+            ser.flush()
+            logger.success(f"[SetXinke] Successfully set port {port_index} with state {state_str}")
 
-    def __set_multiplexer_port(self, port_index=None):
+    @safe_relay_operation
+    def __set_multiplexer_port(self, port_index: Union[int, str]) -> None:
         """
-        Description: This is mcube function entry for relay controlling
-        :param "port_index" Candidate command is the keys of dict => multiplexer_map
+        Set the Multiplexer relay port.
+        :param port_index: Relay port index (as defined in multiplexer_map).
         """
-        obj_multiplexer = None
         multiplexer_map = {
-            "11": [0x01, 0x01],  # In-1, Out-1
-            "12": [0x01, 0x02],  # In-1, Out-2
-            "13": [0x01, 0x03],  # In-1, Out-3
-            "14": [0x01, 0x04],  # In-1, Out-4
-            "21": [0x02, 0x01],  # In-2, Out-1
-            "22": [0x02, 0x02],  # In-2, Out-2
-            "23": [0x02, 0x03],  # In-2, Out-3
-            "24": [0x02, 0x04],  # In-2, Out-4
-            "30": [0x03, 0x00],  # Power relay 1, Off
-            "31": [0x03, 0x01],  # Power relay 1, On
-            "40": [0x04, 0x00],  # Power relay 2, Off
-            "41": [0x04, 0x01],  # Power relay 2, On
-            "50": [0x05, 0x00],  # Voltage ADC
-            "f0": [0x0F, 0x00],  # MCU reset
-            "f1": [0x0F, 0x01],  # USB In-Out selftest
-            "f2": [0x0F, 0x02],  # Get device serial number
-            "f3": [0x0F, 0x03],  # Get FW version
-            "f4": [0x0F, 0x04],  # Get current IO state
+            "11": [0x01, 0x01], "12": [0x01, 0x02], "13": [0x01, 0x03], "14": [0x01, 0x04],
+            "21": [0x02, 0x01], "22": [0x02, 0x02], "23": [0x02, 0x03], "24": [0x02, 0x04],
+            "30": [0x03, 0x00], "31": [0x03, 0x01],
+            "40": [0x04, 0x00], "41": [0x04, 0x01],
+            "50": [0x05, 0x00],
+            "f0": [0x0F, 0x00], "f1": [0x0F, 0x01], "f2": [0x0F, 0x02], "f3": [0x0F, 0x03], "f4": [0x0F, 0x04],
         }
+        port_str = str(port_index)
+        if port_str not in multiplexer_map:
+            logger.error(f"[Multiplexer] Invalid port index: {port_str} not in definition!")
+            return
 
-        try:
-            time_out = 2 if port_index != "f1" else 10
-            obj_multiplexer = serial.Serial(
-                self.multiplexer_comport,
-                baudrate=9600,
-                bytesize=8,
-                parity="N",
-                stopbits=1,
-                timeout=time_out,
-            )
-            if not obj_multiplexer.isOpen():
-                logger.error(
-                    f"[Set-Multiplexer] Fail to open multiplexer serial port={self.multiplexer_comport} !"
-                )
+        cmd_head = [0x24]
+        cmd_tail = [0x24, 0x0D, 0x0A]
+        cmd_payload = multiplexer_map[port_str]
+        cmd_list = cmd_head + cmd_payload + cmd_tail
+
+        timeout_val = 10 if port_str == "f1" else 2
+        with open_serial_port(self.multiplexer_comport, baudrate=9600, timeout=timeout_val, bytesize=8, parity="N", stopbits=1) as ser:
+            if not ser.is_open:
+                logger.error(f"[Multiplexer] Failed to open serial port {self.multiplexer_comport}!")
                 return
+            ser.write(bytearray(cmd_list))
+            ser.flush()
+            logger.success(f"[Multiplexer] Command sent for port {port_str}")
 
-            port_index = str(port_index)
-            if port_index not in multiplexer_map:
-                logger.error(
-                    f"[Error] Not found port_index={port_index} in multiplexer definition !"
-                )
-                return
-
-            hexCmdList = list()
-            cmdhead = [0x24]
-            cmdtail = [0x24, 0x0D, 0x0A]
-            cmdpayload = multiplexer_map[port_index]
-
-            hexCmdList.extend(cmdhead)
-            hexCmdList.extend(cmdpayload)
-            hexCmdList.extend(cmdtail)
-            obj_multiplexer.write(hexCmdList)
-            obj_multiplexer.flush()
-
-        except Exception as e:
-            logger.exception(
-                f"Unable to open multiplexer port {self.multiplexer_comport}, {e}"
-            )
-
-        finally:
-            obj_multiplexer.close()
-
-    def _set_cleware_port(self, port_index, state_code):
+    @safe_relay_operation
+    def _set_cleware_port(self, port_index: int, state_code: Union[int, str]) -> None:
         """
-        Description: Set the relay port close or open
-        :param "port_index" the relay port to be manipulated (1 ~ 8)
-        :param "state_code" port state, "open | close" , "0 | 1". "on | off"
-        :param "dev_id" the cleware id to work on
+        Set the Cleware relay port.
+        :param port_index: Relay port number (1 to 8).
+        :param state_code: Port state ("0" or "1").
         """
-        dev_id = self.cleware_id
-        if dev_id is None:
-            logger.error("[SetCleware] INVALID Cleware id assigned !")
+        if not self.cleware_id:
+            logger.error("[Cleware] Invalid Cleware ID!")
             return
 
-        port_index = int(port_index)
-        state_code = str(state_code).strip()
-        if state_code != "0" and state_code != "1":
-            logger.error(
-                f"[SetCleware] INVALID Cleware state code assigned, '{state_code}' !"
-            )
+        state_str = str(state_code).strip()
+        if state_str not in ["0", "1"]:
+            logger.error(f"[Cleware] Invalid state code: '{state_str}'!")
             return
 
-        sCmd = f"cmd.exe /c {self.cleware_executor} -n {dev_id} {state_code} -# {port_index - 1} -d"
-        os.system(sCmd)
-        logger.info(
-            f"[SetCleware] Set Cleware dev_id={dev_id}, port={port_index}, state={state_code}"
-        )
+        cmd = f"cmd.exe /c {self.cleware_executor} -n {self.cleware_id} {state_str} -# {port_index - 1} -d"
+        os.system(cmd)
+        logger.info(f"[Cleware] Set Cleware ID={self.cleware_id}, port={port_index}, state={state_str}")
 
-    def set_relay_port(self, dev_type=None, **kwargs):
+    def set_relay_port(self, dev_type: str, **kwargs) -> None:
         """
-        Description: This is generic function entry for relay controlling
-        :param "dev_type" This parameter is used to distinguish which relay type to be worked on
-        :param "kwargs" the respective relay device parameters
-        :return
+        Generic method for relay control.
+        :param dev_type: Relay device type ("xinke", "multiplexer", "cleware").
+        :param kwargs: Specific parameters for the relay device.
         """
-        if dev_type is None:
-            logger.error("NOK! dev type should be defined!")
-            return
         dev_type = dev_type.lower()
-
         if dev_type == "xinke":
             return self.__set_xinke_port(**kwargs)
-        if dev_type == "multiplexer":
+        elif dev_type == "multiplexer":
             return self.__set_multiplexer_port(**kwargs)
-        if dev_type == "cleware":
+        elif dev_type == "cleware":
             return self._set_cleware_port(**kwargs)
+        else:
+            logger.error("Invalid device type specified for relay control!")
 
 
 if __name__ == "__main__":
