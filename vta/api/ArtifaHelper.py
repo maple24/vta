@@ -82,9 +82,7 @@ class ArtifaHelper:
     def fetch_url(self, api: str) -> None:
         logger.info("Requesting Artifactory server, please wait...")
         try:
-            response = requests.get(
-                self.server + api, auth=self.auth, verify=False, timeout=60
-            )
+            response = requests.get(self.server + api, auth=self.auth, verify=False, timeout=60)
         except urllib3.exceptions.ReadTimeoutError:
             logger.error("Request time out!")
             sys.exit(1)
@@ -123,9 +121,7 @@ class ArtifaHelper:
         f_lastModified = ""
         try:
             for data in self.get_all_files(api):
-                if data["lastModified"] > t_lastModified and re.search(
-                    self.pattern, data["downloadUri"]
-                ):
+                if data["lastModified"] > t_lastModified and re.search(self.pattern, data["downloadUri"]):
                     t_lastModified = data["lastModified"]
                     f_lastModified = data
         except KeyError as e:
@@ -139,19 +135,13 @@ class ArtifaHelper:
 
     def get_latest_pro(self) -> Optional[dict]:
         # only works for artifactory pro
-        api = (
-            "api/storage/"
-            + self.repo
-            + "?list&deep=1&listFolders=0&mdTimestamps=0&includeRootPath=0"
-        )
+        api = "api/storage/" + self.repo + "?list&deep=1&listFolders=0&mdTimestamps=0&includeRootPath=0"
 
         t_lastModified = ""
         f_lastModified = ""
         try:
             for file in self.fetch_url(api)["files"]:
-                if file["lastModified"] > t_lastModified and re.search(
-                    self.pattern, file["uri"]
-                ):
+                if file["lastModified"] > t_lastModified and re.search(self.pattern, file["uri"]):
                     t_lastModified = file["lastModified"]
                     f_lastModified = file
         except KeyError as e:
@@ -171,9 +161,7 @@ class ArtifaHelper:
             else:
                 yield data
 
-    def monitor(
-        self, thres: int, callback: Optional[Callable] = None
-    ) -> Tuple[bool, str]:
+    def monitor(self, thres: int, callback: Optional[Callable] = None) -> Tuple[bool, str]:
         if self.pro:
             f_lastModified = self.get_latest_pro()
         else:
@@ -183,22 +171,16 @@ class ArtifaHelper:
         t = datetime.strptime(f_lastModified["lastModified"], "%Y-%m-%dT%H:%M:%S.%f%z")
         diff_hrs = (now - t).total_seconds() / 60 / 60
         if diff_hrs < thres:
-            logger.success(
-                f"The latest version {f_lastModified['uri']} was built within {thres} hrs."
-            )
+            logger.success(f"The latest version {f_lastModified['uri']} was built within {thres} hrs.")
             if callback:
                 callback()
             return True, f_lastModified["uri"]
         else:
-            logger.info(
-                f"No actifacts found in {thres} hrs. The latest version was built {diff_hrs} hrs ago."
-            )
+            logger.info(f"No actifacts found in {thres} hrs. The latest version was built {diff_hrs} hrs ago.")
             return False, f_lastModified["uri"]
 
     @staticmethod
-    def unzip(
-        dsfile: str, dcfolder: Optional[str] = None, members: Optional[list] = None
-    ) -> None:
+    def unzip(dsfile: str, dcfolder: Optional[str] = None, members: Optional[list] = None) -> None:
         """
         Extracts `tar_file` and puts the `members` to `path`.
         If members is None, all members on `tar_file` will be extracted.
@@ -220,7 +202,7 @@ class ArtifaHelper:
                 tar.extract(member, path=dcfolder)
                 progress.set_description(f"Extracting {member.name}")
             tar.close()
-            logger.success(f"Done uncompressing")
+            logger.success("Done uncompressing")
         elif dsfile.split(".")[-1] == "zip":
             zip = zipfile.ZipFile(dsfile, "r")
             logger.info(f"Start uncompressing zip: {dsfile}")
@@ -231,13 +213,13 @@ class ArtifaHelper:
                 zip.extract(member, path=dcfolder)
                 progress.set_description(f"Extracting {member}")
             zip.close()
-            logger.success(f"Done uncompressing")
+            logger.success("Done uncompressing")
         else:
             logger.error("File type is not supported to decompress.")
             sys.exit(1)
 
     def __str__(self) -> str:
-        return f"Tool to download from Artifactory."
+        return "Tool to download from Artifactory."
 
     def __repr__(self) -> str:
         return f"ArtifaHelper({self.server}, {self.auth}, {self.dstfolder})"
