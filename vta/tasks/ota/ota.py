@@ -1,4 +1,4 @@
-from vta.api.ADBClient import ADBClient
+from vta.api.AndroidClient import AndroidClient
 from vta.api.PuttyClient import SerialConfig, PuttyClient
 from vta.api.TSmasterAPI.TSRPC import TSMasterRPC, TSMasterConfig, DeviceMode
 from vta.api.DeviceClient import DeviceClient
@@ -112,7 +112,7 @@ class OTA:
         
         # Initialize components
         self.putty = PuttyClient()
-        self.adb = ADBClient(device_id=self.config.device_id)
+        self.adb = AndroidClient(device_id=self.config.device_id)
         self.tsmaster = TSMasterRPC(self.config.tsmaster_config)
         self.device = DeviceClient()
         self.vehicle_mode_manager = VehicleModeManager(

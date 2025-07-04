@@ -9,7 +9,8 @@ import serial
 from contextlib import contextmanager
 from functools import wraps
 from loguru import logger
-from typing import Union
+from typing import Union, Generator
+
 
 ROOT = os.sep.join(os.path.abspath(__file__).split(os.sep)[:-3])
 
@@ -21,10 +22,12 @@ def safe_relay_operation(func):
             return func(*args, **kwargs)
         except Exception as e:
             logger.error(f"[{func.__name__}] Exception: {e}")
+
     return wrapper
 
+
 @contextmanager
-def open_serial_port(port: str, baudrate: int, timeout: float, **kwargs) -> serial.Serial:
+def open_serial_port(port: str, baudrate: int, timeout: float, **kwargs) -> Generator[serial.Serial, None, None]:
     ser = serial.Serial(port, baudrate=baudrate, timeout=timeout, **kwargs)
     try:
         yield ser
@@ -32,7 +35,8 @@ def open_serial_port(port: str, baudrate: int, timeout: float, **kwargs) -> seri
         if ser.is_open:
             ser.close()
 
-class RelayHelper:
+
+class RelayClient:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
     def __init__(self) -> None:
@@ -63,9 +67,7 @@ class RelayHelper:
 
         if drelay.get("cleware", {}).get("enabled", False):
             device_count += 1
-            self.cleware_executor = os.path.join(
-                ROOT, "vta", "bin", "cleware", "USBswitchCmd.exe"
-            )
+            self.cleware_executor = os.path.join(ROOT, "vta", "bin", "cleware", "USBswitchCmd.exe")
             logger.info(f"[Relay.Cleware] Cleware executor found at {self.cleware_executor}")
             if not os.path.exists(self.cleware_executor):
                 logger.error("[Relay.Cleware] Cleware executor not found!")
@@ -77,7 +79,9 @@ class RelayHelper:
             logger.warning("No valid relay device set!")
 
     @safe_relay_operation
-    def __set_xinke_port(self, port_index: Union[int, str], state_code: Union[int, str], xinke_type: str = "KBC2105") -> None:
+    def _set_xinke_port(
+        self, port_index: Union[int, str], state_code: Union[int, str], xinke_type: str = "KBC2105"
+    ) -> None:
         """
         Set the Xinke relay port.
         :param port_index: Relay port index to control.
@@ -100,7 +104,9 @@ class RelayHelper:
         checksum = sum(cmd_list[0:7]) % 256
         cmd_list.append(checksum)
 
-        with open_serial_port(self.xinke_comport, baudrate=9600, timeout=0.5, bytesize=8, parity="N", stopbits=1) as ser:
+        with open_serial_port(
+            self.xinke_comport, baudrate=9600, timeout=0.5, bytesize=8, parity="N", stopbits=1
+        ) as ser:
             if not ser.is_open:
                 logger.error(f"[SetXinke] Failed to open serial port {self.xinke_comport}!")
                 return
@@ -109,18 +115,30 @@ class RelayHelper:
             logger.success(f"[SetXinke] Successfully set port {port_index} with state {state_str}")
 
     @safe_relay_operation
-    def __set_multiplexer_port(self, port_index: Union[int, str]) -> None:
+    def _set_multiplexer_port(self, port_index: Union[int, str]) -> None:
         """
         Set the Multiplexer relay port.
         :param port_index: Relay port index (as defined in multiplexer_map).
         """
         multiplexer_map = {
-            "11": [0x01, 0x01], "12": [0x01, 0x02], "13": [0x01, 0x03], "14": [0x01, 0x04],
-            "21": [0x02, 0x01], "22": [0x02, 0x02], "23": [0x02, 0x03], "24": [0x02, 0x04],
-            "30": [0x03, 0x00], "31": [0x03, 0x01],
-            "40": [0x04, 0x00], "41": [0x04, 0x01],
+            "11": [0x01, 0x01],
+            "12": [0x01, 0x02],
+            "13": [0x01, 0x03],
+            "14": [0x01, 0x04],
+            "21": [0x02, 0x01],
+            "22": [0x02, 0x02],
+            "23": [0x02, 0x03],
+            "24": [0x02, 0x04],
+            "30": [0x03, 0x00],
+            "31": [0x03, 0x01],
+            "40": [0x04, 0x00],
+            "41": [0x04, 0x01],
             "50": [0x05, 0x00],
-            "f0": [0x0F, 0x00], "f1": [0x0F, 0x01], "f2": [0x0F, 0x02], "f3": [0x0F, 0x03], "f4": [0x0F, 0x04],
+            "f0": [0x0F, 0x00],
+            "f1": [0x0F, 0x01],
+            "f2": [0x0F, 0x02],
+            "f3": [0x0F, 0x03],
+            "f4": [0x0F, 0x04],
         }
         port_str = str(port_index)
         if port_str not in multiplexer_map:
@@ -133,7 +151,9 @@ class RelayHelper:
         cmd_list = cmd_head + cmd_payload + cmd_tail
 
         timeout_val = 10 if port_str == "f1" else 2
-        with open_serial_port(self.multiplexer_comport, baudrate=9600, timeout=timeout_val, bytesize=8, parity="N", stopbits=1) as ser:
+        with open_serial_port(
+            self.multiplexer_comport, baudrate=9600, timeout=timeout_val, bytesize=8, parity="N", stopbits=1
+        ) as ser:
             if not ser.is_open:
                 logger.error(f"[Multiplexer] Failed to open serial port {self.multiplexer_comport}!")
                 return
@@ -169,9 +189,9 @@ class RelayHelper:
         """
         dev_type = dev_type.lower()
         if dev_type == "xinke":
-            return self.__set_xinke_port(**kwargs)
+            return self._set_xinke_port(**kwargs)
         elif dev_type == "multiplexer":
-            return self.__set_multiplexer_port(**kwargs)
+            return self._set_multiplexer_port(**kwargs)
         elif dev_type == "cleware":
             return self._set_cleware_port(**kwargs)
         else:
@@ -179,7 +199,7 @@ class RelayHelper:
 
 
 if __name__ == "__main__":
-    obj_relay = RelayHelper()
+    obj_relay = RelayClient()
     drelay = {
         "relay_enabled": True,
         "multiplexer": {"enabled": False, "comport": "COM13"},

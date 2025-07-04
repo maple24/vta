@@ -408,7 +408,6 @@ class TSMasterRPC(TSMasterInterface):
         self.disconnect()
 
     def __del__(self):
-        """析构方法, 释放DLL资源"""
         self.disconnect()
 
 
