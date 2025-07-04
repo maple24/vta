@@ -282,7 +282,7 @@ class OTA:
             logger.warning("Failed to trigger upgrade")
             return False
 
-    @wait_and_retry(timeout=None, interval=10)
+    @wait_and_retry(timeout=300, interval=10)
     def _is_downloading_in_progress(self) -> bool:
         """Check if the OTA package is currently downloading."""
         logger.info("Checking if OTA downloading is in progress by navigating to the upgrade page")
