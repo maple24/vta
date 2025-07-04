@@ -1,36 +1,20 @@
 import click
 import sys
+import json
 from pathlib import Path
 from datetime import datetime
 from loguru import logger
 from vta.core.runner.utils import rotate_folder
 from vta.api.TSmasterAPI.TSRPC import DeviceMode
 from vta.tasks.ota.ota import OTAConfig, OTA
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, Tuple
 from vta.tasks.ota.reporting import TestReporter
 
 ROOT = Path(__file__).resolve().parent.parent.parent.parent
 LOG_PATH = ROOT / "log" / datetime.now().strftime("%A_%m%d%Y_%H%M")
 LOG_PATH.mkdir(parents=True, exist_ok=True)
 # Create default OTA reporter instance
-_ota_reporter = TestReporter("OTA Test")
-
-
-def generate_html_report_for_iteration(
-    iteration_num: int, success: bool, runtime: float, failing_steps: str, log_path: Path
-) -> Path:
-    """Backward compatibility wrapper"""
-    return _ota_reporter.generate_html_report_for_iteration(iteration_num, success, runtime, failing_steps, log_path)
-
-
-def generate_html_summary_report(results: List[Dict[str, Any]]) -> Path:
-    """Backward compatibility wrapper"""
-    return _ota_reporter.generate_html_summary_report(results)
-
-
-def generate_report(results: List[Dict[str, Any]]) -> None:
-    """Backward compatibility wrapper"""
-    _ota_reporter.generate_console_report(results)
+ota_reporter = TestReporter("OTA Test")
 
 
 @click.command()
@@ -42,8 +26,8 @@ def main(iterations: int) -> None:
         results.append(result_entry)
         if not test_result:
             break
-    generate_report(results)
-    generate_html_summary_report(results)
+    ota_reporter.generate_console_report(results)
+    ota_reporter.generate_html_summary_report(results)
 
 
 def setup_logger(iteration: int) -> Path:
@@ -62,45 +46,65 @@ def setup_logger(iteration: int) -> Path:
     return iteration_log_path
 
 
+def load_config() -> Dict[str, Any]:
+    """Load configuration from JSON file"""
+    config_path = Path(__file__).parent / "config.json"
+    with open(config_path, "r") as f:
+        config = json.load(f)
+
+    # Convert string dev_mode to enum
+    config["tsmaster_config"]["dev_mode"] = getattr(DeviceMode, config["tsmaster_config"]["dev_mode"])
+    return config
+
+
 def run_iteration(i: int, total_iterations: int) -> Tuple[Dict[str, Any], bool]:
     iteration_log_path = setup_logger(i)
     logger.info(f"Starting iteration {i + 1} of {total_iterations}")
 
-    # Setup OTA configuration
-    putty_config = {
-        "putty_enabled": True,
-        "putty_comport": "COM44",
-        "putty_baudrate": 921600,
-        "putty_username": "",
-        "putty_password": "",
-    }
-    device_id = "2801750c52300030"
-    tsmaster_config = {"app_name": "TSMaster", "dev_mode": DeviceMode.CAN, "auto_start_simulation": True}
-    ota_config = OTAConfig(putty_config=putty_config, tsmaster_config=tsmaster_config, device_id=device_id)
+    # Load configuration from JSON
+    config = load_config()
+    ota_config = OTAConfig(
+        putty_config=config["putty_config"], tsmaster_config=config["tsmaster_config"], device_id=config["device_id"]
+    )
 
     start_time = datetime.now()
+    performance_metrics = {}
+    failing_steps = ""
+    
     try:
         with OTA(ota_config) as ota:
-            test_result = ota.perform_ota_test(
-                skip_download=False,
-                skip_slot_check=False,
-                skip_trigger_upgrade=False,
-                skip_upgrade_monitor=False,
-            )
+            test_result = ota.perform_ota_test(**config["ota_test_config"])
+            
+            # Capture performance metrics
+            for metric in ["download_duration", "upgrade_duration"]:
+                value = getattr(ota, metric, None)
+                if value is not None:
+                    performance_metrics[metric] = value
+                    logger.success(f"{metric.replace('_', ' ').title()}: {value:.2f} seconds")
+                
+            failing_steps = "" if test_result else "Check OTA logs for details"
     except Exception as e:
         test_result = False
         error_message = str(e)
         logger.error(f"Iteration {i + 1} encountered an error: {error_message}")
         failing_steps = f"Test encountered error: {error_message}"
-    else:
-        failing_steps = "" if test_result else "Check OTA logs for details"
+        
     duration = (datetime.now() - start_time).total_seconds()
 
-    result_entry = {"iteration": i + 1, "success": test_result, "runtime": duration, "failing_steps": failing_steps}
-    html_report_path = generate_html_report_for_iteration(
-        i + 1, test_result, duration, failing_steps, iteration_log_path
+    result_entry = {
+        "iteration": i + 1, 
+        "success": test_result, 
+        "runtime": duration, 
+        "failing_steps": failing_steps,
+        **performance_metrics
+    }
+    
+    # Pass performance metrics to individual iteration report
+    html_report_path = ota_reporter.generate_html_report_for_iteration(
+        i + 1, test_result, duration, failing_steps, iteration_log_path, performance_metrics
     )
     logger.info(f"HTML report for iteration {i + 1} generated: {html_report_path}")
+    
     if test_result:
         logger.success(f"Iteration {i + 1} completed successfully")
     else:

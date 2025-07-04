@@ -1,0 +1,21 @@
+{
+    "device_id": "2801750c52300030",
+    "ota_test_config": {
+        "skip_download": false,
+        "skip_slot_check": false,
+        "skip_trigger_upgrade": false,
+        "skip_upgrade_monitor": false
+    },
+    "putty_config": {
+        "putty_baudrate": 921600,
+        "putty_comport": "COM44",
+        "putty_enabled": true,
+        "putty_password": "",
+        "putty_username": ""
+    },
+    "tsmaster_config": {
+        "app_name": "TSMaster",
+        "auto_start_simulation": true,
+        "dev_mode": "CAN"
+    }
+}

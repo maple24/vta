@@ -63,6 +63,60 @@ class TestReporter:
             th {{ {self.default_styles["table_header"]} }}
         """
 
+    def _calculate_summary_metrics(self, results: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Calculate summary metrics from results"""
+        if not results:
+            return {}
+
+        total_iterations = len(results)
+        success_count = sum(1 for e in results if e["success"])
+        failure_count = total_iterations - success_count
+        avg_runtime = sum(e["runtime"] for e in results) / total_iterations
+        success_rate = success_count / total_iterations * 100
+
+        return {
+            "total_iterations": total_iterations,
+            "success_count": success_count,
+            "failure_count": failure_count,
+            "avg_runtime": avg_runtime,
+            "success_rate": success_rate,
+        }
+
+    def _calculate_additional_metrics(self, results: List[Dict[str, Any]]) -> Dict[str, float]:
+        """Calculate averages for additional numeric metrics (excluding standard columns)"""
+        if not results:
+            return {}
+
+        standard_columns = {"iteration", "success", "runtime", "failing_steps"}
+        all_metric_keys = set()
+        for result in results:
+            all_metric_keys.update(result.keys())
+
+        numeric_metrics = all_metric_keys - standard_columns
+        additional_averages = {}
+
+        for key in numeric_metrics:
+            values = [e.get(key) for e in results if isinstance(e.get(key), (int, float))]
+            if values:
+                additional_averages[key] = sum(values) / len(values)
+
+        return additional_averages
+
+    def _format_metric_name(self, key: str, prefix: str = "") -> str:
+        """Format metric name for display"""
+        name = key.replace("_", " ").title()
+        if prefix:
+            name = f"{prefix} {name}"
+        return name
+
+    def _build_additional_metrics_html(self, additional_metrics: Dict[str, float]) -> str:
+        """Build HTML for additional metrics summary"""
+        html = ""
+        for key, value in additional_metrics.items():
+            metric_name = self._format_metric_name(key, "Average")
+            html += f"<p><strong>{metric_name}:</strong> {value:.2f} seconds</p>"
+        return html
+
     def generate_html_report_for_iteration(
         self,
         iteration_num: int,
@@ -77,7 +131,8 @@ class TestReporter:
         additional_html = ""
         if additional_metrics:
             for key, value in additional_metrics.items():
-                additional_html += f'<div class="metric"><strong>{key}:</strong> {value}</div>'
+                display_name = self._format_metric_name(key)
+                additional_html += f'<div class="metric"><strong>{display_name}:</strong> {value}</div>'
 
         html_content = f"""
         <!DOCTYPE html>
@@ -122,19 +177,15 @@ class TestReporter:
         custom_summary_metrics: Optional[Dict[str, Any]] = None,
     ) -> Path:
         """Generate HTML summary report for all iterations"""
-        total_iterations = len(results)
-        success_count = sum(1 for e in results if e["success"])
-        failure_count = total_iterations - success_count
-        avg_runtime = sum(e["runtime"] for e in results) / total_iterations if total_iterations > 0 else 0
+        summary_metrics = self._calculate_summary_metrics(results)
+        additional_metrics = self._calculate_additional_metrics(results)
 
-        # Default columns
+        # Default columns (keep it simple)
         default_columns = ["iteration", "success", "runtime", "failing_steps"]
         columns_to_show = custom_columns or default_columns
 
         # Generate table headers
-        header_html = ""
-        for col in columns_to_show:
-            header_html += f"<th>{col.replace('_', ' ').title()}</th>"
+        header_html = "".join(f"<th>{col.replace('_', ' ').title()}</th>" for col in columns_to_show)
 
         # Generate table rows
         rows_html = ""
@@ -147,12 +198,13 @@ class TestReporter:
                 if col == "success":
                     rows_html += f'<td class="{status_class}">{status_text}</td>'
                 elif col == "runtime":
-                    rows_html += f"<td>{entry.get(col, 0):.2f}</td>"
+                    rows_html += f"<td>{entry.get(col, 0):.2f}s</td>"
                 else:
                     rows_html += f"<td>{entry.get(col, 'N/A')}</td>"
             rows_html += "</tr>"
 
-        # Build custom summary metrics
+        # Build summary metrics HTML
+        additional_metrics_html = self._build_additional_metrics_html(additional_metrics)
         custom_summary_html = ""
         if custom_summary_metrics:
             for key, value in custom_summary_metrics.items():
@@ -173,11 +225,12 @@ class TestReporter:
             
             <div class="summary">
                 <h2>Summary Statistics</h2>
-                <p><strong>Total Iterations:</strong> {total_iterations}</p>
-                <p><strong>Successful Tests:</strong> <span class="success">{success_count}</span></p>
-                <p><strong>Failed Tests:</strong> <span class="failure">{failure_count}</span></p>
-                <p><strong>Average Runtime:</strong> {avg_runtime:.2f} seconds</p>
-                <p><strong>Success Rate:</strong> {(success_count / total_iterations * 100):.1f}%</p>
+                <p><strong>Total Iterations:</strong> {summary_metrics.get("total_iterations", 0)}</p>
+                <p><strong>Successful Tests:</strong> <span class="success">{summary_metrics.get("success_count", 0)}</span></p>
+                <p><strong>Failed Tests:</strong> <span class="failure">{summary_metrics.get("failure_count", 0)}</span></p>
+                <p><strong>Average Runtime:</strong> {summary_metrics.get("avg_runtime", 0):.2f} seconds</p>
+                <p><strong>Success Rate:</strong> {summary_metrics.get("success_rate", 0):.1f}%</p>
+                {additional_metrics_html}
                 {custom_summary_html}
             </div>
             
@@ -204,7 +257,7 @@ class TestReporter:
         """Generate console report using Rich"""
         table = Table(title=f"{self.test_name} Report")
 
-        # Default columns
+        # Default columns (keep it simple and general)
         default_columns = ["iteration", "success", "runtime", "failing_steps"]
         columns_to_show = custom_columns or default_columns
 
@@ -217,7 +270,7 @@ class TestReporter:
         }
 
         for col in columns_to_show:
-            header = column_headers.get(col, col.replace("_", " ").title())
+            header = column_headers.get(col, self._format_metric_name(col))
             table.add_column(header, justify="center")
 
         # Add data rows
@@ -234,15 +287,23 @@ class TestReporter:
 
         # Add summary if requested
         if show_summary and results:
-            total_iterations = len(results)
-            success_count = sum(1 for e in results if e["success"])
-            failure_count = total_iterations - success_count
-            avg_runtime = sum(e["runtime"] for e in results) / total_iterations
+            summary_metrics = self._calculate_summary_metrics(results)
+            additional_averages = self._calculate_additional_metrics(results)
 
-            table.add_row("─" * 15, "─" * 15, "─" * 15, "─" * 15)
-            table.add_row("[bold]Total Iterations[/bold]", str(total_iterations), "", "")
-            table.add_row("[bold green]Total PASS[/bold green]", str(success_count), "", "")
-            table.add_row("[bold red]Total FAIL[/bold red]", str(failure_count), "", "")
-            table.add_row("[bold]Average Runtime (s)[/bold]", f"{avg_runtime:.2f}", "", "")
+            separator = ["─" * 15] * len(columns_to_show)
+            table.add_row(*separator)
+
+            # Add summary rows with proper column alignment
+            empty_cols = [""] * (len(columns_to_show) - 2)
+
+            table.add_row("[bold]Total Iterations[/bold]", str(summary_metrics["total_iterations"]), *empty_cols)
+            table.add_row("[bold green]Total PASS[/bold green]", str(summary_metrics["success_count"]), *empty_cols)
+            table.add_row("[bold red]Total FAIL[/bold red]", str(summary_metrics["failure_count"]), *empty_cols)
+            table.add_row("[bold]Average Runtime (s)[/bold]", f"{summary_metrics['avg_runtime']:.2f}", *empty_cols)
+
+            # Add additional metric averages
+            for key, avg_value in additional_averages.items():
+                metric_name = self._format_metric_name(key, "Average")
+                table.add_row(f"[bold]{metric_name} (s)[/bold]", f"{avg_value:.2f}", *empty_cols)
 
         self.console.print(table)
