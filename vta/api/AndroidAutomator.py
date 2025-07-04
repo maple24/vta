@@ -46,19 +46,20 @@ class AndroidAutomator:
         self.adb_obj_container = {}
         logger.info(f"{self.__class__.__name__} initialized.")
 
-    def _get_device(self, device_id: str) -> Optional[u2.Device]:
+    def _get_device(self, device_id: str) -> u2.Device:
         device_id = (device_id or "").strip()
         if not device_id:
-            logger.warning("No device id provided.")
-            return None
+            raise ValueError("No device id provided.")
+        
         if device_id not in self.adb_obj_container:
             try:
                 dev_obj = u2.connect(device_id)
                 self.adb_obj_container[device_id] = dev_obj
                 logger.info(f"Connected to device '{device_id}'.")
             except Exception as e:
-                logger.error(f"Failed to connect to device '{device_id}': {e}")
-                return None
+                error_msg = f"Failed to connect to device '{device_id}': {e}"
+                logger.error(error_msg)
+                raise ConnectionError(error_msg) from e
         return self.adb_obj_container[device_id]
 
     def connect(self, device_id: str) -> bool:
@@ -69,8 +70,9 @@ class AndroidAutomator:
             logger.info(f"Connected to device '{device_id}'.")
             return True
         except Exception as e:
-            logger.error(f"Error connecting to device '{device_id}': {e}")
-            return False
+            error_msg = f"Error connecting to device '{device_id}': {e}"
+            logger.error(error_msg)
+            raise ConnectionError(error_msg) from e
 
     @_with_device
     def install_apk(self, dev: u2.Device, apk_path: str) -> bool:

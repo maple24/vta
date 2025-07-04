@@ -82,8 +82,8 @@ class TestReporter:
             "success_rate": success_rate,
         }
 
-    def _calculate_additional_metrics(self, results: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate averages for additional numeric metrics (excluding standard columns)"""
+    def _calculate_additional_metrics(self, results: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Calculate metrics for additional fields (not just averages)"""
         if not results:
             return {}
 
@@ -92,15 +92,26 @@ class TestReporter:
         for result in results:
             all_metric_keys.update(result.keys())
 
+        additional_metrics = {}
         numeric_metrics = all_metric_keys - standard_columns
-        additional_averages = {}
 
         for key in numeric_metrics:
-            values = [e.get(key) for e in results if isinstance(e.get(key), (int, float))]
+            values = [e.get(key) for e in results if e.get(key) is not None]
             if values:
-                additional_averages[key] = sum(values) / len(values)
+                # Check if all values are numeric
+                numeric_values = [v for v in values if isinstance(v, (int, float))]
+                if numeric_values:
+                    # For numeric values, calculate average
+                    additional_metrics[f"avg_{key}"] = sum(numeric_values) / len(numeric_values)
+                    # Also include min/max if there are multiple values
+                    if len(numeric_values) > 1:
+                        additional_metrics[f"min_{key}"] = min(numeric_values)
+                        additional_metrics[f"max_{key}"] = max(numeric_values)
+                else:
+                    # For non-numeric values, just track the most common value or last value
+                    additional_metrics[f"last_{key}"] = values[-1]
 
-        return additional_averages
+        return additional_metrics
 
     def _format_metric_name(self, key: str, prefix: str = "") -> str:
         """Format metric name for display"""
@@ -109,12 +120,22 @@ class TestReporter:
             name = f"{prefix} {name}"
         return name
 
-    def _build_additional_metrics_html(self, additional_metrics: Dict[str, float]) -> str:
+    def _build_additional_metrics_html(self, additional_metrics: Dict[str, Any]) -> str:
         """Build HTML for additional metrics summary"""
         html = ""
         for key, value in additional_metrics.items():
-            metric_name = self._format_metric_name(key, "Average")
-            html += f"<p><strong>{metric_name}:</strong> {value:.2f} seconds</p>"
+            metric_name = self._format_metric_name(key)
+            
+            # Format value based on type and key name
+            if isinstance(value, (int, float)):
+                if "time" in key.lower() or "duration" in key.lower() or key.startswith("avg_") and "time" in key:
+                    formatted_value = f"{value:.2f} seconds"
+                else:
+                    formatted_value = f"{value:.2f}"
+            else:
+                formatted_value = str(value)
+            
+            html += f"<p><strong>{metric_name}:</strong> {formatted_value}</p>"
         return html
 
     def generate_html_report_for_iteration(
@@ -132,7 +153,17 @@ class TestReporter:
         if additional_metrics:
             for key, value in additional_metrics.items():
                 display_name = self._format_metric_name(key)
-                additional_html += f'<div class="metric"><strong>{display_name}:</strong> {value}</div>'
+                
+                # Format value based on type
+                if isinstance(value, (int, float)):
+                    if "time" in key.lower() or "duration" in key.lower():
+                        formatted_value = f"{value:.2f} seconds"
+                    else:
+                        formatted_value = f"{value:.2f}"
+                else:
+                    formatted_value = str(value)
+                
+                additional_html += f'<div class="metric"><strong>{display_name}:</strong> {formatted_value}</div>'
 
         html_content = f"""
         <!DOCTYPE html>
@@ -302,8 +333,18 @@ class TestReporter:
             table.add_row("[bold]Average Runtime (s)[/bold]", f"{summary_metrics['avg_runtime']:.2f}", *empty_cols)
 
             # Add additional metric averages
-            for key, avg_value in additional_averages.items():
-                metric_name = self._format_metric_name(key, "Average")
-                table.add_row(f"[bold]{metric_name} (s)[/bold]", f"{avg_value:.2f}", *empty_cols)
+            for key, value in additional_averages.items():
+                metric_name = self._format_metric_name(key)
+                
+                # Format value based on type and key name
+                if isinstance(value, (int, float)):
+                    if "time" in key.lower() or "duration" in key.lower() or key.startswith("avg_") and "time" in key:
+                        formatted_value = f"{value:.2f} (s)"
+                        table.add_row(f"[bold]{metric_name}[/bold]", formatted_value, *empty_cols)
+                    else:
+                        formatted_value = f"{value:.2f}"
+                        table.add_row(f"[bold]{metric_name}[/bold]", formatted_value, *empty_cols)
+                else:
+                    table.add_row(f"[bold]{metric_name}[/bold]", str(value), *empty_cols)
 
         self.console.print(table)
