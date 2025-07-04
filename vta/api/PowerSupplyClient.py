@@ -4,7 +4,7 @@ from contextlib import contextmanager
 from typing import Dict, Any, Generator, Optional
 
 
-class PPSHelper:
+class PowerSupplyClient:
     ROBOT_LIBRARY_SCOPE: str = "GLOBAL"
 
     def __init__(self) -> None:
@@ -101,7 +101,7 @@ if __name__ == "__main__":
         "pps_baudrate": 9600,
         "pps_channel_used": 1,
     }
-    mpps = PPSHelper()
+    mpps = PowerSupplyClient()
     mpps.init_pps(dPPS=dPPS)
     mpps.get_volt()
     mpps.get_current()

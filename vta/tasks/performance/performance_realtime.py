@@ -19,7 +19,7 @@ from matplotlib.animation import FuncAnimation
 
 sys.path.append(os.sep.join(os.path.abspath(__file__).split(os.sep)[:-4]))
 
-from vta.api.PuttyClient import PuttyClient
+from vta.api.SerialClient import SerialClient
 from vta.library.GenericHelper import GenericHelper
 from vta.library.SystemHelper import SystemHelper
 
@@ -39,7 +39,7 @@ class Performance:
         duration=30,
         callback: str = None,
     ) -> None:
-        self.mputty = PuttyClient()
+        self.mputty = SerialClient()
         self.mputty.connect(self.dputty)
         if not os.path.exists(self.RESULT):
             os.mkdir(self.RESULT)

@@ -39,7 +39,7 @@ def _with_device(func: Callable) -> Callable:
     return wrapper
 
 
-class DeviceClient:
+class AndroidAutomator:
     """Class operations to control Android via uiautomator2."""
 
     def __init__(self):
@@ -573,7 +573,7 @@ class DeviceClient:
 
 if __name__ == "__main__":
     # Initialize the client
-    client = DeviceClient()
+    client = AndroidAutomator()
     device_id = "2801750c52300030"  # replace with your device serial
 
     if client.connect(device_id):

@@ -1,7 +1,7 @@
-from vta.api.AndroidClient import AndroidClient
-from vta.api.PuttyClient import SerialConfig, PuttyClient
+from vta.api.AdbController import AdbController
+from vta.api.SerialClient import SerialConfig, SerialClient
 from vta.api.TSmasterAPI.TSRPC import TSMasterRPC, TSMasterConfig, DeviceMode
-from vta.api.DeviceClient import DeviceClient
+from vta.api.AndroidAutomator import AndroidAutomator
 from vta.library.utility.decorators import timed_step, wait_and_retry
 from vta.library.utility.timelord import countdown
 from loguru import logger
@@ -111,10 +111,10 @@ class OTA:
             self.config = config
         
         # Initialize components
-        self.putty = PuttyClient()
-        self.adb = AndroidClient(device_id=self.config.device_id)
+        self.putty = SerialClient()
+        self.adb = AdbController(device_id=self.config.device_id)
         self.tsmaster = TSMasterRPC(self.config.tsmaster_config)
-        self.device = DeviceClient()
+        self.device = AndroidAutomator()
         self.vehicle_mode_manager = VehicleModeManager(
             self.tsmaster, 
             self.config.signal_path
