@@ -1,6 +1,7 @@
 import click
 import sys
 import json
+import os
 from pathlib import Path
 from datetime import datetime
 from loguru import logger
@@ -9,6 +10,7 @@ from vta.api.TSmasterAPI.TSRPC import DeviceMode
 from vta.tasks.ota.ota import OTAConfig, OTA
 from typing import Dict, Any, Tuple
 from vta.tasks.ota.reporting import TestReporter
+from vta.core.mail.EMAILClient import EmailClient, EmailClientError
 
 ROOT = Path(__file__).resolve().parent.parent.parent.parent
 LOG_PATH = ROOT / "log" / datetime.now().strftime("%A_%m%d%Y_%H%M")
@@ -26,8 +28,13 @@ def main(iterations: int) -> None:
         results.append(result_entry)
         if not test_result:
             break
+    
+    # Generate console and HTML reports
     ota_reporter.generate_console_report(results)
-    ota_reporter.generate_html_summary_report(results)
+    html_summary_path = ota_reporter.generate_html_summary_report(results)
+    
+    # Send email report
+    send_email_report(results, iterations, html_summary_path)
 
 
 def setup_logger(iteration: int) -> Path:
@@ -53,8 +60,66 @@ def load_config() -> Dict[str, Any]:
         config = json.load(f)
 
     # Convert string dev_mode to enum
+    # TODO
     config["tsmaster_config"]["dev_mode"] = getattr(DeviceMode, config["tsmaster_config"]["dev_mode"])
     return config
+
+
+def send_email_report(results: list, total_iterations: int, html_report_path: Path = None) -> None:
+    """Send email with test summary report"""
+    try:
+        config = load_config()
+        email_config = config.get("email_config", {})
+        
+        if not email_config.get("enabled", False):
+            logger.info("Email reporting is disabled")
+            return
+        
+        if not all([email_config.get("sender"), email_config.get("username"), 
+                    email_config.get("password"), email_config.get("recipients")]):
+            logger.warning("Email configuration incomplete, skipping email report")
+            return
+        
+        # Generate email content
+        successful_tests = sum(1 for result in results if result["success"])
+        test_status = "PASSED" if successful_tests == len(results) else "FAILED"
+        
+        # Create email subject
+        subject = f"OTA Test Report - {test_status} ({successful_tests}/{total_iterations} iterations passed)"
+        
+        # Read the existing HTML summary report
+        try:
+            if html_report_path and html_report_path.exists():
+                with open(html_report_path, 'r', encoding='utf-8') as f:
+                    html_body = f.read()
+                logger.info(f"Using HTML report from: {html_report_path}")
+            else:
+                logger.error("HTML summary report not found")
+                return
+        except Exception as e:
+            logger.error(f"Failed to read HTML summary report: {e}")
+            return
+        
+        # Initialize email client and send
+        email_client = EmailClient(
+            sender=email_config["sender"],
+            username=email_config["username"],
+            password=email_config["password"]
+        )
+        
+        logger.info(f"Sending email report to: {', '.join(email_config['recipients'])}")
+        email_client.send_mail(
+            recipients=email_config["recipients"],
+            subject=subject,
+            email_body=html_body,
+            content_type="html"
+        )
+        logger.success("Email report sent successfully")
+            
+    except EmailClientError as e:
+        logger.error(f"Email client error: {e}")
+    except Exception as e:
+        logger.error(f"Failed to send email report: {e}")
 
 
 def run_iteration(i: int, total_iterations: int) -> Tuple[Dict[str, Any], bool]:

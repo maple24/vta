@@ -17,5 +17,14 @@
         "app_name": "TSMaster",
         "auto_start_simulation": true,
         "dev_mode": "CAN"
+    },
+    "email_config": {
+        "enabled": true,
+        "sender": "Test.EST@cn.bosch.com",
+        "username": "ets1szh",
+        "password": "estbangbangde-",
+        "recipients": [
+            "jin.zhu5@cn.bosch.com"
+        ]
     }
 }
