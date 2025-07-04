@@ -31,6 +31,7 @@ def wait_and_retry(timeout: int = 10, interval: float = 1.0, retry_times: int = 
     """
     Retry calling the decorated function until it returns a truthy value,
     or retry_times is exceeded (if set), otherwise until timeout.
+    If both timeout and retry_times are None, retry indefinitely until success.
     Args:
         timeout (int): Total time to keep retrying (seconds).
         interval (float): Wait time between retries (seconds).
@@ -52,7 +53,7 @@ def wait_and_retry(timeout: int = 10, interval: float = 1.0, retry_times: int = 
                     time.sleep(interval)
                 console.log(f"[red]'{func_name}' failed after {retry_times} attempts[/]")
                 return False
-            else:
+            elif timeout is not None:
                 console.rule(f"[bold cyan]wait_and_retry: {func_name} (timeout {timeout}s)")
                 end_time = time.time() + timeout
                 attempt = 1
@@ -67,6 +68,17 @@ def wait_and_retry(timeout: int = 10, interval: float = 1.0, retry_times: int = 
                     attempt += 1
                 console.log(f"[red]'{func_name}' failed after timeout ({timeout}s)[/]")
                 return False
+            else:
+                console.rule(f"[bold cyan]wait_and_retry: {func_name} (infinite retry mode)")
+                attempt = 1
+                while True:
+                    console.log(f"[yellow]Attempt {attempt} for [bold]{func_name}[/] (infinite mode)")
+                    result = func(*args, **kwargs)
+                    if result:
+                        console.log(f"[green]'{func_name}' succeeded on attempt {attempt}[/]")
+                        return result
+                    time.sleep(interval)
+                    attempt += 1
 
         return wrapper
 
