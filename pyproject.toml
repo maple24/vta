@@ -5,6 +5,9 @@ description = "Vite Test Automation Framework"
 authors = ["ziu7wx <jin.zhu5@bosch.com>"]
 readme = "README.md"
 
+[[tool.poetry.source]]
+name = "my-artifactory"
+url = "https://rb-artifactory.bosch.com/artifactory/api/pypi/python-virtual/simple"
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -29,10 +32,11 @@ tqdm = "^4.66.2"
 typer = "^0.9.0"
 typing-extensions = "^4.10.0"
 uiautomator2 = "^3.3.3"
+pytest = {version = "^8.4.1", source = "my-artifactory"}
 
 
 [tool.poetry.group.test.dependencies]
-pytest = "^6.0.0"
+pytest = "^8.4.1"
 pytest-mock = "*"
 
 

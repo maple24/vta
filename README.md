@@ -75,6 +75,13 @@
     poetry run format
     ```
 
+7. (Optional) Add dependencies
+
+    ```
+    <!-- make sure poetry config is set -->
+    poetry add pytest --source my-artifactory
+    ```
+
 ## Architecture
 
 1. Functional test building block
